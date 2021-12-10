@@ -4,13 +4,14 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
 public class VacationHome {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -23,8 +24,8 @@ public class VacationHome {
 
     private HashMap<Integer, Integer> bedRoom;
 
-    @OneToMany(mappedBy = "vacationHome")
-    private List<Reservation> availableReservations;
+    @OneToMany(mappedBy = "vacationHome", fetch = FetchType.LAZY)
+    private Set<Reservation> availableReservations;
 
     private String codeOfConduct;
 

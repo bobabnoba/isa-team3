@@ -6,10 +6,11 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name="ApplicationUser")
+@Table(name = "ApplicationUser")
 public class User {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String firstName;
@@ -32,7 +33,7 @@ public class User {
 
     private boolean isBlocked;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "registration_id")
     private Registration registration;
 

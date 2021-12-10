@@ -5,9 +5,7 @@ import com.ftn.fishingbooker.enumeration.FishingEquipment;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Base64;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,6 +13,7 @@ import java.util.Set;
 public class Adventure {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -25,8 +24,8 @@ public class Adventure {
 
 //    private Set<Base64> images;
 
-    @OneToMany(mappedBy = "adventure")
-    private List<Reservation> availableReservations;
+    @OneToMany(mappedBy = "adventure", fetch = FetchType.LAZY)
+    private Set<Reservation> availableReservations;
 
     private String codeOfConduct;
 
@@ -35,10 +34,10 @@ public class Adventure {
     private String information;
 
     @Column
-    @ElementCollection(targetClass=Integer.class)
-    private List<FishingEquipment> fishingEquipment;
+    @ElementCollection(targetClass = Integer.class)
+    private Set<FishingEquipment> fishingEquipment;
 
-//    @Column
+    //    @Column
 //    @ElementCollection(targetClass=Integer.class)
     private CancelingCondition reservationCanceling;
 

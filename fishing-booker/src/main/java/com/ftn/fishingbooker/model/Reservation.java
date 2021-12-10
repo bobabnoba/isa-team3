@@ -6,14 +6,14 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
 public class Reservation {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -27,7 +27,7 @@ public class Reservation {
 
     @Column
     @ElementCollection(targetClass = Integer.class)
-    private List<AdditionalService> additionalServices;
+    private Set<AdditionalService> additionalServices;
 
     private float price;
 

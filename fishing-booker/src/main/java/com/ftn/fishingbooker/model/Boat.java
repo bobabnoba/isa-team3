@@ -5,15 +5,13 @@ import com.ftn.fishingbooker.enumeration.CancelingCondition;
 import com.ftn.fishingbooker.enumeration.FishingEquipment;
 import com.ftn.fishingbooker.enumeration.NavigationType;
 import lombok.Data;
-import org.apache.tomcat.util.codec.binary.Base64;
 
 import javax.persistence.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
-@Entity
 @Data
+@Entity
 public class Boat {
     @Id
     @Column(name = "id", nullable = false)
@@ -35,24 +33,25 @@ public class Boat {
 
     @Column
     @ElementCollection(targetClass=Integer.class)
-    private List<NavigationType> navigationType;
+    private Set<NavigationType> navigationType;
 
     private String address;
 
     private String description;
 
+    //TODO: Set of images
     //private Set<Base64> images;
 
     private int capacity;
 
-    @OneToMany(mappedBy = "boat")
-    private List<Reservation> availableReservations;
+    @OneToMany(mappedBy = "boat", fetch = FetchType.LAZY)
+    private Set<Reservation> availableReservations;
 
     private String codeOfConduct;
 
     @Column
     @ElementCollection(targetClass=Integer.class)
-    private List<FishingEquipment> fishingEquipment;
+    private Set<FishingEquipment> fishingEquipment;
 
     @Enumerated(EnumType.STRING)
     private CancelingCondition reservationCanceling;

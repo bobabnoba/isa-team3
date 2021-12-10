@@ -11,6 +11,7 @@ import java.util.Set;
 public class Registration {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -22,8 +23,8 @@ public class Registration {
 
     private String adminResponse;
 
-    @OneToMany(mappedBy="registration")
-    private Set<User> registeredUsers;
+    @OneToOne(mappedBy="registration", fetch = FetchType.LAZY)
+    private User registeredUsers;
 
 
 }

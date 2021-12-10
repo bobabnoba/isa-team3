@@ -9,8 +9,10 @@ import javax.persistence.*;
 public class Complaint {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //TODO: Ovo
     //private int authorId;
 
     //private int respondentId;

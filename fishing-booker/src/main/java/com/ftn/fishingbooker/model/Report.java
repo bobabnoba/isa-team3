@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class Report {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private int reservationId;
