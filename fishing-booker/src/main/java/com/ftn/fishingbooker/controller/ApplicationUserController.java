@@ -25,7 +25,6 @@ public class ApplicationUserController {
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getUsers() {
-
         return new ResponseEntity<>(userMapper.mapToDto(userService.getAll()), HttpStatus.OK);
     }
 
