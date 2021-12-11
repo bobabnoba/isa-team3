@@ -5,30 +5,64 @@ import com.ftn.fishingbooker.enumeration.CancelingCondition;
 import com.ftn.fishingbooker.enumeration.FishingEquipment;
 import com.ftn.fishingbooker.enumeration.NavigationType;
 import lombok.Data;
-import org.apache.tomcat.util.codec.binary.Base64;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Set;
 
-@Entity
 @Data
+@Entity
 public class Boat {
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private String name;
+
+    @Enumerated(EnumType.STRING)
     private BoatType type;
+
     private float length;
+
     private int engineCount;
+
     private int enginePower;
+
     private float maxSpeed;
-    private List<NavigationType> navigationType;
+
+    @Column
+    @ElementCollection(targetClass=Integer.class)
+    private Set<NavigationType> navigationType;
+
     private String address;
+
     private String description;
-    private List<Base64> images;
+
+    //TODO: Set of images
+    //private Set<Base64> images;
+
     private int capacity;
-    private List<Reservation> availableReservations;
+
+    @OneToMany(mappedBy = "boat", fetch = FetchType.LAZY)
+    private Set<Reservation> availableReservations;
+
     private String codeOfConduct;
-    private List<FishingEquipment> fishingEquipment;
+
+    @Column
+    @ElementCollection(targetClass=Integer.class)
+    private Set<FishingEquipment> fishingEquipment;
+
+    @Enumerated(EnumType.STRING)
     private CancelingCondition reservationCanceling;
+
     private HashMap<String, Float> priceList;
+
     private String information;
+
+    @ManyToOne
+    @JoinColumn(name = "boat_owner_id")
+    private BoatOwner boatOwner;
+
+
 }

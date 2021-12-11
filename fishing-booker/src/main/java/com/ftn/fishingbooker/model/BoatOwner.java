@@ -3,14 +3,22 @@ package com.ftn.fishingbooker.model;
 import com.ftn.fishingbooker.enumeration.BoatOwnerType;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import java.util.*;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
 public class BoatOwner extends User {
+
+    @Enumerated(EnumType.STRING)
     private BoatOwnerType type;
-    private List<Boat> boats;
-    private List<Report> reservationReport;
-    private List<Complaint> complaints;
+
+    @OneToMany(mappedBy = "boatOwner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Boat> boats;
+
+    @OneToMany(mappedBy = "boatOwner", fetch = FetchType.LAZY)
+    private Set<Report> reservationReport;
+
+    @OneToMany(mappedBy = "boatOwner", fetch = FetchType.LAZY)
+    private Set<Complaint> complaints;
 }
