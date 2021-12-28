@@ -1,21 +1,16 @@
 package com.ftn.fishingbooker.service;
+import com.ftn.fishingbooker.dto.UserDto;
 
-import com.ftn.fishingbooker.model.User;
-import com.ftn.fishingbooker.repository.ApplicationUserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Service
-@Transactional
-public class ApplicationUserService {
+public interface ApplicationUserService {
 
-    @Autowired
-    private ApplicationUserRepository userRepository;
+    List<UserDto> getAll();
 
-    public List<User> getAll() {
-        return userRepository.findAll();
-    }
+    UserDto get(Long id);
+
+    Long save(UserDto newUser);
+
+    void delete(Long id);
+
 }
