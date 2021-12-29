@@ -7,10 +7,12 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "ApplicationUser")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "mySeqGenV1", sequenceName = "myGenV1", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGenV1")
     private Long id;
 
     private String firstName;
@@ -40,5 +42,9 @@ public class User {
     @OneToOne
     @JoinColumn(name = "registration_id")
     private Registration registration;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role roles;
 
 }

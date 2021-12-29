@@ -19,7 +19,7 @@ public class SpringFoxConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .paths(PathSelectors.ant("/users/*"))
+                .paths(PathSelectors.any())
                 .apis(RequestHandlerSelectors.basePackage("com.ftn"))
                 .build();
     }

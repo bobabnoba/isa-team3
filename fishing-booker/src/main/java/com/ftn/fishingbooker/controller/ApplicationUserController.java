@@ -20,8 +20,8 @@ public class ApplicationUserController {
     private UserMapper userMapper;
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getUsers() {
-        return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
+    public List<UserDto> getAll() {
+        return userService.getAll() ;
     }
 
     @PostMapping
