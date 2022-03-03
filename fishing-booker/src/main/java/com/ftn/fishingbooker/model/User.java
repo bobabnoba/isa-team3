@@ -33,6 +33,10 @@ public class User {
 
     private boolean isBlocked;
 
+    private boolean testField1;
+
+    private boolean testField2;
+
     @OneToOne
     @JoinColumn(name = "registration_id")
     private Registration registration;
