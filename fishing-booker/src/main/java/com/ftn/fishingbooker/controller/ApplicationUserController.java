@@ -2,30 +2,44 @@ package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.UserDto;
 import com.ftn.fishingbooker.mapper.UserMapper;
-import com.ftn.fishingbooker.service.ApplicationUserService;
+import com.ftn.fishingbooker.service.ApplicationUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping("/users")
 public class ApplicationUserController {
 
     @Autowired
-    private ApplicationUserService userService;
+    private ApplicationUserServiceImpl userService;
     @Autowired
     private UserMapper userMapper;
 
-
     @GetMapping
-    public ResponseEntity<List<UserDto>> getUsers() {
-        return new ResponseEntity<>(userMapper.mapToDto(userService.getAll()), HttpStatus.OK);
+    public List<UserDto> getAll() {
+        return userService.getAll() ;
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDto save(@RequestBody UserDto newUser){
+        Long id = userService.save(newUser);
+        return userService.get(id);
+    }
+
+    @PutMapping("{id}")
+    public UserDto save(@PathVariable Long id, @RequestBody UserDto userDto){
+        userService.save(userDto);
+        return  userService.get(id);
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Long id){
+        userService.delete(id);
     }
 
 
