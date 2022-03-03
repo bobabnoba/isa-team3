@@ -2,6 +2,7 @@ package com.ftn.fishingbooker.model;
 
 import lombok.Data;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
 
 @Entity
@@ -35,9 +36,7 @@ public class User {
 
     private boolean isBlocked;
 
-    private boolean testField1;
-
-    private boolean testField2;
+    private boolean testRebaseAgain;
 
     @OneToOne
     @JoinColumn(name = "registration_id")
