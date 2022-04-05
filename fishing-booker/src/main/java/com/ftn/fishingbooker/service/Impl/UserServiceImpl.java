@@ -1,13 +1,14 @@
-package com.ftn.fishingbooker.service;
+package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.dto.UserDto;
 import com.ftn.fishingbooker.mapper.UserMapper;
-import com.ftn.fishingbooker.model.BoatOwner;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.HomeOwner;
 import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.repository.ApplicationUserRepository;
+import com.ftn.fishingbooker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ApplicationUserServiceImpl implements ApplicationUserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private ApplicationUserRepository userRepository;
@@ -32,24 +33,6 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
         return userMapper.mapToDto(user);
     }
 
-    public Long saveClient(UserDto newUser) {
-        Client client = userMapper.mapToClient(newUser);
-        userRepository.save(client);
-        return client.getId();
-    }
-
-    public Long saveHomeOwner(UserDto newUser) {
-        HomeOwner client = userMapper.mapToHomeOwner(newUser);
-        userRepository.save(client);
-        return client.getId();
-    }
-
-    public Long saveBoatOwner(UserDto newUser) {
-        BoatOwner client = userMapper.mapToBoatOwner(newUser);
-        userRepository.save(client);
-        return client.getId();
-    }
-
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
@@ -57,5 +40,22 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     public UserDto getUserByName(String name) {
         User user = userRepository.getUserByName(name);
         return userMapper.mapToDto(user);
+    }
+//TODO: THIS
+    @Override
+    public boolean isEmailRegistered() {
+        return true;
+    }
+    /**
+     * UserDetailsService - Spring security requirements
+     */
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("User was not found"));
+        } else {
+            return user;
+        }
     }
 }

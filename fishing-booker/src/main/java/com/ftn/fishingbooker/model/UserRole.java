@@ -2,6 +2,7 @@ package com.ftn.fishingbooker.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Table(name="Role")
-public class UserRole {
+public class UserRole implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,4 +59,8 @@ public class UserRole {
         return getClass().hashCode();
     }
 
+    @Override
+    public String getAuthority() {
+        return name;
+    }
 }

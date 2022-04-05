@@ -34,8 +34,8 @@ public class UserMapper {
         client.setCountry(userDto.getCountry());
         client.setActivated(userDto.isActivated());
         client.setBlocked(userDto.isBlocked());
-        return client;
 
+        return client;
     }
 
     public HomeOwner mapToHomeOwner(UserDto userDto) {
@@ -51,8 +51,8 @@ public class UserMapper {
         homeOwner.setCountry(userDto.getCountry());
         homeOwner.setActivated(userDto.isActivated());
         homeOwner.setBlocked(userDto.isBlocked());
-        return homeOwner;
 
+        return homeOwner;
     }
 
     public BoatOwner mapToBoatOwner(UserDto userDto) {
@@ -68,8 +68,8 @@ public class UserMapper {
         boatOwner.setCountry(userDto.getCountry());
         boatOwner.setActivated(userDto.isActivated());
         boatOwner.setBlocked(userDto.isBlocked());
-        return boatOwner;
 
+        return boatOwner;
     }
 
     public UserDto mapToDto(User user) {
@@ -88,6 +88,4 @@ public class UserMapper {
 
         return userDto;
     }
-
-
 }

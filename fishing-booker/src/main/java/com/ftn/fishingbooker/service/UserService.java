@@ -4,18 +4,13 @@ import com.ftn.fishingbooker.dto.UserDto;
 
 import java.util.List;
 
-public interface ApplicationUserService {
+public interface UserService {
 
     List<UserDto> getAll();
 
     UserDto get(Long id);
 
-    Long saveClient(UserDto newUser);
-
-    Long saveHomeOwner(UserDto newUser);
-
-    Long saveBoatOwner(UserDto newUser);
-
     void delete(Long id);
 
+    boolean isEmailRegistered();
 }
