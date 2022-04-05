@@ -1,4 +1,5 @@
 package com.ftn.fishingbooker.service;
+
 import com.ftn.fishingbooker.dto.UserDto;
 
 import java.util.List;
@@ -9,7 +10,11 @@ public interface ApplicationUserService {
 
     UserDto get(Long id);
 
-    Long save(UserDto newUser);
+    Long saveClient(UserDto newUser);
+
+    Long saveHomeOwner(UserDto newUser);
+
+    Long saveBoatOwner(UserDto newUser);
 
     void delete(Long id);
 

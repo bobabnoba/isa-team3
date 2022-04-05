@@ -5,7 +5,6 @@ import com.ftn.fishingbooker.mapper.UserMapper;
 import com.ftn.fishingbooker.service.ApplicationUserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,26 +20,29 @@ public class ApplicationUserController {
 
     @GetMapping
     public List<UserDto> getAll() {
-        return userService.getAll() ;
+        return userService.getAll();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto save(@RequestBody UserDto newUser){
-        Long id = userService.save(newUser);
+    public UserDto saveClient(@RequestBody UserDto newUser) {
+        Long id = userService.saveClient(newUser);
         return userService.get(id);
     }
 
     @PutMapping("{id}")
-    public UserDto save(@PathVariable Long id, @RequestBody UserDto userDto){
-        userService.save(userDto);
-        return  userService.get(id);
+    public UserDto saveClient(@PathVariable Long id, @RequestBody UserDto userDto) {
+        userService.saveClient(userDto);
+        return userService.get(id);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id) {
         userService.delete(id);
     }
 
-
+    @RequestMapping(value = "/name/{name}", method = RequestMethod.GET)
+    public UserDto getUserByName(@PathVariable String name) {
+        return userService.getUserByName(name);
+    }
 }
