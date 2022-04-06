@@ -8,6 +8,8 @@ import org.hibernate.Hibernate;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -46,16 +48,28 @@ public abstract class User implements UserDetails {
 
     private boolean testRebaseAgain;
 
+    @Column(name = "last_password_reset_date")
+    private Timestamp lastPasswordResetDate;
+
     @OneToOne(targetEntity = Registration.class)
     @JoinColumn(name = "registration_id")
     private Registration registration;
 
-    /** TODO: Svugdje staviti targetEntity
+    /**
+     * TODO: Svugdje staviti targetEntity
      * Nije radilo dok nisam stavila targetEntity
      */
     @ManyToOne(targetEntity = UserRole.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private UserRole role;
+
+    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    public Date getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -69,4 +83,5 @@ public abstract class User implements UserDetails {
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }

@@ -9,8 +9,10 @@ import com.ftn.fishingbooker.service.RoleService;
 import com.ftn.fishingbooker.service.UserService;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @NoArgsConstructor
+@Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private static UserService userService;
@@ -30,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             client.setPassword(passwordEncoder.encode(client.getPassword()));
             client.setActivated(false);
             clientService.saveClient();
-            client.setRole(roleService.findByName("Client"));
+            client.setRole(roleService.findByName("ROLE_CLIENT"));
             client.setPoints(0);
             client.setType(ClientType.SILVER);
             sendRegistrationEmail(client);

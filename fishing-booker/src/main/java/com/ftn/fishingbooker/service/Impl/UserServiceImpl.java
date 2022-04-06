@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userRepository.getUserByName(name);
         return userMapper.mapToDto(user);
     }
-//TODO: THIS
+    //TODO: THIS
     @Override
     public boolean isEmailRegistered() {
         return true;
