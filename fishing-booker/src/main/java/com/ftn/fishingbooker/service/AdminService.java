@@ -1,4 +1,4 @@
 package com.ftn.fishingbooker.service;
 
-public interface AuthenticationService {
+public interface AdminService {
 }

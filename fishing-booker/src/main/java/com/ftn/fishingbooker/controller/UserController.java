@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class ApplicationUserController {
+public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
@@ -27,8 +27,4 @@ public class ApplicationUserController {
         userService.delete(id);
     }
 
-    @GetMapping("/name/{name}")
-    public UserDto getUserByName(@PathVariable String name) {
-        return userService.getUserByName(name);
-    }
 }

@@ -1,10 +1,13 @@
 package com.ftn.fishingbooker.service.Impl;
 
+import com.ftn.fishingbooker.dto.RegisterDto;
 import com.ftn.fishingbooker.dto.UserDto;
+import com.ftn.fishingbooker.exception.ResourceConflictException;
+import com.ftn.fishingbooker.mapper.RegistrationMapper;
 import com.ftn.fishingbooker.mapper.UserMapper;
-import com.ftn.fishingbooker.model.User;
-import com.ftn.fishingbooker.repository.ApplicationUserRepository;
-import com.ftn.fishingbooker.service.UserService;
+import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.repository.UserRepository;
+import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,9 +22,22 @@ import java.util.List;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
-    private ApplicationUserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RegistrationMapper registrationMapper;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private AdminService adminService;
+    @Autowired
+    private BoatOwnerService boatOwnerService;
+    @Autowired
+    private InstructorService instructorService;
+    @Autowired
+    private HomeOwnerService homeOwnerService;
+
 
     public List<UserDto> getAll() {
         List<User> users = userRepository.findAll();
@@ -37,18 +53,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    public UserDto getUserByName(String name) {
-        User user = userRepository.getUserByName(name);
-        return userMapper.mapToDto(user);
-    }
-    //TODO: THIS
     @Override
-    public boolean isEmailRegistered() {
-        return true;
+    public boolean isEmailRegistered(String email) {
+        return userRepository.findByEmail(email) != null;
     }
-    /**
-     * UserDetailsService - Spring security requirements
-     */
+
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -57,5 +67,45 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         } else {
             return user;
         }
+    }
+
+    @Override
+    public User createClient(RegisterDto registerDto) {
+        if (isEmailRegistered(registerDto.getEmail())) {
+            throw new ResourceConflictException("Email already exists");
+        }
+        Client user = registrationMapper.mapToClient(registerDto);
+        clientService.registerClient(user);
+        return user;
+    }
+
+    @Override
+    public User createHomeOwner(RegisterDto registerDto) {
+        if (isEmailRegistered(registerDto.getEmail())) {
+            throw new ResourceConflictException("Email already exists");
+        }
+        HomeOwner user = registrationMapper.mapToHomeOwner(registerDto);
+        //TODO:
+        return user;
+    }
+
+    @Override
+    public User createFishingInstructor(RegisterDto registerDto) {
+        if (isEmailRegistered(registerDto.getEmail())) {
+            throw new ResourceConflictException("Email already exists");
+        }
+        Instructor user = registrationMapper.mapToInstructor(registerDto);
+        //TODO:
+        return user;
+    }
+
+    @Override
+    public User createAdmin(RegisterDto registerDto) {
+        if (isEmailRegistered(registerDto.getEmail())) {
+            throw new ResourceConflictException("Email already exists");
+        }
+        Admin user = registrationMapper.mapToAdmin(registerDto);
+        //TODO:
+        return user;
     }
 }

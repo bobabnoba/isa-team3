@@ -1,4 +1,4 @@
-package com.ftn.fishingbooker.security;
+package com.ftn.fishingbooker.security.config;
 
 import com.ftn.fishingbooker.security.auth.RestAuthenticationEntryPoint;
 import com.ftn.fishingbooker.security.auth.TokenAuthenticationFilter;
@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
-        builder.userDetailsService(userService)
+        builder.userDetailsService(userService) //Authentication manageru damo userService jer on implementira metodu loadUserByUsername
                 .passwordEncoder(passwordEncoder());
     }
 
@@ -59,8 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/h2-console/**").permitAll()    // /h2-console/* ako se koristi H2 baza)
-                .antMatchers("/api/foo").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated().and()
                 .cors().and()
                 .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService),
@@ -73,9 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
 
         web.ignoring().antMatchers(HttpMethod.POST, "/auth/**");//login
-        web.ignoring().antMatchers(HttpMethod.GET, "/auth/**");
+        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "swagger-ui/**", "/swagger-ui.html", "/webjars/**");
         web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico", "/**/*.html",
                 "*.css", "/**/*.js");
-
     }
 }

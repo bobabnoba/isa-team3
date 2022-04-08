@@ -98,7 +98,7 @@ public class TokenUtils {
 
     /**
      * Funkcija za preuzimanje vlasnika tokena (korisničko ime).
-     *
+     * U nasem slucaju ce uzeti email
      * @param token JWT token.
      * @return Korisničko ime iz tokena ili null ukoliko ne postoji.
      */
@@ -209,6 +209,7 @@ public class TokenUtils {
         final Date created = getIssuedAtDateFromToken(authToken);
 
         return (username != null // korisnicko ime nije null
+                //userDetails.getUsername() overridovala da vraca email
                 && username.equals(userDetails.getUsername()) // korisnicko ime iz tokena se podudara sa korisnickom imenom koje pise u bazi
                 && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate())); // nakon kreiranja tokena korisnik nije menjao svoju lozinku
     }

@@ -2,10 +2,8 @@ package com.ftn.fishingbooker.model;
 
 import com.ftn.fishingbooker.enumeration.ClientType;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -25,33 +23,5 @@ public class Client extends User {
     @ToString.Exclude
     private Set<Reservation> reservationsMade;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
 
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
 }

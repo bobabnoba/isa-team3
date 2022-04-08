@@ -31,7 +31,7 @@ public class TokenBasedAuthentication extends AbstractAuthenticationToken {
 
     @Override
     public Object getCredentials() {
-        return token;
+        return null;
     }
 
     @Override

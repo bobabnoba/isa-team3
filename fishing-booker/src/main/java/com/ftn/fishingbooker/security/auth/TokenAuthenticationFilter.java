@@ -1,7 +1,6 @@
 package com.ftn.fishingbooker.security.auth;
 
 import com.ftn.fishingbooker.security.util.TokenUtils;
-import com.ftn.fishingbooker.service.Impl.UserServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,16 +17,15 @@ import java.io.IOException;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
-
     private TokenUtils tokenUtils;
 
     private UserDetailsService userDetailsService;
 
     protected final Log logger = LogFactory.getLog(getClass());
 
-    public TokenAuthenticationFilter(TokenUtils tokenUtils, UserServiceImpl userService) {
+    public TokenAuthenticationFilter(TokenUtils tokenUtils, UserDetailsService userService) {
         this.tokenUtils = tokenUtils;
-        this.userDetailsService = userDetailsService;
+        this.userDetailsService = userService;
     }
 
     /**
@@ -39,14 +37,20 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String email;
+        // 1. Preuzimanje JWT tokena iz zahteva
         String authToken = tokenUtils.getToken(request);
         try {
             if (authToken != null) {
-                email = tokenUtils.getUsernameFromToken(authToken); //email == username
+                // 2. Citanje korisnickog imena iz tokena tj u nasem slucaju metoda ce vratiti email
+                email = tokenUtils.getUsernameFromToken(authToken);
                 if (email != null) {
+                    // 3. Preuzimanje korisnika na osnovu email-a
                     UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
+                    // 4. Provera da li je prosledjeni token validan
                     if (tokenUtils.validateToken(authToken, userDetails)) {
+
+                        // 5. Kreiraj autentifikaciju
                         TokenBasedAuthentication authentication = new TokenBasedAuthentication(userDetails);
                         authentication.setToken(authToken);
                         SecurityContextHolder.getContext().setAuthentication(authentication);
