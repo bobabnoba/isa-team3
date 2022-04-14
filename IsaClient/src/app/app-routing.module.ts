@@ -3,20 +3,41 @@ import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from './material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MainPageComponent } from './components/main-page/main-page.component';
+import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 const routes: Routes = [
   {
     path: '',
     component: MainPageComponent 
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
+  },
+  
+  {
+    path: 'home',
+    component: HomePageComponent
   }
 ];
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  exports: [RouterModule,MaterialModule]
+  exports: [RouterModule,MaterialModule,FormsModule]
 })
 export class AppRoutingModule { }

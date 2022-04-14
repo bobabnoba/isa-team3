@@ -8,6 +8,14 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { MaterialModule } from './material/material.module';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http'; 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -16,14 +24,23 @@ import { HomePageComponent } from './components/home-page/home-page.component';
     HeaderComponent,
     FooterComponent,
     MainPageComponent,
-    HomePageComponent
+    HomePageComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule,
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule ,
+    MatInputModule ,
+    MatSnackBarModule
   ],
-  providers: [],
+  providers: [HttpClientModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
