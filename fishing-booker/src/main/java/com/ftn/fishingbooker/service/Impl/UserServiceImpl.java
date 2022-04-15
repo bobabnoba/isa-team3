@@ -29,14 +29,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private RegistrationMapper registrationMapper;
     @Autowired
     private ClientService clientService;
-    @Autowired
-    private AdminService adminService;
-    @Autowired
-    private BoatOwnerService boatOwnerService;
-    @Autowired
-    private InstructorService instructorService;
-    @Autowired
-    private HomeOwnerService homeOwnerService;
+//    @Autowired
+//    private AdminService adminService;
+//    @Autowired
+//    private BoatOwnerService boatOwnerService;
+//    @Autowired
+//    private InstructorService instructorService;
+//    @Autowired
+//    private HomeOwnerService homeOwnerService;
 
 
     public List<UserDto> getAll() {

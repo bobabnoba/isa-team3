@@ -4,7 +4,9 @@ import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.*;
 
+@Service
 public class ClientServiceImpl implements ClientService {
 
     @Autowired
