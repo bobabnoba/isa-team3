@@ -1,4 +1,5 @@
-import { Component, OnInit ,OnChanges,Input} from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -7,6 +8,7 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { LoggedUser } from 'src/app/interfaces/logged-user';
 import { INewUser } from 'src/app/interfaces/new-user';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -21,13 +23,16 @@ export class RegisterComponent implements OnInit {
   errorMessage!: string;
   passMatch: boolean = false;
   newUser!: INewUser;
+  myUser!: LoggedUser;
+
+
 
   constructor(
     private _formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private _authService : AuthService
-  ) { 
+    private _authService: AuthService
+  ) {
     this.newUser = {} as INewUser;
   }
 
@@ -57,37 +62,32 @@ export class RegisterComponent implements OnInit {
         Validators.minLength(8),
       ])
     });
-
-   
   }
 
   onSubmit(): void {
-    // this.uploadPicture().then((resultt) => {
-       this.createUser();
-       this._authService.registerUser(this.newUser).subscribe(
-        (res) => {
-          this._router.navigate(['/']);
-          this._snackBar.open(
-            'Your registration request has been sumbitted. Please check your email and confirm your email adress to activate your account.',
-            'Dismiss'
-          );
-        },
-        (err) => {
-          let parts = err.error.split(':');
-          let mess = parts[parts.length - 1];
-          let description = mess.substring(1, mess.length - 4);
-          this._snackBar.open(description, 'Dismiss');
-        }
-      );
-    }
-  
 
+    this.createUser();
+    this._authService.registerUser(this.newUser).subscribe({
+      next: (res) => {
+        this.myUser = res;
+        this._router.navigate(['/']);
+        this._snackBar.open(
+          'Your registration request has been sumbitted. Please check your email and confirm your email adress to activate your account.',
+          'Dismiss');
+
+      },
+      error: (err: HttpErrorResponse) => {
+        this._snackBar.open(err.error.message + "!", 'Dismiss');
+      },
+      complete: () => console.info('complete')
+    });
+  }
 
   onPasswordInput(): void {
     this.passMatch =
       this.createForm.value.password === this.createForm.value.passConfirmed;
   }
-  
+
   createUser(): void {
     this.newUser.firstName = this.createForm.value.firstName;
     this.newUser.lastName = this.createForm.value.lastName;

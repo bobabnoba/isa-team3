@@ -40,8 +40,8 @@ export class AuthService {
     );
   }
 
-  registerUser(newUser: INewUser) {
-    return this.http.post('http://localhost:8090/auth/register/admin', newUser);
+  registerUser(newUser: INewUser) : Observable<LoggedUser> {
+    return this.http.post<LoggedUser>('http://localhost:8090/auth/register/client', newUser);
   }
 
 }
