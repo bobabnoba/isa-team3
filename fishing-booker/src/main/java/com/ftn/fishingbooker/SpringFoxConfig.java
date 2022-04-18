@@ -12,8 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SpringFoxConfig {
     /**
-     * Putanja za pokretanje Swagger-a : http://localhost:8080/swagger-ui/#/
-     * @return
+     * Putanja za pokretanje Swagger-a : http://localhost:8090/swagger-ui/index.html
      */
     @Bean
     public Docket api() {

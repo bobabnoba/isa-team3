@@ -4,14 +4,19 @@ import com.ftn.fishingbooker.enumeration.BoatType;
 import com.ftn.fishingbooker.enumeration.CancelingCondition;
 import com.ftn.fishingbooker.enumeration.FishingEquipment;
 import com.ftn.fishingbooker.enumeration.NavigationType;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 
-@Data
 @Entity
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Boat {
     @Id
     @Column(name = "id", nullable = false)
@@ -45,6 +50,7 @@ public class Boat {
     private int capacity;
 
     @OneToMany(mappedBy = "boat", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Set<Reservation> availableReservations;
 
     private String codeOfConduct;
@@ -64,5 +70,16 @@ public class Boat {
     @JoinColumn(name = "boat_owner_id")
     private BoatOwner boatOwner;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Boat boat = (Boat) o;
+        return id != null && Objects.equals(id, boat.id);
+    }
 
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

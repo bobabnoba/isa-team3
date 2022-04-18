@@ -1,13 +1,17 @@
 package com.ftn.fishingbooker.model;
 
 import com.ftn.fishingbooker.enumeration.ClientType;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Client extends User {
 
     private float points;
@@ -15,6 +19,9 @@ public class Client extends User {
     @Enumerated(EnumType.STRING)
     private ClientType type;
 
-    @OneToMany(mappedBy="client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Reservation.class, mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Set<Reservation> reservationsMade;
+
+
 }
