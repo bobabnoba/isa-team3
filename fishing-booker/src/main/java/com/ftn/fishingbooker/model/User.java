@@ -86,6 +86,7 @@ public abstract class User implements UserDetails {
         return getClass().hashCode();
     }
 
+    //TODO: Da li mi treba granted authority
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -113,6 +114,7 @@ public abstract class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        if (isActivated == true) return true;
+        else return false;
     }
 }

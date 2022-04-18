@@ -15,6 +15,9 @@ public class UserTokenStateDto {
         this.expiresIn = expiresIn;
     }
 
+    public UserTokenStateDto(String jwt, int expiresIn) {
+    }
+
     public Long getExpiresIn() {
         return expiresIn;
     }

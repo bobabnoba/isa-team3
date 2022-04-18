@@ -11,6 +11,6 @@ import javax.transaction.Transactional;
 @Repository
 public interface RoleRepository extends JpaRepository<UserRole, Long> {
 
-    @Query("select u from UserRole u where u.name = ?1")
+    @Query(value = "select * from role u where u.name = ?1", nativeQuery = true)
     public UserRole findByName(String email);
 }

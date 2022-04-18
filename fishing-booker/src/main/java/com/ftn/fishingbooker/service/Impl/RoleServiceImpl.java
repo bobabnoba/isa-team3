@@ -3,14 +3,18 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.model.UserRole;
 import com.ftn.fishingbooker.repository.RoleRepository;
 import com.ftn.fishingbooker.service.RoleService;
-import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@NoArgsConstructor
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class RoleServiceImpl implements RoleService {
 
-    private static RoleRepository repository;
+    @Autowired
+    private RoleRepository repository;
+
     @Override
     public UserRole findById(Long id) {
         return repository.getById(id);

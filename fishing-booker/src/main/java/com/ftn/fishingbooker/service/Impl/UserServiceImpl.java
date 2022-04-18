@@ -7,13 +7,15 @@ import com.ftn.fishingbooker.mapper.RegistrationMapper;
 import com.ftn.fishingbooker.mapper.UserMapper;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.UserRepository;
-import com.ftn.fishingbooker.service.*;
+import com.ftn.fishingbooker.service.ClientService;
+import com.ftn.fishingbooker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -29,14 +31,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private RegistrationMapper registrationMapper;
     @Autowired
     private ClientService clientService;
-//    @Autowired
-//    private AdminService adminService;
-//    @Autowired
-//    private BoatOwnerService boatOwnerService;
-//    @Autowired
-//    private InstructorService instructorService;
-//    @Autowired
-//    private HomeOwnerService homeOwnerService;
+    private static String url = "<a href=\"http://localhost:4200/login\"> Login </a>";
 
 
     public List<UserDto> getAll() {
@@ -58,7 +53,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findByEmail(email) != null;
     }
 
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
@@ -70,7 +64,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User createClient(RegisterDto registerDto) {
+    public User createClient(RegisterDto registerDto) throws ResourceConflictException, MessagingException {
         if (isEmailRegistered(registerDto.getEmail())) {
             throw new ResourceConflictException("Email already exists");
         }
@@ -107,5 +101,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Admin user = registrationMapper.mapToAdmin(registerDto);
         //TODO:
         return user;
+    }
+
+    @Override
+    public String enableUser(String email) {
+        User u = userRepository.findByEmail(email);
+        u.setActivated(true);
+        return url;
     }
 }

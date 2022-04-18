@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,7 +11,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor( private authService: AuthService) { }
+  constructor(
+     private authService: AuthService,
+     private _snackBar : MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -19,11 +23,10 @@ export class LoginComponent implements OnInit {
     const loginObserver = {
       next: (x: any) => {
         console.log(x);
-        //this._snackBar.open("Welcome!", "Dismiss");
+        this._snackBar.open("Welcome!", "Dismiss");
       },
-      error: (err: any) => {
-        console.log(err);
-       // this._snackBar.open(err.error, "Dismiss");
+      error: (err: HttpErrorResponse) => {
+        this._snackBar.open(err.error.message + "!", 'Dismiss');
       },
     };
     this.authService.login(f.value).subscribe(loginObserver);

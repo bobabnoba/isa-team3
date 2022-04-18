@@ -41,14 +41,26 @@ public class TokenUtils {
      * @param email u nasem slucaj korisnicko ime je email korisnika
      * @return JWT Token
      */
-    public String generateToken(String email) {
+//    public String generateToken(String email) {
+//        return Jwts.builder()
+//                .setIssuer(APP_NAME)
+//                .setSubject(email)
+//                .setAudience(generateAudience())
+//                .setIssuedAt(new Date())
+//                .setExpiration(generateExpirationDate())
+//                .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+//    }
+
+    public String generateToken(String email, String role, boolean isRefreshToken) {
         return Jwts.builder()
                 .setIssuer(APP_NAME)
                 .setSubject(email)
+                .claim("role", role)
                 .setAudience(generateAudience())
                 .setIssuedAt(new Date())
-                .setExpiration(generateExpirationDate())
+                .setExpiration(generateExpirationDate(isRefreshToken))
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+
     }
 
     /**
@@ -56,8 +68,26 @@ public class TokenUtils {
      *
      * @return Datum do kojeg je JWT validan.
      */
-    private Date generateExpirationDate() {
-        return new Date(new Date().getTime() + EXPIRES_IN);
+//    private Date generateExpirationDate() {
+//        return new Date(new Date().getTime() + EXPIRES_IN);
+//    }
+
+    /**
+     * Edited version of the function above
+     *
+     * @param isRefreshToken
+     * @return
+     */
+    private Date generateExpirationDate(boolean isRefreshToken) {
+
+        Date date;
+        if (isRefreshToken == true) {
+            date = new Date(new Date().getTime() + 3600000);
+        } else {
+            date = new Date(new Date().getTime() + EXPIRES_IN);
+        }
+        return date;
+
     }
 
     /**
@@ -99,6 +129,7 @@ public class TokenUtils {
     /**
      * Funkcija za preuzimanje vlasnika tokena (korisničko ime).
      * U nasem slucaju ce uzeti email
+     *
      * @param token JWT token.
      * @return Korisničko ime iz tokena ili null ukoliko ne postoji.
      */
@@ -199,7 +230,7 @@ public class TokenUtils {
     /**
      * Funkcija za validaciju JWT tokena.
      *
-     * @param authToken       JWT token.
+     * @param authToken   JWT token.
      * @param userDetails Informacije o korisniku koji je vlasnik JWT tokena.
      * @return Informacija da li je token validan ili ne.
      */

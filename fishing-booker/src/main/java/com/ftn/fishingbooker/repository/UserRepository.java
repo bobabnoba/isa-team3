@@ -16,13 +16,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * Dzoker znacima ?1, ?2, .. u upit se ubacuju parametri
      * metode respektivno
      *
-     * @param name
+     * @param email
      * @return
      */
-    @Query(value = "select c from client c where c.first_name = ?1", nativeQuery = true)
-    public User getUserByName(String name);
-
-    //@Query(value = "select c from user c where c.email = ?1", nativeQuery = true)
-   // @Query("select u from User u where u.email = ?1")
     public User findByEmail(String email);
+
 }
