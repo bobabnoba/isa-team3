@@ -1,7 +1,6 @@
 package com.ftn.fishingbooker.service;
 
-import com.ftn.fishingbooker.dto.RegisterDto;
-import com.ftn.fishingbooker.dto.UserDto;
+import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -21,10 +20,6 @@ public interface UserService {
     public UserDetails loadUserByUsername(String email);
 
     public User createClient (RegisterDto registerRequest) throws MessagingException;
-
-    public User createHomeOwner(RegisterDto registerRequest);
-
-    public User createFishingInstructor(RegisterDto registerRequest);
 
     public User createAdmin(RegisterDto registerRequest);
 
