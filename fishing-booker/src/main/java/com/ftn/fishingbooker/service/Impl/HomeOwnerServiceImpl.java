@@ -7,9 +7,10 @@ import com.ftn.fishingbooker.registration.*;
 import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.Service;
 
-import javax.mail.*;
 
+@Service
 public class HomeOwnerServiceImpl implements HomeOwnerService {
     @Autowired
     private UserService userService;

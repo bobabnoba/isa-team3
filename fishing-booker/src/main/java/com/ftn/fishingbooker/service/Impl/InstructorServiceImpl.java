@@ -7,8 +7,9 @@ import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.stereotype.*;
 
+@Service
 public class InstructorServiceImpl implements InstructorService {
 
     @Autowired

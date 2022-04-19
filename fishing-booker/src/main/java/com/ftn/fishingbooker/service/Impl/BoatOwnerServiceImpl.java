@@ -7,7 +7,9 @@ import com.ftn.fishingbooker.registration.*;
 import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
 
+@Service
 public class BoatOwnerServiceImpl implements BoatOwnerService {
 
     @Autowired
