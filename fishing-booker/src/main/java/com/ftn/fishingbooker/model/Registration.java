@@ -31,6 +31,12 @@ public class Registration {
     @ToString.Exclude
     private User registeredUsers;
 
+    public Registration(RegistrationType type, String motivation, User user) {
+        this.type = type;
+        this.motivation = motivation;
+        this.registeredUsers = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
