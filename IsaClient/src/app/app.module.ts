@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MainPageComponent,
     HomePageComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    OwnerRegisterComponent
   ],
   imports: [
     BrowserModule,
