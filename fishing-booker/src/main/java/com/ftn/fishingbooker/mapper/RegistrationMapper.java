@@ -1,6 +1,6 @@
 package com.ftn.fishingbooker.mapper;
 
-import com.ftn.fishingbooker.dto.RegisterDto;
+import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.enumeration.ClientType;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.RoleService;
@@ -37,7 +37,7 @@ public class RegistrationMapper {
         return client;
     }
 
-    public HomeOwner mapToHomeOwner(RegisterDto registerDto) {
+    public HomeOwner mapToHomeOwner(OwnerRegisterDto registerDto) {
         HomeOwner homeOwner = new HomeOwner();
 
         homeOwner.setId(null);
@@ -57,7 +57,7 @@ public class RegistrationMapper {
         return homeOwner;
     }
 
-    public BoatOwner mapToBoatOwner(RegisterDto registerDto) {
+    public BoatOwner mapToBoatOwner(OwnerRegisterDto registerDto) {
         BoatOwner boatOwner = new BoatOwner();
 
         boatOwner.setId(null);
@@ -96,7 +96,7 @@ public class RegistrationMapper {
         return admin;
     }
 
-    public Instructor mapToInstructor(RegisterDto registerDto) {
+    public Instructor mapToInstructor(OwnerRegisterDto registerDto) {
         Instructor instructor = new Instructor();
 
         instructor.setId(null);

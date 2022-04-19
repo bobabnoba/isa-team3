@@ -1,7 +1,6 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.dto.RegisterDto;
-import com.ftn.fishingbooker.dto.UserDto;
+import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.RegistrationMapper;
 import com.ftn.fishingbooker.mapper.UserMapper;
@@ -72,27 +71,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         clientService.registerClient(user);
         return user;
     }
-
-    @Override
-    public User createHomeOwner(RegisterDto registerDto) {
-        if (isEmailRegistered(registerDto.getEmail())) {
-            throw new ResourceConflictException("Email already exists");
-        }
-        HomeOwner user = registrationMapper.mapToHomeOwner(registerDto);
-        //TODO:
-        return user;
-    }
-
-    @Override
-    public User createFishingInstructor(RegisterDto registerDto) {
-        if (isEmailRegistered(registerDto.getEmail())) {
-            throw new ResourceConflictException("Email already exists");
-        }
-        Instructor user = registrationMapper.mapToInstructor(registerDto);
-        //TODO:
-        return user;
-    }
-
     @Override
     public User createAdmin(RegisterDto registerDto) {
         if (isEmailRegistered(registerDto.getEmail())) {
@@ -109,4 +87,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         u.setActivated(true);
         return url;
     }
+
+
 }
