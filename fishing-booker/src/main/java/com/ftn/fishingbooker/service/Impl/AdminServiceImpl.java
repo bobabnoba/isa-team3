@@ -23,8 +23,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void respondToRegistrationRequest(RegistrationResponseDto registrationResponseDto) throws MessagingException {
-        Registration registration = registrationRepository.getById(registrationResponseDto.getRegistrationId());
-        User user = userRepository.findByEmail(registration.getRegisteredUsers().getEmail());
+        Registration registration = registrationRepository.findByUserEmail(registrationResponseDto.userEmail);
+        User user = userRepository.findByEmail(registration.getUserEmail());
         if(registrationResponseDto.isApproved()){
             user.setActivated(true);
             userRepository.save(user);

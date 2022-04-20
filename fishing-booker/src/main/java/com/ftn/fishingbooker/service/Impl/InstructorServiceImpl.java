@@ -26,10 +26,10 @@ public class InstructorServiceImpl implements InstructorService {
             throw new ResourceConflictException("Email already exists");
         }
 
-        userRepository.save(instructor);
-
-        Registration registration = new Registration(RegistrationType.INSTRUCTOR_ADVERTISER, motivation, instructor);
+        Registration registration = new Registration(RegistrationType.INSTRUCTOR_ADVERTISER, motivation, instructor.getEmail());
         registrationRepository.save(registration);
+
+        userRepository.save(instructor);
 
         return userRepository.findByEmail(instructor.getEmail());
     }

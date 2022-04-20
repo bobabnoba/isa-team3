@@ -1,16 +1,14 @@
 package com.ftn.fishingbooker.dto;
+
 public class RegistrationResponseDto {
+
     public String response;
     public boolean isApproved;
-    public Long registrationId;
+    public String userEmail;
 
-    public Long getRegistrationId() {
-        return registrationId;
-    }
+    public String getUserEmail() { return userEmail; }
 
-    public void setRegistrationId(Long registrationId) {
-        this.registrationId = registrationId;
-    }
+    public void setUserEmail(String userEmail) { this.userEmail = userEmail; }
 
     public String getResponse() {
         return response;
@@ -27,4 +25,6 @@ public class RegistrationResponseDto {
     public void setApproved(boolean approved) {
         isApproved = approved;
     }
+
+
 }

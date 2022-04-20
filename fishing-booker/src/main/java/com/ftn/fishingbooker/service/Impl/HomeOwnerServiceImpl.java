@@ -28,7 +28,7 @@ public class HomeOwnerServiceImpl implements HomeOwnerService {
         }
         repository.save(homeOwner);
 
-        Registration registration = new Registration(RegistrationType.VACATION_HOUSE_ADVERTISER, motivation, homeOwner);
+        Registration registration = new Registration(RegistrationType.VACATION_HOUSE_ADVERTISER, motivation, homeOwner.getEmail());
         registrationRepository.save(registration);
 
         return repository.findByEmail(homeOwner.getEmail());

@@ -28,7 +28,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
         }
         repository.save(boatOwner);
 
-        Registration registration = new Registration(RegistrationType.VACATION_BOAT_ADVERTISER, motivation, boatOwner);
+        Registration registration = new Registration(RegistrationType.VACATION_BOAT_ADVERTISER, motivation, boatOwner.getEmail());
         registrationRepository.save(registration);
 
         return repository.findByEmail(boatOwner.getEmail());

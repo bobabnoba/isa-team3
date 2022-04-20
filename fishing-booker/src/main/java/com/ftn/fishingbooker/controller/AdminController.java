@@ -7,12 +7,13 @@ import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.mail.*;
 
+@CrossOrigin(origins = "http://localhost:4200")
+@RestController
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
@@ -20,14 +21,15 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @GetMapping
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(path = "registerRequests")
     public ResponseEntity<Object> getAllRegistrationRequests(){
-        return new ResponseEntity<>(registrationRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(registrationRepository.findUnprocessedRequests(), HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/admin/approveRequest")
-    public ResponseEntity<Object> registrationRequestApproval(RegistrationResponseDto registrationResponseDto) throws MessagingException {
+    @PostMapping("/approveRequest")
+    public ResponseEntity<Object> registrationRequestApproval(@RequestBody RegistrationResponseDto registrationResponseDto) throws MessagingException {
         adminService.respondToRegistrationRequest(registrationResponseDto);
         return null;
     }
