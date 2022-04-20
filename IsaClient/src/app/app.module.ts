@@ -12,11 +12,12 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { MaterialModule } from './material/material.module';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { OwnerRegisterComponent } from './components/owner-register/owner-regist
     HomePageComponent,
     LoginComponent,
     RegisterComponent,
-    OwnerRegisterComponent
+    OwnerRegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,11 +39,12 @@ import { OwnerRegisterComponent } from './components/owner-register/owner-regist
     CommonModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule ,
-    MatInputModule ,
-    MatSnackBarModule
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatSelectModule,
   ],
   providers: [HttpClientModule],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

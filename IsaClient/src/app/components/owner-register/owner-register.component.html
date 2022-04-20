@@ -1,177 +1,209 @@
 <div class="container">
-    <div class="col-12 text-center">
-      <h2>Registration</h2>
+  <div class="col-12 text-center">
+    <h2>Registration</h2>
+    <hr />
+  </div>
+  <div class="container" [formGroup]="createForm" style="width: 70%">
+    <br />
+    <!-- <form [formGroup]="createForm"> -->
+    <div class="separateMe">
+      <div style="width: 100%; display: flex">
+        <mat-form-field appearance="fill">
+          <mat-label>Choose your role</mat-label>
+          <mat-select formControlName="ownerType">
+            <mat-option value="VACATION_BOAT_ADVERTISER">
+              Boat Owner</mat-option
+            >
+            <mat-option value="VACATION_HOUSE_ADVERTISER">
+              Vacation House Owner</mat-option
+            >
+            <mat-option value="INSTRUCTOR_ADVERTISER"> Instuctor</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              !createForm?.get('ownerType')?.valid &&
+              createForm?.get('ownerType')?.touched &&
+              createForm?.get('ownerType')?.errors?.required
+            "
+            >Role is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div style="width: 100%; display: flex">
+        <mat-form-field appearance="fill">
+          <mat-label>First Name</mat-label>
+          <input matInput formControlName="firstName" />
+          <mat-error
+            *ngIf="
+              createForm?.get('firstName')?.valid &&
+              createForm?.get('firstName')?.touched &&
+              createForm?.get('firstName')?.errors?.required
+            "
+            >First name is required.</mat-error
+          >
+          <mat-error>Invalid input</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Last Name</mat-label>
+          <input matInput formControlName="lastName" />
+          <mat-error
+            *ngIf="
+              createForm?.get('lastName')?.valid &&
+              createForm?.get('lastName')?.touched &&
+              createForm?.get('lastName')?.errors?.required
+            "
+            >Last name is required.</mat-error
+          >
+          <mat-error>Invalid input</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div style="width: 100%; display: flex">
+        <mat-form-field appearance="fill">
+          <mat-label class="col-4">Adress</mat-label>
+          <input matInput formControlName="adress" />
+          <mat-error
+            *ngIf="
+              !createForm?.get('adress')?.valid &&
+              createForm?.get('adress')?.touched &&
+              createForm?.get('adress')?.errors?.required
+            "
+            >Adress is required</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label class="col-4">City</mat-label>
+          <input matInput formControlName="city" />
+          <mat-error
+            *ngIf="
+              !createForm?.get('city')?.valid &&
+              createForm?.get('city')?.touched &&
+              createForm?.get('city')?.errors?.required
+            "
+            >City is required</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label class="col-4">Country</mat-label>
+          <input matInput formControlName="country" />
+          <mat-error
+            *ngIf="
+              !createForm?.get('country')?.valid &&
+              createForm?.get('country')?.touched &&
+              createForm?.get('country')?.errors?.required
+            "
+            >Country is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div style="width: 100%; display: flex">
+        <mat-form-field appearance="fill">
+          <mat-label>Phone Number</mat-label>
+          <input matInput formControlName="phone" />
+          <mat-error
+            *ngIf="
+              !createForm?.get('phone')?.valid &&
+              createForm?.get('phone')?.touched &&
+              createForm?.get('phone')?.errors?.required
+            "
+            >Phone number is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <div style="width: 100%; display: flex">
+        <mat-form-field appearance="fill">
+          <mat-label>Motivation</mat-label>
+          <textarea matInput formControlName="motivation"></textarea>
+          <mat-error
+            *ngIf="
+              !createForm?.get('motivation')?.valid &&
+              createForm?.get('motivation')?.touched &&
+              createForm?.get('motivation')?.errors?.required
+            "
+            >Motivation is required</mat-error
+          >
+        </mat-form-field>
+      </div>
+      <hr />
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        <mat-error
+          *ngIf="
+            !createForm?.get('email')?.valid &&
+            createForm?.get('email')?.touched &&
+            createForm?.get('email')?.errors?.required
+          "
+          >Email is required</mat-error
+        >
+        <mat-error
+          *ngIf="
+            !createForm?.get('email')?.valid &&
+            createForm?.get('email')?.touched &&
+            createForm?.get('email')?.errors?.email
+          "
+          >Invalid email!</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password"
+          (input)="onPasswordInput()"
+        />
+        <mat-error
+          *ngIf="
+            !createForm?.get('password')?.valid &&
+            createForm?.get('password')?.touched &&
+            createForm?.get('password')?.errors?.required
+          "
+          >Password is required</mat-error
+        >
+        <mat-error
+          *ngIf="
+            !createForm?.get('password')?.valid &&
+            createForm?.get('password')?.touched &&
+            createForm?.get('password')?.errors?.minlength
+          "
+          >Password must be at least 8 characters long</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          type="password"
+          matInput
+          formControlName="passConfirmed"
+          (input)="onPasswordInput()"
+        />
+        <mat-error
+          *ngIf="
+            !createForm?.get('passConfirmed')?.valid &&
+            createForm?.get('passConfirmed')?.touched &&
+            createForm?.get('passConfirmed')?.errors?.required
+          "
+          >Password is required</mat-error
+        >
+        <mat-error *ngIf="!passMatch">Passwords does not match! </mat-error>
+      </mat-form-field>
       <hr />
     </div>
-    <div class="container" [formGroup]="createForm" style="width: 70%">
-      <br />
-      <!-- <form [formGroup]="createForm"> -->
-      <div class="separateMe">
-        <div style="width: 100%; display: flex">
-          <mat-form-field appearance="fill">
-            <mat-label>First Name</mat-label>
-            <input matInput formControlName="firstName" />
-            <mat-error
-              *ngIf="
-                createForm?.get('firstName')?.valid &&
-                createForm?.get('firstName')?.touched &&
-                createForm?.get('firstName')?.errors?.required
-              "
-              >First name is required.</mat-error
-            >
-            <mat-error>Invalid input</mat-error>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>Last Name</mat-label>
-            <input matInput formControlName="lastName" />
-            <mat-error
-              *ngIf="
-                createForm?.get('lastName')?.valid &&
-                createForm?.get('lastName')?.touched &&
-                createForm?.get('lastName')?.errors?.required
-              "
-              >Last name is required.</mat-error
-            >
-            <mat-error>Invalid input</mat-error>
-          </mat-form-field>
-          
-        </div>
-  
-        <div style="width: 100%; display: flex">
-          <mat-form-field appearance="fill">
-            <mat-label class="col-4">Adress</mat-label>
-            <input matInput formControlName="adress" />
-            <mat-error
-              *ngIf="
-                !createForm?.get('adress')?.valid &&
-                createForm?.get('adress')?.touched &&
-                createForm?.get('adress')?.errors?.required
-              "
-              >Adress is required</mat-error
-            >
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label class="col-4">City</mat-label>
-            <input matInput formControlName="city" />
-            <mat-error
-              *ngIf="
-                !createForm?.get('city')?.valid &&
-                createForm?.get('city')?.touched &&
-                createForm?.get('city')?.errors?.required
-              "
-              >City is required</mat-error
-            >
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label class="col-4">Country</mat-label>
-            <input matInput formControlName="country" />
-            <mat-error
-              *ngIf="
-                !createForm?.get('country')?.valid &&
-                createForm?.get('country')?.touched &&
-                createForm?.get('country')?.errors?.required
-              "
-              >Country is required</mat-error
-            >
-          </mat-form-field>
-          
-        </div>
-        <div style="width: 100%; display: flex">
-          
-          <mat-form-field appearance="fill">
-            <mat-label>Phone Number</mat-label>
-            <input matInput formControlName="phone" />
-            <mat-error
-              *ngIf="
-                !createForm?.get('phone')?.valid &&
-                createForm?.get('phone')?.touched &&
-                createForm?.get('phone')?.errors?.required
-              "
-              >Phone number is required</mat-error
-            >
-          </mat-form-field>
-        </div>
-        <hr />
-        <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" />
-            <mat-error
-              *ngIf="
-                !createForm?.get('email')?.valid &&
-                createForm?.get('email')?.touched &&
-                createForm?.get('email')?.errors?.required
-              "
-              >Email is required</mat-error
-            >
-            <mat-error
-              *ngIf="
-                !createForm?.get('email')?.valid &&
-                createForm?.get('email')?.touched &&
-                createForm?.get('email')?.errors?.email
-              "
-              >Invalid email!</mat-error
-            >
-          </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            type="password"
-            formControlName="password"
-            (input)="onPasswordInput()"
-          />
-          <mat-error
-            *ngIf="
-              !createForm?.get('password')?.valid &&
-              createForm?.get('password')?.touched &&
-              createForm?.get('password')?.errors?.required
-            "
-            >Password is required</mat-error
-          >
-          <mat-error
-            *ngIf="
-              !createForm?.get('password')?.valid &&
-              createForm?.get('password')?.touched &&
-              createForm?.get('password')?.errors?.minlength
-            "
-            >Password must be at least 8 characters long</mat-error
-          >
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-          <mat-label>Confirm Password</mat-label>
-          <input
-            type="password"
-            matInput
-            formControlName="passConfirmed"
-            (input)="onPasswordInput()"
-          />
-          <mat-error
-            *ngIf="
-              !createForm?.get('passConfirmed')?.valid &&
-              createForm?.get('passConfirmed')?.touched &&
-              createForm?.get('passConfirmed')?.errors?.required
-            "
-            >Password is required</mat-error
-          >
-          <mat-error *ngIf="!passMatch">Passwords does not match! </mat-error>
-        </mat-form-field>
-        <hr />
-        
-      </div>
-      <br /><br />
-      <div style="display: flex; justify-content: center">
-        <button
-          mat-raised-button
-          (click)="onSubmit()"
-          color="accent"
-          class="icon-display"
-        >
-          Register
-        </button>
-      </div>
-      <!-- </form> -->
+    <br /><br />
+    <div style="display: flex; justify-content: center">
+      <button
+        mat-raised-button
+        (click)="onSubmit()"
+        color="accent"
+        class="icon-display"
+      >
+        Register
+      </button>
     </div>
-  
-    <hr />
-    <br />
+    <!-- </form> -->
   </div>
+
+  <hr />
+  <br />
+</div>

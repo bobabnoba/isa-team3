@@ -1,10 +1,13 @@
 --INSERT INTO role (id, name) VALUES (1, 'ROLE_ADMIN');
 --INSERT INTO role (id, name) VALUES (2, 'ROLE_CLIENT');
+--INSERT INTO role (id, name) VALUES (3, 'ROLE_BOAT_OWNER');
+--INSERT INTO role (id, name) VALUES (4, 'ROLE_HOME_OWNER');
+--INSERT INTO role (id, name) VALUES (5, 'ROLE_INSTRUCTOR');
 --
---INSERT INTO client(id, address, city, country, email, first_name, is_activated, is_blocked, last_name, password, phone, test_rebase_again, registration_id, role_id, points, type)
+--INSERT INTO client(id, address, city, country, email, first_name, is_activated, is_blocked, last_name, password, phone, test_rebase_again, role_id, points, type)
 --
---VALUES (101, 'WhateverAddress', 'WhateverCity', 'WhateverCountry', 'WhateverEmail', 'Whatever', 'true' , 'false', 'Whatever', /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', false , null , 1 , 0, 'GOLD');
+--VALUES (101, 'WhateverAddress', 'WhateverCity', 'WhateverCountry', 'WhateverEmail', 'Whatever', 'true' , 'false', 'Whatever', /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', false , 1 , 0, 'GOLD');
 --
---INSERT INTO admin(id, address, city, country, email, first_name, is_activated, is_blocked, last_name, password, phone, test_rebase_again, registration_id, role_id)
+--INSERT INTO admin(id, address, city, country, email, first_name, is_activated, is_blocked, last_name, password, phone, test_rebase_again, role_id)
 --
---VALUES (100, 'WhateverAddress', 'WhateverCity', 'WhateverCountry', 'WhateverEmailAdmin', 'Whatever', 'true' , 'false', 'Whatever', /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', false , null , 1 );
+--VALUES (100, 'WhateverAddress', 'WhateverCity', 'WhateverCountry', 'WhateverEmailAdmin', 'Whatever', 'true' , 'false', 'Whatever', /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', false , 1 );

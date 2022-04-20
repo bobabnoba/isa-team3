@@ -76,8 +76,6 @@ public class AuthenticationController {
             return ResponseEntity.ok(new UserTokenStateDto(jwt, expiresIn));
         } catch (BadCredentialsException e) {
             throw new ResourceConflictException("Bad Credentials!");
-        } catch (Exception e) {
-            throw new ResourceConflictException(" Sth wrong not credentials !");
         }
 
     }
@@ -93,9 +91,8 @@ public class AuthenticationController {
         return new ResponseEntity<>(userMapper.mapToDto(user), HttpStatus.CREATED);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/register/owner")
-    public ResponseEntity<Object> registerOwner(@RequestBody OwnerRegisterDto registerDto, UriComponentsBuilder builder)
+    public ResponseEntity<Object> registerOwner(@RequestBody OwnerRegisterDto registerDto)
             throws MessagingException {
         try {
             User user;
@@ -106,7 +103,7 @@ public class AuthenticationController {
             }else {
                 user = boatOwnerService.registerBoatOwner(registrationMapper.mapToBoatOwner(registerDto), registerDto.getMotivation());
             }
-            return new ResponseEntity<>( HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (ResourceAccessException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

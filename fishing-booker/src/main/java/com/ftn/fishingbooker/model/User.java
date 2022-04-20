@@ -110,7 +110,6 @@ public abstract class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if (isActivated == true) return true;
-        else return false;
+        return isActivated;
     }
 }

@@ -4,16 +4,22 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { LoggedUser } from '../interfaces/logged-user';
 import { INewUser } from '../interfaces/new-user';
+import { RegisterOwner } from '../interfaces/register-owner';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  
+  registerOwner(newUser: RegisterOwner): Observable<LoggedUser> {
+    return this.http.post<LoggedUser>(
+      'http://localhost:8090/auth/register/owner',
+      newUser
+    );
+  }
 
   //baseUrl: string = environment.baseHospitalUrl;
   private currentUserSubject: BehaviorSubject<LoggedUser>;
@@ -21,7 +27,9 @@ export class AuthService {
   private user: LoggedUser | undefined;
   private router: Router | undefined;
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<LoggedUser>(JSON.parse((localStorage.getItem('currentUser'))!));
+    this.currentUserSubject = new BehaviorSubject<LoggedUser>(
+      JSON.parse(localStorage.getItem('currentUser')!)
+    );
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -32,16 +40,17 @@ export class AuthService {
           localStorage.setItem('token', response.jwt);
           localStorage.setItem('currentUser', JSON.stringify(response));
           this.currentUserSubject.next(response);
-          window.location.href = "http://localhost:4200/home";
+          window.location.href = 'http://localhost:4200/home';
         }
-        return this.user; 
-
+        return this.user;
       })
     );
   }
 
-  registerUser(newUser: INewUser) : Observable<LoggedUser> {
-    return this.http.post<LoggedUser>('http://localhost:8090/auth/register/client', newUser);
+  registerUser(newUser: INewUser): Observable<LoggedUser> {
+    return this.http.post<LoggedUser>(
+      'http://localhost:8090/auth/register/client',
+      newUser
+    );
   }
-
 }

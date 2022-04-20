@@ -51,7 +51,8 @@ public class RegistrationMapper {
         homeOwner.setCountry(registerDto.getCountry());
         homeOwner.setActivated(false);
         homeOwner.setBlocked(false);
-        homeOwner.setRole(roleService.findByName("ROLE_HOME_OWNER"));
+        UserRole role = roleService.findByName("ROLE_HOME_OWNER");
+        homeOwner.setRole(role);
 
 
         return homeOwner;

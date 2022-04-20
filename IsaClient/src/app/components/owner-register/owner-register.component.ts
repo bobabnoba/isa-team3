@@ -10,23 +10,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoggedUser } from 'src/app/interfaces/logged-user';
 import { INewUser } from 'src/app/interfaces/new-user';
+import { RegisterOwner } from 'src/app/interfaces/register-owner';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-owner-register',
   templateUrl: './owner-register.component.html',
-  styleUrls: ['./owner-register.component.css']
+  styleUrls: ['./owner-register.component.css'],
 })
 export class OwnerRegisterComponent implements OnInit {
-
   createForm!: FormGroup;
   formData!: FormData;
   errorMessage!: string;
   passMatch: boolean = false;
-  newUser!: INewUser;
+  newUser!: RegisterOwner;
   myUser!: LoggedUser;
-
-
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -34,7 +32,7 @@ export class OwnerRegisterComponent implements OnInit {
     private _router: Router,
     private _authService: AuthService
   ) {
-    this.newUser = {} as INewUser;
+    this.newUser = {} as RegisterOwner;
   }
 
   ngOnInit(): void {
@@ -47,13 +45,13 @@ export class OwnerRegisterComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[A-ZŠĐŽČĆ][a-zšđćčžA-ZŠĐŽČĆ ]*$'),
       ]),
-      adress: new FormControl('', [
-        Validators.required,
-      ]),
+      adress: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       phone: new FormControl('', [Validators.required]),
+      motivation: new FormControl('', [Validators.required]),
+      ownerType: new FormControl('', [Validators.required]),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
@@ -61,26 +59,25 @@ export class OwnerRegisterComponent implements OnInit {
       passConfirmed: new FormControl(null, [
         Validators.required,
         Validators.minLength(8),
-      ])
+      ]),
     });
   }
 
   onSubmit(): void {
-
     this.createUser();
-    this._authService.registerUser(this.newUser).subscribe({
+    this._authService.registerOwner(this.newUser).subscribe({
       next: (res) => {
         this.myUser = res;
         this._router.navigate(['/']);
         this._snackBar.open(
           'Your registration request has been sumbitted. Please check your email and confirm your email adress to activate your account.',
-          'Dismiss');
-
+          'Dismiss'
+        );
       },
       error: (err: HttpErrorResponse) => {
-        this._snackBar.open(err.error.message + "!", 'Dismiss');
+        this._snackBar.open(err.error.message + '!', 'Dismiss');
       },
-      complete: () => console.info('complete')
+      complete: () => console.info('complete'),
     });
   }
 
@@ -98,6 +95,8 @@ export class OwnerRegisterComponent implements OnInit {
     this.newUser.city = this.createForm.value.city;
     this.newUser.country = this.createForm.value.country;
     this.newUser.password = this.createForm.value.password;
+    this.newUser.motivation = this.createForm.value.motivation;
+    this.newUser.registrationType = this.createForm.value.ownerType;
+    console.log(this.createForm.value.ownerType);
   }
-
 }
