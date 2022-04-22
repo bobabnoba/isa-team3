@@ -1,14 +1,13 @@
 package com.ftn.fishingbooker.controller;
 
-import com.ftn.fishingbooker.dto.LoginDto;
-import com.ftn.fishingbooker.dto.RegisterDto;
-import com.ftn.fishingbooker.dto.UserTokenStateDto;
+import com.ftn.fishingbooker.dto.*;
+import com.ftn.fishingbooker.enumeration.*;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
-import com.ftn.fishingbooker.mapper.UserMapper;
+import com.ftn.fishingbooker.mapper.*;
 import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.registration.RegistrationService;
 import com.ftn.fishingbooker.security.util.TokenUtils;
-import com.ftn.fishingbooker.service.UserService;
+import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +38,16 @@ public class AuthenticationController {
     private UserMapper userMapper;
     @Autowired
     private RegistrationService registrationService;
+    @Autowired
+    private HomeOwnerService homeOwnerService;
+    @Autowired
+    private BoatOwnerService boatOwnerService;
+    @Autowired
+    private InstructorService instructorService;
+    @Autowired
+    private RegistrationMapper registrationMapper;
+
+
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
@@ -67,8 +76,6 @@ public class AuthenticationController {
             return ResponseEntity.ok(new UserTokenStateDto(jwt, expiresIn));
         } catch (BadCredentialsException e) {
             throw new ResourceConflictException("Bad Credentials!");
-        } catch (Exception e) {
-            throw new ResourceConflictException(" Sth wrong not credentials !");
         }
 
     }
@@ -84,25 +91,25 @@ public class AuthenticationController {
         return new ResponseEntity<>(userMapper.mapToDto(user), HttpStatus.CREATED);
     }
 
-    @PostMapping("/register/homeOwner")
-    public ResponseEntity<Object> registerHomeOwner(@RequestBody RegisterDto registerDto, UriComponentsBuilder builder)
+    @PostMapping("/register/owner")
+    public ResponseEntity<Object> registerOwner(@RequestBody OwnerRegisterDto registerDto)
             throws MessagingException {
         try {
-            User user = userService.createHomeOwner(registerDto);
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
+            User user;
+            if(registerDto.getRegistrationType().equals(RegistrationType.INSTRUCTOR_ADVERTISER)){
+                user = instructorService.registerInstructor(registrationMapper.mapToInstructor(registerDto), registerDto.getMotivation());
+            }else  if(registerDto.getRegistrationType().equals(RegistrationType.VACATION_HOUSE_ADVERTISER)){
+                user = homeOwnerService.registerHomeOwner(registrationMapper.mapToHomeOwner(registerDto), registerDto.getMotivation());
+            }else {
+                user = boatOwnerService.registerBoatOwner(registrationMapper.mapToBoatOwner(registerDto), registerDto.getMotivation());
+            }
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (ResourceAccessException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
     }
 
-    @PostMapping("/register/fishingInstructor")
-    public ResponseEntity<User> registerFishingInstructor(@RequestBody RegisterDto registerDto, UriComponentsBuilder builder)
-            throws MessagingException {
-
-        User user = userService.createFishingInstructor(registerDto);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/register/admin")

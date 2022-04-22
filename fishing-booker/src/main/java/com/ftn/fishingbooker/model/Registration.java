@@ -27,9 +27,14 @@ public class Registration {
 
     private String adminResponse;
 
-    @OneToOne(mappedBy="registration", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private User registeredUsers;
+    private String userEmail;
+
+    public Registration(RegistrationType type, String motivation, String userEmail) {
+        this.type = type;
+        this.motivation = motivation;
+        this.userEmail = userEmail;
+        this.isApproved = false;
+    }
 
     @Override
     public boolean equals(Object o) {

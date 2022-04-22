@@ -14,9 +14,11 @@ import { MaterialModule } from './material/material.module';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JwtInterceptor } from './JwtInterceptor/jwt-interceptor';
+import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { JwtInterceptor } from './JwtInterceptor/jwt-interceptor';
     MainPageComponent,
     HomePageComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    OwnerRegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,13 +40,14 @@ import { JwtInterceptor } from './JwtInterceptor/jwt-interceptor';
     CommonModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule ,
-    MatInputModule ,
-    MatSnackBarModule
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatSelectModule,
   ],
   providers: [HttpClientModule,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

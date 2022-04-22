@@ -53,10 +53,6 @@ public abstract class User implements UserDetails {
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
 
-    @OneToOne(targetEntity = Registration.class)
-    @JoinColumn(name = "registration_id")
-    private Registration registration;
-
     /**
      * TODO: Svugdje staviti targetEntity
      * Nije radilo dok nisam stavila targetEntity
@@ -114,7 +110,6 @@ public abstract class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if (isActivated == true) return true;
-        else return false;
+        return isActivated;
     }
 }

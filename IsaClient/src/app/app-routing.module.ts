@@ -8,27 +8,31 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
-
+import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainPageComponent 
+    component: MainPageComponent,
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
-    path: 'register',
-    component: RegisterComponent
+    path: 'registration',
+    component: RegisterComponent,
   },
-  
+
   {
     path: 'home',
-    component: HomePageComponent
-  }
+    component: HomePageComponent,
+  },
+
+  {
+    path: 'ownerRegistration',
+    component: OwnerRegisterComponent,
+  },
 ];
 @NgModule({
   imports: [
@@ -36,8 +40,8 @@ const routes: Routes = [
     MaterialModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  exports: [RouterModule,MaterialModule,FormsModule]
+  exports: [RouterModule, MaterialModule, FormsModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
