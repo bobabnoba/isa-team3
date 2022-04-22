@@ -29,8 +29,6 @@ export class DeleteAccountFormComponent implements OnInit {
   submitRequest(): void {
      if (this.text && this.text != '') {
        this.newRequest.request = this.text;
-       //TODO: ovo zakucano izbrisati 
-       this.newRequest.userEmail = 'stelena3@gmail.com';
        this._deleteAccountService.sendRequest(this.newRequest).subscribe();
        this._snackBar.open(
          'Your feedback has been successfully submitted.',

@@ -71,8 +71,7 @@ public class AuthenticationController {
 
             User user = (User) authentication.getPrincipal();
             String jwt = tokenUtils.generateToken(user.getEmail(), user.getRole().getName(), false);
-            int expiresIn = tokenUtils.getExpiredIn();
-
+            Long expiresIn = tokenUtils.getExpiredIn();
             return ResponseEntity.ok(new UserTokenStateDto(jwt, expiresIn));
         } catch (BadCredentialsException e) {
             throw new ResourceConflictException("Bad Credentials!");
