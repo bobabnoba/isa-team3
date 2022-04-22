@@ -12,10 +12,11 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { MaterialModule } from './material/material.module';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { JwtInterceptor } from './JwtInterceptor/jwt-interceptor';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -53,7 +54,9 @@ import { DeleteAccountFormComponent } from './components/delete-account-form/del
     MatButtonModule,
     MatIconModule
   ],
-  providers: [HttpClientModule],
-  bootstrap: [AppComponent],
+  providers: [HttpClientModule,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
