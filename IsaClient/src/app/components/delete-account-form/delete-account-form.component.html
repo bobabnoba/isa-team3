@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="col-12 text-center">
+      <h3>Submit your account deletion request!</h3>
+      <hr />
+    </div>
+    <div class="col-12">
+      <form id="fbForm">
+        <div>
+          <mat-form-field appearance="fill" style="width: 100%">
+            <mat-label  >Why do you want to delete your account?</mat-label>
+            <textarea
+              id="text"
+              matInput
+              (change)="doTextareaValueChange($event)"
+              required
+            ></textarea>
+          </mat-form-field>
+        </div>
+        
+        <br />
+        <button
+          id="submitRequest"
+          mat-raised-button
+          color="accent"
+          (click)="submitRequest()"
+          class="text-center"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+  

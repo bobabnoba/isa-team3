@@ -10,6 +10,7 @@ import org.springframework.stereotype.*;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
+import java.util.*;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -20,6 +21,8 @@ public class AdminServiceImpl implements AdminService {
     UserRepository userRepository;
     @Autowired
     EmailService emailService;
+    @Autowired
+    DeleteAccountRequestRepository deleteAccountRequestRepository;
 
     @Override
     public void respondToRegistrationRequest(RegistrationResponseDto registrationResponseDto) throws MessagingException {
@@ -41,5 +44,40 @@ public class AdminServiceImpl implements AdminService {
             String html = emailService.createAdminResponseEmail( registrationResponseDto.getResponse(), false);
             emailService.sendEmail(user.getEmail(),"Account not  activated!", html);
         }
+    }
+
+    @Override
+    public void deleteAccount(DeleteAccountResponseDto deleteAccountResponseDto) throws MessagingException {
+        User user = userRepository.findByEmail(deleteAccountResponseDto.getUserEmail());
+        Optional<DeleteAccountRequest> deleteAccountRequest = deleteAccountRequestRepository.findById(deleteAccountResponseDto.getId());
+        if(deleteAccountRequest.get() != null){
+            if(deleteAccountResponseDto.isApproved()){
+                DeleteAccountRequest dar  = deleteAccountRequest.get();
+                dar.setAdminResponse(deleteAccountResponseDto.getResponse());
+                dar.setApproved(deleteAccountResponseDto.isApproved());
+                deleteAccountRequestRepository.save(dar);
+                //TODO: obrisi usera logicki ili fizicki (dunno)
+                //TODO: obrisi sve ostale zahteve za tog korisnika
+                deleteOtherRequests(deleteAccountResponseDto.getUserEmail());
+                userRepository.delete(user);
+                String html = emailService.createAdminDeleteAccountResponse(deleteAccountResponseDto.getResponse(), true);
+                emailService.sendEmail(user.getEmail(),"Account deletion!", html);
+            }
+            else{
+                DeleteAccountRequest dar  = deleteAccountRequest.get();
+                dar.setAdminResponse(deleteAccountResponseDto.getResponse());
+                dar.setApproved(deleteAccountResponseDto.isApproved());
+                deleteAccountRequestRepository.save(dar);
+                //TODO:
+                String html = emailService.createAdminDeleteAccountResponse( deleteAccountResponseDto.getResponse(), false);
+                emailService.sendEmail(user.getEmail(),"Account deletion!", html);
+            }
+        }
+
+    }
+
+    private void deleteOtherRequests(String userEmail) {
+        Iterable<DeleteAccountRequest> deleteAccountRequests  = deleteAccountRequestRepository.findAllByUserEmail(userEmail);
+        deleteAccountRequestRepository.deleteAll(deleteAccountRequests);
     }
 }

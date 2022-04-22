@@ -6,4 +6,6 @@ import javax.mail.*;
 
 public interface AdminService {
     void respondToRegistrationRequest(RegistrationResponseDto registrationResponseDto) throws MessagingException;
+
+    void deleteAccount(DeleteAccountResponseDto deleteAccountResponseDto) throws MessagingException;
 }

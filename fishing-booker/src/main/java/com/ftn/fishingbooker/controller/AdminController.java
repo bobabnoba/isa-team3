@@ -33,4 +33,11 @@ public class AdminController {
         adminService.respondToRegistrationRequest(registrationResponseDto);
         return null;
     }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/deleteAccount")
+    public ResponseEntity<Object> deleteAccount(@RequestBody DeleteAccountResponseDto deleteAccountResponseDto) throws MessagingException {
+        adminService.deleteAccount(deleteAccountResponseDto);
+        return null;
+    }
 }

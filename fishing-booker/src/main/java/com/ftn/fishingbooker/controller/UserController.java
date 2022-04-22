@@ -35,7 +35,7 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(path = "/deleteAccount")
     public ResponseEntity<?> deleteAccount(@RequestBody DeleteAccountRequestDto deleteAccountRequestDto){
-        DeleteAccountRequest deleteAccountRequest = new DeleteAccountRequest(deleteAccountRequestDto.request,deleteAccountRequestDto.userEmail);
+        DeleteAccountRequest deleteAccountRequest = new DeleteAccountRequest(deleteAccountRequestDto.userEmail, deleteAccountRequestDto.request);
         deleteAccountRequestRepository.save(deleteAccountRequest);
         return new ResponseEntity<DeleteAccountRequest>(deleteAccountRequest, HttpStatus.CREATED);
     }
