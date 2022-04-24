@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//@CrossOrigin(origins = "http://localhost:4200")
+@ControllerAdvice
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -40,7 +42,6 @@ public class UserController {
         userService.delete(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(path = "/deleteAccount")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<?> deleteAccount(@RequestBody DeleteAccountRequestDto deleteAccountRequestDto,  @RequestHeader (name="Authorization") String token) {
@@ -56,6 +57,12 @@ public class UserController {
             e.getMessage();
         }
         return new ResponseEntity<DeleteAccountRequest>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(path = "/u")
+    public ResponseEntity<?> getSmt() {
+
+        return new ResponseEntity<String>("lalalal",HttpStatus.OK);
     }
 
 }

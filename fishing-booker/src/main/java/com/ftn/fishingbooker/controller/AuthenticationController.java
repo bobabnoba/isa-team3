@@ -23,7 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
@@ -49,7 +49,6 @@ public class AuthenticationController {
 
 
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
     public ResponseEntity<UserTokenStateDto> login(
             @RequestBody LoginDto authRequest, HttpServletResponse response) {
@@ -110,7 +109,6 @@ public class AuthenticationController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/register/admin")
     public ResponseEntity<User> registerAdmin(@RequestBody RegisterDto registerDto, UriComponentsBuilder builder)
             throws MessagingException {
