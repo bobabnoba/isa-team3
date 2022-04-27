@@ -28,56 +28,43 @@ public class AdminServiceImpl implements AdminService {
     public void respondToRegistrationRequest(RegistrationResponseDto registrationResponseDto) throws MessagingException {
         Registration registration = registrationRepository.findByUserEmail(registrationResponseDto.userEmail);
         User user = userRepository.findByEmail(registration.getUserEmail());
-        if(registrationResponseDto.isApproved()){
+        if (registrationResponseDto.isApproved()) {
             user.setActivated(true);
             userRepository.save(user);
             registration.setApproved(true);
             registrationRepository.save(registration);
-            String html = emailService.createAdminResponseEmail( "Your account is activated!", true);
-            emailService.sendEmail(user.getEmail(),"Account activated!", html);
-        }
-        else{
+            String html = emailService.createAdminResponseEmail("Your account is activated!", true);
+            emailService.sendEmail(user.getEmail(), "Account activated!", html);
+        } else {
             registration.setApproved(false);
             registration.setAdminResponse(registrationResponseDto.getResponse());
             registrationRepository.save(registration);
             //createAdminResponseEmail srediti da ima 2 template-a
-            String html = emailService.createAdminResponseEmail( registrationResponseDto.getResponse(), false);
-            emailService.sendEmail(user.getEmail(),"Account not  activated!", html);
+            String html = emailService.createAdminResponseEmail(registrationResponseDto.getResponse(), false);
+            emailService.sendEmail(user.getEmail(), "Account not  activated!", html);
         }
     }
 
     @Override
     public void deleteAccount(DeleteAccountResponseDto deleteAccountResponseDto) throws MessagingException {
+
         User user = userRepository.findByEmail(deleteAccountResponseDto.getUserEmail());
         Optional<DeleteAccountRequest> deleteAccountRequest = deleteAccountRequestRepository.findById(deleteAccountResponseDto.getId());
-        if(deleteAccountRequest.get() != null){
-            if(deleteAccountResponseDto.isApproved()){
-                DeleteAccountRequest dar  = deleteAccountRequest.get();
-                dar.setAdminResponse(deleteAccountResponseDto.getResponse());
-                dar.setApproved(deleteAccountResponseDto.isApproved());
-                deleteAccountRequestRepository.save(dar);
-                //TODO: obrisi usera logicki ili fizicki (dunno)
-                //TODO: obrisi sve ostale zahteve za tog korisnika
-                deleteOtherRequests(deleteAccountResponseDto.getUserEmail());
-                userRepository.delete(user);
-                String html = emailService.createAdminDeleteAccountResponse(deleteAccountResponseDto.getResponse(), true);
-                emailService.sendEmail(user.getEmail(),"Account deletion!", html);
-            }
-            else{
-                DeleteAccountRequest dar  = deleteAccountRequest.get();
-                dar.setAdminResponse(deleteAccountResponseDto.getResponse());
-                dar.setApproved(deleteAccountResponseDto.isApproved());
-                deleteAccountRequestRepository.save(dar);
-                //TODO:
-                String html = emailService.createAdminDeleteAccountResponse( deleteAccountResponseDto.getResponse(), false);
-                emailService.sendEmail(user.getEmail(),"Account deletion!", html);
-            }
-        }
+        DeleteAccountRequest dar = deleteAccountRequest.get();
 
+        if (dar != null) {
+            dar.setAdminResponse(deleteAccountResponseDto.getResponse());
+            dar.setApproved(deleteAccountResponseDto.isApproved());
+            deleteAccountRequestRepository.save(dar);
+            if (dar.isApproved())
+                userRepository.delete(user); // TODO: možda dodati i brisanje zahtjeva kad je već user fizički obrisan?
+            String html = emailService.createAdminDeleteAccountResponse(deleteAccountResponseDto.getResponse(), deleteAccountResponseDto.isApproved());
+            emailService.sendEmail(user.getEmail(), "Account deletion request", html);
+        }
     }
 
     private void deleteOtherRequests(String userEmail) {
-        Iterable<DeleteAccountRequest> deleteAccountRequests  = deleteAccountRequestRepository.findAllByUserEmail(userEmail);
+        Iterable<DeleteAccountRequest> deleteAccountRequests = deleteAccountRequestRepository.findAllByUserEmail(userEmail);
         deleteAccountRequestRepository.deleteAll(deleteAccountRequests);
     }
 }
