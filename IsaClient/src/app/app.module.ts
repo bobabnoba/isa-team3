@@ -18,6 +18,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
 import { MatSelectModule } from '@angular/material/select';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page.component';
+import { UnauthenticatedHeaderComponent } from './components/unauthenticated-header/unauthenticated-header.component';
+import { ProfileViewComponent } from './components/reusable-components/profile-view/profile-view.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox'
+
 
 @NgModule({
   declarations: [
@@ -30,6 +37,9 @@ import { MatSelectModule } from '@angular/material/select';
     LoginComponent,
     RegisterComponent,
     OwnerRegisterComponent,
+    UnauthenticatedPageComponent,
+    UnauthenticatedHeaderComponent,
+    ProfileViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +53,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatSnackBarModule,
     MatSelectModule,
+    NgbModule,
+    MatCardModule,
+    MatCheckboxModule
   ],
   providers: [HttpClientModule],
   bootstrap: [AppComponent],

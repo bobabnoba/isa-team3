@@ -3,17 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from './material/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MainPageComponent } from './components/main-page/main-page.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from "@angular/forms"
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
+import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainPageComponent,
+    component: UnauthenticatedPageComponent,
   },
   {
     path: 'login',
