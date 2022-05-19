@@ -24,6 +24,8 @@ import { UnauthenticatedHeaderComponent } from './components/unauthenticated-hea
 import { ProfileViewComponent } from './components/reusable-components/profile-view/profile-view.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox'
+import {MatSliderModule} from '@angular/material/slider';
+
 
 
 @NgModule({
@@ -39,7 +41,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
     OwnerRegisterComponent,
     UnauthenticatedPageComponent,
     UnauthenticatedHeaderComponent,
-    ProfileViewComponent,
+    ProfileViewComponent
   ],
   imports: [
     BrowserModule,
@@ -55,8 +57,29 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
     MatSelectModule,
     NgbModule,
     MatCardModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSliderModule
+
   ],
+  exports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    NgbModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatSliderModule
+
+  ],
+  
   providers: [HttpClientModule],
   bootstrap: [AppComponent],
 })

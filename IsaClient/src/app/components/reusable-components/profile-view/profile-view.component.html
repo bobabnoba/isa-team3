@@ -3,12 +3,15 @@
         <mat-card-title-group>
           <mat-card-title>{{item.name}}</mat-card-title>
           <mat-card-subtitle>{{item.address}}</mat-card-subtitle>
+          
           <img mat-card-xl-image src="../../../assets/images/beach-houses.jpg" >
         </mat-card-title-group>
+        <ngb-rating [max]="5" [(rate)]="item.rating" [readonly]="true" ></ngb-rating>
     
         <mat-card-content>
             {{item.description}}
          </mat-card-content>
+        
        
     </mat-card>
     </div>

@@ -17,23 +17,18 @@ const routes: Routes = [
     component: UnauthenticatedPageComponent,
   },
   {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
-    path: 'registration',
-    component: RegisterComponent,
-  },
+    path:'home',
+    children: [
+      {
+        path: 'page',
+        component: HomePageComponent,
+      },
 
-  {
-    path: 'home',
-    component: HomePageComponent,
+    ]
   },
-
-  {
-    path: 'ownerRegistration',
-    component: OwnerRegisterComponent,
-  },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'ownerRegistration', component: OwnerRegisterComponent },
 ];
 @NgModule({
   imports: [
@@ -45,4 +40,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule, MaterialModule, FormsModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

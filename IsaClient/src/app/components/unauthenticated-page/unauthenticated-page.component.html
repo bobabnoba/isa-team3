@@ -1,32 +1,40 @@
+<router-outlet></router-outlet>
 <div class="container">
     <app-unauthenticated-header></app-unauthenticated-header>
     <br><br>
     <div class="sections">
         <div class="searchSection">
-            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
-            <mat-checkbox class="example-margin">Check me!</mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="vacation" (change)="onChangeDemo($event)"> Vacation
+                House </mat-checkbox>
+            <!-- search by: name, location, rating-->
+            <mat-checkbox class="example-margin" [formControl]="boats" (change)="onChangeDemo($event)"> Boats
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="instructor" (change)="onChangeDemo($event)"> Instructor
+            </mat-checkbox>
+            <form class="example-form" (input)="onChangeDemo($event)">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Search by name</mat-label>
+                    <input matInput="Search by name" [(ngModel)]="nameSearch" name="something"  >
+                </mat-form-field>
+            </form>
+
+            <div>
+                <h3 margin="0px"> Select rating: </h3>
+                <mat-slider thumbLabel [displayWith]="formatLabel" (change)="onChangeDemo($event)" [(ngModel)]="ratingSearch"
+                 min="0" max="5" step="1" value="0"></mat-slider>
+            </div>
         </div>
         <br>
         <div class="displaySection">
-            
+
             <div class="sectionOverflow">
-                <app-profile-view [items]="currentItems" class="profile"></app-profile-view>
-              
+                <app-profile-view [items]="filteredItems" class="profile"></app-profile-view>
+
 
             </div>
             <div class="sectionMap">
-               
-                <img class="mapImg" src="../../../assets/images/tokyo-map.jpg"/>
+
+                <img class="mapImg" src="../../../assets/images/tokyo-map.jpg" />
             </div>
         </div>
     </div>
