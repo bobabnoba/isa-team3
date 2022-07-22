@@ -9,6 +9,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
+import { RegisterVacationHomeComponent } from './components/register-vacation-home/register-vacation-home.component';
+import { VacationHomeComponent } from './components/vacation-home/vacation-home.component';
 
 const routes: Routes = [
   {
@@ -32,6 +34,14 @@ const routes: Routes = [
   {
     path: 'ownerRegistration',
     component: OwnerRegisterComponent,
+  },
+  {
+    path: 'addNewVacationHome',
+    component: RegisterVacationHomeComponent,
+  },
+  {
+    path: 'vacationHome/:homeId',
+    component: VacationHomeComponent,
   },
 ];
 @NgModule({

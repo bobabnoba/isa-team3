@@ -20,5 +20,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return
      */
     public User findByEmail(String email);
-
 }

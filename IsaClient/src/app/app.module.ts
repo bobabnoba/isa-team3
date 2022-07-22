@@ -23,6 +23,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon'
 import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
 import { DeleteAccountFormComponent } from './components/delete-account-form/delete-account-form.component';
+import { RegisterVacationHomeComponent } from './components/register-vacation-home/register-vacation-home.component';
+import { VacationHomeComponent } from './components/vacation-home/vacation-home.component';
 
 
 @NgModule({
@@ -37,6 +39,8 @@ import { DeleteAccountFormComponent } from './components/delete-account-form/del
     RegisterComponent,
     OwnerRegisterComponent,
     DeleteAccountFormComponent,
+    RegisterVacationHomeComponent,
+    VacationHomeComponent,
   ],
   imports: [
     BrowserModule,

@@ -45,7 +45,6 @@ public class UserController {
     @PostMapping(path = "/deleteAccount")
     @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<?> deleteAccount(@RequestBody DeleteAccountRequestDto deleteAccountRequestDto,  @RequestHeader (name="Authorization") String token) {
-        var a = token.substring(7);
         try {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
                     .getPrincipal();

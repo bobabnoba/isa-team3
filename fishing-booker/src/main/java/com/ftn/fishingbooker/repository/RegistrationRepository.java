@@ -6,8 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.*;
 
+import javax.transaction.*;
 import java.util.Collection;
 
+@Transactional
 @Repository
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
 

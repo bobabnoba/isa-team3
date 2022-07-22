@@ -1,0 +1,127 @@
+<div class="container">
+    <div class="col-12 text-center">
+      <h2>Add new vacation home</h2>
+      <hr />
+    </div>
+    <div class="container" [formGroup]="form"  style="width: 70%">
+      <br />
+      <!-- <form [formGroup]="form"> -->
+      <div class="separateMe">
+        <div style="width: 100%; display: flex">
+          <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" />
+            <mat-error
+              *ngIf="
+                form?.get('name')?.valid &&
+                form?.get('name')?.touched &&
+                form?.get('name')?.errors?.required
+              "
+              >Name is required.</mat-error
+            >
+            <mat-error>Invalid input</mat-error>
+          </mat-form-field>
+        </div>
+        <div style="width: 100%; display: flex">
+          <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address" />
+            <mat-error
+              *ngIf="
+                form?.get('address')?.valid &&
+                form?.get('address')?.touched &&
+                form?.get('address')?.errors?.required
+              "
+              >Address is required.</mat-error
+            >
+            <mat-error>Invalid input</mat-error>
+          </mat-form-field>
+        </div>
+        <div style="width: 100%; display: flex">
+          <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <!-- <input matInput formControlName="description" /> -->
+            <textarea
+              id="description"
+              matInput
+              (change)="doDescriptionValueChange($event)"
+              required
+            ></textarea>
+            <mat-error
+              *ngIf="
+                form?.get('description')?.valid &&
+                form?.get('description')?.touched &&
+                form?.get('description')?.errors?.required
+              "
+              >Description is required.</mat-error
+            >
+            <mat-error>Invalid input</mat-error>
+          </mat-form-field>
+        </div>
+        <div style="width: 100%; display: flex">
+          <mat-form-field appearance="fill">
+            <mat-label>Information</mat-label>
+            <textarea
+              id="information"
+              matInput
+              (change)="doInformationValueChange($event)"
+              required
+            ></textarea>
+            <mat-error
+              *ngIf="
+                form?.get('information')?.valid &&
+                form?.get('information')?.touched &&
+                form?.get('information')?.errors?.required
+              "
+              >Information is required.</mat-error
+            >
+            <mat-error>Invalid input</mat-error>
+          </mat-form-field>
+        </div>
+        <div style="width: 100%; display: flex">
+          <mat-form-field appearance="fill">
+            <mat-label>CodeOfConduct</mat-label>
+            <textarea
+              id="codeOfConduct"
+              matInput
+              (change)="doCodeOfConductValueChange($event)"
+              required
+            ></textarea>
+            <mat-error
+              *ngIf="
+                form?.get('codeOfConduct')?.valid &&
+                form?.get('codeOfConduct')?.touched &&
+                form?.get('codeOfConduct')?.errors?.required
+              "
+              >CodeOfConduct is required.</mat-error
+            >
+            <mat-error>Invalid input</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-label>Upload images</mat-label>
+          <br />
+          <input 
+            (change)="setFiles($event)"
+             multiple 
+             placeholder="Pictures"   
+             type="file" required>
+        </div>
+      </div>
+      <br /><br />
+      <div style="display: flex; justify-content: center">
+        <button
+        mat-raised-button
+        (click)="onSubmit()"
+        color="accent"
+        class="icon-display"
+      >
+        Add New Vacation Home
+      </button>        
+      </div>
+      <!-- </form> -->
+    </div>
+  
+    <hr />
+    <br />
+  </div>
