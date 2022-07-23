@@ -3,9 +3,9 @@
       <h2>Add new vacation home</h2>
       <hr />
     </div>
-    <div class="container" [formGroup]="form"  style="width: 70%">
+    <div class="container" style="width: 70%">
       <br />
-      <!-- <form [formGroup]="form"> -->
+       <form [formGroup]="form" (ngSubmit) = "addHome(form.value)"> 
       <div class="separateMe">
         <div style="width: 100%; display: flex">
           <mat-form-field appearance="fill">
@@ -98,29 +98,33 @@
             <mat-error>Invalid input</mat-error>
           </mat-form-field>
         </div>
-        <div>
-          <mat-label>Upload images</mat-label>
-          <br />
-          <input 
-            (change)="setFiles($event)"
-             multiple 
-             placeholder="Pictures"   
-             type="file" required>
-        </div>
+        
       </div>
       <br /><br />
       <div style="display: flex; justify-content: center">
-        <button
+        <!-- <button
         mat-raised-button
-        (click)="onSubmit()"
         color="accent"
         class="icon-display"
       >
         Add New Vacation Home
-      </button>        
+      </button>  -->
+      <input type = "submit" 
+      color="accent"
+      class="icon-display" value = "Add New Vacation Home">       
       </div>
-      <!-- </form> -->
+       </form> 
     </div>
+    <div>
+        <mat-label>Upload images</mat-label>
+        <br />
+        <input 
+          (change)="onFileSelected($event)"
+           multiple 
+           value="selected" #selectFile
+           placeholder="Pictures"   
+           type="file" required>
+      </div>
   
     <hr />
     <br />

@@ -16,6 +16,7 @@ import java.util.*;
 @ControllerAdvice
 @RestController
 @RequestMapping("/home")
+@CrossOrigin(origins = "http://localhost:4200")
 public class VacationHomeController {
 
     @Autowired
@@ -43,41 +44,6 @@ public class VacationHomeController {
         return new ResponseEntity<VacationHomeDto>(HttpStatus.CONFLICT);
     }
 
-    //TODO: dodati autorizaciju
-    @PostMapping("/")
-    public ResponseEntity<VacationHomeDto> createVacationHome(@RequestBody NewVacationHomeDto newVacationHomeDto){
-        try{
-            String userEmail = "mejlic2@mejl.com"; //TODO: izvuci iz autorizacije
-            HomeOwner owner = (HomeOwner) userRepository.findByEmail(userEmail);
-            VacationHome vacationHome = vacationHomeService.createVacationHome(newVacationHomeDto,owner);
-            //List<FileEntity> images = fileService.saveVacationHomeImages(newVacationHomeDto.images,vacationHome.getId());
-            List<FileEntity> images  = fileService.getAllForHome(13L);
-            VacationHomeDto vacationHomeDto = vacationHomeMapper.mapToVacationHomeDto(vacationHome,images);
-
-            return new ResponseEntity<VacationHomeDto>(vacationHomeDto,HttpStatus.OK);
-        }catch (Exception e ){
-            e.getMessage();
-        }
-        return new ResponseEntity<VacationHomeDto>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @PostMapping("/images")
-    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile[] files) {
-        String fileNames = "";
-        try {
-            for (MultipartFile file: files) {
-                VacationHome vacationHome = vacationHomeRepository.getById(13L);
-                fileService.save(file,vacationHome);
-                fileNames.concat(file.getOriginalFilename()).concat(", ");
-            }
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(String.format("File uploaded successfully: %s", fileNames));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(String.format("Could not upload the file: %s!", fileNames));
-        }
-    }
-
     @GetMapping("/images/{id}")
     public ResponseEntity<List<FileEntity>> get(@PathVariable Long id) {
         try {
@@ -85,6 +51,31 @@ public class VacationHomeController {
             return new ResponseEntity<List<FileEntity>>(images, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<List<FileEntity>>( HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //TODO: dodati autorizaciju
+    @PostMapping(value = {"/addNew"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<VacationHomeDto> addNewVacationHome(@RequestPart("home") NewVacationHomeDto home,
+                                                              @RequestPart("imageFile") MultipartFile[] files){
+        try{
+            String userEmail = "mejlic2@mejl.com"; //TODO: izvuci iz autorizacije
+            HomeOwner owner = (HomeOwner) userRepository.findByEmail(userEmail);
+            VacationHome vacationHome = vacationHomeService.createVacationHome(home,owner);
+            String fileNames = "";
+            System.out.println("uuu");
+            for (MultipartFile file: files) {
+                fileService.save(file,vacationHome);
+                fileNames.concat(file.getOriginalFilename()).concat(", ");
+            }
+            List<FileEntity> images  = fileService.getAllForHome(vacationHome.getId());
+            VacationHomeDto vacationHomeDto = vacationHomeMapper.mapToVacationHomeDto(vacationHome,images);
+
+            return new ResponseEntity<VacationHomeDto>(vacationHomeDto,HttpStatus.OK);
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

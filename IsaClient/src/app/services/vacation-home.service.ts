@@ -7,7 +7,6 @@ import { IVacationHome } from '../interfaces/vacation-home';
   providedIn: 'root'
 })
 export class VacationHomeService {
-
   constructor(private http: HttpClient) { }
   createVacationHome(newVacationHome: IVacationHome) {
     return this.http.post(
@@ -36,5 +35,9 @@ export class VacationHomeService {
 
       })
     );
+  }
+
+  addHome(newHome: FormData) {
+    return this.http.post<IVacationHome>("http://localhost:8090/home/addNew", newHome);
   }
 }

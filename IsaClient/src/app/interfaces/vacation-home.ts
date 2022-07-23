@@ -1,3 +1,5 @@
+import { FileHandle } from "./file-handle"
+
 export interface IVacationHome {
     id : number,
     name : string,
@@ -7,5 +9,5 @@ export interface IVacationHome {
     //mapa pricelist
     codeOfConduct : string,
     information : string 
-    images : any[]
+    images : FileHandle[]
 }
