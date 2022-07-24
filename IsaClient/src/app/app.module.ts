@@ -18,6 +18,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
 import { MatSelectModule } from '@angular/material/select';
+import { InstructorDashboardComponent } from './components/instructor/instructor-dashboard/instructor-dashboard.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { InstructorSidebarComponent } from './components/instructor/instructor-sidebar/instructor-sidebar.component';
+import { InstructorTopbarComponent } from './components/instructor/instructor-topbar/instructor-topbar.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,9 @@ import { MatSelectModule } from '@angular/material/select';
     LoginComponent,
     RegisterComponent,
     OwnerRegisterComponent,
+    InstructorDashboardComponent,
+    InstructorSidebarComponent,
+    InstructorTopbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +50,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     MatSnackBarModule,
     MatSelectModule,
+    MatSidenavModule,
   ],
   providers: [HttpClientModule],
   bootstrap: [AppComponent],
