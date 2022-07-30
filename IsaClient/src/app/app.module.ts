@@ -22,6 +22,9 @@ import { InstructorDashboardComponent } from './components/instructor/instructor
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { InstructorSidebarComponent } from './components/instructor/instructor-sidebar/instructor-sidebar.component';
 import { InstructorTopbarComponent } from './components/instructor/instructor-topbar/instructor-topbar.component';
+import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
+import { AdminTopbarComponent } from './components/admin/admin-topbar/admin-topbar.component';
+import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { InstructorTopbarComponent } from './components/instructor/instructor-to
     InstructorDashboardComponent,
     InstructorSidebarComponent,
     InstructorTopbarComponent,
+    AdminSidebarComponent,
+    AdminTopbarComponent,
+    AdminProfileComponent,
   ],
   imports: [
     BrowserModule,
