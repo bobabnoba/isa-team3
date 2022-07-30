@@ -11,10 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegistrationMapper {
 
-    @Autowired
     private static PasswordEncoder passwordEncoder;
-    @Autowired
     private static RoleService roleService;
+
+    @Autowired
+    public RegistrationMapper(PasswordEncoder passwordEncoder, RoleService roleService) {
+        this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
+    }
 
     public static Client mapToClient(RegisterDto registerDto) {
         Client client = new Client();
