@@ -1,5 +1,6 @@
-package com.ftn.fishingbooker.registration.token;
+package com.ftn.fishingbooker.repository;
 
+import com.ftn.fishingbooker.model.ConfirmationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

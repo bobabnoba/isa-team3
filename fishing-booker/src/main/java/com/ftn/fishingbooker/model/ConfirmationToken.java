@@ -1,4 +1,4 @@
-package com.ftn.fishingbooker.registration.token;
+package com.ftn.fishingbooker.model;
 
 
 import lombok.Getter;

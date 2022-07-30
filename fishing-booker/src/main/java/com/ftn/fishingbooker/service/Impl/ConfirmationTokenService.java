@@ -1,5 +1,7 @@
-package com.ftn.fishingbooker.registration.token;
+package com.ftn.fishingbooker.service.Impl;
 
+import com.ftn.fishingbooker.model.ConfirmationToken;
+import com.ftn.fishingbooker.repository.ConfirmationTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

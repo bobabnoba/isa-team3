@@ -12,19 +12,4 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private UserServiceImpl userService;
-    @Autowired
-    private UserMapper userMapper;
-
-    @GetMapping
-    public List<UserDto> getAll() {
-        return userService.getAll();
-    }
-
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id) {
-        userService.delete(id);
-    }
-
 }

@@ -1,4 +1,4 @@
-package com.ftn.fishingbooker.registration;
+package com.ftn.fishingbooker.service;
 
 import javax.mail.MessagingException;
 

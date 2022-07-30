@@ -16,21 +16,23 @@ import javax.mail.*;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    RegistrationRepository registrationRepository;
-    @Autowired
-    AdminService adminService;
+    private final RegistrationRepository registrationRepository;
+    private final AdminService adminService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping(path = "registerRequests")
-    public ResponseEntity<Object> getAllRegistrationRequests(){
-        return new ResponseEntity<>(registrationRepository.findUnprocessedRequests(), HttpStatus.OK);
+    public AdminController(RegistrationRepository registrationRepository, AdminService adminService){
+        this.registrationRepository = registrationRepository;
+        this.adminService = adminService;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(path = "registerRequests")
+    public ResponseEntity<Object> getAllRegistrationRequests(){
+        return ResponseEntity.ok().body(registrationRepository.findUnprocessedRequests());
+    }
+
+
     @PostMapping("/approveRequest")
     public ResponseEntity<Object> registrationRequestApproval(@RequestBody RegistrationResponseDto registrationResponseDto) throws MessagingException {
         adminService.respondToRegistrationRequest(registrationResponseDto);
-        return null;
+        return ResponseEntity.ok().build();
     }
 }
