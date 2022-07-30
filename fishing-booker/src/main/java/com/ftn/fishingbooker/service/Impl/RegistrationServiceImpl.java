@@ -1,8 +1,8 @@
-package com.ftn.fishingbooker.registration;
+package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.registration.email.EmailService;
-import com.ftn.fishingbooker.registration.token.ConfirmationToken;
-import com.ftn.fishingbooker.registration.token.ConfirmationTokenService;
+import com.ftn.fishingbooker.service.RegistrationService;
+import com.ftn.fishingbooker.service.EmailService;
+import com.ftn.fishingbooker.model.ConfirmationToken;
 import com.ftn.fishingbooker.security.util.TokenUtils;
 import com.ftn.fishingbooker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

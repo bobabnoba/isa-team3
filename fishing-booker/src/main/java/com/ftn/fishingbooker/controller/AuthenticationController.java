@@ -1,11 +1,10 @@
 package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.*;
-import com.ftn.fishingbooker.enumeration.*;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.*;
 import com.ftn.fishingbooker.model.User;
-import com.ftn.fishingbooker.registration.RegistrationService;
+import com.ftn.fishingbooker.service.RegistrationService;
 import com.ftn.fishingbooker.security.util.TokenUtils;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.mail.MessagingException;
@@ -28,28 +26,18 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-    @Autowired
-    private TokenUtils tokenUtils;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private RegistrationService registrationService;
-    @Autowired
-    private HomeOwnerService homeOwnerService;
-    @Autowired
-    private BoatOwnerService boatOwnerService;
-    @Autowired
-    private InstructorService instructorService;
-    @Autowired
-    private RegistrationMapper registrationMapper;
+    private final TokenUtils tokenUtils;
+    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final RegistrationService registrationService;
 
+    public AuthenticationController(TokenUtils tokenUtils, AuthenticationManager authenticationManager, UserService userService, RegistrationService registrationService){
+        this.tokenUtils = tokenUtils;
+        this.authenticationManager = authenticationManager;
+        this.userService = userService;
+        this.registrationService = registrationService;
+    }
 
-
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
     public ResponseEntity<UserTokenStateDto> login(
             @RequestBody LoginDto authRequest, HttpServletResponse response) {
@@ -88,34 +76,19 @@ public class AuthenticationController {
     @PostMapping("/register/client")
     public ResponseEntity<Object> registerClient(@RequestBody RegisterDto registerDto) throws MessagingException {
         User user = userService.createClient(registerDto);
-        return new ResponseEntity<>(userMapper.mapToDto(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(UserMapper.mapToDto(user), HttpStatus.CREATED);
     }
 
     @PostMapping("/register/owner")
-    public ResponseEntity<Object> registerOwner(@RequestBody OwnerRegisterDto registerDto)
-            throws MessagingException {
-        try {
-            User user;
-            if(registerDto.getRegistrationType().equals(RegistrationType.INSTRUCTOR_ADVERTISER)){
-                user = instructorService.registerInstructor(registrationMapper.mapToInstructor(registerDto), registerDto.getMotivation());
-            }else  if(registerDto.getRegistrationType().equals(RegistrationType.VACATION_HOUSE_ADVERTISER)){
-                user = homeOwnerService.registerHomeOwner(registrationMapper.mapToHomeOwner(registerDto), registerDto.getMotivation());
-            }else {
-                user = boatOwnerService.registerBoatOwner(registrationMapper.mapToBoatOwner(registerDto), registerDto.getMotivation());
-            }
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-        } catch (ResourceAccessException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Object> registerOwner(@RequestBody OwnerRegisterDto registerDto) throws MessagingException {
 
+        User owner = RegistrationMapper.mapToOwner(registerDto);
+        User user = userService.registerOwner(owner, registerDto.registrationType, registerDto.motivation);
+        return new ResponseEntity<>(UserMapper.mapToDto(user), HttpStatus.CREATED);
     }
 
-
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/register/admin")
-    public ResponseEntity<User> registerAdmin(@RequestBody RegisterDto registerDto, UriComponentsBuilder builder)
-            throws MessagingException {
-
+    public ResponseEntity<User> registerAdmin(@RequestBody RegisterDto registerDto) {
         User user = userService.createAdmin(registerDto);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
