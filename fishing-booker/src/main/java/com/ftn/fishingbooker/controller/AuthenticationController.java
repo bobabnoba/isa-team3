@@ -26,21 +26,18 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-    @Autowired
-    private TokenUtils tokenUtils;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private RegistrationService registrationService;
-    @Autowired
-    private RegistrationMapper registrationMapper;
+    private final TokenUtils tokenUtils;
+    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final RegistrationService registrationService;
 
+    public AuthenticationController(TokenUtils tokenUtils, AuthenticationManager authenticationManager, UserService userService, RegistrationService registrationService){
+        this.tokenUtils = tokenUtils;
+        this.authenticationManager = authenticationManager;
+        this.userService = userService;
+        this.registrationService = registrationService;
+    }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
     public ResponseEntity<UserTokenStateDto> login(
             @RequestBody LoginDto authRequest, HttpServletResponse response) {
@@ -79,21 +76,19 @@ public class AuthenticationController {
     @PostMapping("/register/client")
     public ResponseEntity<Object> registerClient(@RequestBody RegisterDto registerDto) throws MessagingException {
         User user = userService.createClient(registerDto);
-        return new ResponseEntity<>(userMapper.mapToDto(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(UserMapper.mapToDto(user), HttpStatus.CREATED);
     }
 
     @PostMapping("/register/owner")
     public ResponseEntity<Object> registerOwner(@RequestBody OwnerRegisterDto registerDto) throws MessagingException {
 
-            User owner = registrationMapper.mapToOwner(registerDto);
-            User user = userService.registerOwner(owner, registerDto.registrationType, registerDto.motivation);
-            return new ResponseEntity<>(userMapper.mapToDto(user), HttpStatus.CREATED);
+        User owner = RegistrationMapper.mapToOwner(registerDto);
+        User user = userService.registerOwner(owner, registerDto.registrationType, registerDto.motivation);
+        return new ResponseEntity<>(UserMapper.mapToDto(user), HttpStatus.CREATED);
     }
 
     @PostMapping("/register/admin")
-    public ResponseEntity<User> registerAdmin(@RequestBody RegisterDto registerDto, UriComponentsBuilder builder)
-            throws MessagingException {
-
+    public ResponseEntity<User> registerAdmin(@RequestBody RegisterDto registerDto) {
         User user = userService.createAdmin(registerDto);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }

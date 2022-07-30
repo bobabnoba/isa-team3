@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 public class RegistrationMapper {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private static PasswordEncoder passwordEncoder;
     @Autowired
-    private RoleService roleService;
+    private static RoleService roleService;
 
-    public Client mapToClient(RegisterDto registerDto) {
+    public static Client mapToClient(RegisterDto registerDto) {
         Client client = new Client();
         client.setId(null);
         client.setFirstName(registerDto.getFirstName());
@@ -37,7 +37,7 @@ public class RegistrationMapper {
         return client;
     }
 
-    public User mapToOwner(OwnerRegisterDto registerDto) {
+    public static User mapToOwner(OwnerRegisterDto registerDto) {
         User newOwner = new User();
         newOwner.setFirstName(registerDto.getFirstName());
         newOwner.setLastName(registerDto.getLastName());
@@ -59,7 +59,7 @@ public class RegistrationMapper {
         return newOwner;
     }
 
-    public Admin mapToAdmin(RegisterDto registerDto) {
+    public static Admin mapToAdmin(RegisterDto registerDto) {
         Admin admin = new Admin();
 
         admin.setId(null);

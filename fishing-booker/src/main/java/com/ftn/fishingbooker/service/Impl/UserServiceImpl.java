@@ -28,10 +28,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private RegistrationMapper registrationMapper;
-    @Autowired
     private ClientService clientService;
     @Autowired
     RegistrationRepository registrationRepository;
@@ -40,20 +36,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private static String url = "<a href=\"http://localhost:4200/login\"> Login </a>";
 
-
-    public List<UserDto> getAll() {
-        List<User> users = userRepository.findAll();
-        return userMapper.mapToDto(users);
-    }
-
-    public UserDto get(Long id) {
-        User user = userRepository.getById(id);
-        return userMapper.mapToDto(user);
-    }
-
-    public void delete(Long id) {
-        userRepository.deleteById(id);
-    }
 
     @Override
     public boolean isEmailRegistered(String email) {
@@ -75,7 +57,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (isEmailRegistered(registerDto.getEmail())) {
             throw new ResourceConflictException("Email already exists");
         }
-        Client user = registrationMapper.mapToClient(registerDto);
+        Client user = RegistrationMapper.mapToClient(registerDto);
         clientService.registerClient(user);
         return user;
     }
@@ -85,7 +67,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (isEmailRegistered(registerDto.getEmail())) {
             throw new ResourceConflictException("Email already exists");
         }
-        Admin user = registrationMapper.mapToAdmin(registerDto);
+        Admin user = RegistrationMapper.mapToAdmin(registerDto);
         //TODO:
         return user;
     }
