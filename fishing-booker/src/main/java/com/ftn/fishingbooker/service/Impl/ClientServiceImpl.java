@@ -1,7 +1,7 @@
 package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.registration.RegistrationService;
+import com.ftn.fishingbooker.service.RegistrationService;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -9,6 +9,8 @@ import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 
+import javax.mail.MessagingException;
+
 @Service
 public class InstructorServiceImpl implements InstructorService {
 
@@ -18,9 +20,11 @@ public class InstructorServiceImpl implements InstructorService {
     UserRepository userRepository;
     @Autowired
     RegistrationRepository registrationRepository;
+    @Autowired
+    private RegistrationService registrationService;
 
     @Override
-    public User registerInstructor(Instructor instructor, String motivation) {
+    public User registerInstructor(Instructor instructor, String motivation) throws MessagingException {
 
         if (userService.isEmailRegistered(instructor.getEmail())) {
             throw new ResourceConflictException("Email already exists");
@@ -28,6 +32,9 @@ public class InstructorServiceImpl implements InstructorService {
 
         Registration registration = new Registration(RegistrationType.INSTRUCTOR_ADVERTISER, motivation, instructor.getEmail());
         registrationRepository.save(registration);
+
+        String registrationToken = registrationService.generateRegistrationToken(instructor.getEmail(), instructor.getRole().getName());
+        registrationService.sendRegistrationEmail(registrationToken, instructor.getEmail());
 
         userRepository.save(instructor);
 

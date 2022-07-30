@@ -1,6 +1,7 @@
-package com.ftn.fishingbooker.registration.email;
+package com.ftn.fishingbooker.service.Impl;
 
 
+import com.ftn.fishingbooker.service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

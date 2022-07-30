@@ -5,7 +5,7 @@ import com.ftn.fishingbooker.enumeration.*;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.*;
 import com.ftn.fishingbooker.model.User;
-import com.ftn.fishingbooker.registration.RegistrationService;
+import com.ftn.fishingbooker.service.RegistrationService;
 import com.ftn.fishingbooker.security.util.TokenUtils;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,7 +3,6 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.enumeration.*;
 import com.ftn.fishingbooker.exception.*;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.registration.*;
 import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.*;
