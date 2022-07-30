@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
       next: (x: any) => {
         console.log(x);
         this._snackBar.open("Welcome!", "Dismiss");
-        this._router.navigate(['/instructor-dashboard']);
       },
       error: (err: HttpErrorResponse) => {
         this._snackBar.open(err.error.message + "!", 'Dismiss');
