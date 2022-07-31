@@ -47,6 +47,5 @@ export class AuthService {
 
   logout() {
     this._storageService.clear();
-    window.location.href = 'http://localhost:4200/login';
   }
 }

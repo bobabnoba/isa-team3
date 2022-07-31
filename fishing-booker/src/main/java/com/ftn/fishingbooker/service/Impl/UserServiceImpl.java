@@ -92,5 +92,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.save(owner);
     }
 
+    @Override
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User update(User user) {
+        User dbUser = userRepository.findByEmail(user.getEmail());
+        dbUser.setFirstName(user.getFirstName());
+        dbUser.setLastName(user.getLastName());
+        dbUser.setPhone(user.getPhone());
+        dbUser.setAddress(user.getAddress());
+        dbUser.setCity(user.getCity());
+        dbUser.setCountry(user.getCountry());
+        return userRepository.save(dbUser);
+    }
+
 
 }

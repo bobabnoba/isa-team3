@@ -37,15 +37,15 @@ const routes: Routes = [
     component: OwnerRegisterComponent,
   },
   {
-    path : 'instructor-dashboard',
+    path : 'instructor/dashboard',
     component:  InstructorDashboardComponent,
   },
   {
-    path : 'admin-profile',
+    path : 'admin/profile',
     component:  AdminProfileComponent,
   },
   {
-    path : 'admin-registration-requests',
+    path : 'admin/registration-requests',
     component:  AdminRegistrationRequestsComponent,
   }
 ];
