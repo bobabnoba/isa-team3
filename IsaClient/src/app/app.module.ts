@@ -29,7 +29,9 @@ import { AdminRegistrationRequestsComponent } from './components/admin/admin-reg
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { AdminResponseComponent } from './components/admin-response/admin-response.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { MatButtonModule } from '@angular/material/button';
     AdminTopbarComponent,
     AdminProfileComponent,
     AdminRegistrationRequestsComponent,
+    AdminResponseComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +68,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatSidenavModule,
     MatPaginatorModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule,
+    MatCardModule
 
   ],
   providers: [HttpClientModule  ],
