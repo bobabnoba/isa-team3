@@ -1,0 +1,54 @@
+<div id="wrapper">
+    <app-admin-sidebar></app-admin-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <app-admin-topbar></app-admin-topbar>
+        
+
+        <div class="container-fluid">
+
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Registration Requests</h1>
+            </div>
+
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource">
+              
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Owner Type </th>
+                    <td mat-cell *matCellDef="let element" style="min-width: 150px !important;"> {{element.type}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="motivation">
+                    <th mat-header-cell *matHeaderCellDef> Motivation </th>
+                    <td mat-cell *matCellDef="let element" style="word-wrap: wrap-word; padding-right: 10px;"> {{element.motivation}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Owner Email </th>
+                    <td mat-cell *matCellDef="let element" style="min-width: 170px"> {{element.email}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="respond">
+                    <th mat-header-cell  *matHeaderCellDef > Respond </th>
+                    <td mat-cell *matCellDef="let row" style="min-width: 140px">
+                      <button mat-mini-fab style="margin-right: 14px; background-color: rgba(90, 197, 90, 0.774);"> <i class="fa-solid fa-check"></i></button> 
+                      <button mat-mini-fab style="background-color: rgba(196, 105, 105, 0.808);"> <i class="fa-solid fa-xmark"></i></button>
+
+                    </td>
+                  </ng-container>
+              
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                               showFirstLastButtons 
+                               aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+
+        </div>
+
+    </div>
+ </div>
+

@@ -25,6 +25,11 @@ import { InstructorTopbarComponent } from './components/instructor/instructor-to
 import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
 import { AdminTopbarComponent } from './components/admin/admin-topbar/admin-topbar.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
+import { AdminRegistrationRequestsComponent } from './components/admin/admin-registration-requests/admin-registration-requests.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
@@ -43,6 +48,7 @@ import { AdminProfileComponent } from './components/admin/admin-profile/admin-pr
     AdminSidebarComponent,
     AdminTopbarComponent,
     AdminProfileComponent,
+    AdminRegistrationRequestsComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +63,10 @@ import { AdminProfileComponent } from './components/admin/admin-profile/admin-pr
     MatSnackBarModule,
     MatSelectModule,
     MatSidenavModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatButtonModule
+
   ],
   providers: [HttpClientModule],
   bootstrap: [AppComponent],
