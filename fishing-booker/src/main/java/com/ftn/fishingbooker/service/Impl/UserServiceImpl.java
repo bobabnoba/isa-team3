@@ -89,10 +89,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Registration registration = new Registration(type, motivation, owner.getEmail());
         registrationRepository.save(registration);
 
-        String registrationToken = registrationService.generateRegistrationToken(owner.getEmail(), owner.getRole().getName());
-        registrationService.sendRegistrationEmail(registrationToken, owner.getEmail());
-
         return userRepository.save(owner);
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User update(User user) {
+        User dbUser = userRepository.findByEmail(user.getEmail());
+        dbUser.setFirstName(user.getFirstName());
+        dbUser.setLastName(user.getLastName());
+        dbUser.setPhone(user.getPhone());
+        dbUser.setAddress(user.getAddress());
+        dbUser.setCity(user.getCity());
+        dbUser.setCountry(user.getCountry());
+        return userRepository.save(dbUser);
     }
 
 

@@ -1,4 +1,4 @@
-package com.ftn.fishingbooker;
+package com.ftn.fishingbooker.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

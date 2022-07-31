@@ -10,16 +10,19 @@ import java.util.List;
 
 public interface UserService {
 
-    public boolean isEmailRegistered(String email);
+     boolean isEmailRegistered(String email);
 
-    public UserDetails loadUserByUsername(String email);
+     UserDetails loadUserByUsername(String email);
 
-    public User createClient(RegisterDto registerRequest) throws MessagingException;
+     User createClient(RegisterDto registerRequest) throws MessagingException;
 
-    public User createAdmin(RegisterDto registerRequest);
+     User createAdmin(RegisterDto registerRequest);
 
     String enableUser(String email);
 
-    public User registerOwner(User owner, RegistrationType type, String motivation) throws MessagingException;
+     User registerOwner(User owner, RegistrationType type, String motivation) throws MessagingException;
 
+    User getByEmail(String email);
+
+    User update(User user);
 }

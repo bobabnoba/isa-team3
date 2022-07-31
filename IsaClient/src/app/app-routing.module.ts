@@ -10,6 +10,8 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
 import { InstructorDashboardComponent } from './components/instructor/instructor-dashboard/instructor-dashboard.component';
+import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
+import { AdminRegistrationRequestsComponent } from './components/admin/admin-registration-requests/admin-registration-requests.component';
 
 const routes: Routes = [
   {
@@ -35,8 +37,16 @@ const routes: Routes = [
     component: OwnerRegisterComponent,
   },
   {
-    path : 'instructor-dashboard',
+    path : 'instructor/dashboard',
     component:  InstructorDashboardComponent,
+  },
+  {
+    path : 'admin/profile',
+    component:  AdminProfileComponent,
+  },
+  {
+    path : 'admin/registration-requests',
+    component:  AdminRegistrationRequestsComponent,
   }
 ];
 @NgModule({

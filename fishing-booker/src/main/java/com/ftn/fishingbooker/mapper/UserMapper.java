@@ -29,4 +29,21 @@ public class UserMapper {
 
         return userDto;
     }
+
+    public static User mapToEntity(UserDto dto) {
+        User user = new User();
+        user.setId(dto.getId());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
+        user.setAddress(dto.getAddress());
+        user.setCity(dto.getCity());
+        user.setCountry(dto.getCountry());
+        user.setPhone(dto.getPhone());
+        user.setActivated(dto.isActivated());
+        user.setBlocked(user.isBlocked());
+
+        return user;
+    }
 }

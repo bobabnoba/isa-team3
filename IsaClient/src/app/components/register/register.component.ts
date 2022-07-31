@@ -10,7 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoggedUser } from 'src/app/interfaces/logged-user';
 import { INewUser } from 'src/app/interfaces/new-user';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth-service/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -71,13 +71,13 @@ export class RegisterComponent implements OnInit {
       next: (res) => {
         this.myUser = res;
         this._router.navigate(['/']);
-        this._snackBar.open(
-          'Your registration request has been sumbitted. Please check your email and confirm your email adress to activate your account.',
-          'Dismiss');
-
+        this._snackBar.open('Your registration request has been sumbitted. Please check your email and confirm your email adress to activate your account.', '',
+          {duration : 3000,panelClass: ['snack-bar']}
+        );
       },
       error: (err: HttpErrorResponse) => {
-        this._snackBar.open(err.error.message + "!", 'Dismiss');
+        this._snackBar.open(err.error.message + "!", 'Dismiss',
+          {duration : 3000,panelClass: ['snack-bar']});
       },
       complete: () => console.info('complete')
     });

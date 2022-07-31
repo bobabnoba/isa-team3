@@ -15,7 +15,6 @@ import javax.transaction.Transactional;
 @Transactional
 public class RegistrationServiceImpl implements RegistrationService {
 
-
     @Autowired
     private EmailService emailService;
     @Autowired

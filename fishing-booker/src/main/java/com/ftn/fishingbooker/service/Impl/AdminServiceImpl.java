@@ -1,6 +1,5 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.*;
@@ -12,18 +11,22 @@ import javax.mail.*;
 @Service
 public class AdminServiceImpl implements AdminService {
 
+    private final RegistrationRepository registrationRepository;
+    private final UserRepository userRepository;
+    private final EmailService emailService;
+
     @Autowired
-    RegistrationRepository registrationRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    EmailService emailService;
+    public AdminServiceImpl(RegistrationRepository registrationRepository, UserRepository userRepository,
+                            EmailService emailService) {
+        this.registrationRepository = registrationRepository;
+        this.userRepository = userRepository;
+        this.emailService = emailService;
+    }
 
     @Override
-    public void respondToRegistrationRequest(RegistrationResponseDto registrationResponseDto) throws MessagingException {
-        Registration registration = registrationRepository.findByUserEmail(registrationResponseDto.userEmail);
+    public void respondToRegistrationRequest(Registration registration) throws MessagingException {
         User user = userRepository.findByEmail(registration.getUserEmail());
-        if(registrationResponseDto.isApproved()){
+        if(registration.isApproved()){
             user.setActivated(true);
             userRepository.save(user);
             registration.setApproved(true);
@@ -33,10 +36,10 @@ public class AdminServiceImpl implements AdminService {
         }
         else{
             registration.setApproved(false);
-            registration.setAdminResponse(registrationResponseDto.getResponse());
+            registration.setAdminResponse(registration.getAdminResponse());
             registrationRepository.save(registration);
-            //createAdminResponseEmail srediti da ima 2 template-a
-            String html = emailService.createAdminResponseEmail( registrationResponseDto.getResponse(), false);
+            //TODO: createAdminResponseEmail srediti da ima 2 template-a
+            String html = emailService.createAdminResponseEmail( registration.getAdminResponse(), false);
             emailService.sendEmail(user.getEmail(),"Account not  activated!", html);
         }
     }

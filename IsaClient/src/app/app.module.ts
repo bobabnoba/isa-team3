@@ -22,6 +22,16 @@ import { InstructorDashboardComponent } from './components/instructor/instructor
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { InstructorSidebarComponent } from './components/instructor/instructor-sidebar/instructor-sidebar.component';
 import { InstructorTopbarComponent } from './components/instructor/instructor-topbar/instructor-topbar.component';
+import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
+import { AdminTopbarComponent } from './components/admin/admin-topbar/admin-topbar.component';
+import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
+import { AdminRegistrationRequestsComponent } from './components/admin/admin-registration-requests/admin-registration-requests.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AdminResponseComponent } from './components/admin-response/admin-response.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -37,6 +47,11 @@ import { InstructorTopbarComponent } from './components/instructor/instructor-to
     InstructorDashboardComponent,
     InstructorSidebarComponent,
     InstructorTopbarComponent,
+    AdminSidebarComponent,
+    AdminTopbarComponent,
+    AdminProfileComponent,
+    AdminRegistrationRequestsComponent,
+    AdminResponseComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,8 +66,14 @@ import { InstructorTopbarComponent } from './components/instructor/instructor-to
     MatSnackBarModule,
     MatSelectModule,
     MatSidenavModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatCardModule
+
   ],
-  providers: [HttpClientModule],
+  providers: [HttpClientModule  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
