@@ -5,17 +5,9 @@ public class UserTokenStateDto {
     private String jwt;
     private Long expiresIn;
 
-    public UserTokenStateDto() {
-        this.jwt = null;
-        this.expiresIn = null;
-    }
-
     public UserTokenStateDto(String jwt, long expiresIn) {
         this.jwt = jwt;
         this.expiresIn = expiresIn;
-    }
-
-    public UserTokenStateDto(String jwt, int expiresIn) {
     }
 
     public Long getExpiresIn() {

@@ -21,7 +21,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class User implements UserDetails {
+public class User implements UserDetails {
 
     @Id
     @SequenceGenerator(name = "mySeqGenV1", sequenceName = "myGenV1", initialValue = 1, allocationSize = 1)

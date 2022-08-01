@@ -22,11 +22,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page.component';
 import { UnauthenticatedHeaderComponent } from './components/unauthenticated-header/unauthenticated-header.component';
 import { ProfileViewComponent } from './components/reusable-components/profile-view/profile-view.component';
-import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import {MatSliderModule} from '@angular/material/slider';
-
-
+import { InstructorDashboardComponent } from './components/instructor/instructor-dashboard/instructor-dashboard.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { InstructorSidebarComponent } from './components/instructor/instructor-sidebar/instructor-sidebar.component';
+import { InstructorTopbarComponent } from './components/instructor/instructor-topbar/instructor-topbar.component';
+import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
+import { AdminTopbarComponent } from './components/admin/admin-topbar/admin-topbar.component';
+import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
+import { AdminRegistrationRequestsComponent } from './components/admin/admin-registration-requests/admin-registration-requests.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AdminResponseComponent } from './components/admin-response/admin-response.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -41,7 +52,15 @@ import {MatSliderModule} from '@angular/material/slider';
     OwnerRegisterComponent,
     UnauthenticatedPageComponent,
     UnauthenticatedHeaderComponent,
-    ProfileViewComponent
+    ProfileViewComponent,
+    InstructorDashboardComponent,
+    InstructorSidebarComponent,
+    InstructorTopbarComponent,
+    AdminSidebarComponent,
+    AdminTopbarComponent,
+    AdminProfileComponent,
+    AdminRegistrationRequestsComponent,
+    AdminResponseComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,7 +99,15 @@ import {MatSliderModule} from '@angular/material/slider';
 
   ],
   
-  providers: [HttpClientModule],
+  providers: [HttpClientModule,
+    MatSidenavModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatCardModule
+
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

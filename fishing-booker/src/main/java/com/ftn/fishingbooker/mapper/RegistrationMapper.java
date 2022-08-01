@@ -11,12 +11,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegistrationMapper {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private RoleService roleService;
+    private static PasswordEncoder passwordEncoder;
+    private static RoleService roleService;
 
-    public Client mapToClient(RegisterDto registerDto) {
+    @Autowired
+    public RegistrationMapper(PasswordEncoder passwordEncoder, RoleService roleService) {
+        this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
+    }
+
+    public static Client mapToClient(RegisterDto registerDto) {
         Client client = new Client();
         client.setId(null);
         client.setFirstName(registerDto.getFirstName());
@@ -37,48 +41,29 @@ public class RegistrationMapper {
         return client;
     }
 
-    public HomeOwner mapToHomeOwner(OwnerRegisterDto registerDto) {
-        HomeOwner homeOwner = new HomeOwner();
-
-        homeOwner.setId(null);
-        homeOwner.setFirstName(registerDto.getFirstName());
-        homeOwner.setLastName(registerDto.getLastName());
-        homeOwner.setEmail(registerDto.getEmail());
-        homeOwner.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        homeOwner.setAddress(registerDto.getAddress());
-        homeOwner.setPhone(registerDto.getPhone());
-        homeOwner.setCity(registerDto.getCity());
-        homeOwner.setCountry(registerDto.getCountry());
-        homeOwner.setActivated(false);
-        homeOwner.setBlocked(false);
-        UserRole role = roleService.findByName("ROLE_HOME_OWNER");
-        homeOwner.setRole(role);
-
-
-        return homeOwner;
+    public static User mapToOwner(OwnerRegisterDto registerDto) {
+        User newOwner = new User();
+        newOwner.setFirstName(registerDto.getFirstName());
+        newOwner.setLastName(registerDto.getLastName());
+        newOwner.setEmail(registerDto.getEmail());
+        newOwner.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        newOwner.setAddress(registerDto.getAddress());
+        newOwner.setPhone(registerDto.getPhone());
+        newOwner.setCity(registerDto.getCity());
+        newOwner.setCountry(registerDto.getCountry());
+        newOwner.setActivated(false);
+        newOwner.setBlocked(false);
+        if (registerDto.registrationType.name().equals("VACATION_HOUSE_ADVERTISER")){
+            newOwner.setRole(roleService.findByName("ROLE_HOME_OWNER"));
+        } else if (registerDto.registrationType.name().equals("VACATION_BOAT_ADVERTISER")){
+            newOwner.setRole(roleService.findByName("ROLE_BOAT_OWNER"));
+        } else if (registerDto.registrationType.name().equals("INSTRUCTOR_ADVERTISER")) {
+            newOwner.setRole(roleService.findByName("ROLE_INSTRUCTOR"));
+        }
+        return newOwner;
     }
 
-    public BoatOwner mapToBoatOwner(OwnerRegisterDto registerDto) {
-        BoatOwner boatOwner = new BoatOwner();
-
-        boatOwner.setId(null);
-        boatOwner.setFirstName(registerDto.getFirstName());
-        boatOwner.setLastName(registerDto.getLastName());
-        boatOwner.setEmail(registerDto.getEmail());
-        boatOwner.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        boatOwner.setAddress(registerDto.getAddress());
-        boatOwner.setPhone(registerDto.getPhone());
-        boatOwner.setCity(registerDto.getCity());
-        boatOwner.setCountry(registerDto.getCountry());
-        boatOwner.setActivated(false);
-        boatOwner.setBlocked(false);
-
-        boatOwner.setRole(roleService.findByName("ROLE_BOAT_OWNER"));
-
-        return boatOwner;
-    }
-
-    public Admin mapToAdmin(RegisterDto registerDto) {
+    public static Admin mapToAdmin(RegisterDto registerDto) {
         Admin admin = new Admin();
 
         admin.setId(null);
@@ -97,22 +82,24 @@ public class RegistrationMapper {
         return admin;
     }
 
-    public Instructor mapToInstructor(OwnerRegisterDto registerDto) {
-        Instructor instructor = new Instructor();
-
-        instructor.setId(null);
-        instructor.setFirstName(registerDto.getFirstName());
-        instructor.setLastName(registerDto.getLastName());
-        instructor.setEmail(registerDto.getEmail());
-        instructor.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        instructor.setAddress(registerDto.getAddress());
-        instructor.setPhone(registerDto.getPhone());
-        instructor.setCity(registerDto.getCity());
-        instructor.setCountry(registerDto.getCountry());
-        instructor.setActivated(false);
-        instructor.setBlocked(false);
-        instructor.setRole(roleService.findByName("ROLE_INSTRUCTOR"));
-
-        return instructor;
+    public static RegistrationResponseDto mapToResponse(Registration registration){
+        RegistrationResponseDto dto = new RegistrationResponseDto();
+        dto.setId(registration.getId());
+        dto.setUserEmail(registration.getUserEmail());
+        dto.setType(registration.getType());
+        dto.setMotivation(registration.getMotivation());
+        return dto;
     }
+
+    public static Registration mapToRegistration(RegistrationResponseDto dto){
+        Registration registration = new Registration();
+        registration.setId(dto.getId());
+        registration.setType(dto.getType());
+        registration.setMotivation(dto.getMotivation());
+        registration.setApproved(dto.isApproved());
+        registration.setUserEmail(dto.getUserEmail());
+        registration.setAdminResponse(dto.getResponse());
+        return registration;
+    }
+
 }

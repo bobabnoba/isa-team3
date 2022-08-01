@@ -1,12 +1,15 @@
 package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.dto.*;
+import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.RegistrationMapper;
 import com.ftn.fishingbooker.mapper.UserMapper;
 import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.ClientService;
+import com.ftn.fishingbooker.service.RegistrationService;
 import com.ftn.fishingbooker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,27 +28,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private RegistrationMapper registrationMapper;
-    @Autowired
     private ClientService clientService;
+    @Autowired
+    RegistrationRepository registrationRepository;
+    @Autowired
+    private RegistrationService registrationService;
+
     private static String url = "<a href=\"http://localhost:4200/login\"> Login </a>";
 
-
-    public List<UserDto> getAll() {
-        List<User> users = userRepository.findAll();
-        return userMapper.mapToDto(users);
-    }
-
-    public UserDto get(Long id) {
-        User user = userRepository.getById(id);
-        return userMapper.mapToDto(user);
-    }
-
-    public void delete(Long id) {
-        userRepository.deleteById(id);
-    }
 
     @Override
     public boolean isEmailRegistered(String email) {
@@ -67,16 +57,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (isEmailRegistered(registerDto.getEmail())) {
             throw new ResourceConflictException("Email already exists");
         }
-        Client user = registrationMapper.mapToClient(registerDto);
+        Client user = RegistrationMapper.mapToClient(registerDto);
         clientService.registerClient(user);
         return user;
     }
+
     @Override
     public User createAdmin(RegisterDto registerDto) {
         if (isEmailRegistered(registerDto.getEmail())) {
             throw new ResourceConflictException("Email already exists");
         }
-        Admin user = registrationMapper.mapToAdmin(registerDto);
+        Admin user = RegistrationMapper.mapToAdmin(registerDto);
         //TODO:
         return user;
     }
@@ -86,6 +77,36 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User u = userRepository.findByEmail(email);
         u.setActivated(true);
         return url;
+    }
+
+    @Override
+    public User registerOwner(User owner, RegistrationType type, String motivation) throws MessagingException {
+
+        if (isEmailRegistered(owner.getEmail())) {
+            throw new ResourceConflictException("Email already exists");
+        }
+
+        Registration registration = new Registration(type, motivation, owner.getEmail());
+        registrationRepository.save(registration);
+
+        return userRepository.save(owner);
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User update(User user) {
+        User dbUser = userRepository.findByEmail(user.getEmail());
+        dbUser.setFirstName(user.getFirstName());
+        dbUser.setLastName(user.getLastName());
+        dbUser.setPhone(user.getPhone());
+        dbUser.setAddress(user.getAddress());
+        dbUser.setCity(user.getCity());
+        dbUser.setCountry(user.getCountry());
+        return userRepository.save(dbUser);
     }
 
 
