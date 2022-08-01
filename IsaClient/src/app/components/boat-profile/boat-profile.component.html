@@ -1,0 +1,76 @@
+<router-outlet></router-outlet>
+<app-unauthenticated-header></app-unauthenticated-header>
+<div class="container">
+    <div class="about">
+        <mat-card class="example-card">
+            <mat-card-title-group>
+                <mat-card-title>{{item.name}}</mat-card-title>
+                <mat-card-subtitle>{{item.address}}</mat-card-subtitle>
+
+                <div class="image-display">
+                    <img class="img1" src="../../../assets/images/boat.jpg">
+                </div>
+            </mat-card-title-group>
+            <label style="margin-bottom:5px;">Average rating : </label>
+            <ngb-rating [max]="5" [(rate)]="item.rating" [readonly]="true" style="margin-left: 5px;"></ngb-rating>
+
+            <mat-card-content>
+                {{item.description}}
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="bussines">
+        <div class="services">
+            <mat-list role="list">
+
+                <mat-list-item role="listitem" style="height: auto;">
+                    <div style="display: flex; flex-direction:column; margin-top: 30px; height: 100%;">
+                        <div class="sidebar-brand-icon rotate-n-15">
+                            <i class="fa fa-fish" style="font-size: 25px; margin-right: 5px;"></i>
+                            <label style="font-weight:bold">With Skipper</label>
+                        </div>
+                        <a>A professional skipper will navigate the boat for you</a>
+                    </div>
+                </mat-list-item>
+
+                <mat-list-item role="listitem" style="height: auto;">
+                    <div style="display: flex; flex-direction:column; margin-top: 30px;">
+                        <div class="sidebar-brand-icon rotate-n-15">
+                            <i class="fa fa-fish" style="font-size: 25px; margin-right: 5px;"></i>
+                            <label style="font-weight:bold">Drago is a Super Owner</label>
+                        </div>
+                        <a>Super owners are experienced boat owners who have received positive reviews and are
+                            committed
+                            to providing services of the highest quality.</a>
+                    </div>
+                </mat-list-item>
+                <div class="list-itm">
+                    <mat-list-item role="listitem">
+                        <div style="display: flex; flex-direction:column; margin-top: 30px;">
+                            <div class="sidebar-brand-icon rotate-n-15">
+                                <i class="fa fa-fish" style="font-size: 25px; margin-right: 5px;"></i>
+                                <label style="font-weight:bold">Cancellation policy</label>
+                            </div>
+                            <a>Moderate: 70% refund up to 10 days before arrival, excluding service fees and
+                                commission.</a>
+                        </div>
+                    </mat-list-item>
+                </div>
+            </mat-list>
+        </div>
+        <div class="prices">
+            <h1> Price List </h1>
+            <mat-list role="list">
+                <mat-list-item role="listitem">01 January - 31 March
+                    €3,500 / week</mat-list-item>
+                <mat-list-item role="listitem">01 May - 30 June
+                    €3,500 / week</mat-list-item>
+                <mat-list-item role="listitem">01 September - 31 December
+                    €3,500 / week</mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+    <div class="available-reservations">
+        <label> Available reservations pending ...</label>
+    </div>
+</div>

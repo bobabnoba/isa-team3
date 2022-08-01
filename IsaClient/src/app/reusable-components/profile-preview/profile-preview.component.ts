@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IProfileView } from 'src/app/interfaces/profile-view';
 
 @Component({
-  selector: 'app-profile-view',
-  templateUrl: './profile-view.component.html',
-  styleUrls: ['./profile-view.component.css']
+  selector: 'app-profile-preview',
+  templateUrl: './profile-preview.component.html',
+  styleUrls: ['./profile-preview.component.css']
 })
-export class ProfileViewComponent implements OnInit {
+export class ProfilePreviewComponent implements OnInit {
   @Input() 
   items!:IProfileView[]
   constructor() { }
@@ -15,3 +15,4 @@ export class ProfileViewComponent implements OnInit {
   }
 
 }
+

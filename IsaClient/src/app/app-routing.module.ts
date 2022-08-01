@@ -13,6 +13,9 @@ import { UnauthenticatedPageComponent } from './components/unauthenticated-page/
 import { InstructorDashboardComponent } from './components/instructor/instructor-dashboard/instructor-dashboard.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin/admin-registration-requests/admin-registration-requests.component';
+import { VacationHouseProfileComponent } from './components/vacation-house-profile/vacation-house-profile.component';
+import { InstructorProfileComponent } from './components/instructor-profile/instructor-profile.component';
+import { BoatProfileComponent } from './components/boat-profile/boat-profile.component';
 
 const routes: Routes = [
   {
@@ -20,7 +23,7 @@ const routes: Routes = [
     component: UnauthenticatedPageComponent,
   },
   {
-    path:'home',
+    path: 'home',
     children: [
       {
         path: 'page',
@@ -29,20 +32,23 @@ const routes: Routes = [
 
     ]
   },
+  { path: 'house', component: VacationHouseProfileComponent },
+  { path: 'instructor', component: InstructorProfileComponent },
+  { path: 'boat', component: BoatProfileComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'ownerRegistration', component: OwnerRegisterComponent },
   {
-    path : 'instructor/dashboard',
-    component:  InstructorDashboardComponent,
+    path: 'instructor/dashboard',
+    component: InstructorDashboardComponent,
   },
   {
-    path : 'admin/profile',
-    component:  AdminProfileComponent,
+    path: 'admin/profile',
+    component: AdminProfileComponent,
   },
   {
-    path : 'admin/registration-requests',
-    component:  AdminRegistrationRequestsComponent,
+    path: 'admin/registration-requests',
+    component: AdminRegistrationRequestsComponent,
   }
 ];
 @NgModule({

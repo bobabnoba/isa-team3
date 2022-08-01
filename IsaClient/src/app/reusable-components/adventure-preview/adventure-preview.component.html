@@ -1,0 +1,19 @@
+<div *ngFor="let item of items">
+    <mat-card class="example-card">
+        <mat-card-title-group class="title">
+            <div>
+                <mat-card-title>{{item.title}}</mat-card-title>
+                <mat-card-subtitle>{{item.address}}</mat-card-subtitle>
+                <mat-card-subtitle>{{item.time}}</mat-card-subtitle>
+            </div>
+            <div>
+                <mat-card-title style="margin-left: 30px;">{{item.price}}$</mat-card-title>
+            </div>
+        </mat-card-title-group>
+        <ngb-rating [max]="5" [(rate)]="item.rating" [readonly]="true"></ngb-rating>
+
+        <mat-card-content>
+            {{item.description}}
+        </mat-card-content>
+    </mat-card>
+</div>

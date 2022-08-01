@@ -1,0 +1,29 @@
+<router-outlet></router-outlet>
+<app-unauthenticated-header></app-unauthenticated-header>
+<div class="container">
+    <div class="about">
+        <mat-card class="example-card">
+            <mat-card-title-group>
+                <mat-card-title>{{instructor.name}}</mat-card-title>
+                <mat-card-subtitle>{{instructor.address}}</mat-card-subtitle>
+                <mat-card-subtitle>Experience {{instructor.experience}}</mat-card-subtitle>
+
+                <div class="image-display">
+                    <img class="img1" src="../../../assets/images/instructor.jpg">
+                </div>
+            </mat-card-title-group>
+            <label style="margin-bottom:5px;">Average rating : </label>
+            <ngb-rating [max]="5" [(rate)]="instructor.rating" [readonly]="true" style="margin-left: 5px;"></ngb-rating>
+
+            <mat-card-content>
+                {{instructor.biography}}
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="bussines">
+        <div class="services">
+          <app-adventure-preview [items]="adventures"></app-adventure-preview>
+        </div>
+    </div>
+  
+</div>

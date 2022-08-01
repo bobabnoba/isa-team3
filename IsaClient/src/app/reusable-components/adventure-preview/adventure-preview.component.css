@@ -1,0 +1,16 @@
+.example-card {
+    width: 800px;
+    max-height: auto;
+    margin-bottom: 8px;
+}
+
+ngb-rating {
+    color: rgb(241, 207, 11);
+    font-size: 30px;
+}
+.title {
+    margin-left: 0px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProfileViewComponent } from './profile-view.component';
+import { InstructorProfileComponent } from './instructor-profile.component';
 
-describe('ProfileViewComponent', () => {
-  let component: ProfileViewComponent;
-  let fixture: ComponentFixture<ProfileViewComponent>;
+describe('InstructorProfileComponent', () => {
+  let component: InstructorProfileComponent;
+  let fixture: ComponentFixture<InstructorProfileComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProfileViewComponent ]
+      declarations: [ InstructorProfileComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProfileViewComponent);
+    fixture = TestBed.createComponent(InstructorProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

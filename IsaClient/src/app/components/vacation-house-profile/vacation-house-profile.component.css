@@ -1,0 +1,28 @@
+.container {
+    margin-top: 150px;
+    display: flex;
+    flex-direction: column;
+}
+.about {
+    height: 100%;
+    width: 100%;
+}
+.example-card {
+    max-width: 100%;
+    margin-bottom: 8px;
+}
+
+ngb-rating {
+    color: rgb(241, 207, 11);
+    font-size: 30px;
+}
+
+.image-display {
+    max-width: 100%;
+    max-height: 100%;
+}
+.img1 {
+    width: 500px;
+    height: 300px;
+    object-fit: cover;
+}

@@ -21,7 +21,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page.component';
 import { UnauthenticatedHeaderComponent } from './components/unauthenticated-header/unauthenticated-header.component';
-import { ProfileViewComponent } from './components/reusable-components/profile-view/profile-view.component';
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import {MatSliderModule} from '@angular/material/slider';
 import { InstructorDashboardComponent } from './components/instructor/instructor-dashboard/instructor-dashboard.component';
@@ -38,6 +37,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AdminResponseComponent } from './components/admin-response/admin-response.component';
 import { MatCardModule } from '@angular/material/card';
+import { BoatProfileComponent } from './components/boat-profile/boat-profile.component';
+import { InstructorProfileComponent } from './components/instructor-profile/instructor-profile.component';
+import {MatListModule} from '@angular/material/list';
+import { AdventurePreviewComponent } from './reusable-components/adventure-preview/adventure-preview.component';
+import { ProfilePreviewComponent } from './reusable-components/profile-preview/profile-preview.component';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +57,6 @@ import { MatCardModule } from '@angular/material/card';
     OwnerRegisterComponent,
     UnauthenticatedPageComponent,
     UnauthenticatedHeaderComponent,
-    ProfileViewComponent,
     InstructorDashboardComponent,
     InstructorSidebarComponent,
     InstructorTopbarComponent,
@@ -61,6 +65,10 @@ import { MatCardModule } from '@angular/material/card';
     AdminProfileComponent,
     AdminRegistrationRequestsComponent,
     AdminResponseComponent,
+    BoatProfileComponent,
+    InstructorProfileComponent,
+    AdventurePreviewComponent,
+    ProfilePreviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,7 +85,10 @@ import { MatCardModule } from '@angular/material/card';
     NgbModule,
     MatCardModule,
     MatCheckboxModule,
-    MatSliderModule
+    MatSliderModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatListModule
 
   ],
   exports: [
@@ -95,7 +106,8 @@ import { MatCardModule } from '@angular/material/card';
     NgbModule,
     MatCardModule,
     MatCheckboxModule,
-    MatSliderModule
+    MatSliderModule,
+    MatListModule
 
   ],
   

@@ -1,7 +1,7 @@
-export interface IProfileView{
-    name: string, 
+export interface IProfileView {
+    name: string,
     type: string,
     address: string,
     description: string,
     rating: number
-} 
+}
