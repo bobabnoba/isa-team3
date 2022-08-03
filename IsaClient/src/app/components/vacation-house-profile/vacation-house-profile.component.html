@@ -1,6 +1,6 @@
 <router-outlet></router-outlet>
 <app-unauthenticated-header></app-unauthenticated-header>
-<div class="container">
+<div *ngIf="item"class="container">
     <div class="about">
         <mat-card class="example-card">
             <mat-card-title-group>
@@ -19,4 +19,35 @@
             </mat-card-content>
         </mat-card>
     </div>
+    <div class="moreInfo">
+
+        <mat-card class="wrapper">
+            <div class="box">
+            <mat-card-title>Number of rooms - {{roomsNumber}}</mat-card-title>
+            <mat-card-subtitle>Beds  - {{bedsNumber}}</mat-card-subtitle>
+            </div>
+        </mat-card>
+
+
+        <mat-card class="wrapper">
+            <mat-card-title>House rules</mat-card-title>
+            <div class="box">
+                <li *ngFor="let item of item.codeOfConduct; index as i;">{{item}}</li>
+            </div>
+        </mat-card>
+
+        <mat-card class="wrapper">
+            <mat-card-title>Services</mat-card-title>
+            <div class="box">
+                <li *ngFor="let item of item.utilities;">{{item}}</li>
+            </div>
+        </mat-card>
+
+    </div>
+    <hr>
+    <h2 style="margin-left: 15px; color: blue;">Available Actions</h2>
+    <div  *ngFor="let item of item.availableReservations;" >
+        <app-reservation-action [action]="item"></app-reservation-action>
+    </div>
+  
 </div>

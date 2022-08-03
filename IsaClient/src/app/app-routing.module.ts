@@ -32,9 +32,9 @@ const routes: Routes = [
 
     ]
   },
-  { path: 'house', component: VacationHouseProfileComponent },
-  { path: 'instructor', component: InstructorProfileComponent },
-  { path: 'boat', component: BoatProfileComponent },
+  { path: 'vacation/home/:id', component: VacationHouseProfileComponent },
+  { path: 'adventure/:id', component: InstructorProfileComponent },
+  { path: 'boat/:id', component: BoatProfileComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'ownerRegistration', component: OwnerRegisterComponent },

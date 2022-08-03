@@ -25,11 +25,13 @@
         </div>
         <div class="displaySection">
             <div class="sectionOverflow">
-                <app-profile-preview [items]="filteredItems" class="profile"></app-profile-preview>
+                <div *ngFor="let item of filteredItems">
+                    <app-rental-view [item]="item" class="profile"></app-rental-view>
+                </div>
             </div>
             <div class="sectionMap">
                 <div><img class="mapImg" src="../../../assets/images/tokyo-map.jpg" /></div>
-               
+
             </div>
         </div>
     </div>

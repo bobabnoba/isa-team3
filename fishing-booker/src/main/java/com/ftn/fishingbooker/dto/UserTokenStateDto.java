@@ -1,5 +1,8 @@
 package com.ftn.fishingbooker.dto;
 
+import lombok.Data;
+
+@Data
 public class UserTokenStateDto {
 
     private String jwt;
@@ -10,19 +13,4 @@ public class UserTokenStateDto {
         this.expiresIn = expiresIn;
     }
 
-    public Long getExpiresIn() {
-        return expiresIn;
-    }
-
-    public void setExpiresIn(Long expiresIn) {
-        this.expiresIn = expiresIn;
-    }
-
-    public String getJwt() {
-        return jwt;
-    }
-
-    public void setJwt(String jwt) {
-        this.jwt = jwt;
-    }
 }

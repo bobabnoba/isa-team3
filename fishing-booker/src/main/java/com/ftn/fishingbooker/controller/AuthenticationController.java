@@ -83,7 +83,7 @@ public class AuthenticationController {
     public ResponseEntity<Object> registerOwner(@RequestBody OwnerRegisterDto registerDto) throws MessagingException {
 
         User owner = RegistrationMapper.mapToOwner(registerDto);
-        User user = userService.registerOwner(owner, registerDto.registrationType, registerDto.motivation);
+        User user = userService.registerOwner(owner, registerDto.getRegistrationType(), registerDto.getMotivation());
         return new ResponseEntity<>(UserMapper.mapToDto(user), HttpStatus.CREATED);
     }
 

@@ -53,11 +53,11 @@ public class RegistrationMapper {
         newOwner.setCountry(registerDto.getCountry());
         newOwner.setActivated(false);
         newOwner.setBlocked(false);
-        if (registerDto.registrationType.name().equals("VACATION_HOUSE_ADVERTISER")){
+        if (registerDto.getRegistrationType().name().equals("VACATION_HOUSE_ADVERTISER")){
             newOwner.setRole(roleService.findByName("ROLE_HOME_OWNER"));
-        } else if (registerDto.registrationType.name().equals("VACATION_BOAT_ADVERTISER")){
+        } else if (registerDto.getRegistrationType().name().equals("VACATION_BOAT_ADVERTISER")){
             newOwner.setRole(roleService.findByName("ROLE_BOAT_OWNER"));
-        } else if (registerDto.registrationType.name().equals("INSTRUCTOR_ADVERTISER")) {
+        } else if (registerDto.getRegistrationType().name().equals("INSTRUCTOR_ADVERTISER")) {
             newOwner.setRole(roleService.findByName("ROLE_INSTRUCTOR"));
         }
         return newOwner;

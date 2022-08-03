@@ -1,7 +1,5 @@
 package com.ftn.fishingbooker.model;
 
-import com.ftn.fishingbooker.enumeration.AdditionalService;
-import com.ftn.fishingbooker.enumeration.ReservationType;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -21,38 +19,26 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private ReservationType type;
-
     private Date startDate;
 
-    private int days;
+    //TODO:trazi se trajanje rezervacije?
+
+    private Date endDate;
 
     private int maxGuests;
 
-    @Column
-    @ElementCollection(targetClass = Integer.class)
-    private Set<AdditionalService> additionalServices;
+    private Boolean isCanceled = false;
 
     private float price;
 
-    private String adventureDestination;
-
-    @ManyToOne
-    @JoinColumn(name = "boat_id", nullable = false)
-    private Boat boat;
+    @Column
+    @ElementCollection(targetClass = Integer.class)
+    private Set<String> additionalServices;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @ManyToOne
-    @JoinColumn(name = "adventure_id")
-    private Adventure adventure;
-
-    @ManyToOne
-    @JoinColumn(name = "vacation_home_id")
-    private VacationHome vacationHome;
 
     @Override
     public boolean equals(Object o) {

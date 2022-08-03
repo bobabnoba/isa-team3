@@ -1,11 +1,12 @@
-package com.ftn.fishingbooker.model;
+package com.ftn.fishingbooker.model.boat;
 
 import com.ftn.fishingbooker.enumeration.BoatOwnerType;
+import com.ftn.fishingbooker.model.Complaint;
+import com.ftn.fishingbooker.model.Report;
+import com.ftn.fishingbooker.model.User;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -16,7 +17,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class BoatOwner extends User {
 
-    @Enumerated(EnumType.STRING)
     private BoatOwnerType type;
 
     @OneToMany(mappedBy = "boatOwner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

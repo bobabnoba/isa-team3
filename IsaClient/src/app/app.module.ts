@@ -22,16 +22,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page.component';
 import { UnauthenticatedHeaderComponent } from './components/unauthenticated-header/unauthenticated-header.component';
 import { MatCheckboxModule } from '@angular/material/checkbox'
-import {MatSliderModule} from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
 import { InstructorDashboardComponent } from './components/instructor/instructor-dashboard/instructor-dashboard.component';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { InstructorSidebarComponent } from './components/instructor/instructor-sidebar/instructor-sidebar.component';
 import { InstructorTopbarComponent } from './components/instructor/instructor-topbar/instructor-topbar.component';
 import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
 import { AdminTopbarComponent } from './components/admin/admin-topbar/admin-topbar.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin/admin-registration-requests/admin-registration-requests.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -39,10 +39,10 @@ import { AdminResponseComponent } from './components/admin-response/admin-respon
 import { MatCardModule } from '@angular/material/card';
 import { BoatProfileComponent } from './components/boat-profile/boat-profile.component';
 import { InstructorProfileComponent } from './components/instructor-profile/instructor-profile.component';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
 import { AdventurePreviewComponent } from './reusable-components/adventure-preview/adventure-preview.component';
-import { ProfilePreviewComponent } from './reusable-components/profile-preview/profile-preview.component';
-
+import { ReservationActionComponent } from './reusable-components/reservation-action/reservation-action.component';
+import { RentalViewComponent } from './reusable-components/rental-view/rental-view.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +68,8 @@ import { ProfilePreviewComponent } from './reusable-components/profile-preview/p
     BoatProfileComponent,
     InstructorProfileComponent,
     AdventurePreviewComponent,
-    ProfilePreviewComponent,
+    ReservationActionComponent,
+    RentalViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,7 +89,8 @@ import { ProfilePreviewComponent } from './reusable-components/profile-preview/p
     MatSliderModule,
     MatPaginatorModule,
     MatTableModule,
-    MatListModule
+    MatListModule,
+    MatButtonModule
 
   ],
   exports: [
@@ -107,19 +109,21 @@ import { ProfilePreviewComponent } from './reusable-components/profile-preview/p
     MatCardModule,
     MatCheckboxModule,
     MatSliderModule,
-    MatListModule
+    MatListModule,
+    MatButtonModule
 
   ],
-  
+
   providers: [HttpClientModule,
     MatSidenavModule,
     MatPaginatorModule,
     MatTableModule,
     MatButtonModule,
     MatDialogModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule
 
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

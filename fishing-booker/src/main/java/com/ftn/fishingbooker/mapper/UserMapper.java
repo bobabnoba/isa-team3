@@ -1,14 +1,8 @@
 package com.ftn.fishingbooker.mapper;
 
 import com.ftn.fishingbooker.dto.UserDto;
-import com.ftn.fishingbooker.model.BoatOwner;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.HomeOwner;
 import com.ftn.fishingbooker.model.User;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class UserMapper {

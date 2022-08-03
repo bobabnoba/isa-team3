@@ -1,7 +1,7 @@
 package com.ftn.fishingbooker.enumeration;
 
-public enum ReservationType {
+public enum RentalType {
     BOAT,
-    VACATION_HOME,
+    HOME,
     ADVENTURE
 }

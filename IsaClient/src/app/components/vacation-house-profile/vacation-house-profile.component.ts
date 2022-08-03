@@ -1,5 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { IProfileView } from 'src/app/interfaces/profile-view';
+import { Router } from '@angular/router';
+import { IAvailableReservations, IVacationHouseProfile } from 'src/app/interfaces/vacation-house-profile';
+import { HomeService } from 'src/app/services/vacation-home-service/home.service';
 
 @Component({
   selector: 'app-vacation-house-profile',
@@ -7,18 +10,36 @@ import { IProfileView } from 'src/app/interfaces/profile-view';
   styleUrls: ['./vacation-house-profile.component.css']
 })
 export class VacationHouseProfileComponent implements OnInit {
-  item!: IProfileView;
-  constructor() { }
+  item!: IVacationHouseProfile;
+  actions!: IAvailableReservations[];
+  roomsNumber!: number;
+  bedsNumber!: number;
+  id!: string;
+  constructor(private homeService: HomeService, private _router: Router) {
+    this.id = this._router.url.substring(15) ?? '';
+    console.log(this.id);
+    this.getHomeDetails();
+
+  }
+  getHomeDetails() {
+    const homeObserver = {
+      next: (data: IVacationHouseProfile) => {
+        this.item = data;
+        console.log(data);
+        this.roomsNumber = this.item.rooms.length
+        var b = 0
+        this.item.rooms.forEach(x => b = b + x.numberOfBeds)
+        this.bedsNumber = b;
+
+      },
+      error: (err: HttpErrorResponse) => {
+        this._router.navigate(['/404']);
+      },
+    }
+    this.homeService.getVacationHomeDetails(this.id).subscribe(homeObserver)
+  }
 
   ngOnInit(): void {
-    this.item = 
-      {
-        name: "Family-Friendly and Cozy Cottage in Los Feliz",
-        type: "vacation",
-        address: "(203) 781-8459 203 Mansfield St New Haven, Connecticut(CT), 06511",
-        description: "Knowing how to write an amazing vacation rental description is essential if you want to make your vacation rental listings stand out on sales channels like Booking.com, Airbnb and Vrbo, and to quickly get the guest’s attention among hundreds of other listings. A good description should highlight the uniqueness of your vacation rentals, project a picture that matches with guests’ travel imaginations, and as a result, secure you more bookings. ",
-        rating: 2
-      }
-  
-    }
+
+  }
 }

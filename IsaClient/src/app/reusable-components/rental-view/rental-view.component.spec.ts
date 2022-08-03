@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProfilePreviewComponent } from './profile-preview.component';
+import { RentalViewComponent } from './rental-view.component';
 
-describe('ProfilePreviewComponent', () => {
-  let component: ProfilePreviewComponent;
-  let fixture: ComponentFixture<ProfilePreviewComponent>;
+describe('RentalViewComponent', () => {
+  let component: RentalViewComponent;
+  let fixture: ComponentFixture<RentalViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProfilePreviewComponent ]
+      declarations: [ RentalViewComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProfilePreviewComponent);
+    fixture = TestBed.createComponent(RentalViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

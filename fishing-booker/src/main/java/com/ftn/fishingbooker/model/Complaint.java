@@ -1,5 +1,7 @@
 package com.ftn.fishingbooker.model;
 
+import com.ftn.fishingbooker.model.boat.BoatOwner;
+import com.ftn.fishingbooker.model.home.VacationHomeOwner;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -32,7 +34,7 @@ public class Complaint {
 
     @ManyToOne
     @JoinColumn(name = "home_owner_id", nullable = false)
-    private HomeOwner homeOwner;
+    private VacationHomeOwner vacationHomeOwner;
 
     @ManyToOne
     @JoinColumn(name = "instructor_id", nullable = false)

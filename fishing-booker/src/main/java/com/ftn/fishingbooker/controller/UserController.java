@@ -13,19 +13,19 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService){
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("{email}")
-    public ResponseEntity<UserDto> getUserInfo(@PathVariable String email){
+    public ResponseEntity<UserDto> getUserInfo(@PathVariable String email) {
         User userInfo = userService.getByEmail(email);
         return ResponseEntity.ok(UserMapper.mapToDto(userInfo));
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/update")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
         User user = userService.update(UserMapper.mapToEntity(userDto));
         return ResponseEntity.ok(UserMapper.mapToDto(user));
     }

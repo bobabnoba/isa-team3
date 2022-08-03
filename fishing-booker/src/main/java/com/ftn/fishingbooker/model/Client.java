@@ -16,7 +16,7 @@ public class Client extends User {
 
     private float points;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated
     private ClientType type;
 
     @OneToMany(targetEntity = Reservation.class, mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

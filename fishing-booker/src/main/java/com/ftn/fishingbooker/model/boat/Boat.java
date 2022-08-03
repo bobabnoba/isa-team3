@@ -1,15 +1,16 @@
-package com.ftn.fishingbooker.model;
+package com.ftn.fishingbooker.model.boat;
 
 import com.ftn.fishingbooker.enumeration.BoatType;
 import com.ftn.fishingbooker.enumeration.CancelingCondition;
 import com.ftn.fishingbooker.enumeration.FishingEquipment;
 import com.ftn.fishingbooker.enumeration.NavigationType;
-import lombok.*;
-import org.hibernate.Hibernate;
+import com.ftn.fishingbooker.model.Image;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -23,9 +24,10 @@ public class Boat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private boolean deleted = false;
+
     private String name;
 
-    @Enumerated(EnumType.STRING)
     private BoatType type;
 
     private float length;
@@ -37,32 +39,41 @@ public class Boat {
     private float maxSpeed;
 
     @Column
-    @ElementCollection(targetClass=Integer.class)
+    @ElementCollection(targetClass = Integer.class)
     private Set<NavigationType> navigationType;
 
     private String address;
 
     private String description;
 
-    //TODO: Set of images
-    //private Set<Base64> images;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "boat_images",
+            joinColumns = @JoinColumn(name = "boat_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id"))
+    private Set<Image> images;
+
+    private Double rating = 0.0;
 
     private int capacity;
 
     @OneToMany(mappedBy = "boat", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private Set<Reservation> availableReservations;
-
-    private String codeOfConduct;
+    private Set<BoatReservation> availableReservations;
 
     @Column
-    @ElementCollection(targetClass=Integer.class)
+    @ElementCollection(targetClass = String.class)
+    private Set<String> codeOfConduct;
+
+    @Column
+    @ElementCollection(targetClass = Integer.class)
     private Set<FishingEquipment> fishingEquipment;
 
-    @Enumerated(EnumType.STRING)
     private CancelingCondition reservationCanceling;
 
-    private HashMap<String, Float> priceList;
+
+    @OneToMany(mappedBy = "boat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<BoatUtility> utilities;
 
     private String information;
 
@@ -70,16 +81,4 @@ public class Boat {
     @JoinColumn(name = "boat_owner_id")
     private BoatOwner boatOwner;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Boat boat = (Boat) o;
-        return id != null && Objects.equals(id, boat.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
