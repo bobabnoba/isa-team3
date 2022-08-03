@@ -12,6 +12,7 @@ import java.util.Collection;
 @Entity
 @Data
 public class Admin extends User {
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<UserRole> roles = new ArrayList<>();

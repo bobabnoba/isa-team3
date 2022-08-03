@@ -1,12 +1,8 @@
 package com.ftn.fishingbooker.model;
-
-import com.ftn.fishingbooker.enumeration.CancelingCondition;
-import com.ftn.fishingbooker.enumeration.FishingEquipment;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,35 +17,41 @@ public class Adventure {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String title;
 
+    //TODO: location class, map related
     private String address;
 
     private String description;
 
-    //private Set<Base64> images;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> images;
 
-    @OneToMany(mappedBy = "adventure", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private Set<Reservation> availableReservations;
+    //TODO: quick reservations
+
+//    @OneToMany(mappedBy = "adventure", fetch = FetchType.LAZY)
+//    @ToString.Exclude
+//    private Set<Reservation> availableReservations;
 
     private String codeOfConduct;
 
-    private HashMap<String, Float> priceList;
+    private double pricePerDay;
 
-    private String information;
+    private double cancelingPercentage;
+
+    private int maxNumberOfParticipants;
+
+    @ManyToOne(targetEntity = Instructor.class, cascade = CascadeType.MERGE)
+    private Instructor instructor;
+
 
     @Column
-    @ElementCollection(targetClass = Integer.class)
+    @ManyToMany(targetEntity = FishingEquipment.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<FishingEquipment> fishingEquipment;
 
-    //@Column
-    //@ElementCollection(targetClass=Integer.class)
-    private CancelingCondition reservationCanceling;
-
-    @ManyToOne
-    @JoinColumn(name = "instructor_id")
-    private Instructor instructor;
+    @Column
+    @OneToMany(targetEntity = AdditionalService.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<AdditionalService> additionalServices;
 
     @Override
     public boolean equals(Object o) {

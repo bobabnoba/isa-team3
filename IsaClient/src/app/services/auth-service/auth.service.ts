@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { LoggedUser } from '../../interfaces/logged-user';
 import { INewUser } from '../../interfaces/new-user';
 import { RegisterOwner } from '../../interfaces/register-owner';
@@ -39,10 +38,23 @@ export class AuthService {
   }
 
   registerOwner(newUser: RegisterOwner): Observable<LoggedUser> {
-    return this.http.post<LoggedUser>(
-      'http://localhost:8090/auth/register/owner',
-      newUser
-    );
+
+    if (newUser.registrationType === "INSTRUCTOR_ADVERTISER"){
+      return this.http.post<LoggedUser>(
+        'http://localhost:8090/instructor/register',
+        newUser
+      );
+    } else if (newUser.registrationType === "VACATION_HOUSE_ADVERTISER"){
+      return this.http.post<LoggedUser>(
+        'http://localhost:8090/home-owner/register',
+        newUser
+      );
+    } else { //if (newUser.registrationType === "VACATION_BOAT_ADVERTISER"){
+      return this.http.post<LoggedUser>(
+        'http://localhost:8090/boat-owner/register',
+        newUser
+      );
+    } 
   }
 
   logout() {

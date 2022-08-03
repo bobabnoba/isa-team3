@@ -79,14 +79,6 @@ public class AuthenticationController {
         return new ResponseEntity<>(UserMapper.mapToDto(user), HttpStatus.CREATED);
     }
 
-    @PostMapping("/register/owner")
-    public ResponseEntity<Object> registerOwner(@RequestBody OwnerRegisterDto registerDto) throws MessagingException {
-
-        User owner = RegistrationMapper.mapToOwner(registerDto);
-        User user = userService.registerOwner(owner, registerDto.registrationType, registerDto.motivation);
-        return new ResponseEntity<>(UserMapper.mapToDto(user), HttpStatus.CREATED);
-    }
-
     @PostMapping("/register/admin")
     public ResponseEntity<User> registerAdmin(@RequestBody RegisterDto registerDto) {
         User user = userService.createAdmin(registerDto);
