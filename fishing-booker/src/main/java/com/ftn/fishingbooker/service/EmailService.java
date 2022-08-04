@@ -9,4 +9,6 @@ public interface EmailService {
     String createAdminResponseEmail(String message, boolean isApproved);
 
     void sendEmail(String to, String subject, String emailContent) throws MessagingException;
+
+    String createDeleteAccountResponseEmail(String message, boolean isApproved);
 }

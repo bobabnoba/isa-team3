@@ -41,7 +41,18 @@ export class LoginComponent implements OnInit {
         }
       },
       error: (err: HttpErrorResponse) => {
-        this._snackBar.open(err.error.message + "!", 'Dismiss');
+        if(err.status == 403){
+          this._snackBar.open('Your account has been deleted!', '',
+          {duration : 3000,panelClass: ['snack-bar']}
+        );
+        f.reset();
+        }else if(err.status == 400) {
+          this._snackBar.open(err.error.message +' Please try again.', '',
+          {duration : 3000,panelClass: ['snack-bar']}
+        );
+        } else {
+          this._snackBar.open(err.error.message + "!", 'Dismiss');
+        }
       },
     };
     this.authService.login(f.value).subscribe(loginObserver);

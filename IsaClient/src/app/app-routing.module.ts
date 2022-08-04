@@ -14,6 +14,7 @@ import { AdminProfileComponent } from './components/admin/admin-profile/admin-pr
 import { AdminRegistrationRequestsComponent } from './components/admin/admin-registration-requests/admin-registration-requests.component';
 import { AdventureProfileComponent } from './components/adventure/adventure-profile/adventure-profile.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { AdminDeleteRequestsComponent } from './components/admin/admin-delete-requests/admin-delete-requests.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,10 @@ const routes: Routes = [
   {
     path : 'admin/registration-requests',
     component:  AdminRegistrationRequestsComponent,
+  },
+  {
+    path: 'admin/account-deletion-requests',
+    component: AdminDeleteRequestsComponent
   },
   {
     path : 'adventure',

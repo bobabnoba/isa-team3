@@ -58,6 +58,11 @@ public class AuthenticationController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             User user = (User) authentication.getPrincipal();
+
+            if (user.isDeleted()) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+
             String jwt = tokenUtils.generateToken(user.getEmail(), user.getRole().getName(), false);
             int expiresIn = tokenUtils.getExpiredIn();
 

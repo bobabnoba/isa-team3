@@ -50,6 +50,8 @@ public class User implements UserDetails {
 
     private boolean isBlocked;
 
+    private boolean isDeleted;
+
     private boolean testRebaseAgain;
 
     @Column(name = "last_password_reset_date")
