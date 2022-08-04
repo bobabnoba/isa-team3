@@ -21,7 +21,7 @@ public class Instructor extends User {
 //    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    @ToString.Exclude
 //    private Set<Adventure> adventures;
-
+//
 //    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
 //    @ToString.Exclude
 //    private Set<Report> reservationReport;

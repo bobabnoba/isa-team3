@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table'
 import { RegistrationRequest } from 'src/app/interfaces/registration-request';
 import { AdminService } from 'src/app/services/admin-service/admin.service';
-import { AdminResponseComponent } from '../../admin-response/admin-response.component';
+import { AdminResponseComponent } from '../admin-response/admin-response.component';
 
 @Component({
   selector: 'app-admin-registration-requests',

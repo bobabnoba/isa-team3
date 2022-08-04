@@ -30,8 +30,11 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AdminResponseComponent } from './components/admin-response/admin-response.component';
+import { AdminResponseComponent } from './components/admin/admin-response/admin-response.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { AdventureProfileComponent } from './components/adventure/adventure-profile/adventure-profile.component';
+import { AdventureInfoComponent } from './components/adventure/adventure-info/adventure-info.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,8 @@ import { MatCardModule } from '@angular/material/card';
     AdminProfileComponent,
     AdminRegistrationRequestsComponent,
     AdminResponseComponent,
+    AdventureProfileComponent,
+    AdventureInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +75,8 @@ import { MatCardModule } from '@angular/material/card';
     MatTableModule,
     MatButtonModule,
     MatDialogModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule
 
   ],
   providers: [HttpClientModule  ],
