@@ -35,6 +35,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AdventureProfileComponent } from './components/adventure/adventure-profile/adventure-profile.component';
 import { AdventureInfoComponent } from './components/adventure/adventure-info/adventure-info.component';
+import { AdventureAddtionalInfoComponent } from './components/adventure/adventure-addtional-info/adventure-addtional-info.component';
+import { AdventureLocationComponent } from './components/adventure/adventure-location/adventure-location.component';
+import { AdventureServicesComponent } from './components/adventure/adventure-services/adventure-services.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +59,10 @@ import { AdventureInfoComponent } from './components/adventure/adventure-info/ad
     AdminRegistrationRequestsComponent,
     AdminResponseComponent,
     AdventureProfileComponent,
-    AdventureInfoComponent
+    AdventureInfoComponent,
+    AdventureAddtionalInfoComponent,
+    AdventureLocationComponent,
+    AdventureServicesComponent
   ],
   imports: [
     BrowserModule,
