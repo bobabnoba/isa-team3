@@ -110,5 +110,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.save(dbUser);
     }
 
+    @Transactional
+    @Override
+    public void delete(String email) {
+        User dbUser = userRepository.findByEmail(email);
+        dbUser.setDeleted(true);
+        userRepository.save(dbUser);
+    }
+
 
 }
