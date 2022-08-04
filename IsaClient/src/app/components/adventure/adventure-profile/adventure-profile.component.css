@@ -1,0 +1,9 @@
+.pic {
+    background: #FFFFFF url("../../../../assets/images/Summer-Fishing.jpg") no-repeat center fixed;
+    flex-direction: column;
+}
+
+.tabs {
+    width: 80%;
+    background-color: rgba(237, 242, 248, 0.664);
+}

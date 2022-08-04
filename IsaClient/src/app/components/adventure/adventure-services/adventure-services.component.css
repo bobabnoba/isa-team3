@@ -1,0 +1,14 @@
+.wrapper {
+    justify-content: center;
+    display: flex;
+    min-height: 160px;
+}
+
+.inner {
+    padding: 14px;
+    width: 70%;
+}
+
+.price {
+    text-align: right;
+}

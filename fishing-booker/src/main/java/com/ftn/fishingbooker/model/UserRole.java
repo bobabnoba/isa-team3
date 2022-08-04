@@ -23,29 +23,30 @@ public class UserRole implements GrantedAuthority {
 
     private String name;
 
-    @OneToMany(mappedBy = "role")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private List<User> users;
+//    @OneToMany(mappedBy = "role")
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    private List<User> users;
 
     /**
      * Do this for bidirectional relationships
      * Add Child method in Parent Entity
      * @param user another user entity that claims this role
      */
-    public void addUser(User user){
-        users.add(user);
-        user.setRole(this);
-    }
+//    public void addUser(User user){
+//        users.add(user);
+//        user.setRole(this);
+//    }
     /**
      * Do this for bidirectional relationships
      * Remove Child method in Parent Entity
      * @param user user entity no longer claims this role
      */
-    public void removeUser(User user){
-        users.remove(user);
-        user.setRole(null);
-    }
+//    public void removeUser(User user){
+//        users.remove(user);
+//        user.setRole(null);
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

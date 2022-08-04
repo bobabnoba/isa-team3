@@ -1,0 +1,10 @@
+<div class="container wrapper">
+    <div class = "row inner" *ngFor="let service of adventure.additionalServices">
+        <div class="col-md" >
+          {{ service.name }}
+        </div>
+        <div class="col-md price">
+            ${{service.price}}
+        </div>
+    </div>
+</div>

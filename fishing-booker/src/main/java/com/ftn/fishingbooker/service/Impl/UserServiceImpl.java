@@ -89,6 +89,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Registration registration = new Registration(type, motivation, owner.getEmail());
         registrationRepository.save(registration);
 
+
         return userRepository.save(owner);
     }
 

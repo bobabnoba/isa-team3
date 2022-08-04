@@ -18,16 +18,16 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class Instructor extends User {
 
-    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @ToString.Exclude
-    private Set<Adventure> adventures;
-
-    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private Set<Report> reservationReport;
-
-    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private Set<Complaint> complaints;
+//    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @ToString.Exclude
+//    private Set<Adventure> adventures;
+//
+//    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
+//    @ToString.Exclude
+//    private Set<Report> reservationReport;
+//
+//    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
+//    @ToString.Exclude
+//    private Set<Complaint> complaints;
     
 }

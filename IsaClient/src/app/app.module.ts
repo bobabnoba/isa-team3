@@ -30,8 +30,18 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AdminResponseComponent } from './components/admin-response/admin-response.component';
+import { AdminResponseComponent } from './components/admin/admin-response/admin-response.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { AdventureProfileComponent } from './components/adventure/adventure-profile/adventure-profile.component';
+import { AdventureInfoComponent } from './components/adventure/adventure-info/adventure-info.component';
+import { AdventureAddtionalInfoComponent } from './components/adventure/adventure-addtional-info/adventure-addtional-info.component';
+import { AdventureLocationComponent } from './components/adventure/adventure-location/adventure-location.component';
+import { AdventureServicesComponent } from './components/adventure/adventure-services/adventure-services.component';
+import { AdventureInstructorComponent } from './components/adventure/adventure-instructor/adventure-instructor.component';
+import { PastExperiencesComponent } from './components/adventure/past-experiences/past-experiences.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+
 
 @NgModule({
   declarations: [
@@ -52,6 +62,14 @@ import { MatCardModule } from '@angular/material/card';
     AdminProfileComponent,
     AdminRegistrationRequestsComponent,
     AdminResponseComponent,
+    AdventureProfileComponent,
+    AdventureInfoComponent,
+    AdventureAddtionalInfoComponent,
+    AdventureLocationComponent,
+    AdventureServicesComponent,
+    AdventureInstructorComponent,
+    PastExperiencesComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +88,8 @@ import { MatCardModule } from '@angular/material/card';
     MatTableModule,
     MatButtonModule,
     MatDialogModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule,
 
   ],
   providers: [HttpClientModule  ],

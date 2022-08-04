@@ -9,4 +9,6 @@ public interface RegistrationService {
     public void sendRegistrationEmail(String client, String email) throws MessagingException;
 
     String confirmToken(String token);
+
+
 }

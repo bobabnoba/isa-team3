@@ -12,6 +12,8 @@ import { OwnerRegisterComponent } from './components/owner-register/owner-regist
 import { InstructorDashboardComponent } from './components/instructor/instructor-dashboard/instructor-dashboard.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin/admin-registration-requests/admin-registration-requests.component';
+import { AdventureProfileComponent } from './components/adventure/adventure-profile/adventure-profile.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   {
@@ -41,13 +43,22 @@ const routes: Routes = [
     component:  InstructorDashboardComponent,
   },
   {
+    path : 'admin/dashboard',
+    component: AdminDashboardComponent
+  },
+  {
     path : 'admin/profile',
     component:  AdminProfileComponent,
   },
   {
     path : 'admin/registration-requests',
     component:  AdminRegistrationRequestsComponent,
-  }
+  },
+  {
+    path : 'adventure',
+    component: AdventureProfileComponent
+  },
+
 ];
 @NgModule({
   imports: [

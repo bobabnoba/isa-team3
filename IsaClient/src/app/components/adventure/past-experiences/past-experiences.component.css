@@ -1,0 +1,7 @@
+.slider {
+    justify-content: center;
+    display: flex;
+    width: 77%;
+    flex-direction: column;
+    text-align: center;
+}

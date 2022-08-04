@@ -26,3 +26,9 @@ body {
     font-weight: 500;
     color: #012970 !important;
 }
+
+.mat-sidenav-container,
+.mat-sidenav-content,
+.mat-tab-body-content {
+    transform: none !important;
+}

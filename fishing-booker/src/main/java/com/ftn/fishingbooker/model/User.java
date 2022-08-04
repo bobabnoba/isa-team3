@@ -44,6 +44,8 @@ public class User implements UserDetails {
 
     private String country;
 
+    private String biography;
+
     private boolean isActivated;
 
     private boolean isBlocked;
