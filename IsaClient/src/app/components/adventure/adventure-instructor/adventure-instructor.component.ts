@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Adventure } from 'src/app/interfaces/adventure';
 
 @Component({
   selector: 'app-adventure-instructor',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./adventure-instructor.component.css']
 })
 export class AdventureInstructorComponent implements OnInit {
+
+  @Input()
+  adventure! : Adventure;  
 
   constructor() { }
 

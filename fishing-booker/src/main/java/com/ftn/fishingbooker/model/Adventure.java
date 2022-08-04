@@ -41,7 +41,7 @@ public class Adventure {
 
     private int maxNumberOfParticipants;
 
-    @ManyToOne(targetEntity = Instructor.class, cascade = CascadeType.MERGE)
+    @ManyToOne(targetEntity = Instructor.class, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Instructor instructor;
 
 

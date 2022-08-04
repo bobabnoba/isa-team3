@@ -40,6 +40,7 @@ import { AdventureLocationComponent } from './components/adventure/adventure-loc
 import { AdventureServicesComponent } from './components/adventure/adventure-services/adventure-services.component';
 import { AdventureInstructorComponent } from './components/adventure/adventure-instructor/adventure-instructor.component';
 import { PastExperiencesComponent } from './components/adventure/past-experiences/past-experiences.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { PastExperiencesComponent } from './components/adventure/past-experience
     AdventureLocationComponent,
     AdventureServicesComponent,
     AdventureInstructorComponent,
-    PastExperiencesComponent
+    PastExperiencesComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,

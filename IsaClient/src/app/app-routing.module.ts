@@ -13,6 +13,7 @@ import { InstructorDashboardComponent } from './components/instructor/instructor
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin/admin-registration-requests/admin-registration-requests.component';
 import { AdventureProfileComponent } from './components/adventure/adventure-profile/adventure-profile.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path : 'instructor/dashboard',
     component:  InstructorDashboardComponent,
+  },
+  {
+    path : 'admin/dashboard',
+    component: AdminDashboardComponent
   },
   {
     path : 'admin/profile',
