@@ -3,7 +3,7 @@ package com.ftn.fishingbooker.dto;
 public class DeleteAccountRequestDto {
 
     public String email;
-    public String motivation;
+    public String explanation;
 
     public String getEmail() {
         return email;
@@ -13,12 +13,12 @@ public class DeleteAccountRequestDto {
         this.email = email;
     }
 
-    public String getMotivation() {
-        return motivation;
+    public String getExplanation() {
+        return explanation;
     }
 
-    public void setMotivation(String motivation) {
-        this.motivation = motivation;
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
     }
 
 }

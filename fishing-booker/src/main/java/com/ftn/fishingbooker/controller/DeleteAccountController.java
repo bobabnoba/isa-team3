@@ -28,7 +28,7 @@ public class DeleteAccountController {
         return ResponseEntity.ok(DeleteAccountRequestMapper.mapToDto(savedRequest));
     }
 
-    @GetMapping
+    @GetMapping("/requests")
     public ResponseEntity<Collection<DeleteAccountResponse>> getAllDeletionRequests(){
         Collection<DeleteAccountRequest> requests = deleteAccountService.getAllUnprocessed();
         Collection<DeleteAccountResponse> dtos = requests.stream()
@@ -44,13 +44,6 @@ public class DeleteAccountController {
         } catch (MessagingException e) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
-
-    @DeleteMapping(value = "/{email}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable String email) {
-       // userService.delete(email);
-        return ResponseEntity.noContent().build();
-    }
-
 }

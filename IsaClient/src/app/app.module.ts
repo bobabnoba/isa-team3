@@ -41,6 +41,7 @@ import { AdventureServicesComponent } from './components/adventure/adventure-ser
 import { AdventureInstructorComponent } from './components/adventure/adventure-instructor/adventure-instructor.component';
 import { PastExperiencesComponent } from './components/adventure/past-experiences/past-experiences.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { AdminDeleteRequestsComponent } from './components/admin/admin-delete-requests/admin-delete-requests.component';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { AdminDashboardComponent } from './components/admin/admin-dashboard/admi
     AdventureServicesComponent,
     AdventureInstructorComponent,
     PastExperiencesComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
+    AdminDeleteRequestsComponent
   ],
   imports: [
     BrowserModule,

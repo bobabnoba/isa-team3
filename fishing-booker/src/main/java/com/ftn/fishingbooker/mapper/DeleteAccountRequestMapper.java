@@ -9,7 +9,7 @@ public class DeleteAccountRequestMapper {
     public static DeleteAccountRequest mapToEntity(DeleteAccountRequestDto dto) {
         DeleteAccountRequest request = new DeleteAccountRequest();
         request.setEmail(dto.getEmail());
-        request.setExplanation(dto.getMotivation());
+        request.setExplanation(dto.getExplanation());
         request.setApproved(false);
         return request;
     }
