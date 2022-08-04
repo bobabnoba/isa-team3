@@ -38,6 +38,9 @@ import { AdventureInfoComponent } from './components/adventure/adventure-info/ad
 import { AdventureAddtionalInfoComponent } from './components/adventure/adventure-addtional-info/adventure-addtional-info.component';
 import { AdventureLocationComponent } from './components/adventure/adventure-location/adventure-location.component';
 import { AdventureServicesComponent } from './components/adventure/adventure-services/adventure-services.component';
+import { AdventureInstructorComponent } from './components/adventure/adventure-instructor/adventure-instructor.component';
+import { PastExperiencesComponent } from './components/adventure/past-experiences/past-experiences.component';
+
 
 @NgModule({
   declarations: [
@@ -62,7 +65,9 @@ import { AdventureServicesComponent } from './components/adventure/adventure-ser
     AdventureInfoComponent,
     AdventureAddtionalInfoComponent,
     AdventureLocationComponent,
-    AdventureServicesComponent
+    AdventureServicesComponent,
+    AdventureInstructorComponent,
+    PastExperiencesComponent
   ],
   imports: [
     BrowserModule,
@@ -82,7 +87,7 @@ import { AdventureServicesComponent } from './components/adventure/adventure-ser
     MatButtonModule,
     MatDialogModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
 
   ],
   providers: [HttpClientModule  ],

@@ -1,3 +1,9 @@
 .wrapper {
     padding: 15px;
+    min-height: 160px;
+}
+
+.lists {
+    list-style: none;
+    padding-left: 20px;
 }
