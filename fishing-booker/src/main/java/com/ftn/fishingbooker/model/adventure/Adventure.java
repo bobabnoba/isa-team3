@@ -51,7 +51,6 @@ public class Adventure {
             inverseJoinColumns = @JoinColumn(name = "image_id"))
     private Set<Image> images;
 
-
     private String information;
 
     @Column
