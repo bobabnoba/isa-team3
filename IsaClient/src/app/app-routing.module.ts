@@ -15,11 +15,27 @@ import { AdminRegistrationRequestsComponent } from './components/admin/admin-reg
 import { AdventureProfileComponent } from './components/adventure/adventure-profile/adventure-profile.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { AdminDeleteRequestsComponent } from './components/admin/admin-delete-requests/admin-delete-requests.component';
+import { ClientDashboardComponent } from './components/client/client-dashboard/client-dashboard.component';
+import { ClientProfileComponent } from './components/client/client-profile/client-profile.component';
+import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page/unauthenticated-page.component';
+import { VacationHomePageComponent } from './components/vacation-home-page/vacation-home-page/vacation-home-page.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainPageComponent,
+    component: UnauthenticatedPageComponent,
+  },
+  {
+    path: 'client/dashboard',
+    component: ClientDashboardComponent
+  },
+  {
+    path: 'client/profile',
+    component: ClientProfileComponent
+  },
+  {
+    path: 'vacation/home/:id',
+    component: VacationHomePageComponent
   },
   {
     path: 'login',
@@ -40,27 +56,27 @@ const routes: Routes = [
     component: OwnerRegisterComponent,
   },
   {
-    path : 'instructor/dashboard',
-    component:  InstructorDashboardComponent,
+    path: 'instructor/dashboard',
+    component: InstructorDashboardComponent,
   },
   {
-    path : 'admin/dashboard',
+    path: 'admin/dashboard',
     component: AdminDashboardComponent
   },
   {
-    path : 'admin/profile',
-    component:  AdminProfileComponent,
+    path: 'admin/profile',
+    component: AdminProfileComponent,
   },
   {
-    path : 'admin/registration-requests',
-    component:  AdminRegistrationRequestsComponent,
+    path: 'admin/registration-requests',
+    component: AdminRegistrationRequestsComponent,
   },
   {
     path: 'admin/account-deletion-requests',
     component: AdminDeleteRequestsComponent
   },
   {
-    path : 'adventure',
+    path: 'adventure',
     component: AdventureProfileComponent
   },
 
@@ -75,4 +91,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule, MaterialModule, FormsModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

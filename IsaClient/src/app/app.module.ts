@@ -19,14 +19,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
 import { MatSelectModule } from '@angular/material/select';
 import { InstructorDashboardComponent } from './components/instructor/instructor-dashboard/instructor-dashboard.component';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { InstructorSidebarComponent } from './components/instructor/instructor-sidebar/instructor-sidebar.component';
 import { InstructorTopbarComponent } from './components/instructor/instructor-topbar/instructor-topbar.component';
 import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
 import { AdminTopbarComponent } from './components/admin/admin-topbar/admin-topbar.component';
 import { AdminProfileComponent } from './components/admin/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin/admin-registration-requests/admin-registration-requests.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -42,6 +42,18 @@ import { AdventureInstructorComponent } from './components/adventure/adventure-i
 import { PastExperiencesComponent } from './components/adventure/past-experiences/past-experiences.component';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { AdminDeleteRequestsComponent } from './components/admin/admin-delete-requests/admin-delete-requests.component';
+import { ClientSidebarComponent } from './components/client/client-sidebar/client-sidebar.component';
+import { ClientProfileComponent } from './components/client/client-profile/client-profile.component';
+import { ClientDashboardComponent } from './components/client/client-dashboard/client-dashboard.component';
+import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page/unauthenticated-page.component';
+import { UnauthenticatedHeaderComponent } from './components/unauthenticated-header/unauthenticated-header/unauthenticated-header.component';
+import { RentalViewComponent } from './components/rental-view/rental-view/rental-view.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatListModule } from '@angular/material/list';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { VacationHomePageComponent } from './components/vacation-home-page/vacation-home-page/vacation-home-page.component';
+import { ReservationViewComponent } from './components/reservation-view/reservation-view/reservation-view.component';
 
 
 @NgModule({
@@ -71,7 +83,15 @@ import { AdminDeleteRequestsComponent } from './components/admin/admin-delete-re
     AdventureInstructorComponent,
     PastExperiencesComponent,
     AdminDashboardComponent,
-    AdminDeleteRequestsComponent
+    AdminDeleteRequestsComponent,
+    ClientSidebarComponent,
+    ClientProfileComponent,
+    ClientDashboardComponent,
+    UnauthenticatedPageComponent,
+    UnauthenticatedHeaderComponent,
+    RentalViewComponent,
+    VacationHomePageComponent,
+    ReservationViewComponent
   ],
   imports: [
     BrowserModule,
@@ -86,15 +106,41 @@ import { AdminDeleteRequestsComponent } from './components/admin/admin-delete-re
     MatSnackBarModule,
     MatSelectModule,
     MatSidenavModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatSliderModule,
     MatPaginatorModule,
     MatTableModule,
+    MatListModule,
     MatButtonModule,
-    MatDialogModule,
-    MatCardModule,
     MatTabsModule,
+    MatDialogModule,
+    NgbModule
 
   ],
-  providers: [HttpClientModule  ],
+  exports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatSliderModule,
+    MatListModule,
+    MatButtonModule,
+    MatDialogModule
+
+
+  ],
+  providers: [HttpClientModule],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
