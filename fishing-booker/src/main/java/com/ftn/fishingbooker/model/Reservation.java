@@ -2,7 +2,10 @@ package com.ftn.fishingbooker.model;
 
 import com.ftn.fishingbooker.enumeration.AdditionalService;
 import com.ftn.fishingbooker.enumeration.ReservationType;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -25,6 +28,8 @@ public class Reservation {
     private ReservationType type;
 
     private Date startDate;
+
+    private Date endDate;
 
     private int days;
 

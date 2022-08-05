@@ -4,7 +4,10 @@ import com.ftn.fishingbooker.enumeration.BoatType;
 import com.ftn.fishingbooker.enumeration.CancelingCondition;
 import com.ftn.fishingbooker.enumeration.FishingEquipment;
 import com.ftn.fishingbooker.enumeration.NavigationType;
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -20,10 +23,12 @@ import java.util.Set;
 public class Boat {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
+    private double rating = 0.0;
 
     @Enumerated(EnumType.STRING)
     private BoatType type;
@@ -37,10 +42,12 @@ public class Boat {
     private float maxSpeed;
 
     @Column
-    @ElementCollection(targetClass=Integer.class)
+    @ElementCollection(targetClass = Integer.class)
     private Set<NavigationType> navigationType;
 
-    private String address;
+    @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
+    private Address address;
+    ;
 
     private String description;
 
@@ -56,7 +63,7 @@ public class Boat {
     private String codeOfConduct;
 
     @Column
-    @ElementCollection(targetClass=Integer.class)
+    @ElementCollection(targetClass = Integer.class)
     private Set<FishingEquipment> fishingEquipment;
 
     @Enumerated(EnumType.STRING)
