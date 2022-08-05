@@ -35,9 +35,9 @@ public class Adventure {
 
     //TODO: quick reservations
 
-//    @OneToMany(mappedBy = "adventure", fetch = FetchType.LAZY)
-//    @ToString.Exclude
-//    private Set<Reservation> availableReservations;
+
+    @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    private Set<Reservation> availableReservations;
 
     private String codeOfConduct;
 

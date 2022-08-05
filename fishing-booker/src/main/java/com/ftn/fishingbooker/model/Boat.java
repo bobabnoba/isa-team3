@@ -8,11 +8,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -28,6 +25,8 @@ public class Boat {
 
     private String name;
 
+    private boolean deleted = false;
+
     private double rating = 0.0;
 
     @Enumerated(EnumType.STRING)
@@ -41,26 +40,28 @@ public class Boat {
 
     private float maxSpeed;
 
+    private int capacity;
+
+    private String description;
+
+    private String information;
+
     @Column
     @ElementCollection(targetClass = Integer.class)
     private Set<NavigationType> navigationType;
 
     @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
     private Address address;
-    ;
 
-    private String description;
+    @OneToMany(targetEntity = Image.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Image> images;
 
-    //TODO: Set of images
-    //private Set<Base64> images;
-
-    private int capacity;
-
-    @OneToMany(mappedBy = "boat", fetch = FetchType.LAZY)
-    @ToString.Exclude
+    @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private Set<Reservation> availableReservations;
 
-    private String codeOfConduct;
+    @Column
+    @ElementCollection(targetClass = String.class, fetch = FetchType.LAZY)
+    private Set<String> codeOfConduct;
 
     @Column
     @ElementCollection(targetClass = Integer.class)
@@ -69,24 +70,8 @@ public class Boat {
     @Enumerated(EnumType.STRING)
     private CancelingCondition reservationCanceling;
 
-    private HashMap<String, Float> priceList;
-
-    private String information;
-
     @ManyToOne
     @JoinColumn(name = "boat_owner_id")
     private BoatOwner boatOwner;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Boat boat = (Boat) o;
-        return id != null && Objects.equals(id, boat.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

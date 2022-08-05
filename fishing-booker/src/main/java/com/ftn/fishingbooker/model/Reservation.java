@@ -6,11 +6,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.util.Date;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -24,6 +23,17 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String destination;
+
+    private double discount;
+
+    //TODO: Pisalo je trajanje ali nisam sigurna za sta sluzi
+    private Duration duration;
+
+    private boolean isReserved = false;
+
+    private Boolean isCancelled = false;
+
     @Enumerated(EnumType.STRING)
     private ReservationType type;
 
@@ -35,40 +45,18 @@ public class Reservation {
 
     private int maxGuests;
 
+    private float price;
+
+    //TODO: Can be replaced with utility
     @Column
     @ElementCollection(targetClass = Integer.class)
     private Set<AdditionalService> additionalServices;
-
-    private float price;
-
-    private String adventureDestination;
-
-    @ManyToOne
-    @JoinColumn(name = "boat_id", nullable = false)
-    private Boat boat;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @ManyToOne
-    @JoinColumn(name = "adventure_id")
-    private Adventure adventure;
 
-    @ManyToOne
-    @JoinColumn(name = "vacation_home_id")
-    private VacationHome vacationHome;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Reservation that = (Reservation) o;
-        return id != null && Objects.equals(id, that.id);
-    }
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
