@@ -25,6 +25,7 @@ public class UserMapper {
         userDto.setCity(user.getCity());
         userDto.setCountry(user.getCountry());
         userDto.setActivated(user.isActivated());
+        userDto.setZipCode(user.getZipCode());
         userDto.setBlocked(user.isBlocked());
 
         return userDto;
@@ -43,6 +44,7 @@ public class UserMapper {
         user.setPhone(dto.getPhone());
         user.setActivated(dto.isActivated());
         user.setBlocked(user.isBlocked());
+        user.setZipCode(user.getZipCode());
 
         return user;
     }

@@ -13,8 +13,8 @@ import { AdminRegistrationRequestsComponent } from './components/admin-component
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
 import { AdminDashboardComponent } from './components/admin-components/admin-dashboard/admin-dashboard.component';
 import { AdminDeleteRequestsComponent } from './components/admin-components/admin-delete-requests/admin-delete-requests.component';
-import { ClientDashboardComponent } from './components/client/client-dashboard/client-dashboard.component';
-import { ClientProfileComponent } from './components/client/client-profile/client-profile.component';
+import { ClientDashboardComponent } from './components/client-components/client-dashboard/client-dashboard.component';
+import { ClientProfileComponent } from './components/client-components/client-profile/client-profile.component';
 import { VacationHomePageComponent } from './components/vacation-home-components/vacation-home-page/vacation-home-page.component';
 import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page.component';
 
@@ -40,7 +40,7 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'registration',
+    path: 'register',
     component: RegisterComponent,
   },
 

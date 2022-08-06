@@ -34,6 +34,7 @@ public class RegistrationMapper {
         client.setActivated(false);
         client.setBlocked(false);
         client.setPoints(0);
+        client.setZipCode(registerDto.getZipCode());
         client.setType(ClientType.SILVER);
         UserRole role = roleService.findByName("ROLE_CLIENT");
         client.setRole(role);
@@ -53,6 +54,7 @@ public class RegistrationMapper {
         homeOwner.setCountry(registerDto.getCountry());
         homeOwner.setActivated(false);
         homeOwner.setBlocked(false);
+
         UserRole role = roleService.findByName("ROLE_HOME_OWNER");
         homeOwner.setRole(role);
 

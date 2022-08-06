@@ -16,7 +16,7 @@ insert into role (id, name) values (2, 'ROLE_CLIENT');
 insert into role (id, name) values (3, 'ROLE_BOAT_OWNER');
 insert into role (id, name) values (4, 'ROLE_HOME_OWNER');
 insert into role (id, name) values (5, 'ROLE_INSTRUCTOR');
-
+--
 --Address
 insert into address(
 id, city, country, street, zip_code)
@@ -24,12 +24,13 @@ values (40, 'Novi Sad', 'Serbia', 'Sime milosevica', 2100);
 
 
 --Client
-insert into client(id, address, biography, city, country, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, role_id, points, type)
-values (10, 'WhateverAddress','Whatever Bio', 'WhateverCity', 'WhateverCountry', 'WhateverEmail', 'Whatever', 'true' , 'false', 'false', 'Whatever',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false' , 1 , 0, 'SILVER');
+insert into client(id, address, biography, city, country, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, zip_code, role_id, points, type)
+values (10, 'WhateverAddress','Whatever Bio', 'WhateverCity', 'WhateverCountry', 'ClientEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false' ,2100, 2 , 0, 'SILVER');
 
 ----Admin
---insert into admin(id, address, city, country, email, first_name, is_activated, is_blocked, last_name, password, phone, test_rebase_again, role_id)
---
+insert into client(id, address, biography, city, country, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, zip_code, role_id, points, type)
+values (20, 'WhateverAddress','Whatever Bio', 'WhateverCity', 'WhateverCountry', 'AdminEmail', 'Whatever', 'true' , 'false', 'false', 'Whatever',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false', 2100 , 1 , 0, 'SILVER');
+
 ----Home Owner
 insert into home_owner(
 	id, address, biography, city, country, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, role_id)

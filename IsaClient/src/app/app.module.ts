@@ -40,9 +40,9 @@ import { AdventureInstructorComponent } from './components/adventure-components/
 import { PastExperiencesComponent } from './components/adventure-components/past-experiences/past-experiences.component';
 import { AdminDashboardComponent } from './components/admin-components/admin-dashboard/admin-dashboard.component';
 import { AdminDeleteRequestsComponent } from './components/admin-components/admin-delete-requests/admin-delete-requests.component';
-import { ClientSidebarComponent } from './components/client/client-sidebar/client-sidebar.component';
-import { ClientProfileComponent } from './components/client/client-profile/client-profile.component';
-import { ClientDashboardComponent } from './components/client/client-dashboard/client-dashboard.component';
+import { ClientSidebarComponent } from './components/client-components/client-sidebar/client-sidebar.component';
+import { ClientProfileComponent } from './components/client-components/client-profile/client-profile.component';
+import { ClientDashboardComponent } from './components/client-components/client-dashboard/client-dashboard.component';
 import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page.component';
 import { UnauthenticatedHeaderComponent } from './components/unauthenticated-header/unauthenticated-header.component';
 import { RentalViewComponent } from './components/rental-view/rental-view.component';

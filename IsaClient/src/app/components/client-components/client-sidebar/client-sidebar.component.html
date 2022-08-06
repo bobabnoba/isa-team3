@@ -1,0 +1,42 @@
+<ul [ngClass]="{'toggled' : toggle}" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+    id="accordionSidebar">
+
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fa fa-fish"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3"> Booker <sup>easy&peasy</sup></div>
+    </a>
+
+    <hr class="sidebar-divider my-0">
+
+    <li class="nav-item active">
+        <a class="nav-link" href="/client/dashboard">
+            <i class="fa fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
+        <a class="nav-link" href="/client/profile">
+            <i class="fa-solid fa-user"></i>
+            <span>My profile</span>
+        </a>
+    </li>
+
+
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
+        <a class="nav-link" (click)="logout()" style="cursor:pointer">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Log out</span></a>
+    </li>
+
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" (click)="toggleMe()" id="sidebarToggle"></button>
+    </div>
+
+</ul>
