@@ -15,7 +15,11 @@ import java.util.Collection;
 public class RentalMapper {
     public static Collection<RentalDto> mapBoatToRental(Collection<Boat> boats) {
 
-        Collection<RentalDto> rentals = new ArrayList<RentalDto>();
+        ArrayList<RentalDto> rentals = new ArrayList<RentalDto>();
+
+        if (boats == null) {
+            return rentals;
+        }
         for (Boat boat : boats) {
             rentals.add(mapToRental(boat));
 
@@ -23,9 +27,12 @@ public class RentalMapper {
         return rentals;
     }
 
-    public static Collection<RentalDto> mapInstructorToRental(Collection<Adventure> adventures) {
+    public static Collection<RentalDto> mapAdventureToRental(Collection<Adventure> adventures) {
 
-        Collection<RentalDto> rentals = new ArrayList<RentalDto>();
+        ArrayList<RentalDto> rentals = new ArrayList<RentalDto>();
+        if (adventures == null) {
+            return rentals;
+        }
         for (Adventure adventure : adventures) {
             rentals.add(mapToRental(adventure));
 
@@ -34,7 +41,10 @@ public class RentalMapper {
     }
 
     public static Collection<RentalDto> mapVacationHomeToRental(Collection<VacationHome> homes) {
-        Collection<RentalDto> rentals = new ArrayList<>();
+        ArrayList<RentalDto> rentals = new ArrayList<>();
+        if (homes == null) {
+            return rentals;
+        }
         for (VacationHome home : homes) {
             rentals.add(mapToRental(home));
 
@@ -45,6 +55,7 @@ public class RentalMapper {
     private static RentalDto mapToRental(Boat boat) {
         //TODO:Images
         RentalDto rentalDto = new RentalDto();
+        rentalDto.setId(boat.getId());
         rentalDto.setAddress(boat.getAddress());
         rentalDto.setDescription(boat.getDescription());
         rentalDto.setName(boat.getName());
@@ -57,6 +68,7 @@ public class RentalMapper {
     public static RentalDto mapToRental(Adventure adventure) {
         //TODO:Images
         RentalDto rentalDto = new RentalDto();
+        rentalDto.setId(adventure.getId());
         rentalDto.setAddress(adventure.getAddress());
         rentalDto.setDescription(adventure.getDescription());
         rentalDto.setName(adventure.getTitle());
@@ -69,6 +81,7 @@ public class RentalMapper {
     public static RentalDto mapToRental(VacationHome home) {
         //TODO:Images
         RentalDto rentalDto = new RentalDto();
+        rentalDto.setId(home.getId());
         rentalDto.setAddress(home.getAddress());
         rentalDto.setDescription(home.getDescription());
         rentalDto.setName(home.getName());

@@ -27,7 +27,7 @@ public class RentalsController {
         Collection<RentalDto> allRentals = new ArrayList<>();
         Collection<RentalDto> boatRentals = RentalMapper.mapBoatToRental(boatService.getAll());
         Collection<RentalDto> vacationHomeRentals = RentalMapper.mapVacationHomeToRental(vacationHomeService.getAll());
-        Collection<RentalDto> adventureRentals = RentalMapper.mapInstructorToRental(adventureService.getAll());
+        Collection<RentalDto> adventureRentals = RentalMapper.mapAdventureToRental(adventureService.getAll());
         allRentals.addAll(boatRentals);
         allRentals.addAll(vacationHomeRentals);
         allRentals.addAll(adventureRentals);

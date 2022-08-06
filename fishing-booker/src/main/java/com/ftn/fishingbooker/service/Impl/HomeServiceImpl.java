@@ -16,7 +16,7 @@ public class HomeServiceImpl implements HomeService {
     private final HomeRepository vacationHomeRepository;
     @Override
     public Collection<VacationHome> getAll() {
-        return null;
+        return vacationHomeRepository.getAll();
     }
 
     @Override

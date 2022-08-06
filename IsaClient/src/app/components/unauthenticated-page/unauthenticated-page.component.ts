@@ -13,7 +13,7 @@ export class UnauthenticatedPageComponent implements OnInit {
   filteredItems!: IProfileView[];
   vacation = new FormControl();
   boats = new FormControl();
-  instructor = new FormControl();
+  adventure = new FormControl();
   nameSearch = "";
   ratingSearch = 0;
   constructor(private _service: RentalService) {
@@ -32,51 +32,50 @@ export class UnauthenticatedPageComponent implements OnInit {
   }
 
   onChangeDemo(ob: any) {
-    console.log(this.ratingSearch);
     this.filterAll();
   }
   
   filterAll() {
 
-    if (this.vacation.value && this.instructor.value && this.boats.value) {
+    if (this.vacation.value && this.adventure.value && this.boats.value) {
       this.filteredItems = this.currentItems.filter(
         item => item.rentalType == "HOME" || item.rentalType == "BOAT" || item.rentalType == "ADVENTURE"
           && item.rating >= this.ratingSearch
 
           && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
     }
-    if (this.vacation.value && this.instructor.value && !this.boats.value) {
+    if (this.vacation.value && this.adventure.value && !this.boats.value) {
       this.filteredItems = this.currentItems.filter(item => item.rentalType != "BOAT"
         && item.rating >= this.ratingSearch
         && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
     }
-    if (this.vacation.value && !this.instructor.value && this.boats.value) {
+    if (this.vacation.value && !this.adventure.value && this.boats.value) {
       this.filteredItems = this.currentItems.filter(item => item.rentalType != "ADVENTURE"
         && item.rating >= this.ratingSearch
         && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
     }
-    if (!this.vacation.value && this.instructor.value && this.boats.value) {
+    if (!this.vacation.value && this.adventure.value && this.boats.value) {
       this.filteredItems = this.currentItems.filter(item => item.rentalType != "HOME"
         && item.rating >= this.ratingSearch
         && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
     }
 
-    if (!this.vacation.value && !this.instructor.value && !this.boats.value) {
+    if (!this.vacation.value && !this.adventure.value && !this.boats.value) {
       this.filteredItems = this.currentItems.filter(item =>
         item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1
         && item.rating >= this.ratingSearch)
     }
-    if (!this.vacation.value && !this.instructor.value && this.boats.value) {
+    if (!this.vacation.value && !this.adventure.value && this.boats.value) {
       this.filteredItems = this.currentItems.filter(item => item.rentalType == "BOAT"
         && item.rating >= this.ratingSearch
         && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
     }
-    if (!this.vacation.value && this.instructor.value && !this.boats.value) {
+    if (!this.vacation.value && this.adventure.value && !this.boats.value) {
       this.filteredItems = this.currentItems.filter(item => item.rentalType == "ADVENTURE"
         && item.rating >= this.ratingSearch
         && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
     }
-    if (this.vacation.value && !this.instructor.value && !this.boats.value) {
+    if (this.vacation.value && !this.adventure.value && !this.boats.value) {
       this.filteredItems = this.currentItems.filter(item => item.rentalType == "HOME"
         && item.rating >= this.ratingSearch
         && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)

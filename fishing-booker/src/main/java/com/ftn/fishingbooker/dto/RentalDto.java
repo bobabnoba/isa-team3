@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class RentalDto {
 
+    private Long id;
+
     private String name;
 
     private Address address;

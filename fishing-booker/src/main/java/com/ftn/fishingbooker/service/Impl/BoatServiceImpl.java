@@ -17,6 +17,6 @@ public class BoatServiceImpl implements BoatService {
 
     @Override
     public Collection<Boat> getAll() {
-        return null;
+        return boatRepository.getAll();
     }
 }

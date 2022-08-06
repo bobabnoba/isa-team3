@@ -12,7 +12,7 @@ export class RentalViewComponent implements OnInit {
   @Input()
   item!: IProfileView
   constructor(private _router: Router) {
-    console.log(this.item);
+   
     
    }
 
@@ -21,6 +21,7 @@ export class RentalViewComponent implements OnInit {
   seeMore() {
 
     var id = this.item.id;
+    console.log(id);
     if (this.item.rentalType == "HOME") {
       this._router.navigate(['vacation/home/' + id]);
     }

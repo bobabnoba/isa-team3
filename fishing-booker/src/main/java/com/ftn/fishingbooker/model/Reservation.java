@@ -52,7 +52,7 @@ public class Reservation {
     @ElementCollection(targetClass = Integer.class)
     private Set<AdditionalService> additionalServices;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Client.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
 

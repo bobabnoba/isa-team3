@@ -15,6 +15,7 @@ public class VacationHomeMapper {
 
     public static VacationHomeDto map(VacationHome home) {
         VacationHomeDto vacationHomeDto = new VacationHomeDto();
+        vacationHomeDto.setId(home.getId());
         vacationHomeDto.setName(home.getName());
         vacationHomeDto.setAddress(home.getAddress());
         vacationHomeDto.setDescription(home.getDescription());

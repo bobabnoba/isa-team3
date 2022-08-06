@@ -14,7 +14,8 @@ public class Room {
 
     private int bedNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "home_id")
     private VacationHome vacationHome;
+
 }
