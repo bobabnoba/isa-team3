@@ -1,0 +1,9 @@
+.example-card {
+    max-width: 900px;
+    margin-bottom: 8px;
+}
+
+ngb-rating {
+    color: rgb(241, 207, 11);
+    font-size: 30px;
+}

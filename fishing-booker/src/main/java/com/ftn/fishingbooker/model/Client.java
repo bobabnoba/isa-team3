@@ -19,8 +19,7 @@ public class Client extends User {
     @Enumerated(EnumType.STRING)
     private ClientType type;
 
-    @OneToMany(targetEntity = Reservation.class, mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @ToString.Exclude
+    @OneToMany(targetEntity = Reservation.class, mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Reservation> reservationsMade;
 
 

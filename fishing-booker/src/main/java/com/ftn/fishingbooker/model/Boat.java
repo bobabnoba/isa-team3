@@ -4,12 +4,12 @@ import com.ftn.fishingbooker.enumeration.BoatType;
 import com.ftn.fishingbooker.enumeration.CancelingCondition;
 import com.ftn.fishingbooker.enumeration.FishingEquipment;
 import com.ftn.fishingbooker.enumeration.NavigationType;
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.HashMap;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -20,10 +20,14 @@ import java.util.Set;
 public class Boat {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+
+    private boolean deleted = false;
+
+    private double rating = 0.0;
 
     @Enumerated(EnumType.STRING)
     private BoatType type;
@@ -36,50 +40,38 @@ public class Boat {
 
     private float maxSpeed;
 
-    @Column
-    @ElementCollection(targetClass=Integer.class)
-    private Set<NavigationType> navigationType;
-
-    private String address;
+    private int capacity;
 
     private String description;
 
-    //TODO: Set of images
-    //private Set<Base64> images;
-
-    private int capacity;
-
-    @OneToMany(mappedBy = "boat", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private Set<Reservation> availableReservations;
-
-    private String codeOfConduct;
+    private String information;
 
     @Column
-    @ElementCollection(targetClass=Integer.class)
+    @ElementCollection(targetClass = Integer.class)
+    private Set<NavigationType> navigationType;
+
+    @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
+    private Address address;
+
+    @OneToMany(targetEntity = Image.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Image> images;
+
+    @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    private Set<Reservation> availableReservations;
+
+    @Column
+    @ElementCollection(targetClass = String.class, fetch = FetchType.LAZY)
+    private Set<String> codeOfConduct;
+
+    @Column
+    @ElementCollection(targetClass = Integer.class)
     private Set<FishingEquipment> fishingEquipment;
 
     @Enumerated(EnumType.STRING)
     private CancelingCondition reservationCanceling;
 
-    private HashMap<String, Float> priceList;
-
-    private String information;
-
     @ManyToOne
     @JoinColumn(name = "boat_owner_id")
     private BoatOwner boatOwner;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Boat boat = (Boat) o;
-        return id != null && Objects.equals(id, boat.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
