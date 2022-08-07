@@ -1,0 +1,38 @@
+<router-outlet></router-outlet>
+<div class="container">
+    <app-unauthenticated-header></app-unauthenticated-header>
+    <div class="sections">
+        <div class="searchSection" style="margin-top: 100px;">
+            <mat-checkbox class="example-margin" [formControl]="vacation" (change)="onChangeDemo($event)"> Vacation
+                House </mat-checkbox>
+            <!-- search by: name, location, rating-->
+            <mat-checkbox class="example-margin" [formControl]="boats" (change)="onChangeDemo($event)"> Boats
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" [formControl]="adventure" (change)="onChangeDemo($event)"> Adventures
+            </mat-checkbox>
+            <form class="example-form" (input)="onChangeDemo($event)">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Search by name</mat-label>
+                    <input matInput="Search by name" [(ngModel)]="nameSearch" name="something">
+                </mat-form-field>
+            </form>
+
+            <div>
+                <h3 margin="0px"> Select rating: </h3>
+                <mat-slider thumbLabel [displayWith]="formatLabel" (change)="onChangeDemo($event)"
+                    [(ngModel)]="ratingSearch" min="0" max="5" step="1" value="0"></mat-slider>
+            </div>
+        </div>
+        <div class="displaySection">
+            <div class="sectionOverflow">
+                <div *ngFor="let item of filteredItems">
+                    <app-rental-view [item]="item" class="profile"></app-rental-view>
+                </div>
+            </div>
+            <div class="sectionMap">
+                <div><img class="mapImg" src="../../../assets/images/tokyo-map.jpg" /></div>
+
+            </div>
+        </div>
+    </div>
+</div>

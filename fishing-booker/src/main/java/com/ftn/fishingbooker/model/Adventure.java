@@ -1,5 +1,9 @@
 package com.ftn.fishingbooker.model;
-import lombok.*;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -18,19 +22,21 @@ public class Adventure {
 
     private String title;
 
-    //TODO: location class, map related
-    private String address;
+    @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
+    private Address address;
 
     private String description;
+
+    private double rating = 0.0;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> images;
 
     //TODO: quick reservations
 
-//    @OneToMany(mappedBy = "adventure", fetch = FetchType.LAZY)
-//    @ToString.Exclude
-//    private Set<Reservation> availableReservations;
+
+    @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    private Set<Reservation> availableReservations;
 
     private String codeOfConduct;
 
@@ -52,16 +58,5 @@ public class Adventure {
     @OneToMany(targetEntity = AdditionalService.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<AdditionalService> additionalServices;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Adventure adventure = (Adventure) o;
-        return id != null && Objects.equals(id, adventure.id);
-    }
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

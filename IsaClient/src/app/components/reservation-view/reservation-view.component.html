@@ -1,0 +1,32 @@
+<mat-card *ngIf="action" class="messagePreview">
+
+    <div>
+        <i class="bi bi-house-fill" style="height: 30px;margin-right:15px"></i>
+        <label style="font-weight:bold;">Date From: </label>
+        <label style="margin-left: 20px;margin-right: 20px;"> {{action.startDate | date:'short' }}</label>
+        <label style="font-weight:bold;">To: </label>
+        <label style="margin-left: 20px;"> {{action.endDate | date:'short'}}</label>
+    </div>
+    <div class="info col-6">
+        <div>
+            <label style="font-weight:bold;"> Duration:</label>
+            <label> ???</label>
+        </div>
+        <div>
+            <label style="font-weight:bold;"> People:</label>
+            <label> {{action.maxGuests}}</label>
+        </div>
+        <div>
+            <label style="font-weight:bold;"> Amenities:</label>
+            <label> ???</label>
+        </div>
+
+
+    </div>
+    <div>
+        <label class="price">Price: {{action.price}}</label>
+        <label class="dollar">$</label>
+    </div>
+
+    <button mat-raised-button color="primary">Book</button>
+</mat-card>
