@@ -107,6 +107,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         dbUser.setAddress(user.getAddress());
         dbUser.setCity(user.getCity());
         dbUser.setCountry(user.getCountry());
+        dbUser.setBiography(user.getBiography());
         return userRepository.save(dbUser);
     }
 

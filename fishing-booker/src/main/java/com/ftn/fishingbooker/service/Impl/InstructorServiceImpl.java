@@ -11,6 +11,10 @@ import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.stereotype.*;
 
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.*;
+
 @Service
 public class InstructorServiceImpl implements InstructorService {
 
@@ -27,6 +31,7 @@ public class InstructorServiceImpl implements InstructorService {
         this.instructorRepository = instructorRepository;
     }
 
+    @Transactional
     @Override
     public User register(Instructor instructor, String motivation) throws ResourceConflictException {
 
@@ -40,13 +45,61 @@ public class InstructorServiceImpl implements InstructorService {
         return userService.save(instructor);
     }
 
+    @Transactional
     @Override
     public InstructorAvailability addAvailabilityPeriod(InstructorAvailability availability, String email) {
-        InstructorAvailability saved = availabilityService.save(availability);
+
         Instructor instructor = instructorRepository.findByEmail(email);
-        instructor.getAvailability().add(saved);
+        List<InstructorAvailability> availabilities = new ArrayList<>(instructor.getAvailability());
+        InstructorAvailability added = availabilityService.save(availability);
+        availabilities.add(added);
+
+        instructor.setAvailability(new HashSet<>(checkForOverlapping(added, availabilities)));
+
+        //instructor.setAvailability(availabilities);
         instructorRepository.save(instructor);
-        return saved;
+
+        //TODO: delete all availabilities that overlapped and got replaced // availabilityService
+
+        return added;
+    }
+
+    private List<InstructorAvailability> checkForOverlapping(InstructorAvailability availability, List<InstructorAvailability> availabilities) {
+
+        List<InstructorAvailability> retVal = new ArrayList<>();
+        for (InstructorAvailability a : availabilities) {
+            if (!a.getId().equals(availability.getId()) && (isBetween(availability.getStartDate(), a) || isBetween(availability.getEndDate(), a))) {
+                LocalDateTime newStartDate = a.getStartDate();
+                LocalDateTime newEndDate = a.getEndDate();
+                availabilities.remove(a);
+                a = calculateNew(newStartDate, newEndDate, availability);
+            }
+            else if (availability.getStartDate().isBefore(a.getStartDate()) &&
+                    availability.getEndDate().isAfter(a.getEndDate())){
+                a.setStartDate(availability.getStartDate());
+                a.setEndDate(availability.getEndDate());
+            }
+            retVal.add(a);
+        }
+
+        return retVal;
+    }
+
+    private InstructorAvailability calculateNew(LocalDateTime newStartDate, LocalDateTime newEndDate, InstructorAvailability availability) {
+        if ( newStartDate.isBefore(availability.getStartDate())) {
+            availability.setStartDate(newStartDate);
+        }
+        if (newEndDate.isAfter(availability.getEndDate())) {
+            availability.setEndDate(newEndDate);
+        }
+        return availability;
+    }
+
+    private boolean isBetween(LocalDateTime newAvailabilityDate, InstructorAvailability availability) {
+        return (newAvailabilityDate.isAfter(availability.getStartDate())
+                && newAvailabilityDate.isBefore(availability.getEndDate())) ||
+                newAvailabilityDate.equals(availability.getStartDate())
+                || newAvailabilityDate.equals(availability.getEndDate());
     }
 
     @Override

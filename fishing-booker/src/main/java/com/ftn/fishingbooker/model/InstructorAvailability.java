@@ -24,4 +24,9 @@ public class InstructorAvailability {
 
     private LocalDateTime endDate;
 
+    public InstructorAvailability(LocalDateTime startDate, LocalDateTime endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
 }

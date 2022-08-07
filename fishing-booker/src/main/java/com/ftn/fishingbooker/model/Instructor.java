@@ -15,7 +15,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class Instructor extends User {
 
-    @OneToMany(targetEntity = InstructorAvailability.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = InstructorAvailability.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<InstructorAvailability> availability;
 
 }
