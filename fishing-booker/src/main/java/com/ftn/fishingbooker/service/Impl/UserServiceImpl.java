@@ -118,5 +118,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(dbUser);
     }
 
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
 
 }
