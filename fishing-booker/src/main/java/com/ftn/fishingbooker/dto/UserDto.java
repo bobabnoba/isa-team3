@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.dto;
 
+import com.ftn.fishingbooker.model.Address;
 import lombok.Data;
 
 @Data
@@ -10,11 +11,8 @@ public class UserDto {
     public String lastName;
     public String email;
     public String password;
-    public String address;
+    public Address address;
     public String phone;
-    public String city;
-    private String zipCode;
-    public String country;
     public boolean activated;
     public boolean blocked;
 }

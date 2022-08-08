@@ -4,7 +4,6 @@ import com.ftn.fishingbooker.model.Address;
 import lombok.Data;
 
 import java.util.Collection;
-import java.util.Set;
 
 @Data
 public class VacationHomeDto {
@@ -16,7 +15,9 @@ public class VacationHomeDto {
 
     private String description;
 
-    private Double rating;
+    private double rating;
+
+    private double pricePerDay;
 
     private Integer guestLimit;
 
@@ -30,5 +31,5 @@ public class VacationHomeDto {
 
     private Collection<UtilityDto> utilities;
 
-    private HomeOwnerDto vacationHomeOwner;
+    private OwnerDto vacationHomeOwner;
 }

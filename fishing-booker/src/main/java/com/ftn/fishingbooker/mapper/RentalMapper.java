@@ -1,10 +1,12 @@
 package com.ftn.fishingbooker.mapper;
 
 
+import com.ftn.fishingbooker.dto.InstructorDto;
 import com.ftn.fishingbooker.dto.RentalDto;
 import com.ftn.fishingbooker.enumeration.RentalType;
 import com.ftn.fishingbooker.model.Adventure;
 import com.ftn.fishingbooker.model.Boat;
+import com.ftn.fishingbooker.model.Instructor;
 import com.ftn.fishingbooker.model.VacationHome;
 import org.springframework.stereotype.Component;
 
@@ -35,7 +37,6 @@ public class RentalMapper {
         }
         for (Adventure adventure : adventures) {
             rentals.add(mapToRental(adventure));
-
         }
         return rentals;
     }
@@ -47,7 +48,6 @@ public class RentalMapper {
         }
         for (VacationHome home : homes) {
             rentals.add(mapToRental(home));
-
         }
         return rentals;
     }
@@ -60,7 +60,10 @@ public class RentalMapper {
         rentalDto.setDescription(boat.getDescription());
         rentalDto.setName(boat.getName());
         rentalDto.setRating(boat.getRating());
-        rentalDto.setRentalType(RentalType.BOAT);
+        rentalDto.setRentalType(RentalType.boat);
+        rentalDto.setPricePerDay(boat.getPricePerDay());
+        rentalDto.setUtilities(UtilityMapper.map(boat.getUtilities()));
+        rentalDto.setOwner(OwnerMapper.map(boat.getBoatOwner()));
 
         return rentalDto;
     }
@@ -73,7 +76,10 @@ public class RentalMapper {
         rentalDto.setDescription(adventure.getDescription());
         rentalDto.setName(adventure.getTitle());
         rentalDto.setRating(adventure.getRating());
-        rentalDto.setRentalType(RentalType.ADVENTURE);
+        rentalDto.setRentalType(RentalType.adventure);
+        rentalDto.setPricePerDay(adventure.getPricePerDay());
+        rentalDto.setUtilities(UtilityMapper.map(adventure.getUtilities()));
+        rentalDto.setOwner(OwnerMapper.map(adventure.getInstructor()));
 
         return rentalDto;
     }
@@ -86,8 +92,13 @@ public class RentalMapper {
         rentalDto.setDescription(home.getDescription());
         rentalDto.setName(home.getName());
         rentalDto.setRating(home.getRating());
-        rentalDto.setRentalType(RentalType.HOME);
+        rentalDto.setRentalType(RentalType.home);
+        rentalDto.setPricePerDay(home.getPricePerDay());
+        rentalDto.setUtilities(UtilityMapper.map(home.getUtilities()));
+        rentalDto.setOwner(OwnerMapper.map(home.getHomeOwner()));
 
         return rentalDto;
     }
+
+
 }

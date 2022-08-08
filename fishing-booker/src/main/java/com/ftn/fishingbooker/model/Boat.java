@@ -42,6 +42,8 @@ public class Boat {
 
     private int capacity;
 
+    private double pricePerDay = 0.0;
+
     private String description;
 
     private String information;
@@ -58,6 +60,9 @@ public class Boat {
 
     @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private Set<Reservation> availableReservations;
+
+    @OneToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Utility> utilities;
 
     @Column
     @ElementCollection(targetClass = String.class, fetch = FetchType.LAZY)

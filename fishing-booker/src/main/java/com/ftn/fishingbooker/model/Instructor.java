@@ -1,14 +1,8 @@
 package com.ftn.fishingbooker.model;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import java.util.Collection;
-import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -18,7 +12,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class Instructor extends User {
 
-//    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private double rating = 0.0;
+
+    //    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    @ToString.Exclude
 //    private Set<Adventure> adventures;
 //
@@ -29,5 +25,5 @@ public class Instructor extends User {
 //    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
 //    @ToString.Exclude
 //    private Set<Complaint> complaints;
-    
+
 }

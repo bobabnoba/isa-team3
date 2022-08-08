@@ -36,15 +36,10 @@ public class User implements UserDetails {
 
     private String password;
 
-    private String address;
+    @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
+    private Address address;
 
     private String phone;
-
-    private String city;
-
-    private String country;
-
-    private String zipCode;
 
     private String biography;
 

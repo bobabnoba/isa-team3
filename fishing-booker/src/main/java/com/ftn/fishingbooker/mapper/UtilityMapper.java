@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Set;
 
 public class UtilityMapper {
-    public static Collection<UtilityDto> map(Set<Utility> utilities) {
+    public static Collection<UtilityDto> map(Collection<Utility> utilities) {
         Collection<UtilityDto> utilitiesDto = new ArrayList<>();
 
         for (Utility utility : utilities

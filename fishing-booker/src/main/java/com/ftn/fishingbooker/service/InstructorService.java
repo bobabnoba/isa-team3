@@ -2,10 +2,14 @@ package com.ftn.fishingbooker.service;
 
 import com.ftn.fishingbooker.model.Instructor;
 import com.ftn.fishingbooker.model.User;
+import com.ftn.fishingbooker.model.VacationHome;
 
 import javax.mail.MessagingException;
+import java.util.Collection;
 
 public interface InstructorService {
 
     User register(Instructor instructor, String motivation) throws MessagingException;
+
+    Collection<Instructor> getAll();
 }

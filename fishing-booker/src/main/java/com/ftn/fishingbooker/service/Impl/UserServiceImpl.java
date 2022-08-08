@@ -1,11 +1,13 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.dto.*;
+import com.ftn.fishingbooker.dto.RegisterDto;
 import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.RegistrationMapper;
-import com.ftn.fishingbooker.mapper.UserMapper;
-import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.model.Admin;
+import com.ftn.fishingbooker.model.Client;
+import com.ftn.fishingbooker.model.Registration;
+import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.ClientService;
@@ -19,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 @Transactional
@@ -105,8 +106,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         dbUser.setLastName(user.getLastName());
         dbUser.setPhone(user.getPhone());
         dbUser.setAddress(user.getAddress());
-        dbUser.setCity(user.getCity());
-        dbUser.setCountry(user.getCountry());
         return userRepository.save(dbUser);
     }
 

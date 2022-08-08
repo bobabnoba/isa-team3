@@ -12,7 +12,7 @@ public class RegisterDto {
     public String address;
     public String phone;
     public String city;
-    public String zipCode;
+    public Long zipCode;
     public String country;
 
 
