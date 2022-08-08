@@ -16,8 +16,8 @@ export class VacationHomePageComponent implements OnInit {
   bedsNumber!: number;
   id!: string;
   constructor(private homeService: HomeService, private _router: Router) {
-    this.id = this._router.url.substring(15) ?? '';
-    console.log(this.id);
+    this.id = this._router.url.substring(6) ?? '';
+    console.log(this.id); 
     this.getHomeDetails();
 
   }

@@ -42,19 +42,29 @@ import { AdminDashboardComponent } from './components/admin-components/admin-das
 import { AdminDeleteRequestsComponent } from './components/admin-components/admin-delete-requests/admin-delete-requests.component';
 import { ClientSidebarComponent } from './components/client-components/client-sidebar/client-sidebar.component';
 import { ClientProfileComponent } from './components/client-components/client-profile/client-profile.component';
-import { ClientDashboardComponent } from './components/client-components/client-dashboard/client-dashboard.component';
 import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page.component';
 import { UnauthenticatedHeaderComponent } from './components/unauthenticated-header/unauthenticated-header.component';
-import { RentalViewComponent } from './components/rental-view/rental-view.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatListModule } from '@angular/material/list';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReservationViewComponent } from './components/reservation-view/reservation-view.component';
 import { VacationHouseProfileComponent } from './components/vacation-home-components/vacation-house-profile/vacation-house-profile.component';
+import { BrowseCardComponent } from './components/browse-card/browse-card.component';
+import { TruncatePipe } from './pipes/truncate-pipe';
+import { SearchCardComponent } from './components/search-card/search-card.component';
+import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
+import { ClientReservationsHistoryComponent } from './components/client-components/client-reservations-history/client-reservations-history.component';
+import { ClientBrowseComponent } from './components/client-components/client-browse/client-browse.component';
+import { ClientHomesComponent } from './components/client-components/client-homes/client-homes.component';
+import { ClientInstructorsComponent } from './components/client-components/client-instructors/client-instructors.component';
+import { ClientBoatsComponent } from './components/client-components/client-boats/client-boats.component';
+import { ClientSearchCardComponent } from './components/client-components/client-search-card/client-search-card.component';
+import { BrowseInstructorCardComponent } from './components/browse-instructor-card/browse-instructor-card.component';
 
 @NgModule({
   declarations: [
+    TruncatePipe,
     AppComponent,
     HeaderComponent,
     FooterComponent,
@@ -80,13 +90,21 @@ import { VacationHouseProfileComponent } from './components/vacation-home-compon
     AdminDeleteRequestsComponent,
     ClientSidebarComponent,
     ClientProfileComponent,
-    ClientDashboardComponent,
     UnauthenticatedPageComponent,
     UnauthenticatedHeaderComponent,
-    RentalViewComponent,
     VacationHomePageComponent,
     ReservationViewComponent,
-    VacationHouseProfileComponent
+    VacationHouseProfileComponent,
+    BrowseCardComponent,
+    SearchCardComponent,
+    ClientReservationsComponent,
+    ClientReservationsHistoryComponent,
+    ClientBrowseComponent,
+    ClientHomesComponent,
+    ClientInstructorsComponent,
+    ClientBoatsComponent,
+    ClientSearchCardComponent,
+    BrowseInstructorCardComponent
   ],
   imports: [
     BrowserModule,

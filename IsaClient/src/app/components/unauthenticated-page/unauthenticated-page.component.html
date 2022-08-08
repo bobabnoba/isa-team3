@@ -3,30 +3,23 @@
     <app-unauthenticated-header></app-unauthenticated-header>
     <div class="sections">
         <div class="searchSection" style="margin-top: 100px;">
-            <mat-checkbox class="example-margin" [formControl]="vacation" (change)="onChangeDemo($event)"> Vacation
-                House </mat-checkbox>
-            <!-- search by: name, location, rating-->
-            <mat-checkbox class="example-margin" [formControl]="boats" (change)="onChangeDemo($event)"> Boats
-            </mat-checkbox>
-            <mat-checkbox class="example-margin" [formControl]="adventure" (change)="onChangeDemo($event)"> Adventures
-            </mat-checkbox>
-            <form class="example-form" (input)="onChangeDemo($event)">
-                <mat-form-field class="example-full-width">
-                    <mat-label>Search by name</mat-label>
-                    <input matInput="Search by name" [(ngModel)]="nameSearch" name="something">
-                </mat-form-field>
-            </form>
-
-            <div>
-                <h3 margin="0px"> Select rating: </h3>
-                <mat-slider thumbLabel [displayWith]="formatLabel" (change)="onChangeDemo($event)"
-                    [(ngModel)]="ratingSearch" min="0" max="5" step="1" value="0"></mat-slider>
-            </div>
+            <app-search-card (doSearch)="search($event)"></app-search-card>
         </div>
         <div class="displaySection">
             <div class="sectionOverflow">
                 <div *ngFor="let item of filteredItems">
-                    <app-rental-view [item]="item" class="profile"></app-rental-view>
+                    <app-browse-card
+                    [name]="item.name"
+                    [description]="item.description"
+                    [address]="item.address"
+                    [utilities]="item.utilities"
+                    [price]="item.pricePerDay"
+                    [rating]="item.rating"
+                    [id]="item.id"          
+                    [type]="item.rentalType"
+                    [ownerName]="item.owner.firstName"
+                   
+                  ></app-browse-card>
                 </div>
             </div>
             <div class="sectionMap">

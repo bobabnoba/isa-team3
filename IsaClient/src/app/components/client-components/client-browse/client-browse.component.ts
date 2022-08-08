@@ -6,18 +6,16 @@ import { RentalService } from 'src/app/services/rental-service/rental.service';
 import { SearchService } from 'src/app/services/search-service/search.service';
 
 @Component({
-  selector: 'app-unauthenticated-page',
-  templateUrl: './unauthenticated-page.component.html',
-  styleUrls: ['./unauthenticated-page.component.css']
+  selector: 'app-client-browse',
+  templateUrl: './client-browse.component.html',
+  styleUrls: ['./client-browse.component.css']
 })
-export class UnauthenticatedPageComponent implements OnInit {
+export class ClientBrowseComponent implements OnInit {
   currentItems!: IProfileView[];
   filteredItems!: IProfileView[];
   vacation = new FormControl();
   boats = new FormControl();
   adventure = new FormControl();
-  nameSearch = "";
-  ratingSearch = 0;
   constructor(private _service: RentalService,private searchService: SearchService) {
     this._service.getAllRentals().subscribe(
       res => {
@@ -30,7 +28,6 @@ export class UnauthenticatedPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
   search(filter: SearchFilter) {
   
@@ -38,6 +35,4 @@ export class UnauthenticatedPageComponent implements OnInit {
     this.filteredItems = this.searchService.filterProfiles(this.currentItems, filter)!;
     console.log(this.filteredItems);
   }
-
-
 }

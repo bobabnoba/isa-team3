@@ -6,23 +6,17 @@ import { RentalService } from 'src/app/services/rental-service/rental.service';
 import { SearchService } from 'src/app/services/search-service/search.service';
 
 @Component({
-  selector: 'app-unauthenticated-page',
-  templateUrl: './unauthenticated-page.component.html',
-  styleUrls: ['./unauthenticated-page.component.css']
+  selector: 'app-client-homes',
+  templateUrl: './client-homes.component.html',
+  styleUrls: ['./client-homes.component.css']
 })
-export class UnauthenticatedPageComponent implements OnInit {
+export class ClientHomesComponent implements OnInit {
   currentItems!: IProfileView[];
   filteredItems!: IProfileView[];
-  vacation = new FormControl();
-  boats = new FormControl();
-  adventure = new FormControl();
-  nameSearch = "";
-  ratingSearch = 0;
   constructor(private _service: RentalService,private searchService: SearchService) {
-    this._service.getAllRentals().subscribe(
+    this._service.getAllVacationHomes().subscribe(
       res => {
         console.log(res);
-        
         this.currentItems = res;
         this.filteredItems = res;
       }
@@ -30,14 +24,11 @@ export class UnauthenticatedPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
   search(filter: SearchFilter) {
-  
-    console.log(filter);  
+    console.log(filter);
+    
     this.filteredItems = this.searchService.filterProfiles(this.currentItems, filter)!;
-    console.log(this.filteredItems);
   }
-
 
 }

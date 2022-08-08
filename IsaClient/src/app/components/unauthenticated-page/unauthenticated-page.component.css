@@ -22,14 +22,14 @@
 }
 
 .searchSection {
-    display: flex;
+    /* display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 20px 20px 100px 10px;
+    align-items: center; */
+    padding: 20px 20px 0px 10px;
     margin: 0px 0px 0px 0px; 
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     /* background-color: white; */
-    max-height: 50px;
+    height: fit-content;
     width: 100%;
     border-radius: 25px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;

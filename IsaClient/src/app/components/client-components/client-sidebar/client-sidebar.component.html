@@ -11,20 +11,59 @@
     <hr class="sidebar-divider my-0">
 
     <li class="nav-item active">
-        <a class="nav-link" href="/client/dashboard">
-            <i class="fa fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+        <a class="nav-link" [routerLink]="['/client/profile']">
+            <i class="fa-solid fa-user"></i>
+            <span>My profile</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/client/homes']">
+            <i class="fa-solid fa-house"></i>
+            <span>Homes</span>
+        </a>
+    </li>
+    <!-- <hr class="sidebar-divider">
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/client/browse']">
+            <i class="fa-solid fa-house"></i>
+            <span>Rentals</span>
+        </a>
+    </li> -->
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/client/boats']">
+            <i class="fa-solid fa-ship"></i>
+            <span>Boats</span>
+        </a>
     </li>
     <hr class="sidebar-divider">
 
     <li class="nav-item">
-        <a class="nav-link" href="/client/profile">
-            <i class="fa-solid fa-user"></i>
-            <span>My profile</span>
+        <a class="nav-link"[routerLink]="['/client/instructors']">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span>Instructor Profiles</span>
         </a>
     </li>
+    <hr class="sidebar-divider">
 
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/client/reservations/history']">
+            <i class="fa-solid  fa-history"></i>
+            <span>Reservation History</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
 
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/client/reservations']">
+            <i class="fa-solid fa-calendar"></i>
+            <span>Upcoming Reservations</span>
+        </a>
+    </li>
+    
     <hr class="sidebar-divider">
 
     <li class="nav-item">
