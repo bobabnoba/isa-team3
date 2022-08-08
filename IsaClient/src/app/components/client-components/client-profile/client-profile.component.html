@@ -50,7 +50,7 @@
                                   <div class="col-md-12">
                                     <div class="form-group">
                                       <label>Address</label>
-                                      <input [disabled]="!updateMode" type="text" class="form-control" placeholder="Home Address" name="address" [(ngModel)]="user.address">
+                                      <input [disabled]="!updateMode" type="text" class="form-control" placeholder="Home Address" name="address" [(ngModel)]="user.address.street">
                                     </div>
                                   </div>
                                 </div>
@@ -58,13 +58,13 @@
                                   <div class="col-md-6 pr-1">
                                     <div class="form-group">
                                       <label>City</label>
-                                      <input [disabled]="!updateMode" type="text" class="form-control" placeholder="City" name="city" [(ngModel)]="user.city" required>
+                                      <input [disabled]="!updateMode" type="text" class="form-control" placeholder="City" name="city" [(ngModel)]="user.address.city" required>
                                     </div>
                                   </div>
                                   <div class="col-md-6 pr-1">
                                     <div class="form-group">
                                       <label>Country</label>
-                                      <input [disabled]="!updateMode" type="text" class="form-control" placeholder="Country" name="country" [(ngModel)]="user.country">
+                                      <input [disabled]="!updateMode" type="text" class="form-control" placeholder="Country" name="country" [(ngModel)]="user.address.country">
                                     </div>
                                   </div>
                                 </div>

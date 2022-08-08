@@ -26,7 +26,7 @@ public class AdventureController {
         Collection<Adventure> found = adventureService.getAll();
 
         Collection<AdventureDto> dtos = found.stream()
-                .map(adventure -> AdventureMapper.mapToDto(adventure))
+                .map(AdventureMapper::mapToDto)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok().body(dtos);

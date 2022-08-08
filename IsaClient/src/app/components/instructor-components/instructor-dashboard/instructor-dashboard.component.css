@@ -11,3 +11,15 @@
 #wrapper #content-wrapper #content {
     flex: 1 0 auto;
 }
+
+.picker {
+    display: flex;
+    flex-direction: row;
+    padding-top: 16px;
+}
+
+.submit-btn {
+    height: 58px;
+    margin: 0 0 0 10px;
+    width: 150px;
+}

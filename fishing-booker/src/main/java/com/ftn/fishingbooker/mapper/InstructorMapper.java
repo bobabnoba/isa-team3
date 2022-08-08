@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.mapper;
 
+import com.ftn.fishingbooker.dto.InstructorBrowseDto;
 import com.ftn.fishingbooker.dto.InstructorDto;
 import com.ftn.fishingbooker.model.Instructor;
 
@@ -8,8 +9,8 @@ import java.util.Collection;
 
 public class InstructorMapper {
 
-    public static Collection<InstructorDto> mapInstructors(Collection<Instructor> instructors) {
-        ArrayList<InstructorDto> instructorsDto = new ArrayList<>();
+    public static Collection<InstructorBrowseDto> mapInstructors(Collection<Instructor> instructors) {
+        ArrayList<InstructorBrowseDto> instructorsDto = new ArrayList<>();
         if (instructors == null) {
             return instructorsDto;
         }
@@ -19,8 +20,8 @@ public class InstructorMapper {
         return instructorsDto;
     }
 
-    public static InstructorDto map(Instructor instructor) {
-        InstructorDto instructorDto = new InstructorDto();
+    public static InstructorBrowseDto map(Instructor instructor) {
+        InstructorBrowseDto instructorDto = new InstructorBrowseDto();
         instructorDto.setId(instructor.getId());
         instructorDto.setRating(instructor.getRating());
         instructorDto.setFirstName(instructor.getFirstName());
@@ -30,5 +31,11 @@ public class InstructorMapper {
         instructorDto.setBiography(instructor.getBiography());
 
         return instructorDto;
+    }
+    public static InstructorDto toDto(Instructor instructor){
+        InstructorDto dto = new InstructorDto();
+        dto.setUser(UserMapper.mapToDto(instructor));
+        dto.setAvailability(instructor.getAvailability());
+        return dto;
     }
 }

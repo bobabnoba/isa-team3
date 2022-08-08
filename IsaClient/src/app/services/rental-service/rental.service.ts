@@ -25,7 +25,7 @@ export class RentalService {
   }
   getAllActiveInstructors() {
     return this._http.get<any>(
-      'http://localhost:8090/instructor'
+      'http://localhost:8090/instructor/available'
     );
   }
 

@@ -47,9 +47,14 @@ import { UnauthenticatedHeaderComponent } from './components/unauthenticated-hea
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatListModule } from '@angular/material/list';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReservationViewComponent } from './components/reservation-view/reservation-view.component';
 import { VacationHouseProfileComponent } from './components/vacation-home-components/vacation-house-profile/vacation-house-profile.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { InstructorCalendarComponent } from './components/instructor-components/instructor-calendar/instructor-calendar.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 import { BrowseCardComponent } from './components/browse-card/browse-card.component';
 import { TruncatePipe } from './pipes/truncate-pipe';
 import { SearchCardComponent } from './components/search-card/search-card.component';
@@ -61,6 +66,8 @@ import { ClientInstructorsComponent } from './components/client-components/clien
 import { ClientBoatsComponent } from './components/client-components/client-boats/client-boats.component';
 import { ClientSearchCardComponent } from './components/client-components/client-search-card/client-search-card.component';
 import { BrowseInstructorCardComponent } from './components/browse-instructor-card/browse-instructor-card.component';
+
+
 
 @NgModule({
   declarations: [
@@ -95,6 +102,8 @@ import { BrowseInstructorCardComponent } from './components/browse-instructor-ca
     VacationHomePageComponent,
     ReservationViewComponent,
     VacationHouseProfileComponent,
+    InstructorCalendarComponent,
+    VacationHouseProfileComponent,
     BrowseCardComponent,
     SearchCardComponent,
     ClientReservationsComponent,
@@ -128,7 +137,14 @@ import { BrowseInstructorCardComponent } from './components/browse-instructor-ca
     MatButtonModule,
     MatTabsModule,
     MatDialogModule,
-    NgbModule
+    NgbModule,
+    NgbModalModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
 
   ],
   exports: [
@@ -149,7 +165,10 @@ import { BrowseInstructorCardComponent } from './components/browse-instructor-ca
     MatSliderModule,
     MatListModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    CalendarModule,
+  
+
 
 
   ],

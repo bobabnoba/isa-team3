@@ -1,6 +1,7 @@
 import { IAddress } from "./address"
 
 export interface InstructorBrowse {
+   
     address: IAddress
     email: string
     firstName: string

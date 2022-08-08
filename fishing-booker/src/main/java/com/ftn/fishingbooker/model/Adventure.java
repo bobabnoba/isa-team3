@@ -15,7 +15,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class Adventure {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

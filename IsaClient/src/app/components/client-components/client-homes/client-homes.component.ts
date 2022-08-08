@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+
 import { SearchFilter } from 'src/app/filters/search-filter';
 import { IProfileView } from 'src/app/interfaces/rental-view';
 import { RentalService } from 'src/app/services/rental-service/rental.service';

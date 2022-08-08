@@ -1,22 +1,14 @@
 package com.ftn.fishingbooker.dto;
 
-import com.ftn.fishingbooker.model.Address;
+import com.ftn.fishingbooker.model.InstructorAvailability;
 import lombok.Data;
+
+import java.util.Collection;
 
 @Data
 public class InstructorDto {
-    private Long id;
+    public  UserDto user;
+    public Collection<InstructorAvailability> availability;
 
-    private String firstName;
-
-    private String lastName;
-
-    private double rating;
-
-    private String email;
-
-    private Address address;
-
-    private String biography;
 
 }

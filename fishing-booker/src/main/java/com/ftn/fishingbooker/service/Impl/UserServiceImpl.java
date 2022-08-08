@@ -106,6 +106,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         dbUser.setLastName(user.getLastName());
         dbUser.setPhone(user.getPhone());
         dbUser.setAddress(user.getAddress());
+        dbUser.setBiography(user.getBiography());
         return userRepository.save(dbUser);
     }
 
@@ -115,6 +116,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User dbUser = userRepository.findByEmail(email);
         dbUser.setDeleted(true);
         userRepository.save(dbUser);
+    }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
 

@@ -19,7 +19,7 @@ public class BoatController {
     private final BoatService boatService;
 
     @GetMapping()
-    public Collection<RentalDto> GetALL() {
+    public Collection<RentalDto> GetAll() {
         Collection<Boat> boats = boatService.getAll();
 
         return RentalMapper.mapBoatToRental(boats);
