@@ -45,6 +45,12 @@ insert into boat_owner(
 	, 'true' , 'false', 'false', 'BoatOwnerLastName', null , /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.',
 	 '0943242342','false', 3,'BOAT_OWNER');
 
+--instructor
+insert into instructor(
+	id, address, biography, city, country, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, role_id)
+	values (110, 'InstructorAddress','Whatever Bio', 'InstructorCity', 'InstructorCountry', 'InstructorEmail', 'InstructorFirstName'
+	, 'true' , 'false', 'false', 'InstructorLastName', null , /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.',
+	 '0943242342','false', 5);
 
 --Vacation Home
 insert into vacation_home(

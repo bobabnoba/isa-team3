@@ -49,9 +49,14 @@ import { RentalViewComponent } from './components/rental-view/rental-view.compon
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatListModule } from '@angular/material/list';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReservationViewComponent } from './components/reservation-view/reservation-view.component';
 import { VacationHouseProfileComponent } from './components/vacation-home-components/vacation-house-profile/vacation-house-profile.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { InstructorCalendarComponent } from './components/instructor-components/instructor-calendar/instructor-calendar.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -86,7 +91,8 @@ import { VacationHouseProfileComponent } from './components/vacation-home-compon
     RentalViewComponent,
     VacationHomePageComponent,
     ReservationViewComponent,
-    VacationHouseProfileComponent
+    VacationHouseProfileComponent,
+    InstructorCalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -110,7 +116,14 @@ import { VacationHouseProfileComponent } from './components/vacation-home-compon
     MatButtonModule,
     MatTabsModule,
     MatDialogModule,
-    NgbModule
+    NgbModule,
+    NgbModalModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
 
   ],
   exports: [

@@ -28,4 +28,6 @@ public interface UserService {
 
     void delete(String email);
 
+    User save(User user);
+
 }
