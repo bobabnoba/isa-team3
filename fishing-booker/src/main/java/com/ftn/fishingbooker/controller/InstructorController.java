@@ -2,8 +2,10 @@ package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.InstructorAvailabilityRequestDto;
 import com.ftn.fishingbooker.dto.InstructorAvailabilityResponseDto;
+import com.ftn.fishingbooker.dto.InstructorDto;
 import com.ftn.fishingbooker.dto.OwnerRegisterDto;
 import com.ftn.fishingbooker.mapper.InstructorAvailabilityMapper;
+import com.ftn.fishingbooker.mapper.InstructorMapper;
 import com.ftn.fishingbooker.mapper.RegistrationMapper;
 import com.ftn.fishingbooker.mapper.UserMapper;
 import com.ftn.fishingbooker.model.Instructor;
@@ -37,8 +39,9 @@ public class InstructorController {
     }
 
     @GetMapping
-    public ResponseEntity<Instructor> getInstructorWithAvailability(String email){
-        return ResponseEntity.ok(instructorService.getWithAvailability(email));
+    public ResponseEntity<InstructorDto> getInstructorWithAvailability(String email){
+        Instructor found = instructorService.getWithAvailability(email);
+        return ResponseEntity.ok(InstructorMapper.toDto(found));
     }
 
     @PostMapping("/add-availability")

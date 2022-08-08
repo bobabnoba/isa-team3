@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -20,11 +21,11 @@ public class InstructorAvailability {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime startDate;
+    private Date startDate;
 
-    private LocalDateTime endDate;
+    private Date endDate;
 
-    public InstructorAvailability(LocalDateTime startDate, LocalDateTime endDate) {
+    public InstructorAvailability(Date startDate, Date endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
     }

@@ -1,14 +1,15 @@
 package com.ftn.fishingbooker.dto;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class InstructorAvailabilityResponseDto {
 
     public Long id;
 
-    public LocalDateTime startDate;
+    public Date startDate;
 
-    public LocalDateTime endDate;
+    public Date endDate;
 
     public Long getId() {
         return id;
@@ -18,19 +19,19 @@ public class InstructorAvailabilityResponseDto {
         this.id = id;
     }
 
-    public LocalDateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 }

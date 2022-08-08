@@ -12,7 +12,6 @@ import com.ftn.fishingbooker.service.*;
 import org.springframework.stereotype.*;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -69,13 +68,13 @@ public class InstructorServiceImpl implements InstructorService {
         List<InstructorAvailability> retVal = new ArrayList<>();
         for (InstructorAvailability a : availabilities) {
             if (!a.getId().equals(availability.getId()) && (isBetween(availability.getStartDate(), a) || isBetween(availability.getEndDate(), a))) {
-                LocalDateTime newStartDate = a.getStartDate();
-                LocalDateTime newEndDate = a.getEndDate();
+                Date newStartDate = a.getStartDate();
+                Date newEndDate = a.getEndDate();
                 availabilities.remove(a);
                 a = calculateNew(newStartDate, newEndDate, availability);
             }
-            else if (availability.getStartDate().isBefore(a.getStartDate()) &&
-                    availability.getEndDate().isAfter(a.getEndDate())){
+            else if (availability.getStartDate().before(a.getStartDate()) &&
+                    availability.getEndDate().after(a.getEndDate())){
                 a.setStartDate(availability.getStartDate());
                 a.setEndDate(availability.getEndDate());
             }
@@ -85,19 +84,19 @@ public class InstructorServiceImpl implements InstructorService {
         return retVal;
     }
 
-    private InstructorAvailability calculateNew(LocalDateTime newStartDate, LocalDateTime newEndDate, InstructorAvailability availability) {
-        if ( newStartDate.isBefore(availability.getStartDate())) {
+    private InstructorAvailability calculateNew(Date newStartDate, Date newEndDate, InstructorAvailability availability) {
+        if ( newStartDate.before(availability.getStartDate())) {
             availability.setStartDate(newStartDate);
         }
-        if (newEndDate.isAfter(availability.getEndDate())) {
+        if (newEndDate.after(availability.getEndDate())) {
             availability.setEndDate(newEndDate);
         }
         return availability;
     }
 
-    private boolean isBetween(LocalDateTime newAvailabilityDate, InstructorAvailability availability) {
-        return (newAvailabilityDate.isAfter(availability.getStartDate())
-                && newAvailabilityDate.isBefore(availability.getEndDate())) ||
+    private boolean isBetween(Date newAvailabilityDate, InstructorAvailability availability) {
+        return (newAvailabilityDate.after(availability.getStartDate())
+                && newAvailabilityDate.before(availability.getEndDate())) ||
                 newAvailabilityDate.equals(availability.getStartDate())
                 || newAvailabilityDate.equals(availability.getEndDate());
     }

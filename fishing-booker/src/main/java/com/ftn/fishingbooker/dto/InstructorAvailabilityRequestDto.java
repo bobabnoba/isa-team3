@@ -1,28 +1,29 @@
 package com.ftn.fishingbooker.dto;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class InstructorAvailabilityRequestDto {
 
-    public LocalDateTime startDate;
+    public Date startDate;
 
-    public LocalDateTime endDate;
+    public Date endDate;
 
     public String instructorEmail;
 
-    public LocalDateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
