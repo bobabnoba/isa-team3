@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -29,18 +27,18 @@ public class Adventure {
 
     private double rating = 0.0;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> images;
+    private double pricePerDay = 0.0;
+
+    @OneToMany(targetEntity = Image.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Image> images;
 
     //TODO: quick reservations
-
-
     @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    private Set<Reservation> availableReservations;
+    private Set<Reservation> reservations;
 
-    private String codeOfConduct;
-
-    private double pricePerDay;
+    @Column
+    @ElementCollection(targetClass = String.class, fetch = FetchType.LAZY)
+    private Set<String> codeOfConduct;
 
     private double cancelingPercentage;
 
@@ -49,14 +47,13 @@ public class Adventure {
     @ManyToOne(targetEntity = Instructor.class, fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Instructor instructor;
 
-
     @Column
     @ManyToMany(targetEntity = FishingEquipment.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<FishingEquipment> fishingEquipment;
 
-    @Column
-    @OneToMany(targetEntity = AdditionalService.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<AdditionalService> additionalServices;
+
+    @OneToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Utility> utilities;
 
 
 }

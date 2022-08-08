@@ -27,6 +27,8 @@ public class VacationHome {
 
     private String description;
 
+    private double pricePerDay = 0.0;
+
     private double rating = 0.0;
 
     @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
@@ -43,7 +45,7 @@ public class VacationHome {
     private Set<Image> images;
 
     @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    private Set<Reservation> availableReservations;
+    private Set<Reservation> reservations;
 
     @OneToMany(targetEntity = Room.class, mappedBy = "vacationHome", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<Room> rooms;

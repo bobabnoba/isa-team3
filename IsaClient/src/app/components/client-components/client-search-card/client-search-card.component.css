@@ -1,0 +1,56 @@
+.searchSection {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 20px 40px 10px;
+    margin: 0px 0px 0px 0px;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%
+}
+
+.tag {
+    margin-right: 10px;
+}
+
+.button-tag {
+    padding: 0px !important;
+    font-size: 1rem;
+    height: auto !important;
+    border: 0px;
+    background-color: transparent;
+    color: white;
+}
+
+.button-tag .tag-icon {
+    color: white;
+    margin-left: 10px;
+}
+
+.unselected {
+    background-color: rgb(187, 187, 187) !important;
+}
+
+.select select {
+    font-size: 1rem;
+    width: 100%;
+}
+
+.select {
+    height: 2.5rem;
+    min-width: 187px;
+    width: 100%;
+}
+
+.input {
+    min-width: 187px;
+}
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+    opacity: 0.03 !important;
+    background-color: rgb(57, 89, 235) !important;
+}
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: rgb(38, 71, 219);
+}

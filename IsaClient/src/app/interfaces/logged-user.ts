@@ -1,9 +1,9 @@
+import { IAddress } from "./address"
+
 export interface LoggedUser {
     activated: boolean,
-    address:string,
+    address:IAddress,
     blocked: boolean,
-    city: string,
-    country: string,
     email:string,
     firstName:string,
     id: number,

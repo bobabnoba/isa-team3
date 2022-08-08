@@ -51,6 +51,7 @@ export class RegisterComponent implements OnInit {
       ]),
       city: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
+      zipCode: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       phone: new FormControl('', [Validators.required]),
       password: new FormControl('', [
@@ -67,6 +68,8 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
 
     this.createUser();
+    console.log(this.newUser);
+    
     this._authService.registerUser(this.newUser).subscribe({
       next: (res) => {
         this.myUser = res;
@@ -97,5 +100,6 @@ export class RegisterComponent implements OnInit {
     this.newUser.city = this.createForm.value.city;
     this.newUser.country = this.createForm.value.country;
     this.newUser.password = this.createForm.value.password;
+    this.newUser.zipCode = this.createForm.value.zipCode;
   }
 }

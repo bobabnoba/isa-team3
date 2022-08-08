@@ -4,6 +4,8 @@ import com.ftn.fishingbooker.enumeration.RentalType;
 import com.ftn.fishingbooker.model.Address;
 import lombok.Data;
 
+import java.util.Collection;
+
 @Data
 public class RentalDto {
 
@@ -13,9 +15,15 @@ public class RentalDto {
 
     private Address address;
 
+    private Collection<UtilityDto> utilities;
+
+    private double pricePerDay;
+
     private String description;
 
     private Double rating = 0.0;
 
     private RentalType rentalType;
+
+    private OwnerDto owner;
 }

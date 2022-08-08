@@ -1,8 +1,10 @@
-import { IAddress } from "./rental-view"
+import { IAddress } from "./address"
+
 
 export interface IVacationHouseProfile {
-    id: string,
+    id: number,
     name: string,
+    pricePerDay:number,
     address: IAddress,
     description: string,
     rating: number,
@@ -12,9 +14,9 @@ export interface IVacationHouseProfile {
     availableReservations: IAvailableReservations[],
     codeOfConduct: string[],
     utilities: IUtility[],
-    vacationHomeOwner: IHomeOwnerInfo
+    vacationHomeOwner: IOwnerInfo
 }
-export interface IHomeOwnerInfo {
+export interface IOwnerInfo {
     firstName: string,
     lastName: string,
     email: string,

@@ -8,24 +8,24 @@ export class StorageService {
 
   constructor() { }
 
-  storeTokenData(token : string) {
+  storeTokenData(token: string) {
     localStorage.setItem('token', token);
     let decoded: any = jwt_decode(token)
     localStorage.setItem('role', decoded.role)
     localStorage.setItem('email', decoded.sub)
   }
-  
-  clear() : void {
+
+  clear(): void {
     localStorage.clear()
   }
 
-  getToken() : string {
+  getToken(): string {
     return localStorage.getItem('token') || ""
   }
-  getRole() : string {
+  getRole(): string {
     return localStorage.getItem('role') || "UNAUTHENTICATED"
   }
-  getEmail() : string {
+  getEmail(): string {
     return localStorage.getItem('email') || "UNAUTHENTICATED"
   }
 }

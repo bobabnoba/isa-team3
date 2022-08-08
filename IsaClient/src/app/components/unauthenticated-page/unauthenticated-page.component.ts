@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { SearchFilter } from 'src/app/filters/search-filter';
 import { IProfileView } from 'src/app/interfaces/rental-view';
 import { RentalService } from 'src/app/services/rental-service/rental.service';
+import { SearchService } from 'src/app/services/search-service/search.service';
 
 @Component({
   selector: 'app-unauthenticated-page',
@@ -16,7 +18,7 @@ export class UnauthenticatedPageComponent implements OnInit {
   adventure = new FormControl();
   nameSearch = "";
   ratingSearch = 0;
-  constructor(private _service: RentalService) {
+  constructor(private _service: RentalService,private searchService: SearchService) {
     this._service.getAllRentals().subscribe(
       res => {
         console.log(res);
@@ -30,64 +32,12 @@ export class UnauthenticatedPageComponent implements OnInit {
   ngOnInit(): void {
 
   }
-
-  onChangeDemo(ob: any) {
-    this.filterAll();
-  }
+  search(filter: SearchFilter) {
   
-  filterAll() {
-
-    if (this.vacation.value && this.adventure.value && this.boats.value) {
-      this.filteredItems = this.currentItems.filter(
-        item => item.rentalType == "HOME" || item.rentalType == "BOAT" || item.rentalType == "ADVENTURE"
-          && item.rating >= this.ratingSearch
-
-          && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
-    }
-    if (this.vacation.value && this.adventure.value && !this.boats.value) {
-      this.filteredItems = this.currentItems.filter(item => item.rentalType != "BOAT"
-        && item.rating >= this.ratingSearch
-        && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
-    }
-    if (this.vacation.value && !this.adventure.value && this.boats.value) {
-      this.filteredItems = this.currentItems.filter(item => item.rentalType != "ADVENTURE"
-        && item.rating >= this.ratingSearch
-        && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
-    }
-    if (!this.vacation.value && this.adventure.value && this.boats.value) {
-      this.filteredItems = this.currentItems.filter(item => item.rentalType != "HOME"
-        && item.rating >= this.ratingSearch
-        && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
-    }
-
-    if (!this.vacation.value && !this.adventure.value && !this.boats.value) {
-      this.filteredItems = this.currentItems.filter(item =>
-        item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1
-        && item.rating >= this.ratingSearch)
-    }
-    if (!this.vacation.value && !this.adventure.value && this.boats.value) {
-      this.filteredItems = this.currentItems.filter(item => item.rentalType == "BOAT"
-        && item.rating >= this.ratingSearch
-        && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
-    }
-    if (!this.vacation.value && this.adventure.value && !this.boats.value) {
-      this.filteredItems = this.currentItems.filter(item => item.rentalType == "ADVENTURE"
-        && item.rating >= this.ratingSearch
-        && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
-    }
-    if (this.vacation.value && !this.adventure.value && !this.boats.value) {
-      this.filteredItems = this.currentItems.filter(item => item.rentalType == "HOME"
-        && item.rating >= this.ratingSearch
-        && item.name.toLowerCase().indexOf(this.nameSearch.toLowerCase().trim()) > -1)
-    }
-
+    console.log(filter);  
+    this.filteredItems = this.searchService.filterProfiles(this.currentItems, filter)!;
+    console.log(this.filteredItems);
   }
-  formatLabel(value: number) {
-    if (value >= 0) {
-      return Math.round(value);
-    }
 
-    return value;
-  }
 
 }

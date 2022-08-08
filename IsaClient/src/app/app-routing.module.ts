@@ -1,38 +1,62 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { MaterialModule } from './material/material.module';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register-components/register/register.component';
-import { OwnerRegisterComponent } from './components/register-components/owner-register/owner-register.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { InstructorDashboardComponent } from './components/instructor-components/instructor-dashboard/instructor-dashboard.component';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { AdminDashboardComponent } from './components/admin-components/admin-dashboard/admin-dashboard.component';
+import { AdminDeleteRequestsComponent } from './components/admin-components/admin-delete-requests/admin-delete-requests.component';
 import { AdminProfileComponent } from './components/admin-components/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin-components/admin-registration-requests/admin-registration-requests.component';
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
-import { AdminDashboardComponent } from './components/admin-components/admin-dashboard/admin-dashboard.component';
-import { AdminDeleteRequestsComponent } from './components/admin-components/admin-delete-requests/admin-delete-requests.component';
-import { ClientDashboardComponent } from './components/client/client-dashboard/client-dashboard.component';
-import { ClientProfileComponent } from './components/client/client-profile/client-profile.component';
-import { VacationHomePageComponent } from './components/vacation-home-components/vacation-home-page/vacation-home-page.component';
+import { ClientBoatsComponent } from './components/client-components/client-boats/client-boats.component';
+import { ClientBrowseComponent } from './components/client-components/client-browse/client-browse.component';
+import { ClientHomesComponent } from './components/client-components/client-homes/client-homes.component';
+import { ClientInstructorsComponent } from './components/client-components/client-instructors/client-instructors.component';
+import { ClientProfileComponent } from './components/client-components/client-profile/client-profile.component';
+import { ClientReservationsHistoryComponent } from './components/client-components/client-reservations-history/client-reservations-history.component';
+import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
+import { InstructorDashboardComponent } from './components/instructor-components/instructor-dashboard/instructor-dashboard.component';
+import { LoginComponent } from './components/login/login.component';
+import { OwnerRegisterComponent } from './components/register-components/owner-register/owner-register.component';
+import { RegisterComponent } from './components/register-components/register/register.component';
 import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page.component';
+import { VacationHomePageComponent } from './components/vacation-home-components/vacation-home-page/vacation-home-page.component';
+import { MaterialModule } from './material/material.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: UnauthenticatedPageComponent,
-  },
-  {
-    path: 'client/dashboard',
-    component: ClientDashboardComponent
+    component: UnauthenticatedPageComponent
   },
   {
     path: 'client/profile',
     component: ClientProfileComponent
   },
   {
-    path: 'vacation/home/:id',
+    path: 'client/browse',
+    component: ClientBrowseComponent
+  },
+  {
+    path: 'client/homes',
+    component: ClientHomesComponent
+  },
+  {
+    path: 'client/boats',
+    component: ClientBoatsComponent
+  },
+  {
+    path: 'client/instructors',
+    component: ClientInstructorsComponent
+  },
+  {
+    path: 'client/reservations',
+    component: ClientReservationsComponent
+  },
+  {
+    path: 'client/reservations/history',
+    component: ClientReservationsHistoryComponent
+  },
+  {
+    path: 'home/:id',
     component: VacationHomePageComponent
   },
   {
@@ -40,7 +64,7 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'registration',
+    path: 'register',
     component: RegisterComponent,
   },
 

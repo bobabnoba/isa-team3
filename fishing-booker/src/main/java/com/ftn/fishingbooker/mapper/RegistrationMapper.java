@@ -1,6 +1,8 @@
 package com.ftn.fishingbooker.mapper;
 
-import com.ftn.fishingbooker.dto.*;
+import com.ftn.fishingbooker.dto.OwnerRegisterDto;
+import com.ftn.fishingbooker.dto.RegisterDto;
+import com.ftn.fishingbooker.dto.RegistrationResponseDto;
 import com.ftn.fishingbooker.enumeration.ClientType;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.RoleService;
@@ -27,10 +29,16 @@ public class RegistrationMapper {
         client.setLastName(registerDto.getLastName());
         client.setEmail(registerDto.getEmail());
         client.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        client.setAddress(registerDto.getAddress());
+
+        Address address = new Address();
+        address.setCity(registerDto.getCity());
+        address.setCountry(registerDto.getCountry());
+        address.setZipCode(registerDto.getZipCode());
+        address.setStreet(registerDto.getAddress());
+        client.setAddress(address);
+
+
         client.setPhone(registerDto.getPhone());
-        client.setCity(registerDto.getCity());
-        client.setCountry(registerDto.getCountry());
         client.setActivated(false);
         client.setBlocked(false);
         client.setPoints(0);
@@ -40,6 +48,7 @@ public class RegistrationMapper {
 
         return client;
     }
+
     public static HomeOwner mapToHomeOwner(OwnerRegisterDto registerDto) {
         HomeOwner homeOwner = new HomeOwner();
 
@@ -47,12 +56,18 @@ public class RegistrationMapper {
         homeOwner.setLastName(registerDto.getLastName());
         homeOwner.setEmail(registerDto.getEmail());
         homeOwner.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        homeOwner.setAddress(registerDto.getAddress());
+
+        Address address = new Address();
+        address.setCity(registerDto.getCity());
+        address.setCountry(registerDto.getCountry());
+        address.setZipCode(registerDto.getZipCode());
+        address.setStreet(registerDto.getAddress());
+        homeOwner.setAddress(address);
+
         homeOwner.setPhone(registerDto.getPhone());
-        homeOwner.setCity(registerDto.getCity());
-        homeOwner.setCountry(registerDto.getCountry());
         homeOwner.setActivated(false);
         homeOwner.setBlocked(false);
+
         UserRole role = roleService.findByName("ROLE_HOME_OWNER");
         homeOwner.setRole(role);
 
@@ -67,10 +82,15 @@ public class RegistrationMapper {
         boatOwner.setLastName(registerDto.getLastName());
         boatOwner.setEmail(registerDto.getEmail());
         boatOwner.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        boatOwner.setAddress(registerDto.getAddress());
+
+        Address address = new Address();
+        address.setCity(registerDto.getCity());
+        address.setCountry(registerDto.getCountry());
+        address.setZipCode(registerDto.getZipCode());
+        address.setStreet(registerDto.getAddress());
+        boatOwner.setAddress(address);
+
         boatOwner.setPhone(registerDto.getPhone());
-        boatOwner.setCity(registerDto.getCity());
-        boatOwner.setCountry(registerDto.getCountry());
         boatOwner.setActivated(false);
         boatOwner.setBlocked(false);
 
@@ -86,10 +106,14 @@ public class RegistrationMapper {
         admin.setLastName(registerDto.getLastName());
         admin.setEmail(registerDto.getEmail());
         admin.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        admin.setAddress(registerDto.getAddress());
-        admin.setPhone(registerDto.getPhone());
-        admin.setCity(registerDto.getCity());
-        admin.setCountry(registerDto.getCountry());
+
+        Address address = new Address();
+        address.setCity(registerDto.getCity());
+        address.setCountry(registerDto.getCountry());
+        address.setZipCode(registerDto.getZipCode());
+        address.setStreet(registerDto.getAddress());
+        admin.setAddress(address);
+
         admin.setActivated(false);
         admin.setBlocked(false);
         admin.setRole(roleService.findByName("ROLE_ADMIN"));
@@ -104,10 +128,13 @@ public class RegistrationMapper {
         instructor.setLastName(registerDto.getLastName());
         instructor.setEmail(registerDto.getEmail());
         instructor.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        instructor.setAddress(registerDto.getAddress());
+        Address address = new Address();
+        address.setCity(registerDto.getCity());
+        address.setCountry(registerDto.getCountry());
+        address.setZipCode(registerDto.getZipCode());
+        address.setStreet(registerDto.getAddress());
+        instructor.setAddress(address);
         instructor.setPhone(registerDto.getPhone());
-        instructor.setCity(registerDto.getCity());
-        instructor.setCountry(registerDto.getCountry());
         instructor.setActivated(false);
         instructor.setBlocked(false);
         instructor.setRole(roleService.findByName("ROLE_INSTRUCTOR"));
@@ -115,7 +142,7 @@ public class RegistrationMapper {
         return instructor;
     }
 
-    public static RegistrationResponseDto mapToResponse(Registration registration){
+    public static RegistrationResponseDto mapToResponse(Registration registration) {
         RegistrationResponseDto dto = new RegistrationResponseDto();
         dto.setId(registration.getId());
         dto.setUserEmail(registration.getUserEmail());
@@ -124,7 +151,7 @@ public class RegistrationMapper {
         return dto;
     }
 
-    public static Registration mapToRegistration(RegistrationResponseDto dto){
+    public static Registration mapToRegistration(RegistrationResponseDto dto) {
         Registration registration = new Registration();
         registration.setId(dto.getId());
         registration.setType(dto.getType());

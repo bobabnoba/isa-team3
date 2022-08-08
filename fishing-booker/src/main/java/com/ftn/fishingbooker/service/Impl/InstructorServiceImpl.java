@@ -9,12 +9,15 @@ import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.repository.InstructorRepository;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.service.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.*;
 
 import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class InstructorServiceImpl implements InstructorService {
 
     private final UserService userService;
@@ -22,13 +25,6 @@ public class InstructorServiceImpl implements InstructorService {
     private final RegistrationRepository registrationRepository;
     private final InstructorAvailabilityService availabilityService;
     private final InstructorRepository instructorRepository;
-
-    public InstructorServiceImpl(UserService userService, RegistrationRepository registrationRepository, InstructorAvailabilityService instructorAvailabilityService, InstructorRepository instructorRepository) {
-        this.userService = userService;
-        this.registrationRepository = registrationRepository;
-        this.availabilityService = instructorAvailabilityService;
-        this.instructorRepository = instructorRepository;
-    }
 
     @Transactional
     @Override
@@ -105,6 +101,9 @@ public class InstructorServiceImpl implements InstructorService {
     public Instructor getWithAvailability(String email) {
         return instructorRepository.findByEmail(email);
     }
-
+    @Override
+    public Collection<Instructor> getAll() {
+        return instructorRepository.getAll();
+    }
 
 }

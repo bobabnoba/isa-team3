@@ -1,16 +1,15 @@
+import { IAddress } from "./address";
+import { IOwnerInfo, IUtility } from "./vacation-house-profile";
+
 export interface IProfileView {
-    id:string;
+    id:number;
     name: string,
     address: IAddress,
     description: string,
+    utilities: IUtility[],
+    pricePerDay: number,
     rating: number,
     rentalType: string,
+    owner: IOwnerInfo
 }
 
-export interface IAddress{
-    id: number,
-    country: string,
-    city: string,
-    street: string,
-    zipCode: number
-}

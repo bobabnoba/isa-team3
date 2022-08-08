@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class RentalService {
+
   constructor(private _http: HttpClient) { }
 
   getAllRentals() {
@@ -12,4 +13,20 @@ export class RentalService {
       'http://localhost:8090/rentals'
     );
   }
+  getAllVacationHomes() {
+    return this._http.get<any>(
+      'http://localhost:8090/vacation/homes'
+    );
+  }
+  getAllBoats() {
+    return this._http.get<any>(
+      'http://localhost:8090/boats'
+    );
+  }
+  getAllActiveInstructors() {
+    return this._http.get<any>(
+      'http://localhost:8090/instructor/available'
+    );
+  }
+
 }

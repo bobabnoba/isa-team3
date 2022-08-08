@@ -1,6 +1,5 @@
 package com.ftn.fishingbooker.model;
 
-import com.ftn.fishingbooker.enumeration.AdditionalService;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +26,6 @@ public class Reservation {
 
     private double discount;
 
-    //TODO: Pisalo je trajanje ali nisam sigurna za sta sluzi
     private Duration duration;
 
     private boolean isReserved = false;
@@ -47,16 +45,11 @@ public class Reservation {
 
     private float price;
 
-    //TODO: Can be replaced with utility
-    @Column
-    @ElementCollection(targetClass = Integer.class)
-    private Set<AdditionalService> additionalServices;
+    @OneToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Utility> utilities;
 
     @ManyToOne(targetEntity = Client.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
-
-
-
 
 }

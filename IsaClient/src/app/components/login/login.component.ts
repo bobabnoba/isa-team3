@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
         } else if (role === "ROLE_ADMIN") {
           this._router.navigate(['/admin/profile']);
         } else {
-          this._router.navigate(['/client/dashboard']);
+          this._router.navigate(['/client/profile']);
         }
       },
       error: (err: HttpErrorResponse) => {

@@ -74,6 +74,18 @@
               >Country is required</mat-error
             >
           </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label class="col-4">Zip code</mat-label>
+            <input matInput formControlName="zipCode" />
+            <mat-error
+              *ngIf="
+                !createForm?.get('zipCode')?.valid &&
+                createForm?.get('zipCode')?.touched &&
+                createForm?.get('zipCode')?.errors?.required
+              "
+              >Zip code is required</mat-error
+            >
+          </mat-form-field>
           
         </div>
         <div style="width: 100%; display: flex">

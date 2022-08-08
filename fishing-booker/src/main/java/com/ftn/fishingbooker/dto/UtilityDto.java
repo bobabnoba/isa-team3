@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class UtilityDto {
+
     private String name;
 
     private Double price;

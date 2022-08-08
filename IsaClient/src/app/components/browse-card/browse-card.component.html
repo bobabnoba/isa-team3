@@ -1,0 +1,51 @@
+<div class="my-5 is-clickable hvr-underline-from-center stretch-width" (click)="preview()">
+    <article class="media shadow p-4">
+      <figure class="media-left">
+        <p class="image">
+          <img class="image center-cropped" [src]="image" />
+        </p>
+      </figure>
+      <div class="media-content">
+        <div class="content">
+          <div>
+            <p>
+              <strong
+                ><a href="{{ type }}/{{ id }}">{{ name }}</a></strong
+              >
+              <small>, @{{ ownerName }} </small>
+              <br />
+              {{ description | truncate: [200] }}
+            </p>
+  
+            <div >
+              <strong *ngIf="address"><i class="fa fa-map-marker"></i> {{ address.street }}, {{ address.city }},
+                {{ address.country }}, {{ address.zipCode }}</strong>
+              <h4 *ngIf="price">${{ price }}/day</h4>
+            </div>
+          </div>
+          <div class="columns is-vcentered">
+            <div class="column">
+              <span
+                class="tag is-success"
+                *ngFor="let utility of utilities.slice(0, 7)"
+                >{{ utility.name }}</span
+              >
+            </div>
+            <div
+              class="column is-flex is-justify-content-flex-end is-align-items-center"
+            >
+              <strong class="mr-1 star-text">{{ rating }} </strong>
+              <i class="fa fa-star"></i>
+              <div class="buttons ml-5">
+                <button mat-raised-button color="primary" (click)="preview()">See More</button>
+                <!-- <a class="button is-success" href="{{ type }}/{{ id }}">
+                  Preview
+                </a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+  

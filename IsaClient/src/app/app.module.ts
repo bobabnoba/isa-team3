@@ -40,12 +40,10 @@ import { AdventureInstructorComponent } from './components/adventure-components/
 import { PastExperiencesComponent } from './components/adventure-components/past-experiences/past-experiences.component';
 import { AdminDashboardComponent } from './components/admin-components/admin-dashboard/admin-dashboard.component';
 import { AdminDeleteRequestsComponent } from './components/admin-components/admin-delete-requests/admin-delete-requests.component';
-import { ClientSidebarComponent } from './components/client/client-sidebar/client-sidebar.component';
-import { ClientProfileComponent } from './components/client/client-profile/client-profile.component';
-import { ClientDashboardComponent } from './components/client/client-dashboard/client-dashboard.component';
+import { ClientSidebarComponent } from './components/client-components/client-sidebar/client-sidebar.component';
+import { ClientProfileComponent } from './components/client-components/client-profile/client-profile.component';
 import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page.component';
 import { UnauthenticatedHeaderComponent } from './components/unauthenticated-header/unauthenticated-header.component';
-import { RentalViewComponent } from './components/rental-view/rental-view.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatListModule } from '@angular/material/list';
@@ -57,9 +55,23 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { InstructorCalendarComponent } from './components/instructor-components/instructor-calendar/instructor-calendar.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import { BrowseCardComponent } from './components/browse-card/browse-card.component';
+import { TruncatePipe } from './pipes/truncate-pipe';
+import { SearchCardComponent } from './components/search-card/search-card.component';
+import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
+import { ClientReservationsHistoryComponent } from './components/client-components/client-reservations-history/client-reservations-history.component';
+import { ClientBrowseComponent } from './components/client-components/client-browse/client-browse.component';
+import { ClientHomesComponent } from './components/client-components/client-homes/client-homes.component';
+import { ClientInstructorsComponent } from './components/client-components/client-instructors/client-instructors.component';
+import { ClientBoatsComponent } from './components/client-components/client-boats/client-boats.component';
+import { ClientSearchCardComponent } from './components/client-components/client-search-card/client-search-card.component';
+import { BrowseInstructorCardComponent } from './components/browse-instructor-card/browse-instructor-card.component';
+
+
 
 @NgModule({
   declarations: [
+    TruncatePipe,
     AppComponent,
     HeaderComponent,
     FooterComponent,
@@ -85,14 +97,23 @@ import {MatNativeDateModule} from '@angular/material/core';
     AdminDeleteRequestsComponent,
     ClientSidebarComponent,
     ClientProfileComponent,
-    ClientDashboardComponent,
     UnauthenticatedPageComponent,
     UnauthenticatedHeaderComponent,
-    RentalViewComponent,
     VacationHomePageComponent,
     ReservationViewComponent,
     VacationHouseProfileComponent,
-    InstructorCalendarComponent
+    InstructorCalendarComponent,
+    VacationHouseProfileComponent,
+    BrowseCardComponent,
+    SearchCardComponent,
+    ClientReservationsComponent,
+    ClientReservationsHistoryComponent,
+    ClientBrowseComponent,
+    ClientHomesComponent,
+    ClientInstructorsComponent,
+    ClientBoatsComponent,
+    ClientSearchCardComponent,
+    BrowseInstructorCardComponent
   ],
   imports: [
     BrowserModule,
@@ -144,7 +165,10 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatSliderModule,
     MatListModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    CalendarModule,
+  
+
 
 
   ],
