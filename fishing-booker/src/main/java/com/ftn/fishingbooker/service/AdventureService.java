@@ -6,4 +6,6 @@ import java.util.*;
 public interface AdventureService {
 
     Collection<Adventure> getAll();
+
+    void addImage(Long adventureId, String fileName);
 }

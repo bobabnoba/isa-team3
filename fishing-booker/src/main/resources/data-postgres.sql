@@ -112,3 +112,13 @@ insert into reservation(
 insert into vacation_home_reservations(
 	vacation_home_id, reservations_id)
 	values (100, 99);
+
+-- Adventure
+INSERT INTO adventure(
+	id, canceling_percentage, description, max_number_of_participants, price_per_day, rating, title, address_id, instructor_id)
+	VALUES (111, 20, 'Description', 3, 45, 4, 'title', 40, 110);
+
+-- adv images
+insert into images (id, url) values (111, 'att.jpg');
+
+insert into adventure_images (adventure_id, images_id) values (111, 111);
