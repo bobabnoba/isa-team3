@@ -66,7 +66,8 @@ import { ClientInstructorsComponent } from './components/client-components/clien
 import { ClientBoatsComponent } from './components/client-components/client-boats/client-boats.component';
 import { ClientSearchCardComponent } from './components/client-components/client-search-card/client-search-card.component';
 import { BrowseInstructorCardComponent } from './components/browse-instructor-card/browse-instructor-card.component';
-
+import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 @NgModule({
@@ -113,7 +114,8 @@ import { BrowseInstructorCardComponent } from './components/browse-instructor-ca
     ClientInstructorsComponent,
     ClientBoatsComponent,
     ClientSearchCardComponent,
-    BrowseInstructorCardComponent
+    BrowseInstructorCardComponent,
+    AddAdventureComponent
   ],
   imports: [
     BrowserModule,
@@ -145,7 +147,7 @@ import { BrowseInstructorCardComponent } from './components/browse-instructor-ca
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
-
+    MatStepperModule,
   ],
   exports: [
     BrowserModule,

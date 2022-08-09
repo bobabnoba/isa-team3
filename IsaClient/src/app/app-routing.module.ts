@@ -6,6 +6,7 @@ import { AdminDashboardComponent } from './components/admin-components/admin-das
 import { AdminDeleteRequestsComponent } from './components/admin-components/admin-delete-requests/admin-delete-requests.component';
 import { AdminProfileComponent } from './components/admin-components/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin-components/admin-registration-requests/admin-registration-requests.component';
+import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
 import { ClientBoatsComponent } from './components/client-components/client-boats/client-boats.component';
 import { ClientBrowseComponent } from './components/client-components/client-browse/client-browse.component';
@@ -96,6 +97,10 @@ const routes: Routes = [
     path: 'adventure',
     component: AdventureProfileComponent
   },
+  {
+    path: 'add-adventure',
+    component : AddAdventureComponent
+  }
 
 ];
 @NgModule({

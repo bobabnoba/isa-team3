@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 @RestController
 @RequestMapping("/adventures")
 public class AdventureController {
@@ -29,6 +31,6 @@ public class AdventureController {
                 .map(AdventureMapper::mapToDto)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok().body(dtos);
+        return ok(dtos);
     }
 }
