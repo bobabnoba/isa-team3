@@ -5,7 +5,6 @@ import com.ftn.fishingbooker.model.FishingEquipment;
 import lombok.Data;
 
 import java.util.Collection;
-import java.util.Set;
 
 @Data
 public class AdventureDto {
@@ -14,7 +13,7 @@ public class AdventureDto {
     public String title;
     public Address address;
     public String description;
-    public Collection<ImageDto> images;
+    public Collection<String> images;
     public String codeOfConduct;
     public double pricePerDay;
     public double cancelingPercentage;

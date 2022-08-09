@@ -4,9 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 import javax.persistence.*;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -54,6 +53,16 @@ public class Adventure {
 
     @OneToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Utility> utilities;
+
+    @Transient
+    public List<String> getImagePaths() {
+        List<String> retVal = new ArrayList<>();
+        this.getImages().forEach(
+                image ->
+                    retVal.add("/images/adventures/" + this.getId() + "/" + image.getUrl())
+        );
+        return retVal;
+    }
 
 
 }
