@@ -36,7 +36,7 @@ public class Adventure {
     private Set<Reservation> reservations;
 
     @Column
-    @ElementCollection(targetClass = String.class, fetch = FetchType.LAZY)
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     private Set<String> codeOfConduct;
 
     private double cancelingPercentage;
@@ -57,10 +57,11 @@ public class Adventure {
     @Transient
     public List<String> getImagePaths() {
         List<String> retVal = new ArrayList<>();
-        this.getImages().forEach(
-                image ->
-                    retVal.add("/images/adventures/" + this.getId() + "/" + image.getUrl())
-        );
+        if (this.getImages() != null){
+            this.getImages().forEach(
+                    image ->
+                            retVal.add("/images/adventures/" + this.getId() + "/" + image.getUrl()));
+        }
         return retVal;
     }
 

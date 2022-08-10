@@ -35,3 +35,12 @@ button {
 ::ng-deep .mat-form-field-outline-thick {
     color: black !important;
 }
+
+.d-flex input {
+    margin-left: 2px;
+}
+
+.example-additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+}

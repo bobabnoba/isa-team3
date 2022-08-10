@@ -1,8 +1,11 @@
+import { IAddress } from "./address";
+
 export interface FishingEquipment {
+    id : number;
     name: string;
 }
 
-export interface AdditionalService{
+export interface Utility{
     name: string;
     price : number;
 }
@@ -10,10 +13,10 @@ export interface AdditionalService{
 export interface Adventure {
     id: number;
     title : string;
-    address : string;
+    address : IAddress;
     description : string;
     images : string[];
-    codeOfConduct : string;
+    codeOfConduct : string[];
     pricePerDay : number;
     cancelingPercentage : number;
     maxNumberOfParticipants : number;
@@ -21,5 +24,6 @@ export interface Adventure {
     instructorLastName: string;
     instructorBio : string;
     fishingEquipment : FishingEquipment[];
-    additionalServices : AdditionalService[];
+    utilities : Utility[];
+    instructorEmail : string;
 }

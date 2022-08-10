@@ -68,6 +68,7 @@ import { ClientSearchCardComponent } from './components/client-components/client
 import { BrowseInstructorCardComponent } from './components/browse-instructor-card/browse-instructor-card.component';
 import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
 import {MatStepperModule} from '@angular/material/stepper';
+import { MatFileUploadModule } from 'angular-material-fileupload';
 
 
 @NgModule({
@@ -148,6 +149,7 @@ import {MatStepperModule} from '@angular/material/stepper';
       useFactory: adapterFactory,
     }),
     MatStepperModule,
+    MatFileUploadModule,
   ],
   exports: [
     BrowserModule,

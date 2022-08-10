@@ -2,6 +2,7 @@ package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.AdventureDto;
 import com.ftn.fishingbooker.dto.MultipleFilesUploadDto;
+import com.ftn.fishingbooker.dto.NewAdventureDto;
 import com.ftn.fishingbooker.mapper.AdventureMapper;
 import com.ftn.fishingbooker.model.Adventure;
 import com.ftn.fishingbooker.service.AdventureService;
@@ -39,20 +40,21 @@ public class AdventureController {
         return ok(dtos);
     }
 
+    @PostMapping
+    public ResponseEntity<AdventureDto> addNewAdventure(@RequestBody NewAdventureDto dto) {
+        Adventure adventure = AdventureMapper.toEntity(dto);
+        Adventure saved = adventureService.addAdventure(adventure, dto.getInstructorEmail());
+        return ok(AdventureMapper.mapToDto(saved));
+    }
+
     @PostMapping("/image-upload/{id}")
-    public ResponseEntity<Object> uploadImages(@RequestParam MultipartFile[] files, @PathVariable Long id)  {
+    public ResponseEntity<Object> uploadImages(@RequestParam MultipartFile file, @PathVariable Long id) throws  IOException{
 
         String uploadDir = "images/adventures/" + id;
 
-        Arrays.asList(files).forEach(file -> {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            try {
-                FIleUploadUtil.saveFile(uploadDir, fileName, file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            adventureService.addImage(id, fileName);
-        });
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        FIleUploadUtil.saveFile(uploadDir, fileName, file);
+        adventureService.addImage(id, fileName);
 
         return ResponseEntity.ok().build();
     }
