@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -15,10 +14,20 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService {
 
-    ReservationRepository reservationRepository;
+    private final ReservationRepository reservationRepository;
 
     @Override
     public Collection<Reservation> findAllForClient(Long clientId) {
-        return new ArrayList<>();
+        return reservationRepository.findAllForClient(clientId);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationForVacationHome(Long homeId) {
+        return reservationRepository.getReservationForVacationHome(homeId);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationsForClient(Long clientId) {
+        return reservationRepository.findAllForClient(clientId);
     }
 }

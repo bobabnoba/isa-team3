@@ -11,4 +11,5 @@ public interface HomeService {
     VacationHome getById(Long id);
 
     Collection<VacationHome> filterAll(FilterDto filter);
+
 }

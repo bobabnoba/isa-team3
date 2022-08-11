@@ -22,13 +22,7 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String destination;
-
     private double discount;
-
-    private Duration duration;
-
-    private boolean isReserved = false;
 
     private Boolean isCancelled = false;
 
@@ -39,14 +33,9 @@ public class Reservation {
 
     private Date endDate;
 
-    private int days;
-
     private int maxGuests;
 
     private float price;
-
-    @OneToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private Set<Utility> utilities;
 
     @ManyToOne(targetEntity = Client.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")

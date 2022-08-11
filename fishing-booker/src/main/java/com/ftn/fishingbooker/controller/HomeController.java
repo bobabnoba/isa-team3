@@ -2,12 +2,15 @@ package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.FilterDto;
 import com.ftn.fishingbooker.dto.RentalDto;
+import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.VacationHomeDto;
 import com.ftn.fishingbooker.mapper.RentalMapper;
+import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.mapper.VacationHomeMapper;
 import com.ftn.fishingbooker.model.VacationHome;
 import com.ftn.fishingbooker.service.ClientService;
 import com.ftn.fishingbooker.service.HomeService;
+import com.ftn.fishingbooker.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ import java.util.Collection;
 public class HomeController {
     private final HomeService vacationHomeService;
     private final ClientService clientService;
+    private final ReservationService reservationService;
 
     @GetMapping("/{id}")
     public VacationHomeDto GetVacationHome(@PathVariable("id") Long id) {
@@ -37,7 +41,7 @@ public class HomeController {
     }
 
     @PostMapping("/search/{clientId}")
-    public ResponseEntity<Collection<RentalDto>> FilterAll( @PathVariable Long clientId, @RequestBody FilterDto filter) {
+    public ResponseEntity<Collection<RentalDto>> FilterAll(@PathVariable Long clientId, @RequestBody FilterDto filter) {
         if (clientService.hasOverlappingReservation(clientId, filter.getStartDate(), filter.getEndDate())) {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
@@ -45,4 +49,12 @@ public class HomeController {
         Collection<RentalDto> rentals = RentalMapper.mapVacationHomeToRental(vacationHomes);
         return new ResponseEntity<>(rentals, HttpStatus.OK);
     }
+
+    @GetMapping("/reservations/{homeId}")
+    public Collection<ReservationDto> GetVacationHomeReservations(@PathVariable Long homeId) {
+
+        return ReservationMapper.map(reservationService.getReservationForVacationHome(homeId));
+    }
+
 }
+

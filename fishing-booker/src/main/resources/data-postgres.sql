@@ -36,6 +36,9 @@ values (43, 'Ljubljana', 'Slovenia', 'Jana Kustosa', 1000);
 insert into client(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, type)
 values (10,'Whatever Bio',  'ClientEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 'SILVER');
 
+insert into client(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, type)
+values (12,'Whatever Bio',  'ClientEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 'SILVER');
+
 ----Admin
 insert into admin(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id)
 values (11,'Whatever Bio',  'AdminEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 1 );
@@ -58,8 +61,8 @@ insert into boat_owner(
 	 '0943242342','false', 41, 3,'BOAT_OWNER');
 
 -- Instructor
-INSERT INTO instructor(	id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, rating)
-	VALUES (110, 'biography', 'InstructorEmail', 'first_name', 'true', 'false', 'false', 'last_name', null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '4324234', 'false', 41, 5, 4.3);
+insert into instructor(	id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, rating)
+	values (110, 'biography', 'InstructorEmail', 'first_name', 'true', 'false', 'false', 'last_name', null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '4324234', 'false', 41, 5, 4.3);
 
 
 --Vacation Home
@@ -72,7 +75,7 @@ insert into vacation_home(
 insert into vacation_home(
 	id, deleted, description, guest_limit, name, price_per_day,  rating, address_id, home_owner_id)
 	values (101, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell',
-	 5, ' Whatever you say',44,
+	 3, ' Whatever you say',44,
 	 3, 41 , 110);
 
 insert into vacation_home(
@@ -80,6 +83,13 @@ insert into vacation_home(
 	values (102, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell',
 	 5, ' Yo soy tu madre', 60,
 	 1.5, 42 , 110);
+
+insert into vacation_home(
+	id, deleted, description, guest_limit, name, price_per_day,  rating, address_id, home_owner_id)
+	values (103, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell',
+	 5, ' Home 103 ', 60,
+	 1.5, 42 , 110);
+
 
 
 --Boat
@@ -104,11 +114,38 @@ insert into vacation_home_code_of_conduct(
 
 ---- Reservations
 insert into reservation(
-	id, days, destination, discount, duration, end_date, is_cancelled, is_reserved, max_guests, price, start_date, type, client_id)
-	values (99, 6, 'destination', 0.0, null, '2020-01-01', 'false', 'false', 6, 200, '2020-01-21', 'VACATION_HOME', 10);
+	id, discount, end_date, is_cancelled, max_guests, price, start_date, type, client_id)
+	values (100, 0.0,  '2020-08-17', 'false', 5, 200, '2020-08-11', 'VACATION_HOME', 10); -- perfect
+insert into reservation(
+	id, discount, end_date, is_cancelled, max_guests, price, start_date, type, client_id)
+	values (101, 0.0,  '2020-08-17', 'false', 3, 200, '2020-08-11', 'VACATION_HOME', 10); -- quest limit
+insert into reservation(
+	id, discount, end_date, is_cancelled, max_guests, price, start_date, type, client_id)
+	values (102, 0.0,  '2020-08-07', 'false', 5, 200, '2020-08-01', 'VACATION_HOME', 12); --overlapping reservation
 
+-- Vacation Home Availability
+insert into vacation_home_availability(
+	id, end_date, start_date, home_id)
+	values (100,  '2020-08-30', '2020-08-01', 100); --  available
+insert into vacation_home_availability(
+	id, end_date, start_date, home_id)
+	values (101,  '2020-08-30', '2020-08-01', 101); --  available
+insert into vacation_home_availability(
+	id, end_date, start_date, home_id)
+	values (102,  '2020-08-30', '2020-08-01', 102); --  available
+insert into vacation_home_availability(
+	id, end_date, start_date, home_id)
+	values (103, '2020-08-21', '2020-08-11', 103); -- not available
 
----- Vacation Home Reservations
+-- Vacation Home Reservations
 insert into vacation_home_reservations(
 	vacation_home_id, reservations_id)
-	values (100, 99);
+	values (100, 100);
+--
+insert into vacation_home_reservations(
+	vacation_home_id, reservations_id)
+	values (101, 101);
+
+insert into vacation_home_reservations(
+	vacation_home_id, reservations_id)
+	values (102, 102);

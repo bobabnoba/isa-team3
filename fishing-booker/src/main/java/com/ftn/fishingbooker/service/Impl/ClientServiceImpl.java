@@ -1,19 +1,21 @@
 package com.ftn.fishingbooker.service.Impl;
 
+import com.ftn.fishingbooker.dto.UserDto;
+import com.ftn.fishingbooker.mapper.UserMapper;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.User;
-import com.ftn.fishingbooker.service.DateService;
-import com.ftn.fishingbooker.service.RegistrationService;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.ClientService;
+import com.ftn.fishingbooker.service.DateService;
+import com.ftn.fishingbooker.service.RegistrationService;
 import com.ftn.fishingbooker.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Date;
 
 @Service
@@ -38,9 +40,14 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public boolean hasOverlappingReservation(Long clientId, Date startDate, Date endDate) {
-        User client = userRepository.getById(clientId);
+        UserDto client = UserMapper.mapToDto(userRepository.getById(clientId));
         if (client != null) {
-            for (Reservation reservation : reservationService.findAllForClient(clientId)) {
+            Collection<Reservation> clientReservations = reservationService.findAllForClient(clientId);
+            if (clientReservations == null) {
+                return false;
+            }
+
+            for (Reservation reservation : clientReservations) {
                 if (dateService.doPeriodsOverlap(reservation.getStartDate(), reservation.getEndDate(), startDate, endDate))
                     return true;
             }
