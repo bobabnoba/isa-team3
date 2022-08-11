@@ -7,6 +7,8 @@ import { AdminDeleteRequestsComponent } from './components/admin-components/admi
 import { AdminProfileComponent } from './components/admin-components/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin-components/admin-registration-requests/admin-registration-requests.component';
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
+import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
+import { BoatReservationsComponent } from './components/client-components/boat-reservations/boat-reservations.component';
 import { ClientBoatsComponent } from './components/client-components/client-boats/client-boats.component';
 import { ClientBrowseComponent } from './components/client-components/client-browse/client-browse.component';
 import { ClientHomesComponent } from './components/client-components/client-homes/client-homes.component';
@@ -14,6 +16,7 @@ import { ClientInstructorsComponent } from './components/client-components/clien
 import { ClientProfileComponent } from './components/client-components/client-profile/client-profile.component';
 import { ClientReservationsHistoryComponent } from './components/client-components/client-reservations-history/client-reservations-history.component';
 import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
+import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
 import { InstructorDashboardComponent } from './components/instructor-components/instructor-dashboard/instructor-dashboard.component';
 import { LoginComponent } from './components/login/login.component';
 import { OwnerRegisterComponent } from './components/register-components/owner-register/owner-register.component';
@@ -46,6 +49,18 @@ const routes: Routes = [
   {
     path: 'client/instructors',
     component: ClientInstructorsComponent
+  },
+  {
+    path: 'client/homes/reservation',
+    component: HomeReservationsComponent
+  },
+  {
+    path: 'client/boats/reservation',
+    component: BoatReservationsComponent
+  },
+  {
+    path: 'client/adventures/reservation',
+    component: AdventureReservationsComponent
   },
   {
     path: 'client/reservations',

@@ -59,7 +59,7 @@ insert into boat_owner(
 
 -- Instructor
 INSERT INTO instructor(	id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, rating)
-	VALUES (110, 'biography', 'email', 'first_name', 'true', 'false', 'false', 'last_name', null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '4324234', 'false', 41, 5, 4.3);
+	VALUES (110, 'biography', 'InstructorEmail', 'first_name', 'true', 'false', 'false', 'last_name', null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '4324234', 'false', 41, 5, 4.3);
 
 
 --Vacation Home

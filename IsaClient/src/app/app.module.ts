@@ -66,6 +66,9 @@ import { ClientInstructorsComponent } from './components/client-components/clien
 import { ClientBoatsComponent } from './components/client-components/client-boats/client-boats.component';
 import { ClientSearchCardComponent } from './components/client-components/client-search-card/client-search-card.component';
 import { BrowseInstructorCardComponent } from './components/browse-instructor-card/browse-instructor-card.component';
+import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
+import { BoatReservationsComponent } from './components/client-components/boat-reservations/boat-reservations.component';
+import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
 
 
 
@@ -113,7 +116,10 @@ import { BrowseInstructorCardComponent } from './components/browse-instructor-ca
     ClientInstructorsComponent,
     ClientBoatsComponent,
     ClientSearchCardComponent,
-    BrowseInstructorCardComponent
+    BrowseInstructorCardComponent,
+    HomeReservationsComponent,
+    BoatReservationsComponent,
+    AdventureReservationsComponent
   ],
   imports: [
     BrowserModule,
