@@ -2,11 +2,9 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.repository.AddressRepository;
-import com.ftn.fishingbooker.repository.AdventureRepository;
-import com.ftn.fishingbooker.repository.FishingEquipmentRepository;
-import com.ftn.fishingbooker.repository.InstructorRepository;
+import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.AdventureService;
+import jdk.jshell.execution.Util;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,16 +19,18 @@ public class AdventureServiceImpl implements AdventureService {
     private final InstructorRepository instructorRepository;
     private final AddressRepository addressRepository;
     private final FishingEquipmentRepository fishingEquipmentRepository;
+    private final UtilityRepository utilityRepository;
 
-    public AdventureServiceImpl(AdventureRepository adventureRepository, InstructorRepository instructorRepository, AddressRepository addressRepository, FishingEquipmentRepository fishingEquipmentRepository) {
+    public AdventureServiceImpl(AdventureRepository adventureRepository, InstructorRepository instructorRepository, AddressRepository addressRepository, FishingEquipmentRepository fishingEquipmentRepository, UtilityRepository utilityRepository) {
         this.adventureRepository = adventureRepository;
         this.instructorRepository = instructorRepository;
         this.addressRepository = addressRepository;
         this.fishingEquipmentRepository = fishingEquipmentRepository;
+        this.utilityRepository = utilityRepository;
     }
 
     @Override
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class)
     public Collection<Adventure> getAll() {
         return adventureRepository.findAll();
     }
@@ -46,15 +46,23 @@ public class AdventureServiceImpl implements AdventureService {
     @Override
     @Transactional
     public Adventure addAdventure(Adventure adventure, String instructorEmail) {
+
         Address savedAddress = addressRepository.save(adventure.getAddress());
+        Instructor instructor = instructorRepository.findByEmail(instructorEmail);
+
         Set<FishingEquipment> fishingEquipment = adventure.getFishingEquipment().stream()
                 .map(fe -> fishingEquipmentRepository.findById(fe.getId()).get())
                 .collect(Collectors.toSet());
-        Instructor instructor = instructorRepository.findByEmail(instructorEmail);
+
+        Set<Utility> utilities = adventure.getUtilities().stream()
+                .map(u -> utilityRepository.findById(u.getId()).get())
+                .collect(Collectors.toSet());
 
         adventure.setInstructor(instructor);
         adventure.setAddress(savedAddress);
         adventure.setFishingEquipment(fishingEquipment);
+        adventure.setUtilities(utilities);
+
         return adventureRepository.save(adventure);
     }
 }

@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Adventure, FishingEquipment } from 'src/app/interfaces/adventure';
+import { Adventure, FishingEquipment, Utility } from 'src/app/interfaces/adventure';
+import { Rule } from 'src/app/interfaces/rule';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,13 @@ export class AdventureService {
 
   getFishingEquipment() : Observable<FishingEquipment[]>{
     return this._http.get<FishingEquipment[]>('http://localhost:8090/fishing-equipment');
+  }
+
+  getUtilities() : Observable<Utility[]>{
+    return this._http.get<Utility[]>('http://localhost:8090/utilities');
+  }
+
+  getCodeOfConduct() : Observable<Rule[]>{
+    return this._http.get<Rule[]>('http://localhost:8090/code-of-conduct');
   }
 }

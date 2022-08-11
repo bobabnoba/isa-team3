@@ -47,6 +47,13 @@ public class AdventureController {
         return ok(AdventureMapper.mapToDto(saved));
     }
 
+    @PutMapping("/info-update/{id}")
+    public ResponseEntity<AdventureDto> updateAdventureInfo(@PathVariable Long id, @RequestBody AdventureDto dto) {
+       // Adventure adventure = AdventureMapper.toEntity(dto);
+       // Adventure updated = adventureService.updateAdventureInfo(id, adventure);
+        return ok().build();
+    }
+
     @PostMapping("/image-upload/{id}")
     public ResponseEntity<Object> uploadImages(@RequestParam MultipartFile file, @PathVariable Long id) throws  IOException{
 

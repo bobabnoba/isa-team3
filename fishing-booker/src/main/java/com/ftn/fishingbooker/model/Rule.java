@@ -1,6 +1,9 @@
 package com.ftn.fishingbooker.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -9,19 +12,13 @@ import javax.persistence.*;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Utility {
+public class Rule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
-    private Double price;
-
-    public Utility(Long id, String name, Double price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
 }

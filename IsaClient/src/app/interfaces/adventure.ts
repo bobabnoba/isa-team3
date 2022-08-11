@@ -1,4 +1,5 @@
 import { IAddress } from "./address";
+import { Rule } from "./rule";
 
 export interface FishingEquipment {
     id : number;
@@ -16,7 +17,7 @@ export interface Adventure {
     address : IAddress;
     description : string;
     images : string[];
-    codeOfConduct : string[];
+    codeOfConduct : Rule[];
     pricePerDay : number;
     cancelingPercentage : number;
     maxNumberOfParticipants : number;

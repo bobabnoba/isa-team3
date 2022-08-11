@@ -35,9 +35,8 @@ public class Adventure {
     @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private Set<Reservation> reservations;
 
-    @Column
-    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
-    private Set<String> codeOfConduct;
+    @OneToMany(targetEntity = Rule.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Rule> codeOfConduct;
 
     private double cancelingPercentage;
 

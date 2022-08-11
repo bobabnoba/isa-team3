@@ -2,9 +2,11 @@ package com.ftn.fishingbooker.dto;
 
 import com.ftn.fishingbooker.model.Address;
 import com.ftn.fishingbooker.model.FishingEquipment;
+import com.ftn.fishingbooker.model.Rule;
 import lombok.Data;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Data
 public class AdventureDto {
@@ -14,7 +16,7 @@ public class AdventureDto {
     public Address address;
     public String description;
     public Collection<String> images;
-    public String codeOfConduct;
+    public Set<Rule> codeOfConduct;
     public double pricePerDay;
     public double cancelingPercentage;
     public int maxNumberOfParticipants;

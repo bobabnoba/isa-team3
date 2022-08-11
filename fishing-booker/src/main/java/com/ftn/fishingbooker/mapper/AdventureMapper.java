@@ -25,6 +25,7 @@ public class AdventureMapper {
         dto.setInstructorBio(adventure.getInstructor().getBiography());
         dto.setInstructorLastName(adventure.getInstructor().getLastName());
         dto.setFishingEquipment(adventure.getFishingEquipment());
+        dto.setCodeOfConduct(adventure.getCodeOfConduct());
         dto.setUtilities(UtilityMapper.map(adventure.getUtilities()));
         return dto;
     }
@@ -33,14 +34,12 @@ public class AdventureMapper {
         Adventure adventure = new Adventure();
         adventure.setTitle(dto.getTitle());
         adventure.setCodeOfConduct(new HashSet<>(dto.getCodeOfConduct()));
+        adventure.setMaxNumberOfParticipants(dto.getMaxNumberOfParticipants());
         adventure.setDescription(dto.getDescription());
         adventure.setPricePerDay(dto.getPricePerDay());
         adventure.setCancelingPercentage(dto.getCancelingPercentage());
         adventure.setFishingEquipment(FishingEquipmentMapper.toEntity(dto.getFishingEquipment()));
-        adventure.setUtilities(
-                dto.getUtilities().stream()
-                        .map(uDto -> new Utility(uDto.getName(), uDto.getPrice()))
-                        .collect(Collectors.toSet()));
+        adventure.setUtilities(UtilityMapper.toEntitySet(dto.getUtilities()));
         adventure.setAddress(AddressMapper.toEntity(dto.getAddress()));
 
         return adventure;

@@ -129,4 +129,21 @@ INSERT INTO fishing_equipment(id, name)
 	       (105, 'Tackle Boxes'),
 	       (106, 'Rain Gear');
 
+-- utilities
+INSERT INTO utility(name, price)
+	VALUES ('You keep catch', 40),
+			('Child friendly', 0),
+			('Catch cleaning & filleting', 20),
+			('Snorkeling Equipment', 5),
+			('Fighting Chair', 10),
+			('Drinks', 10);
 
+-- code of conduct
+INSERT INTO rule(id, name)
+    VALUES (99, 'No smoking'),
+            (100, 'No pets'),
+            (101, 'No alcohol'),
+            (102, 'No littering'),
+            (103, '18+'),
+            (104, 'WiFi included'),
+            (105, 'No kids');

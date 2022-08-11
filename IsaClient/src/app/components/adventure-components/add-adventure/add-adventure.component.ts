@@ -2,6 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import {  Adventure, FishingEquipment, Utility } from 'src/app/interfaces/adventure';
+import { Rule } from 'src/app/interfaces/rule';
 import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { environment } from 'src/environments/environment';
@@ -13,17 +14,22 @@ import { environment } from 'src/environments/environment';
 })
 export class AddAdventureComponent implements OnInit {
 
-  existingEquipment! : FishingEquipment[];
+  existingEquipment! : FishingEquipment[]
+  existingServices! : Utility[]
+  existingRules! : Rule[]
 
   equipment : FishingEquipment[] = []
   services : Utility[] = []
+  rules : Rule[] = []
   newAdventure : Adventure = {} as Adventure
 
-  showImgUpload : boolean = false;
+  showImgUpload : boolean = false
 
-  toppings = new FormControl();
+  requestUrl! : string
 
-  requestUrl! : string;
+  equi = new FormControl()
+  servi = new FormControl()
+  rul = new FormControl()
 
   headers = new HttpHeaders()
     .set('Access-Control-Allow-Origin', '*')
@@ -36,27 +42,28 @@ export class AddAdventureComponent implements OnInit {
     cancellationPercentage: ['', Validators.required],
     maxPersons: ['', Validators.required],
 
-  });
+  })
+
   additional = this._formBuilder.group({
     equipmentCtrl: ['', Validators.required],
     serviceName : ['', Validators.required],
     servicePrice : ['', Validators.required],
-  });
+  })
 
   conduct = this._formBuilder.group({
     rules : ['', Validators.required],
-  });
+  })
 
   location = this._formBuilder.group({
     street: ['', Validators.required],
     city : ['', Validators.required],
     country : ['', Validators.required],
     zipCode:  ['', Validators.required],
-  });
+  })
 
   images = this._formBuilder.group({ 
     image : ['', Validators.required],
-  });
+  })
 
   constructor(private _formBuilder: FormBuilder, private _storageService : StorageService,
               private _adventureService : AdventureService) { }
@@ -67,18 +74,18 @@ export class AddAdventureComponent implements OnInit {
         this.existingEquipment = data;
       }
     );
-  }
+    
+    this._adventureService.getUtilities().subscribe(
+      data => {
+        this.existingServices = data;
+      }
+    )
 
-  addEquipment(event : FishingEquipment){
-
-    console.log(event);
-  }
-
-  addService(){
-    if(this.additional.value.serviceName != '' && this.additional.value.servicePrice != ''){
-    this.services.push({name : this.additional.value.serviceName,
-                        price: this.additional.value.servicePrice})
-    }
+    this._adventureService.getCodeOfConduct().subscribe(
+      data => {
+        this.existingRules = data;
+      }
+    )
   }
 
   createAdventure() : any {
@@ -91,10 +98,6 @@ export class AddAdventureComponent implements OnInit {
         this.requestUrl =  environment.apiURL + '/adventures/image-upload/' + data.id;
       }
       );
-  }
-
-  addNewEquipment(){
-    // todo
   }
 
   createObject() : void {
@@ -111,7 +114,7 @@ export class AddAdventureComponent implements OnInit {
     this.newAdventure.pricePerDay = this.info.value.price;
     this.newAdventure.cancelingPercentage = this.info.value.cancellationPercentage;
     this.newAdventure.maxNumberOfParticipants = this.info.value.maxPersons;
-    this.newAdventure.codeOfConduct = [this.conduct.value.rules];
+    this.newAdventure.codeOfConduct = this.rules;
     this.newAdventure.instructorEmail = this._storageService.getEmail();
     this.newAdventure.fishingEquipment = this.equipment;
     this.newAdventure.utilities = this.services;

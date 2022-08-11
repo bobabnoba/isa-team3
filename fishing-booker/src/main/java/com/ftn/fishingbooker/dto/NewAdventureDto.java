@@ -1,4 +1,5 @@
 package com.ftn.fishingbooker.dto;
+import com.ftn.fishingbooker.model.Rule;
 import lombok.Data;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public class NewAdventureDto {
     public String title;
     public AddressDto address;
     public String description;
-    public List<String> codeOfConduct;
+    public List<Rule> codeOfConduct;
     public double pricePerDay;
     public double cancelingPercentage;
     public int maxNumberOfParticipants;
