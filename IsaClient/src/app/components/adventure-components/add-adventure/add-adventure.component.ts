@@ -2,6 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import {  Adventure, FishingEquipment, Utility } from 'src/app/interfaces/adventure';
 import { Rule } from 'src/app/interfaces/rule';
@@ -73,12 +74,14 @@ export class AddAdventureComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder, private _storageService : StorageService,
               private _adventureService : AdventureService, private _router : Router,
-              public dialogRef: MatDialogRef<AddAdventureComponent>) {
+              public dialogRef: MatDialogRef<AddAdventureComponent>,
+              private _snackBar : MatSnackBar) {
 
                 if(this._router.url != "/instructor/dashboard")
                 {
                   this.adventureId = this._router.url.substring(22);
                   this.editMode = true;
+                  this.requestUrl =  environment.apiURL + '/adventures/image-upload/' + this.adventureId;
                   this._adventureService.getById(this.adventureId).subscribe(
                     res => {
                       this.adventure = res;
@@ -169,34 +172,71 @@ export class AddAdventureComponent implements OnInit {
 
   formEnd(){
     if(this.editMode){
-      // poziv za apdejt
       if ( this.info.value.title != this.adventure.title 
         || this.info.value.description != this.adventure.description 
         || this.info.value.price != this.adventure.pricePerDay 
         || this.info.value.cancellationPercentage != this.adventure.cancelingPercentage
         || this.info.value.maxPersons != this.adventure.maxNumberOfParticipants) {
-          this.adventure.title = this.info.value.title;
-          this.adventure.description = this.info.value.description;
 
-        this._adventureService.updateInfo(this.adventureId, this.adventure).subscribe(
-          data => {console.log(data)}
+        this._adventureService.updateInfo(this.adventureId,   
+          {
+            title: this.info.value.title,
+            description: this.info.value.description,
+            price: this.info.value.price,
+            cancelingPercentage: this.info.value.cancellationPercentage,
+            maxParticipants: this.info.value.maxPersons
+          }
+          ).subscribe(
+          () => {
+            this._snackBar.open('Adventure successfully updated.', '',
+            { duration: 3000, panelClass: ['snack-bar'] }
+          );
+          }
         )
       } 
        if ( this.location.value.street != this.adventure.address.street
         || this.location.value.city != this.adventure.address.city
         || this.location.value.country != this.adventure.address.country
         || this.location.value.zipCode != this.adventure.address.zipCode) {
-        console.log('sad je mijenjana adresa')
+        
+          this._adventureService.updateAddress(this.adventureId, {
+            street: this.location.value.street,
+            city: this.location.value.city,
+            country: this.location.value.country,
+            zipCode: this.location.value.zipCode,
+          }).subscribe(
+            () => {
+              this._snackBar.open('Adventure successfully updated.', '',
+              { duration: 3000, panelClass: ['snack-bar'] }
+            );
+            }
+          )
       } 
        if ( this.rules != this.adventure.codeOfConduct) {
-        console.log('sad je mijenjana kod koristenja')
-      }
+        this._adventureService.updateCodeOfConduct(this.adventureId, this.rules).subscribe(
+          () => {
+            this._snackBar.open('Adventure successfully updated.', '',
+            { duration: 3000, panelClass: ['snack-bar'] }
+          );
+          }
+        )}
       if ( this.equipment != this.adventure.fishingEquipment
-        || this.services != this.adventure.utilities) {
-        console.log('sad je mijenjana oprema i usluge')
-      } 
+        || this.services != this.adventure.utilities) { 
+          this._adventureService.updateAdditionalInfo(this.adventureId,
+              {
+                fishingEquipment: this.equipment,
+                utilities: this.services
+              }
+            ).subscribe(
+              () => {
+                this._snackBar.open('Adventure successfully updated.', '',
+                { duration: 3000, panelClass: ['snack-bar'] }
+              );
+              }
+            )
+      }
     }
-    //this.dialogRef.close();
+    this.dialogRef.close();
   }
 
 }

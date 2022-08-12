@@ -15,7 +15,7 @@ export class AdventureProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this._adventureService.getAdventures().subscribe(
-      res => this.adventure = res[1]
+      res => this.adventure = res[0]
     )
   }
 

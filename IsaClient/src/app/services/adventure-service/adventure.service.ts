@@ -35,15 +35,19 @@ export class AdventureService {
     return this._http.get<Rule[]>('http://localhost:8090/code-of-conduct');
   }
 
-  //info-update/
-  updateInfo(id : string, updated : Adventure) : Observable<Adventure>{
-    let headers = new HttpHeaders()
-    .set('Access-Control-Allow-Origin', 'http://localhost:4200')
-    .set('Access-Control-Allow-Headers', '*')
-    .set('Access-Control-Allow-Methods', '*');
+  updateInfo(id : string, updated : any) : Observable<Adventure>{
+    return this._http.post<Adventure>(`http://localhost:8090/adventures/info-update/${id}` , updated);
+  }
 
-    return this._http.post<Adventure>(`http://localhost:8090/info-update/`+id , updated, {
-      headers : headers
-    });
+  updateAdditionalInfo(id : string, updated : any) : Observable<Adventure>{
+    return this._http.post<Adventure>(`http://localhost:8090/adventures/additional-update/${id}` , updated);
+  }
+
+  updateCodeOfConduct(id : string, updated : any) : Observable<Adventure>{
+    return this._http.post<Adventure>(`http://localhost:8090/adventures/code-of-conduct-update/${id}` , updated);
+  }
+
+  updateAddress(id : string, updated : any) : Observable<Adventure>{
+    return this._http.post<Adventure>(`http://localhost:8090/adventures/address-update/${id}` , updated);
   }
 }

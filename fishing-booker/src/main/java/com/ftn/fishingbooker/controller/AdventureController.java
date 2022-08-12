@@ -1,9 +1,10 @@
 package com.ftn.fishingbooker.controller;
 
-import com.ftn.fishingbooker.dto.AdventureDto;
-import com.ftn.fishingbooker.dto.NewAdventureDto;
+import com.ftn.fishingbooker.dto.*;
+import com.ftn.fishingbooker.mapper.AddressMapper;
 import com.ftn.fishingbooker.mapper.AdventureMapper;
 import com.ftn.fishingbooker.model.Adventure;
+import com.ftn.fishingbooker.model.Rule;
 import com.ftn.fishingbooker.service.AdventureService;
 import com.ftn.fishingbooker.util.FIleUploadUtil;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import static org.springframework.http.ResponseEntity.ok;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/adventures")
 public class AdventureController {
@@ -51,12 +51,28 @@ public class AdventureController {
         return ok(AdventureMapper.mapToDto(saved));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/info-update/{id}")
-    public ResponseEntity<AdventureDto> updateAdventureInfo(@PathVariable Long id, @RequestBody AdventureDto dto) {
-        Adventure adventure = AdventureMapper.mapToEntity(dto);
-        Adventure updated = adventureService.updateAdventureInfo(id, adventure);
-        return ResponseEntity.ok(AdventureMapper.mapToDto(updated));
+    public ResponseEntity<AdventureDto> updateAdventureInfo(@PathVariable Long id, @RequestBody AdventureInfo updated) {
+        Adventure saved = adventureService.updateAdventureInfo(id, updated);
+        return ResponseEntity.ok(AdventureMapper.mapToDto(saved));
+    }
+
+    @PostMapping("/additional-update/{id}")
+    public ResponseEntity<AdventureDto> updateAdventureAdditionalInfo(@PathVariable Long id, @RequestBody AdventureAdditionalInfo updated) {
+        Adventure saved = adventureService.updateAdventureAdditionalInfo(id, updated);
+        return ResponseEntity.ok(AdventureMapper.mapToDto(saved));
+    }
+
+    @PostMapping("/code-of-conduct-update/{id}")
+    public ResponseEntity<AdventureDto> updateAdventureCodeOfConduct(@PathVariable Long id, @RequestBody Collection<Rule> updated) {
+        Adventure saved = adventureService.updateAdventureRules(id, updated);
+        return ResponseEntity.ok(AdventureMapper.mapToDto(saved));
+    }
+
+    @PostMapping("/address-update/{id}")
+    public ResponseEntity<AdventureDto> updateAdventureAddress(@PathVariable Long id, @RequestBody AddressDto updated) {
+        Adventure saved = adventureService.updateAdventureAddress(id, AddressMapper.toEntity(updated));
+        return ResponseEntity.ok(AdventureMapper.mapToDto(saved));
     }
 
     @PostMapping("/image-upload/{id}")
