@@ -12,4 +12,7 @@ public interface AdventureRepository extends JpaRepository<Adventure, Long> {
 
     @Query("SELECT a FROM Adventure a JOIN FETCH a.instructor i")
     Collection<Adventure> findAllWithInstructor();
+
+    @Query("SELECT a FROM Adventure a WHERE a.instructor.id = ?1")
+    Collection<Adventure> findAllByInstructorId(Long id);
 }

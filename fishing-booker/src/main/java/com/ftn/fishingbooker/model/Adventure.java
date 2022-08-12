@@ -53,6 +53,8 @@ public class Adventure {
     @OneToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Utility> utilities;
 
+    private Boolean isDeleted;
+
     @Transient
     public List<String> getImagePaths() {
         List<String> retVal = new ArrayList<>();

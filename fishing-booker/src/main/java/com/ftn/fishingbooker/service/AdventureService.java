@@ -13,6 +13,8 @@ public interface AdventureService {
 
     Collection<Adventure> getAll();
 
+    Collection<Adventure> getAllByInstructorEmail(String email);
+
     void addImage(Long adventureId, String fileName);
 
     Adventure addAdventure(Adventure adventure, String instructorEmail);

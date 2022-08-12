@@ -32,6 +32,15 @@ public class AdventureServiceImpl implements AdventureService {
     }
 
     @Override
+    public Collection<Adventure> getAllByInstructorEmail(String email) {
+        Instructor instructor = instructorRepository.findByEmail(email);
+        if(instructor == null) {
+            throw new ResourceConflictException("Instructor with email " + email + " does not exist");
+        }
+        return adventureRepository.findAllByInstructorId(instructor.getId());
+    }
+
+    @Override
     public void addImage(Long adventureId, String fileName) {
         Adventure found = adventureRepository.findById(adventureId)
                 .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
