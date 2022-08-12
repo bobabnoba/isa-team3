@@ -36,7 +36,7 @@ public class User implements UserDetails {
 
     private String password;
 
-    @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Address.class, cascade = CascadeType.MERGE)
     private Address address;
 
     private String phone;
