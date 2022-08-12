@@ -69,6 +69,7 @@ import { BrowseInstructorCardComponent } from './components/browse-instructor-ca
 import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
 import {MatStepperModule} from '@angular/material/stepper';
 import { MatFileUploadModule } from 'angular-material-fileupload';
+import { InstructorServiceComponent } from './components/instructor-components/instructor-service/instructor-service.component';
 
 
 @NgModule({
@@ -116,7 +117,8 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     ClientBoatsComponent,
     ClientSearchCardComponent,
     BrowseInstructorCardComponent,
-    AddAdventureComponent
+    AddAdventureComponent,
+    InstructorServiceComponent
   ],
   imports: [
     BrowserModule,

@@ -10,4 +10,8 @@ public interface AdventureService {
     void addImage(Long adventureId, String fileName);
 
     Adventure addAdventure(Adventure adventure, String instructorEmail);
+
+    Adventure getById(Long id);
+
+    Adventure updateAdventureInfo(Long id, Adventure adventure);
 }

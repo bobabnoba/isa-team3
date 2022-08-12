@@ -44,3 +44,11 @@ button {
     opacity: 0.75;
     font-size: 0.75em;
 }
+
+::ng-deep .mat-step-optional {
+    display: none !important;
+}
+
+::ng-deep .mat-focus-indicator {
+    margin-right: 5px !important;
+}

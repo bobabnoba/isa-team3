@@ -1,6 +1,8 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import {  Adventure, FishingEquipment, Utility } from 'src/app/interfaces/adventure';
 import { Rule } from 'src/app/interfaces/rule';
 import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
@@ -22,10 +24,14 @@ export class AddAdventureComponent implements OnInit {
   services : Utility[] = []
   rules : Rule[] = []
   newAdventure : Adventure = {} as Adventure
+  adventure : Adventure = {} as Adventure
 
   showImgUpload : boolean = false
-
   requestUrl! : string
+
+  editMode : boolean = false
+  adventureId! : string
+
 
   equi = new FormControl()
   servi = new FormControl()
@@ -66,7 +72,39 @@ export class AddAdventureComponent implements OnInit {
   })
 
   constructor(private _formBuilder: FormBuilder, private _storageService : StorageService,
-              private _adventureService : AdventureService) { }
+              private _adventureService : AdventureService, private _router : Router,
+              public dialogRef: MatDialogRef<AddAdventureComponent>) {
+
+                if(this._router.url != "/instructor/dashboard")
+                {
+                  this.adventureId = this._router.url.substring(22);
+                  this.editMode = true;
+                  this._adventureService.getById(this.adventureId).subscribe(
+                    res => {
+                      this.adventure = res;
+    
+                      this.info.setValue({
+                        title : res.title,
+                        description : res.description,
+                        price : res.pricePerDay,
+                        cancellationPercentage : res.cancelingPercentage,
+                        maxPersons : res.maxNumberOfParticipants,
+                      })
+                      this.location.setValue({
+                        street : res.address.street,
+                        city : res.address.city,
+                        country : res.address.country,
+                        zipCode : res.address.zipCode,
+                      })
+                      this.rules = res.codeOfConduct;
+                      this.equipment = res.fishingEquipment;
+                      this.services = res.utilities;
+                    }
+                   )
+                }
+               
+              
+               }
 
   ngOnInit(): void {
     this._adventureService.getFishingEquipment().subscribe(
@@ -86,6 +124,14 @@ export class AddAdventureComponent implements OnInit {
         this.existingRules = data;
       }
     )
+
+    
+  }
+
+  compareObjects(o1: any, o2: any) {
+    if(o1.name == o2.name && o1.id == o2.id )
+    return true;
+    else return false
   }
 
   createAdventure() : any {
@@ -120,4 +166,37 @@ export class AddAdventureComponent implements OnInit {
     this.newAdventure.utilities = this.services;
 
   }
+
+  formEnd(){
+    if(this.editMode){
+      // poziv za apdejt
+      if ( this.info.value.title != this.adventure.title 
+        || this.info.value.description != this.adventure.description 
+        || this.info.value.price != this.adventure.pricePerDay 
+        || this.info.value.cancellationPercentage != this.adventure.cancelingPercentage
+        || this.info.value.maxPersons != this.adventure.maxNumberOfParticipants) {
+          this.adventure.title = this.info.value.title;
+          this.adventure.description = this.info.value.description;
+
+        this._adventureService.updateInfo(this.adventureId, this.adventure).subscribe(
+          data => {console.log(data)}
+        )
+      } 
+       if ( this.location.value.street != this.adventure.address.street
+        || this.location.value.city != this.adventure.address.city
+        || this.location.value.country != this.adventure.address.country
+        || this.location.value.zipCode != this.adventure.address.zipCode) {
+        console.log('sad je mijenjana adresa')
+      } 
+       if ( this.rules != this.adventure.codeOfConduct) {
+        console.log('sad je mijenjana kod koristenja')
+      }
+      if ( this.equipment != this.adventure.fishingEquipment
+        || this.services != this.adventure.utilities) {
+        console.log('sad je mijenjana oprema i usluge')
+      } 
+    }
+    //this.dialogRef.close();
+  }
+
 }

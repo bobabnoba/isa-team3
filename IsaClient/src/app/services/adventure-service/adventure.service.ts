@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Adventure, FishingEquipment, Utility } from 'src/app/interfaces/adventure';
@@ -15,6 +15,10 @@ export class AdventureService {
     return this._http.get<any>('http://localhost:8090/adventures');
   }
 
+  getById(id : string) : Observable<Adventure>{
+    return this._http.get<Adventure>(`http://localhost:8090/adventures/${id}`);
+  }
+
   addAdventure(adventure : Adventure) : Observable<Adventure>{
     return this._http.post<any>('http://localhost:8090/adventures', adventure);
   }
@@ -29,5 +33,17 @@ export class AdventureService {
 
   getCodeOfConduct() : Observable<Rule[]>{
     return this._http.get<Rule[]>('http://localhost:8090/code-of-conduct');
+  }
+
+  //info-update/
+  updateInfo(id : string, updated : Adventure) : Observable<Adventure>{
+    let headers = new HttpHeaders()
+    .set('Access-Control-Allow-Origin', 'http://localhost:4200')
+    .set('Access-Control-Allow-Headers', '*')
+    .set('Access-Control-Allow-Methods', '*');
+
+    return this._http.post<Adventure>(`http://localhost:8090/info-update/`+id , updated, {
+      headers : headers
+    });
   }
 }

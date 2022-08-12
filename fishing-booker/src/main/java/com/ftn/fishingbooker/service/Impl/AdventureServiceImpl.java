@@ -65,5 +65,23 @@ public class AdventureServiceImpl implements AdventureService {
 
         return adventureRepository.save(adventure);
     }
+
+    @Override
+    public Adventure getById(Long id) {
+        return adventureRepository.findById(id).orElseThrow(() -> new ResourceConflictException("Adventure not found"));
+    }
+
+    @Override
+    public Adventure updateAdventureInfo(Long id, Adventure adventure) {
+        Adventure found = adventureRepository.findById(id)
+                .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
+
+        found.setTitle(adventure.getTitle());
+        found.setDescription(adventure.getDescription());
+        found.setPricePerDay(adventure.getPricePerDay());
+        found.setMaxNumberOfParticipants(adventure.getMaxNumberOfParticipants());
+        found.setCancelingPercentage(adventure.getCancelingPercentage());
+        return adventureRepository.save(found);
+    }
 }
 

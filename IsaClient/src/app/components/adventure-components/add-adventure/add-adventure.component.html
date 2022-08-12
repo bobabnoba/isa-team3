@@ -37,7 +37,7 @@
           <form [formGroup]="additional">
                 <mat-form-field appearance="standard">
                     <mat-label>Fishing equipment</mat-label>
-                    <mat-select [formControl]="equi" [(ngModel)]="equipment" multiple>
+                    <mat-select [formControl]="equi" [compareWith]="compareObjects" [(ngModel)]="equipment" multiple>
                       <mat-select-trigger>
                         {{equipment?.[0]?.name || ''}}
                         <span *ngIf="(equipment?.length || 0) > 1" class="example-additional-selection">
@@ -50,7 +50,7 @@
 
                   <mat-form-field appearance="standard">
                     <mat-label>Additional services</mat-label>
-                    <mat-select [formControl]="servi" [(ngModel)]="services" multiple>
+                    <mat-select [formControl]="servi" [compareWith]="compareObjects" [(ngModel)]="services" multiple>
                       <mat-select-trigger>
                         {{services?.[0]?.name || ''}}
                         <span *ngIf="(services?.length || 0) > 1" class="example-additional-selection">
@@ -96,7 +96,7 @@
           <form [formGroup]="conduct">
             <mat-form-field appearance="standard">
               <mat-label>Code of conduct</mat-label>
-              <mat-select [formControl]="rul" [(ngModel)]="rules" multiple>
+              <mat-select [formControl]="rul" [compareWith]="compareObjects" [(ngModel)]="rules" multiple>
                 <mat-select-trigger>
                   {{rules?.[0]?.name || ''}}
                   <span *ngIf="(rules?.length || 0) > 1" class="example-additional-selection">
@@ -112,7 +112,7 @@
         </mat-step>
         
         
-        <mat-step>
+        <mat-step *ngIf="!editMode">
           <ng-template matStepLabel>Save adventure</ng-template>
           <br>
           <p *ngIf="!showImgUpload">You are done. Confirm to save adventure. Back if you need to correct something. </p>
@@ -125,12 +125,15 @@
         </mat-step>
 
 
-       <template *ngIf="showImgUpload">
+       <template *ngIf="showImgUpload || editMode">
         <mat-step [stepControl]="images" label="Previous adventures" optional>
           <form [formGroup]="images">
 
+                <br>
+
                 <input id="singleFile" type="file" [fileUploadInputFor]= "fileUploadQueue"/>
-                      <br>
+          
+                <br><br>
 
               <mat-file-upload-queue #fileUploadQueue
                   [fileAlias]="'file'"
@@ -142,7 +145,7 @@
                   </mat-file-upload>
               </mat-file-upload-queue>
 
-              <button mat-button (click)="stepper.reset()">All done!</button>
+              <button mat-button (click)="formEnd()">Save</button>
           </form>
         </mat-step>
        </template>

@@ -11,4 +11,9 @@ public class FishingEquipmentDto {
     public String getName() {
         return name;
     }
+
+    public FishingEquipmentDto(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

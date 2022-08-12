@@ -1,7 +1,6 @@
 package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.AdventureDto;
-import com.ftn.fishingbooker.dto.MultipleFilesUploadDto;
 import com.ftn.fishingbooker.dto.NewAdventureDto;
 import com.ftn.fishingbooker.mapper.AdventureMapper;
 import com.ftn.fishingbooker.model.Adventure;
@@ -11,14 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import static org.springframework.http.ResponseEntity.ok;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/adventures")
 public class AdventureController {
@@ -40,6 +37,13 @@ public class AdventureController {
         return ok(dtos);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<AdventureDto> getAdventureById(@PathVariable Long id){
+        Adventure found = adventureService.getById(id);
+        AdventureDto dto = AdventureMapper.mapToDto(found);
+        return ok(dto);
+    }
+
     @PostMapping
     public ResponseEntity<AdventureDto> addNewAdventure(@RequestBody NewAdventureDto dto) {
         Adventure adventure = AdventureMapper.toEntity(dto);
@@ -47,11 +51,12 @@ public class AdventureController {
         return ok(AdventureMapper.mapToDto(saved));
     }
 
-    @PutMapping("/info-update/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping("/info-update/{id}")
     public ResponseEntity<AdventureDto> updateAdventureInfo(@PathVariable Long id, @RequestBody AdventureDto dto) {
-       // Adventure adventure = AdventureMapper.toEntity(dto);
-       // Adventure updated = adventureService.updateAdventureInfo(id, adventure);
-        return ok().build();
+        Adventure adventure = AdventureMapper.mapToEntity(dto);
+        Adventure updated = adventureService.updateAdventureInfo(id, adventure);
+        return ResponseEntity.ok(AdventureMapper.mapToDto(updated));
     }
 
     @PostMapping("/image-upload/{id}")

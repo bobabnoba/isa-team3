@@ -16,6 +16,7 @@ import { ClientProfileComponent } from './components/client-components/client-pr
 import { ClientReservationsHistoryComponent } from './components/client-components/client-reservations-history/client-reservations-history.component';
 import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
 import { InstructorDashboardComponent } from './components/instructor-components/instructor-dashboard/instructor-dashboard.component';
+import { InstructorServiceComponent } from './components/instructor-components/instructor-service/instructor-service.component';
 import { LoginComponent } from './components/login/login.component';
 import { OwnerRegisterComponent } from './components/register-components/owner-register/owner-register.component';
 import { RegisterComponent } from './components/register-components/register/register.component';
@@ -100,6 +101,10 @@ const routes: Routes = [
   {
     path: 'add-adventure',
     component : AddAdventureComponent
+  },
+  {
+    path : 'instructor/adventure/:id',
+    component : InstructorServiceComponent
   }
 
 ];
