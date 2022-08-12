@@ -37,6 +37,8 @@ public class AdventureController {
         return ok(dtos);
     }
 
+
+
     @GetMapping("/{id}")
     public ResponseEntity<AdventureDto> getAdventureById(@PathVariable Long id){
         Adventure found = adventureService.getById(id);
