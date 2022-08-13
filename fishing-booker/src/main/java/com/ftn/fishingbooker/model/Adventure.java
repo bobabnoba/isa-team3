@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import javax.persistence.*;
+import java.time.Duration;
 import java.util.*;
 
 @Entity
@@ -54,6 +55,8 @@ public class Adventure {
     private Set<Utility> utilities;
 
     private Boolean isDeleted = false;
+
+    private Duration duration;
 
     @Transient
     public List<String> getImagePaths() {

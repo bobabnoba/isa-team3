@@ -9,4 +9,5 @@ import java.util.Collection;
 public interface HomeRepository extends JpaRepository<VacationHome, Long> {
     @Query(value = "select * from vacation_home u where u.deleted = false", nativeQuery = true)
     Collection<VacationHome> getAll();
+
 }

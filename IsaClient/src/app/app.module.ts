@@ -75,6 +75,9 @@ import { AdventurePreviewComponent } from './components/adventure-components/adv
 import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
 import { InstructorProfileComponent } from './components/instructor-components/instructor-profile/instructor-profile.component';
 import { AccDeletionExplanationComponent } from './components/instructor-components/acc-deletion-explanation/acc-deletion-explanation.component';
+import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
+import { BoatReservationsComponent } from './components/client-components/boat-reservations/boat-reservations.component';
+import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
 
 
 @NgModule({
@@ -161,6 +164,9 @@ import { AccDeletionExplanationComponent } from './components/instructor-compone
     }),
     MatStepperModule,
     MatFileUploadModule,
+    HomeReservationsComponent,
+    BoatReservationsComponent,
+    AdventureReservationsComponent
   ],
   exports: [
     BrowserModule,
