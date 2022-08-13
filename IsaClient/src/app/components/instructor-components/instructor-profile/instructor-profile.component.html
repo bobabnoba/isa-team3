@@ -1,14 +1,15 @@
 <div id="wrapper">
-    <app-admin-sidebar></app-admin-sidebar>
+    <app-instructor-sidebar></app-instructor-sidebar>
     <div id="content-wrapper" class="d-flex flex-column">
-        <app-admin-topbar [admin]="topbarInfo"></app-admin-topbar>
+        <app-instructor-topbar [instructor]="topbarInfo"></app-instructor-topbar>
         <div class="container-fluid">
+
             <div class="content">
                 <div class="row">
                     <div class="col-xl-4 col-lg-5">
                         <div class="card card-user">
                             <div class="image">
-                              <img src="../../../../assets/images/black-admin-bg2.jpg" alt="...">
+                              <img src="../../../../assets/images/instructor-bgs.jpg" style="width: 100%; height: 100%;" alt="...">
                             </div>
                             <div class="card-body">
                               <div class="author">
@@ -18,21 +19,23 @@
                                 </a><br>
                               </div>
                               <p class="description text-center">
-                                Undertaking administrative tasks,
-                                 ensuring the rest of the system users has adequate support to work efficiently.
+                                Here to give you some good time and show you everything you need to know about fishing.
                               </p>
                             </div>
-                        </div>    
+                        </div>  
+                        
                         <div class="card card-user">
-                          <div class="card-header">
-                              <h5 class="card-title">Settings</h5>
-                            </div>
-                              <div class="d-flex justify-content-center body-improv" style="flex-direction: column;">
-                                  <button mat-button class="btn">Change password</button>
-
+                            <div class="card-header">
+                                <h5 class="card-title">Settings</h5>
                               </div>
-                          
-                      </div> 
+                                <div class="d-flex justify-content-center body-improv" style="flex-direction: column;">
+                                    <button mat-button class="btn"(click)="deleteAccount()">Delete my account</button>
+                                    <button mat-button class="btn">Change password</button>
+
+                                </div>
+                            
+                        </div>   
+                    
                     </div>
 
                     <div class="col-xl-8 col-lg-7">
@@ -106,7 +109,7 @@
                                       </div>
                                     </div>
                                   </div>
-                                  <hr>
+                                 <hr>
                                 <div class="row">
                                   <div  style="display: flex; align-items: center; justify-content: center;">
                                     <button type="submit" (click)="doSth()" class="btn btn-primary btn-round">{{ updateMode ? 'Submit' : 'Update' }}</button>
@@ -116,9 +119,9 @@
                             </div>
                           </div>
                     </div>
-
                  </div>
             </div>
-        </div>
     </div>
+    </div>
+ </div>
 

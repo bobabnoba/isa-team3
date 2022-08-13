@@ -73,6 +73,8 @@ import { InstructorServiceComponent } from './components/instructor-components/i
 import { JwtInterceptor } from './JwtInterceptor/jwt-interceptor';
 import { AdventurePreviewComponent } from './components/adventure-components/adventure-preview/adventure-preview.component';
 import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
+import { InstructorProfileComponent } from './components/instructor-components/instructor-profile/instructor-profile.component';
+import { AccDeletionExplanationComponent } from './components/instructor-components/acc-deletion-explanation/acc-deletion-explanation.component';
 
 
 @NgModule({
@@ -123,7 +125,9 @@ import { InstructorServiceListComponent } from './components/instructor-componen
     AddAdventureComponent,
     InstructorServiceComponent,
     AdventurePreviewComponent,
-    InstructorServiceListComponent
+    InstructorServiceListComponent,
+    InstructorProfileComponent,
+    AccDeletionExplanationComponent
   ],
   imports: [
     BrowserModule,

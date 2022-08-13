@@ -10,4 +10,5 @@ export interface LoggedUser {
     lastName:string,
     password:string,
     phone:string
+    biography:string,
 }

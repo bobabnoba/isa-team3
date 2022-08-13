@@ -12,6 +12,14 @@
     flex: 1 0 auto;
 }
 
+.btn {
+    padding: 5px;
+}
+
+.body-improv {
+    max-height: 100px;
+}
+
 .card-user form .form-group {
     margin-bottom: 20px;
 }
@@ -57,12 +65,4 @@
     font-size: 0.8571em;
     margin-bottom: 5px;
     color: #9A9A9A;
-}
-
-.btn {
-    padding: 5px;
-}
-
-.body-improv {
-    min-height: 90px;
 }
