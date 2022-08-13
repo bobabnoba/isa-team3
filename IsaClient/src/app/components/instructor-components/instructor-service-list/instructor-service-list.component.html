@@ -1,0 +1,21 @@
+<div id="wrapper">
+    <app-instructor-sidebar></app-instructor-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <app-instructor-topbar></app-instructor-topbar>
+        <div class="container-fluid">
+
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">My services</h1>
+                <button (click)="addNew()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        class="fa-solid fa-plus fa-sm text-white-50"></i> Add new service</button>
+            </div>
+
+            <div class="row">
+                <div *ngFor="let adv of adventures" >
+                    <app-adventure-preview [adventure]="adv" (adventureEdited)="adventureEdited($event)"></app-adventure-preview>
+                </div>
+            </div> 
+        </div>
+    </div>
+ </div>
+

@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import {  Adventure, FishingEquipment, Utility } from 'src/app/interfaces/adventure';
@@ -26,6 +26,7 @@ export class AddAdventureComponent implements OnInit {
   rules : Rule[] = []
   newAdventure : Adventure = {} as Adventure
   adventure : Adventure = {} as Adventure
+  dataAdventure : Adventure = {} as Adventure
 
   showImgUpload : boolean = false
   requestUrl! : string
@@ -75,11 +76,12 @@ export class AddAdventureComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder, private _storageService : StorageService,
               private _adventureService : AdventureService, private _router : Router,
               public dialogRef: MatDialogRef<AddAdventureComponent>,
-              private _snackBar : MatSnackBar) {
+              private _snackBar : MatSnackBar,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
 
-                if(this._router.url != "/instructor/dashboard")
+                if(data.editMode)
                 {
-                  this.adventureId = this._router.url.substring(22);
+                  this.adventureId = data.adventureId;
                   this.editMode = true;
                   this.requestUrl =  environment.apiURL + '/adventures/image-upload/' + this.adventureId;
                   this._adventureService.getById(this.adventureId).subscribe(
@@ -126,9 +128,7 @@ export class AddAdventureComponent implements OnInit {
       data => {
         this.existingRules = data;
       }
-    )
-
-    
+    ) 
   }
 
   compareObjects(o1: any, o2: any) {
@@ -139,14 +139,14 @@ export class AddAdventureComponent implements OnInit {
 
   createAdventure() : any {
     this.createObject();
-    console.log(this.newAdventure);
     this._adventureService.addAdventure(this.newAdventure).subscribe(
       data => {
         console.log(data);
+        this.dataAdventure = data;
         this.showImgUpload = true;
         this.requestUrl =  environment.apiURL + '/adventures/image-upload/' + data.id;
       }
-      );
+    );
   }
 
   createObject() : void {
@@ -171,7 +171,54 @@ export class AddAdventureComponent implements OnInit {
   }
 
   formEnd(){
+
     if(this.editMode){
+
+       if ( this.location.value.street != this.adventure.address.street
+        || this.location.value.city != this.adventure.address.city
+        || this.location.value.country != this.adventure.address.country
+        || this.location.value.zipCode != this.adventure.address.zipCode) {
+        
+          this._adventureService.updateAddress(this.adventureId, {
+            street: this.location.value.street,
+            city: this.location.value.city,
+            country: this.location.value.country,
+            zipCode: this.location.value.zipCode,
+          }).subscribe(
+            (res) => { 
+              this.dataAdventure = res;
+              this._snackBar.open('Adventure successfully updated.', '',
+              { duration: 3000, panelClass: ['snack-bar'] }
+            );
+            }
+          )
+      } 
+       if ( this.rules != this.adventure.codeOfConduct) {
+        this._adventureService.updateCodeOfConduct(this.adventureId, this.rules).subscribe(
+          (res) => { 
+            this.dataAdventure = res;
+            this._snackBar.open('Adventure successfully updated.', '',
+            { duration: 3000, panelClass: ['snack-bar'] }
+          );
+          }
+        )}
+      if ( this.equipment != this.adventure.fishingEquipment
+        || this.services != this.adventure.utilities) { 
+          this._adventureService.updateAdditionalInfo(this.adventureId,
+              {
+                fishingEquipment: this.equipment,
+                utilities: this.services
+              }
+            ).subscribe(
+              (res) => { 
+                this.dataAdventure = res;
+                this._snackBar.open('Adventure successfully updated.', '',
+                { duration: 3000, panelClass: ['snack-bar'] }
+              );
+              }
+            )
+      }
+
       if ( this.info.value.title != this.adventure.title 
         || this.info.value.description != this.adventure.description 
         || this.info.value.price != this.adventure.pricePerDay 
@@ -187,56 +234,27 @@ export class AddAdventureComponent implements OnInit {
             maxParticipants: this.info.value.maxPersons
           }
           ).subscribe(
-          () => {
+            (res) => { 
+              this.dataAdventure = res;
             this._snackBar.open('Adventure successfully updated.', '',
             { duration: 3000, panelClass: ['snack-bar'] }
           );
+          this.closeDialog();
           }
+          
         )
       } 
-       if ( this.location.value.street != this.adventure.address.street
-        || this.location.value.city != this.adventure.address.city
-        || this.location.value.country != this.adventure.address.country
-        || this.location.value.zipCode != this.adventure.address.zipCode) {
-        
-          this._adventureService.updateAddress(this.adventureId, {
-            street: this.location.value.street,
-            city: this.location.value.city,
-            country: this.location.value.country,
-            zipCode: this.location.value.zipCode,
-          }).subscribe(
-            () => {
-              this._snackBar.open('Adventure successfully updated.', '',
-              { duration: 3000, panelClass: ['snack-bar'] }
-            );
-            }
-          )
-      } 
-       if ( this.rules != this.adventure.codeOfConduct) {
-        this._adventureService.updateCodeOfConduct(this.adventureId, this.rules).subscribe(
-          () => {
-            this._snackBar.open('Adventure successfully updated.', '',
-            { duration: 3000, panelClass: ['snack-bar'] }
-          );
-          }
-        )}
-      if ( this.equipment != this.adventure.fishingEquipment
-        || this.services != this.adventure.utilities) { 
-          this._adventureService.updateAdditionalInfo(this.adventureId,
-              {
-                fishingEquipment: this.equipment,
-                utilities: this.services
-              }
-            ).subscribe(
-              () => {
-                this._snackBar.open('Adventure successfully updated.', '',
-                { duration: 3000, panelClass: ['snack-bar'] }
-              );
-              }
-            )
-      }
+
     }
-    this.dialogRef.close();
+    this.closeDialog();
+  }
+
+  closeDialog(){
+    this.dialogRef.close({data: {
+      editMode : this.editMode,
+      adventure : this.dataAdventure
+    }});
   }
 
 }
+

@@ -7,6 +7,7 @@ import { AdminDeleteRequestsComponent } from './components/admin-components/admi
 import { AdminProfileComponent } from './components/admin-components/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin-components/admin-registration-requests/admin-registration-requests.component';
 import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
+import { AdventurePreviewComponent } from './components/adventure-components/adventure-preview/adventure-preview.component';
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
 import { ClientBoatsComponent } from './components/client-components/client-boats/client-boats.component';
 import { ClientBrowseComponent } from './components/client-components/client-browse/client-browse.component';
@@ -16,6 +17,7 @@ import { ClientProfileComponent } from './components/client-components/client-pr
 import { ClientReservationsHistoryComponent } from './components/client-components/client-reservations-history/client-reservations-history.component';
 import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
 import { InstructorDashboardComponent } from './components/instructor-components/instructor-dashboard/instructor-dashboard.component';
+import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
 import { InstructorServiceComponent } from './components/instructor-components/instructor-service/instructor-service.component';
 import { LoginComponent } from './components/login/login.component';
 import { OwnerRegisterComponent } from './components/register-components/owner-register/owner-register.component';
@@ -105,6 +107,10 @@ const routes: Routes = [
   {
     path : 'instructor/adventure/:id',
     component : InstructorServiceComponent
+  },
+  {
+    path : 'instructor/services',
+    component: InstructorServiceListComponent
   }
 
 ];

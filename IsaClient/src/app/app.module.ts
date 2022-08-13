@@ -27,7 +27,7 @@ import { AdminRegistrationRequestsComponent } from './components/admin-component
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdminResponseComponent } from './components/admin-components/admin-response/admin-response.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -71,6 +71,8 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import { InstructorServiceComponent } from './components/instructor-components/instructor-service/instructor-service.component';
 import { JwtInterceptor } from './JwtInterceptor/jwt-interceptor';
+import { AdventurePreviewComponent } from './components/adventure-components/adventure-preview/adventure-preview.component';
+import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
 
 
 @NgModule({
@@ -119,7 +121,9 @@ import { JwtInterceptor } from './JwtInterceptor/jwt-interceptor';
     ClientSearchCardComponent,
     BrowseInstructorCardComponent,
     AddAdventureComponent,
-    InstructorServiceComponent
+    InstructorServiceComponent,
+    AdventurePreviewComponent,
+    InstructorServiceListComponent
   ],
   imports: [
     BrowserModule,
@@ -180,7 +184,10 @@ import { JwtInterceptor } from './JwtInterceptor/jwt-interceptor';
 
   ],
   providers: [HttpClientModule,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+     { provide: MatDialogRef, useValue: {} }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

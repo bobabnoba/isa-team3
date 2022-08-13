@@ -147,3 +147,6 @@ INSERT INTO rule(id, name)
             (103, '18+'),
             (104, 'WiFi included'),
             (105, 'No kids');
+
+           insert into adventure_code_of_conduct(adventure_id, code_of_conduct_id)
+            values (111, 100);
