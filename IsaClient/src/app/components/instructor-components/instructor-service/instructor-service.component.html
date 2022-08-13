@@ -1,3 +1,10 @@
-<div style="width: 1100px; justify-content: center; display: flex;">
-    <button mat-button-raised (click)="openAddAdvModal()"> ajde klikni me</button>
-</div>
+<div id="wrapper">
+    <app-instructor-sidebar></app-instructor-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <app-instructor-topbar></app-instructor-topbar>
+        <div class="container-fluid p-0" style="height: 100vh">
+            <app-adventure-profile [adventureId]="adventureId" ></app-adventure-profile>
+        </div>
+    </div>
+ </div>
+

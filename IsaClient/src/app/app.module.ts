@@ -10,7 +10,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register-components/register/register.component';
 import { MaterialModule } from './material/material.module';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -27,7 +27,7 @@ import { AdminRegistrationRequestsComponent } from './components/admin-component
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdminResponseComponent } from './components/admin-components/admin-response/admin-response.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -70,6 +70,9 @@ import { AddAdventureComponent } from './components/adventure-components/add-adv
 import {MatStepperModule} from '@angular/material/stepper';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import { InstructorServiceComponent } from './components/instructor-components/instructor-service/instructor-service.component';
+import { JwtInterceptor } from './JwtInterceptor/jwt-interceptor';
+import { AdventurePreviewComponent } from './components/adventure-components/adventure-preview/adventure-preview.component';
+import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
 
 
 @NgModule({
@@ -118,7 +121,9 @@ import { InstructorServiceComponent } from './components/instructor-components/i
     ClientSearchCardComponent,
     BrowseInstructorCardComponent,
     AddAdventureComponent,
-    InstructorServiceComponent
+    InstructorServiceComponent,
+    AdventurePreviewComponent,
+    InstructorServiceListComponent
   ],
   imports: [
     BrowserModule,
@@ -178,7 +183,11 @@ import { InstructorServiceComponent } from './components/instructor-components/i
 
 
   ],
-  providers: [HttpClientModule],
+  providers: [HttpClientModule,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+     { provide: MatDialogRef, useValue: {} }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

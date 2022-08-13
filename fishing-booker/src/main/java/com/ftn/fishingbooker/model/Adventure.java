@@ -32,10 +32,10 @@ public class Adventure {
     private Set<Image> images;
 
     //TODO: quick reservations
-    @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private Set<Reservation> reservations;
 
-    @OneToMany(targetEntity = Rule.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Rule.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Rule> codeOfConduct;
 
     private double cancelingPercentage;
@@ -50,8 +50,10 @@ public class Adventure {
     private Set<FishingEquipment> fishingEquipment;
 
 
-    @OneToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Utility> utilities;
+
+    private Boolean isDeleted = false;
 
     @Transient
     public List<String> getImagePaths() {

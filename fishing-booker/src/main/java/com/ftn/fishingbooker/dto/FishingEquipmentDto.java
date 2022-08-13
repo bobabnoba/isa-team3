@@ -16,4 +16,6 @@ public class FishingEquipmentDto {
         this.id = id;
         this.name = name;
     }
+
+    public FishingEquipmentDto(){}
 }

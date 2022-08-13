@@ -8,6 +8,7 @@ import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.AdventureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AdventureServiceImpl implements AdventureService {
+ public class AdventureServiceImpl implements AdventureService {
 
     private final AdventureRepository adventureRepository;
     private final InstructorRepository instructorRepository;
@@ -29,6 +30,15 @@ public class AdventureServiceImpl implements AdventureService {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class)
     public Collection<Adventure> getAll() {
         return adventureRepository.findAll();
+    }
+
+    @Override
+    public Collection<Adventure> getAllByInstructorEmail(String email) {
+        Instructor instructor = instructorRepository.findByEmail(email);
+        if(instructor == null) {
+            throw new ResourceConflictException("Instructor with email " + email + " does not exist");
+        }
+        return adventureRepository.findAllByInstructorId(instructor.getId());
     }
 
     @Override
@@ -126,6 +136,14 @@ public class AdventureServiceImpl implements AdventureService {
         addressRepository.save(updated);
         found.setAddress(updated);
         return adventureRepository.save(found);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        Adventure found = adventureRepository.findById(id)
+                .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
+        found.setIsDeleted(true);
+        adventureRepository.save(found);
     }
 
 }

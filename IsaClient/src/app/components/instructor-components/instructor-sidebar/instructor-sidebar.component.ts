@@ -25,26 +25,10 @@ export class InstructorSidebarComponent implements OnInit {
     this.toggle = !this.toggle;
   }
 
-  openAddAdvModal(){
-
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = 'modal-component';
-    dialogConfig.width = '1100px';
-    const dialogRef = this._matDialog.open(AddAdventureComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(res =>
-      {
-        this._snackBar.open('New adventure successfully added.', '',
-        {duration : 3000, panelClass: ['snack-bar']}
-      );
-      })
-  }
-
   deleteAccount(){
     let request = {
       email : this._storageService.getEmail(),
-      explanation : "I want to delete my account bc this shit suuucks",
+      explanation : "I want to delete my account ",
     } as DeleteAccoutRequest;
     this._deleteAccountService.createDeletionRequest(request).subscribe();
   }

@@ -37,11 +37,28 @@ public class AdventureController {
         return ok(dtos);
     }
 
+    @GetMapping("/by-instructor/{email}")
+    public ResponseEntity<Collection<AdventureDto>> getAllAdventuresByInstructor(@PathVariable String email) {
+        Collection<Adventure> found = adventureService.getAllByInstructorEmail(email);
+
+        Collection<AdventureDto> dtos = found.stream()
+                .map(AdventureMapper::mapToDto)
+                .collect(Collectors.toList());
+
+        return ok(dtos);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<AdventureDto> getAdventureById(@PathVariable Long id){
         Adventure found = adventureService.getById(id);
         AdventureDto dto = AdventureMapper.mapToDto(found);
         return ok(dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAdventure(@PathVariable Long id){
+        adventureService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping
