@@ -8,12 +8,10 @@ import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.AdventureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,10 +19,6 @@ import java.util.stream.Collectors;
 
     private final AdventureRepository adventureRepository;
     private final InstructorRepository instructorRepository;
-    private final AddressRepository addressRepository;
-    private final FishingEquipmentRepository fishingEquipmentRepository;
-    private final UtilityRepository utilityRepository;
-    private final RuleRepository ruleRepository;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class)
@@ -42,6 +36,7 @@ import java.util.stream.Collectors;
     }
 
     @Override
+    @Transactional
     public void addImage(Long adventureId, String fileName) {
         Adventure found = adventureRepository.findById(adventureId)
                 .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
@@ -52,37 +47,19 @@ import java.util.stream.Collectors;
     @Override
     @Transactional
     public Adventure addAdventure(Adventure adventure, String instructorEmail) {
-
-        Address savedAddress = addressRepository.save(adventure.getAddress());
         Instructor instructor = instructorRepository.findByEmail(instructorEmail);
-
-        Set<FishingEquipment> fishingEquipment = adventure.getFishingEquipment().stream()
-                .map(fe -> fishingEquipmentRepository.findById(fe.getId()).get())
-                .collect(Collectors.toSet());
-
-        Set<Rule> rules = adventure.getCodeOfConduct().stream()
-                .map(r -> ruleRepository.findById(r.getId()).get())
-                .collect(Collectors.toSet());
-
-        Set<Utility> utilities = adventure.getUtilities().stream()
-                .map(u -> utilityRepository.findById(u.getId()).get())
-                .collect(Collectors.toSet());
-
         adventure.setInstructor(instructor);
-        adventure.setAddress(savedAddress);
-        adventure.setFishingEquipment(fishingEquipment);
-        adventure.setUtilities(utilities);
-        adventure.setCodeOfConduct(rules);
-
         return adventureRepository.save(adventure);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Adventure getById(Long id) {
         return adventureRepository.findById(id).orElseThrow(() -> new ResourceConflictException("Adventure not found"));
     }
 
     @Override
+    @Transactional
     public Adventure updateAdventureInfo(Long id,  AdventureInfo updated) {
         Adventure found = adventureRepository.findById(id)
                 .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
@@ -97,48 +74,39 @@ import java.util.stream.Collectors;
     }
 
     @Override
+    @Transactional
     public Adventure updateAdventureAdditionalInfo(Long id, AdventureAdditionalInfo updated) {
 
         Adventure found = adventureRepository.findById(id)
                 .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
 
-        Set<FishingEquipment> fishingEquipment = updated.getFishingEquipment().stream()
-                .map(fe -> fishingEquipmentRepository.findById(fe.getId()).get())
-                .collect(Collectors.toSet());
-
-        Set<Utility> utilities = updated.getUtilities().stream()
-                .map(u -> utilityRepository.findById(u.getId()).get())
-                .collect(Collectors.toSet());
-
-        found.setFishingEquipment(fishingEquipment);
-        found.setUtilities(utilities);
+        found.setFishingEquipment(new HashSet<>(updated.getFishingEquipment()));
+        found.setUtilities(new HashSet<>(updated.getUtilities()));
         return adventureRepository.save(found);
     }
 
     @Override
+    @Transactional
     public Adventure updateAdventureRules(Long id, Collection<Rule> updated) {
         Adventure found = adventureRepository.findById(id)
                 .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
 
-        Set<Rule> rules = updated.stream()
-                .map(r -> ruleRepository.findById(r.getId()).get())
-                .collect(Collectors.toSet());
-        found.setCodeOfConduct(rules);
-
+        found.setCodeOfConduct(new HashSet<>(updated));
         return adventureRepository.save(found);
     }
 
     @Override
+    @Transactional
     public Adventure updateAdventureAddress(Long id, Address updated) {
         Adventure found = adventureRepository.findById(id)
                 .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
 
-        addressRepository.save(updated);
         found.setAddress(updated);
         return adventureRepository.save(found);
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         Adventure found = adventureRepository.findById(id)
                 .orElseThrow(() -> new ResourceConflictException("Adventure not found"));

@@ -24,20 +24,11 @@ public class RegistrationMapper {
 
     public static Client mapToClient(RegisterDto registerDto) {
         Client client = new Client();
-        client.setId(null);
         client.setFirstName(registerDto.getFirstName());
         client.setLastName(registerDto.getLastName());
         client.setEmail(registerDto.getEmail());
         client.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-
-        Address address = new Address();
-        address.setCity(registerDto.getCity());
-        address.setCountry(registerDto.getCountry());
-        address.setZipCode(registerDto.getZipCode());
-        address.setStreet(registerDto.getAddress());
-        client.setAddress(address);
-
-
+        client.setAddress(AddressMapper.toEntity(registerDto.getAddress()));
         client.setPhone(registerDto.getPhone());
         client.setActivated(false);
         client.setBlocked(false);
@@ -56,21 +47,13 @@ public class RegistrationMapper {
         homeOwner.setLastName(registerDto.getLastName());
         homeOwner.setEmail(registerDto.getEmail());
         homeOwner.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-
-        Address address = new Address();
-        address.setCity(registerDto.getCity());
-        address.setCountry(registerDto.getCountry());
-        address.setZipCode(registerDto.getZipCode());
-        address.setStreet(registerDto.getAddress());
-        homeOwner.setAddress(address);
-
+        homeOwner.setAddress(AddressMapper.toEntity(registerDto.getAddress()));
         homeOwner.setPhone(registerDto.getPhone());
         homeOwner.setActivated(false);
         homeOwner.setBlocked(false);
 
         UserRole role = roleService.findByName("ROLE_HOME_OWNER");
         homeOwner.setRole(role);
-
 
         return homeOwner;
     }
@@ -82,14 +65,7 @@ public class RegistrationMapper {
         boatOwner.setLastName(registerDto.getLastName());
         boatOwner.setEmail(registerDto.getEmail());
         boatOwner.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-
-        Address address = new Address();
-        address.setCity(registerDto.getCity());
-        address.setCountry(registerDto.getCountry());
-        address.setZipCode(registerDto.getZipCode());
-        address.setStreet(registerDto.getAddress());
-        boatOwner.setAddress(address);
-
+        boatOwner.setAddress(AddressMapper.toEntity(registerDto.getAddress()));
         boatOwner.setPhone(registerDto.getPhone());
         boatOwner.setActivated(false);
         boatOwner.setBlocked(false);
@@ -106,14 +82,7 @@ public class RegistrationMapper {
         admin.setLastName(registerDto.getLastName());
         admin.setEmail(registerDto.getEmail());
         admin.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-
-        Address address = new Address();
-        address.setCity(registerDto.getCity());
-        address.setCountry(registerDto.getCountry());
-        address.setZipCode(registerDto.getZipCode());
-        address.setStreet(registerDto.getAddress());
-        admin.setAddress(address);
-
+        admin.setAddress(AddressMapper.toEntity(registerDto.getAddress()));
         admin.setActivated(false);
         admin.setBlocked(false);
         admin.setRole(roleService.findByName("ROLE_ADMIN"));
@@ -128,12 +97,7 @@ public class RegistrationMapper {
         instructor.setLastName(registerDto.getLastName());
         instructor.setEmail(registerDto.getEmail());
         instructor.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        Address address = new Address();
-        address.setCity(registerDto.getCity());
-        address.setCountry(registerDto.getCountry());
-        address.setZipCode(registerDto.getZipCode());
-        address.setStreet(registerDto.getAddress());
-        instructor.setAddress(address);
+        instructor.setAddress(AddressMapper.toEntity(registerDto.getAddress()));
         instructor.setPhone(registerDto.getPhone());
         instructor.setActivated(false);
         instructor.setBlocked(false);
