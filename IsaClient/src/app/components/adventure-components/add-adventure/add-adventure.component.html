@@ -29,7 +29,9 @@
             </div>
 
             <div>
-              <button mat-button matStepperNext>Next</button>
+              <button *ngIf="!editMode" mat-button matStepperNext>Next</button>
+              <button *ngIf="editMode" mat-button (click)="updateInfo()">Update</button>
+
             </div>
           </form>
         </mat-step>
@@ -61,8 +63,8 @@
                     </mat-select>
                   </mat-form-field>
             <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
+              <button *ngIf="!editMode" mat-button matStepperNext>Next</button>
+              <button *ngIf="editMode" mat-button (click)="updateAdditional()">Update</button>
             </div>
           </form>
         </mat-step>
@@ -87,8 +89,8 @@
                       <input matInput formControlName="zipCode" placeholder="">
                   </mat-form-field>
                 </div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
+                <button *ngIf="!editMode" mat-button matStepperNext>Next</button>
+                <button *ngIf="editMode" mat-button (click)="updateAddress()">Update</button>
           </form>
         </mat-step>
        
@@ -106,8 +108,8 @@
                 <mat-option *ngFor="let e of existingRules" [value]="e">{{e.name}}</mat-option>
               </mat-select>
             </mat-form-field>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext>Next</button>
+            <button *ngIf="!editMode" mat-button matStepperNext>Next</button>
+            <button *ngIf="editMode" mat-button (click)="updateRules()">Update</button>
           </form>
         </mat-step>
         
@@ -146,7 +148,8 @@
                   </mat-file-upload>
               </mat-file-upload-queue>
 
-              <button mat-button (click)="formEnd()">Save</button>
+              <button *ngIf="!editMode" mat-button (click)="formEnd()">Next</button>
+              <button *ngIf="editMode" mat-button (click)="updateImg()">Update</button>
           </form>
         </mat-step>
        </template>

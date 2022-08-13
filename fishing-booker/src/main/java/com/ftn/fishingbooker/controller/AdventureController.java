@@ -48,12 +48,17 @@ public class AdventureController {
         return ok(dtos);
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<AdventureDto> getAdventureById(@PathVariable Long id){
         Adventure found = adventureService.getById(id);
         AdventureDto dto = AdventureMapper.mapToDto(found);
         return ok(dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAdventure(@PathVariable Long id){
+        adventureService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping

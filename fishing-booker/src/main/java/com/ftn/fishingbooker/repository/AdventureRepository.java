@@ -10,9 +10,10 @@ import java.util.*;
 @Repository
 public interface AdventureRepository extends JpaRepository<Adventure, Long> {
 
-    @Query("SELECT a FROM Adventure a JOIN FETCH a.instructor i")
+    @Query("SELECT a FROM Adventure a JOIN FETCH a.instructor i WHERE a.isDeleted = false")
     Collection<Adventure> findAllWithInstructor();
 
-    @Query("SELECT a FROM Adventure a WHERE a.instructor.id = ?1")
+    @Query("SELECT a FROM Adventure a WHERE a.instructor.id = ?1 and a.isDeleted = false")
     Collection<Adventure> findAllByInstructorId(Long id);
+
 }

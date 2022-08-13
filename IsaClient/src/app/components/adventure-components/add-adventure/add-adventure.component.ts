@@ -141,7 +141,6 @@ export class AddAdventureComponent implements OnInit {
     this.createObject();
     this._adventureService.addAdventure(this.newAdventure).subscribe(
       data => {
-        console.log(data);
         this.dataAdventure = data;
         this.showImgUpload = true;
         this.requestUrl =  environment.apiURL + '/adventures/image-upload/' + data.id;
@@ -170,82 +169,81 @@ export class AddAdventureComponent implements OnInit {
 
   }
 
-  formEnd(){
-
-    if(this.editMode){
-
-       if ( this.location.value.street != this.adventure.address.street
-        || this.location.value.city != this.adventure.address.city
-        || this.location.value.country != this.adventure.address.country
-        || this.location.value.zipCode != this.adventure.address.zipCode) {
-        
-          this._adventureService.updateAddress(this.adventureId, {
-            street: this.location.value.street,
-            city: this.location.value.city,
-            country: this.location.value.country,
-            zipCode: this.location.value.zipCode,
-          }).subscribe(
-            (res) => { 
-              this.dataAdventure = res;
-              this._snackBar.open('Adventure successfully updated.', '',
-              { duration: 3000, panelClass: ['snack-bar'] }
-            );
-            }
-          )
-      } 
-       if ( this.rules != this.adventure.codeOfConduct) {
-        this._adventureService.updateCodeOfConduct(this.adventureId, this.rules).subscribe(
-          (res) => { 
-            this.dataAdventure = res;
-            this._snackBar.open('Adventure successfully updated.', '',
-            { duration: 3000, panelClass: ['snack-bar'] }
-          );
-          }
-        )}
-      if ( this.equipment != this.adventure.fishingEquipment
-        || this.services != this.adventure.utilities) { 
-          this._adventureService.updateAdditionalInfo(this.adventureId,
-              {
-                fishingEquipment: this.equipment,
-                utilities: this.services
-              }
-            ).subscribe(
-              (res) => { 
-                this.dataAdventure = res;
-                this._snackBar.open('Adventure successfully updated.', '',
-                { duration: 3000, panelClass: ['snack-bar'] }
-              );
-              }
-            )
+  updateInfo(){
+    this._adventureService.updateInfo(this.adventureId,   
+      {
+        title: this.info.value.title,
+        description: this.info.value.description,
+        price: this.info.value.price,
+        cancelingPercentage: this.info.value.cancellationPercentage,
+        maxParticipants: this.info.value.maxPersons
       }
+      ).subscribe(
+        (res) => { 
+          this.dataAdventure = res;
+        this._snackBar.open('Adventure successfully updated.', '',
+        { duration: 3000, panelClass: ['snack-bar'] }
+      );
+      this.closeDialog();
+      })
+  }
 
-      if ( this.info.value.title != this.adventure.title 
-        || this.info.value.description != this.adventure.description 
-        || this.info.value.price != this.adventure.pricePerDay 
-        || this.info.value.cancellationPercentage != this.adventure.cancelingPercentage
-        || this.info.value.maxPersons != this.adventure.maxNumberOfParticipants) {
+  updateAdditional(){
+    this._adventureService.updateAdditionalInfo(this.adventureId,
+      {
+        fishingEquipment: this.equipment,
+        utilities: this.services
+      }
+    ).subscribe(
+      (res) => { 
+        this.dataAdventure = res;
+        this._snackBar.open('Adventure successfully updated.', '',
+        { duration: 3000, panelClass: ['snack-bar'] }
+      );
+      this.closeDialog();
+      }
+    )
+  }
 
-        this._adventureService.updateInfo(this.adventureId,   
-          {
-            title: this.info.value.title,
-            description: this.info.value.description,
-            price: this.info.value.price,
-            cancelingPercentage: this.info.value.cancellationPercentage,
-            maxParticipants: this.info.value.maxPersons
-          }
-          ).subscribe(
-            (res) => { 
-              this.dataAdventure = res;
-            this._snackBar.open('Adventure successfully updated.', '',
-            { duration: 3000, panelClass: ['snack-bar'] }
-          );
-          this.closeDialog();
-          }
-          
-        )
-      } 
+  updateAddress(){
+    this._adventureService.updateAddress(this.adventureId, {
+      street: this.location.value.street,
+      city: this.location.value.city,
+      country: this.location.value.country,
+      zipCode: this.location.value.zipCode,
+    }).subscribe(
+      (res) => { 
+        this.dataAdventure = res;
+        this._snackBar.open('Adventure successfully updated.', '',
+        { duration: 3000, panelClass: ['snack-bar'] }
+      );
+      this.closeDialog();
+      }
+    )
+  }
 
-    }
+  updateRules(){
+    this._adventureService.updateCodeOfConduct(this.adventureId, this.rules).subscribe(
+      (res) => { 
+        this.dataAdventure = res;
+        this._snackBar.open('Adventure successfully updated.', '',
+        { duration: 3000, panelClass: ['snack-bar'] }
+      );
+      }
+    )
+  }
+
+  updateImg(){
+    this._adventureService.getById(this.adventureId).subscribe(
+      res => {
+        this.dataAdventure = res;
+        this.closeDialog();
+
+      })
+  }
+
+  formEnd(){
+    // snack??
     this.closeDialog();
   }
 

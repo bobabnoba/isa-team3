@@ -115,8 +115,8 @@ insert into vacation_home_reservations(
 
 -- Adventure
 INSERT INTO adventure(
-	id, canceling_percentage, description, max_number_of_participants, price_per_day, rating, title, address_id, instructor_id)
-	VALUES (111, 20, 'Description', 3, 45, 4, 'title', 40, 110);
+	id, canceling_percentage, description, max_number_of_participants, price_per_day, rating, title, is_deleted, address_id, instructor_id)
+	VALUES (111, 20, 'Description', 3, 45, 4, 'title', false, 40, 110);
 
 -- equipment
 INSERT INTO fishing_equipment(id, name)

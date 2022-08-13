@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class AdventureServiceImpl implements AdventureService {
+ public class AdventureServiceImpl implements AdventureService {
 
     private final AdventureRepository adventureRepository;
     private final InstructorRepository instructorRepository;
@@ -136,6 +136,14 @@ public class AdventureServiceImpl implements AdventureService {
         addressRepository.save(updated);
         found.setAddress(updated);
         return adventureRepository.save(found);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        Adventure found = adventureRepository.findById(id)
+                .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
+        found.setIsDeleted(true);
+        adventureRepository.save(found);
     }
 
 }

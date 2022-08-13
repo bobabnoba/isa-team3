@@ -28,4 +28,6 @@ public interface AdventureService {
     Adventure updateAdventureRules(Long id, Collection<Rule> updated);
 
     Adventure updateAdventureAddress(Long id, Address updated);
+
+    void deleteById(Long id);
 }
