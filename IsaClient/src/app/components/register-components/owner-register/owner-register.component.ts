@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { IAddress } from 'src/app/interfaces/address';
 import { LoggedUser } from 'src/app/interfaces/logged-user';
 import { RegisterOwner } from 'src/app/interfaces/register-owner';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
@@ -32,6 +33,7 @@ export class OwnerRegisterComponent implements OnInit {
     private _authService: AuthService
   ) {
     this.newUser = {} as RegisterOwner;
+    this.newUser.address = {} as IAddress;
   }
 
   ngOnInit(): void {
@@ -89,11 +91,11 @@ export class OwnerRegisterComponent implements OnInit {
   createUser(): void {
     this.newUser.firstName = this.createForm.value.firstName;
     this.newUser.lastName = this.createForm.value.lastName;
-    this.newUser.address = this.createForm.value.adress;
+    this.newUser.address.street = this.createForm.value.adress;
     this.newUser.phone = this.createForm.value.phone;
     this.newUser.email = this.createForm.value.email;
-    this.newUser.city = this.createForm.value.city;
-    this.newUser.country = this.createForm.value.country;
+    this.newUser.address.city = this.createForm.value.city;
+    this.newUser.address.country = this.createForm.value.country;
     this.newUser.password = this.createForm.value.password;
     this.newUser.motivation = this.createForm.value.motivation;
     this.newUser.registrationType = this.createForm.value.ownerType;

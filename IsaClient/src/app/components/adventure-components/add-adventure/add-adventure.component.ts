@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { IAddress } from 'src/app/interfaces/address';
 import {  Adventure, FishingEquipment, Utility } from 'src/app/interfaces/adventure';
 import { Rule } from 'src/app/interfaces/rule';
 import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
@@ -79,6 +80,8 @@ export class AddAdventureComponent implements OnInit {
               private _snackBar : MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: any) {
 
+                this.newAdventure.address = {} as IAddress
+
                 if(data.editMode)
                 {
                   this.adventureId = data.adventureId;
@@ -151,13 +154,10 @@ export class AddAdventureComponent implements OnInit {
   createObject() : void {
 
     this.newAdventure.title = this.info.value.title;
-    this.newAdventure.address = {
-      id : 0,
-      street : this.location.value.street,
-      city : this.location.value.city,
-      country : this.location.value.country,
-      zipCode : this.location.value.zipCode,
-    };
+    this.newAdventure.address.street = this.location.value.street,
+    this.newAdventure.address.city =  this.location.value.city;
+    this.newAdventure.address.country = this.location.value.country;
+    this.newAdventure.address.zipCode = this.location.value.zipCode;
     this.newAdventure.description = this.info.value.description;
     this.newAdventure.pricePerDay = this.info.value.price;
     this.newAdventure.cancelingPercentage = this.info.value.cancellationPercentage;

@@ -17,6 +17,7 @@ import { ClientProfileComponent } from './components/client-components/client-pr
 import { ClientReservationsHistoryComponent } from './components/client-components/client-reservations-history/client-reservations-history.component';
 import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
 import { InstructorDashboardComponent } from './components/instructor-components/instructor-dashboard/instructor-dashboard.component';
+import { InstructorProfileComponent } from './components/instructor-components/instructor-profile/instructor-profile.component';
 import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
 import { InstructorServiceComponent } from './components/instructor-components/instructor-service/instructor-service.component';
 import { LoginComponent } from './components/login/login.component';
@@ -111,6 +112,10 @@ const routes: Routes = [
   {
     path : 'instructor/services',
     component: InstructorServiceListComponent
+  },
+  {
+    path: 'instructor/profile',
+    component: InstructorProfileComponent
   }
 
 ];
