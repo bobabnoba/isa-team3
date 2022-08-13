@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Adventure } from 'src/app/interfaces/adventure';
 import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
 
@@ -9,13 +9,14 @@ import { AdventureService } from 'src/app/services/adventure-service/adventure.s
 })
 export class AdventureProfileComponent implements OnInit {
 
+  @Input() adventureId! : string
   adventure! : Adventure;
   
   constructor(private _adventureService : AdventureService) { }
 
   ngOnInit(): void {
-    this._adventureService.getAdventures().subscribe(
-      res => this.adventure = res[0]
+    this._adventureService.getById(this.adventureId).subscribe(
+      res => this.adventure = res
     )
   }
 

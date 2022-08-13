@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AddAdventureComponent } from '../../adventure-components/add-adventure/add-adventure.component';
 
 @Component({
@@ -9,23 +10,12 @@ import { AddAdventureComponent } from '../../adventure-components/add-adventure/
 })
 export class InstructorServiceComponent implements OnInit {
 
-  constructor(private _matDialog : MatDialog) { }
+  adventureId! : string
+
+  constructor(private _matDialog : MatDialog, private _router : Router) { }
 
   ngOnInit(): void {
-  }
-
-  openAddAdvModal(){
-
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = 'modal-component';
-    dialogConfig.width = '1100px';
-    const dialogRef = this._matDialog.open(AddAdventureComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(res =>
-      {
-        console.log(res);
-      })
+    this.adventureId = this._router.url.substring(22);
   }
 
 }

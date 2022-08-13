@@ -44,20 +44,27 @@ export class InstructorServiceListComponent implements OnInit {
   }
 
   adventureEdited(adventure : Adventure){
-    console.log('dosao u roditelja emit metod, donio ovo kao avanturu')
-    console.log(adventure)
-    
     let index = -1;
     this.adventures.forEach(element => {
       if(element.id == adventure.id){
         index = this.adventures.indexOf(element);
       }
     });
-    
-    console.log('nasao indeks ' + index)
           if (index !== -1){
             this.adventures[index] = adventure
           }
+  }
+
+  adventureDeleted(adventureId : number){
+    let index = -1;
+    this.adventures.forEach(element => {
+      if(element.id == adventureId){
+        index = this.adventures.indexOf(element);
+      }
+    });
+    if (index !== -1){
+      this.adventures.splice(index, 1)
+    }
   }
 
 }

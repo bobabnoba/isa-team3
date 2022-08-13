@@ -74,7 +74,7 @@ export class AddAdventureComponent implements OnInit {
   })
 
   constructor(private _formBuilder: FormBuilder, private _storageService : StorageService,
-              private _adventureService : AdventureService, private _router : Router,
+              private _adventureService : AdventureService, 
               public dialogRef: MatDialogRef<AddAdventureComponent>,
               private _snackBar : MatSnackBar,
               @Inject(MAT_DIALOG_DATA) public data: any) {

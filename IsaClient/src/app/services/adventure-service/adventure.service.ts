@@ -22,6 +22,10 @@ export class AdventureService {
     return this._http.get<Adventure>(`${this.baseURL}/adventures/${id}`);
   }
 
+  deleteAdventure(id : number) {
+    return this._http.delete<any>(`${this.baseURL}/adventures/${id}`);
+  }
+
   getAllByInstructor(email : string) : Observable<Adventure[]>{
     return this._http.get<Adventure[]>(`${this.baseURL}/adventures/by-instructor/${email}`);
   } 

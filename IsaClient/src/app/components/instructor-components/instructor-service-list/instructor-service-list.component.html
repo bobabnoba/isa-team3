@@ -12,7 +12,8 @@
 
             <div class="row">
                 <div *ngFor="let adv of adventures" >
-                    <app-adventure-preview [adventure]="adv" (adventureEdited)="adventureEdited($event)"></app-adventure-preview>
+                    <app-adventure-preview [adventure]="adv" (adventureEdited)="adventureEdited($event)" 
+                    (adventureDeleted)="adventureDeleted($event)"></app-adventure-preview>
                 </div>
             </div> 
         </div>

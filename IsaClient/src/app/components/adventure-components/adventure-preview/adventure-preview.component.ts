@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewContainerRef } from
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Adventure } from 'src/app/interfaces/adventure';
+import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
 import { environment } from 'src/environments/environment';
 import { AddAdventureComponent } from '../add-adventure/add-adventure.component';
 
@@ -16,10 +17,13 @@ export class AdventurePreviewComponent implements OnInit {
   adventure : Adventure = {} as Adventure; 
   
   @Output() adventureEdited = new EventEmitter<Adventure>();
-  
+    
+  @Output() adventureDeleted = new EventEmitter<number>();
+
   baseUrl = environment.apiURL
 
-  constructor(private _router : Router, private _matDialog : MatDialog, private _viewContainerRef: ViewContainerRef) { }
+  constructor(private _router : Router, private _matDialog : MatDialog,
+              private _adventureService : AdventureService) { }
 
   ngOnInit(): void {
   }
@@ -43,11 +47,7 @@ export class AdventurePreviewComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res =>
       {
-        console.log('afterclosed')
         if(res.data.editMode){
-          console.log('emiturem ovo')
-          console.log(res.data.adventure)
-
         this.adventureEdited.emit(res.data.adventure);
         }
         
@@ -55,6 +55,8 @@ export class AdventurePreviewComponent implements OnInit {
   }
 
   delete(){
-    
+    this._adventureService.deleteAdventure(this.adventure.id).subscribe(() => {
+      this.adventureDeleted.emit(this.adventure.id);
+    });
   }
 }
