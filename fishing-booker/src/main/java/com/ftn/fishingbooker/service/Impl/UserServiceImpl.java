@@ -26,16 +26,15 @@ import javax.transaction.Transactional;
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    private final UserRepository userRepository;
-    private final ClientService clientService;
-    private final RegistrationRepository registrationRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    RegistrationRepository registrationRepository;
+
     private static String url = "<a href=\"http://localhost:4200/login\"> Login </a>";
 
-    public UserServiceImpl(UserRepository userRepository, ClientService clientService, RegistrationRepository registrationRepository) {
-        this.userRepository = userRepository;
-        this.clientService = clientService;
-        this.registrationRepository = registrationRepository;
-    }
 
     @Override
     public boolean isEmailRegistered(String email) {
