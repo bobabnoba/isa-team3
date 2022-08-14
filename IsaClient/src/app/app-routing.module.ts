@@ -20,6 +20,7 @@ import { ClientReservationsHistoryComponent } from './components/client-componen
 import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
 import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
 import { InstructorDashboardComponent } from './components/instructor-components/instructor-dashboard/instructor-dashboard.component';
+import { InstructorOffersComponent } from './components/instructor-components/instructor-offers/instructor-offers.component';
 import { InstructorProfileComponent } from './components/instructor-components/instructor-profile/instructor-profile.component';
 import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
 import { InstructorServiceComponent } from './components/instructor-components/instructor-service/instructor-service.component';
@@ -131,6 +132,10 @@ const routes: Routes = [
   {
     path: 'instructor/profile',
     component: InstructorProfileComponent
+  },
+  {
+    path: 'instructor/special-offers',
+    component: InstructorOffersComponent
   }
 
 ];

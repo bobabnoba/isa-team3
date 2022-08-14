@@ -30,4 +30,6 @@ public interface AdventureService {
     Adventure updateAdventureAddress(Long id, Address updated);
 
     void deleteById(Long id);
+
+    Adventure save(Adventure adventure);
 }

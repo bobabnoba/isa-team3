@@ -1,0 +1,46 @@
+mat-form-field {
+    width: 100%;
+    margin-left: 2px;
+}
+
+mat-form-field input {
+    width: 100%;
+    margin-left: 2px;
+}
+
+button {
+    margin-top: 4px;
+    height: 60px;
+    border-radius: 0px 4px 4px 0px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: white;
+    color: black;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    color: black !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border-radius: 0px !important;
+}
+
+
+::ng-deep .mat-form-field-outline {
+    color: black !important;
+    border-radius: 4px 0px 0px 4px !important;
+}
+
+::ng-deep .mat-form-field-outline-thick {
+    color: black !important;
+}
+
+.d-flex input {
+    margin-left: 2px;
+}
+
+.example-additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+}

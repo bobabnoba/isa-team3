@@ -1,20 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InstructorService {
 
+  baseURL = environment.apiURL;
+
   constructor(private _http : HttpClient) { }
 
   getInstructor(email : string ) : Observable<any> {
-    return this._http.get('http://localhost:8090/instructor?email=' + email);
+    return this._http.get(`${this.baseURL}/instructor?email=${email}`);
   }
 
   addAvailability(body : any ) : Observable<any> {
-    return this._http.post('http://localhost:8090/instructor/add-availability', body);
+    return this._http.post(`${this.baseURL}/instructor/add-availability`, body);
+  }
+
+  checkAvailability(from : string, to : string, instructorEmail : string) {
+    return this._http.get(`${this.baseURL}/instructor/check-availability?from=${from}&to=${to}&instructorEmail=${instructorEmail}`);
   }
  
 }

@@ -2,10 +2,7 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
-import com.ftn.fishingbooker.model.Instructor;
-import com.ftn.fishingbooker.model.InstructorAvailability;
-import com.ftn.fishingbooker.model.Registration;
-import com.ftn.fishingbooker.model.User;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.InstructorRepository;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.service.*;
@@ -16,7 +13,6 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class InstructorServiceImpl implements InstructorService {
 
@@ -101,9 +97,24 @@ public class InstructorServiceImpl implements InstructorService {
     public Instructor getWithAvailability(String email) {
         return instructorRepository.findByEmail(email);
     }
+
     @Override
     public Collection<Instructor> getAll() {
         return instructorRepository.getAll();
+    }
+
+    @Override
+    public boolean checkAvailability(Date from, Date to, String instructorEmail) {
+        boolean isAvailable = false;
+        Instructor instructor = instructorRepository.findByEmail(instructorEmail);
+        List<InstructorAvailability> availabilityPeriods = new ArrayList<>(instructor.getAvailability());
+
+        for (InstructorAvailability period : availabilityPeriods) {
+            if (from.after(period.getStartDate()) && to.before(period.getEndDate())) {
+                isAvailable = true;
+            }
+        }
+        return isAvailable;
     }
 
 }

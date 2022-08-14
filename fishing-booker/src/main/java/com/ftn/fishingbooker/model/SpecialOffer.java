@@ -1,4 +1,4 @@
-package com.ftn.fishingbooker.mapper;
+package com.ftn.fishingbooker.model;
 
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import lombok.Getter;
@@ -35,7 +35,7 @@ public class SpecialOffer {
 
     private Date reservationEndDate;
 
-    private int noOfGuests;
+    private int guests;
 
     private boolean isUsed = false;
 

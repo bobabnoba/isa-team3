@@ -1,0 +1,41 @@
+
+<form [formGroup]="form">
+    <mat-form-field appearance="standard">
+        <mat-label>Adventure</mat-label>
+        <mat-select formControlName="adventure" >
+            <mat-option *ngFor="let a of adventures" [value]="a">{{a.title}}</mat-option>
+          </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput type="datetime-local" formControlName="activeUntil" placeholder="start date">
+      </mat-form-field>
+
+      <h3>DateTime picker</h3>
+
+      <mat-form-field>
+        <mat-placeholder>Date</mat-placeholder>
+        <input [mtxDatetimepicker]="datetimePicker" [formControl]="x" matInput required>
+        <mtx-datetimepicker-toggle [for]="datetimePicker" matSuffix></mtx-datetimepicker-toggle>
+        <mtx-datetimepicker #datetimePicker
+                            [type]="type"
+                            [mode]="mode"
+                            [multiYearSelector]="multiYearSelector"
+                            [startView]="startView"
+                            [twelvehour]="twelvehour"
+                            [timeInterval]="timeInterval"
+                            [touchUi]="touchUi"></mtx-datetimepicker>
+      </mat-form-field>
+
+        <!-- <mat-form-field appearance="standard">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" placeholder="">
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Country</mat-label>
+            <input matInput formControlName="country" placeholder="">
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+          <mat-label>Zip code</mat-label>
+          <input matInput formControlName="zipCode" placeholder="">
+      </mat-form-field> -->
+</form>

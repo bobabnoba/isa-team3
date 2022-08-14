@@ -53,8 +53,6 @@ import { VacationHouseProfileComponent } from './components/vacation-home-compon
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { InstructorCalendarComponent } from './components/instructor-components/instructor-calendar/instructor-calendar.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
 import { BrowseCardComponent } from './components/browse-card/browse-card.component';
 import { TruncatePipe } from './pipes/truncate-pipe';
 import { SearchCardComponent } from './components/search-card/search-card.component';
@@ -78,6 +76,14 @@ import { AccDeletionExplanationComponent } from './components/instructor-compone
 import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
 import { BoatReservationsComponent } from './components/client-components/boat-reservations/boat-reservations.component';
 import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { InstructorOffersComponent } from './components/instructor-components/instructor-offers/instructor-offers.component';
+import { AddSpecialOfferComponent } from './components/instructor-components/add-special-offer/add-special-offer.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MtxDatetimepickerModule } from '@ng-matero/extensions/datetimepicker';
+import { MtxNativeDatetimeModule } from '@ng-matero/extensions/core';
+
+
 
 
 @NgModule({
@@ -130,7 +136,12 @@ import { AdventureReservationsComponent } from './components/client-components/a
     AdventurePreviewComponent,
     InstructorServiceListComponent,
     InstructorProfileComponent,
-    AccDeletionExplanationComponent
+    AccDeletionExplanationComponent,
+    HomeReservationsComponent,
+    BoatReservationsComponent,
+    AdventureReservationsComponent,
+    InstructorOffersComponent,
+    AddSpecialOfferComponent
   ],
   imports: [
     BrowserModule,
@@ -164,9 +175,8 @@ import { AdventureReservationsComponent } from './components/client-components/a
     }),
     MatStepperModule,
     MatFileUploadModule,
-    HomeReservationsComponent,
-    BoatReservationsComponent,
-    AdventureReservationsComponent
+    MtxDatetimepickerModule,
+    MtxNativeDatetimeModule
   ],
   exports: [
     BrowserModule,

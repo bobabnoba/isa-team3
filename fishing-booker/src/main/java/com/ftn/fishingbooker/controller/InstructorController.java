@@ -10,16 +10,17 @@ import com.ftn.fishingbooker.model.InstructorAvailability;
 import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.service.InstructorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import java.util.Collection;
+import java.util.Date;
 
 import static org.springframework.http.ResponseEntity.ok;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/instructor")
@@ -52,5 +53,12 @@ public class InstructorController {
         Collection<Instructor> instructors = instructorService.getAll();
 
         return InstructorMapper.mapInstructors(instructors);
+    }
+
+    @GetMapping("/check-if-available")
+    ResponseEntity<Boolean> checkAvailability(@RequestParam@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
+                                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
+                                              @RequestParam String instructorEmail) {
+        return ok(instructorService.checkAvailability(from, to, instructorEmail));
     }
 }

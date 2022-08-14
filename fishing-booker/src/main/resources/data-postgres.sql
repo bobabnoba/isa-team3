@@ -114,13 +114,13 @@ insert into vacation_home_code_of_conduct(
 
 ---- Reservations
 insert into reservation(
-	id, discount, end_date, is_cancelled, max_guests, price, start_date, type, client_id)
+	id, discount, end_date, is_cancelled, guests, price, start_date, type, client_id)
 	values (100, 0.0,  '2020-08-17', 'false', 5, 200, '2020-08-11', 'VACATION_HOME', 10); -- perfect
 insert into reservation(
-	id, discount, end_date, is_cancelled, max_guests, price, start_date, type, client_id)
+	id, discount, end_date, is_cancelled, guests, price, start_date, type, client_id)
 	values (101, 0.0,  '2020-08-17', 'false', 3, 200, '2020-08-11', 'VACATION_HOME', 10); -- quest limit
 insert into reservation(
-	id, discount, end_date, is_cancelled, max_guests, price, start_date, type, client_id)
+	id, discount, end_date, is_cancelled, guests, price, start_date, type, client_id)
 	values (102, 0.0,  '2020-08-07', 'false', 5, 200, '2020-08-01', 'VACATION_HOME', 12); --overlapping reservation
 
 -- Vacation Home Availability
