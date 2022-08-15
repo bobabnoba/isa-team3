@@ -1,4 +1,5 @@
 <div class="container wrapper">
+    <p *ngIf = "adventure.utilities.length === 0"> No additional services provided.</p>
     <div class = "row inner" *ngFor="let service of adventure.utilities">
         <div class="col-md" >
           {{ service.name }}

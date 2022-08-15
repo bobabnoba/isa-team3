@@ -5,17 +5,18 @@
         <div class="container-fluid">
 
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">My services</h1>
+                <h1  *ngIf="adventures.length === 0" class="h3 mb-0 text-gray-800">You do not have any services yet.</h1>
+                <h1  *ngIf="adventures.length > 0" class="h3 mb-0 text-gray-800">My services</h1>
                <div class="d-flex align-items-end">
                 <button (click)="addNew()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mright"><i
                     class="fa-solid fa-plus"></i> Add new service</button>
             
-            <button (click)="addOffer()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <button (click)="addOffer()"  *ngIf="adventures.length > 0"  class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                 <i class="fa-solid fa-tags"></i> Create a special offer</button>
                </div>
             </div>
 
-            <div class="row">
+            <div class="row" *ngIf="adventures.length > 0">
                 <div *ngFor="let adv of adventures | adventureSearch : searchText " >
                     <app-adventure-preview [adventure]="adv" (adventureEdited)="adventureEdited($event)" 
                     (adventureDeleted)="adventureDeleted($event)"></app-adventure-preview>

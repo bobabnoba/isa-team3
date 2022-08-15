@@ -49,6 +49,6 @@ export class AdventureSearchPipe implements PipeTransform {
          })
       })  
   }
-    return retVal;
+    return [... new Set(retVal)];
   }
 }
