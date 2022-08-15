@@ -1,5 +1,5 @@
 <div class="container-fluid h-100 d-flex justify-content-center p-0 pic">
-        <div class="jumbotron my-auto mx-auto tabs">
+        <div class="jumbotron mx-auto tabs">
             <mat-tab-group mat-align-tabs="center">
                 <mat-tab label="About"> 
                 
@@ -24,7 +24,7 @@
                 </mat-tab>
               </mat-tab-group>
         </div>
-       <div class="justify-content-center d-flex flex-dir" >
+       <div class="justify-content-center d-flex flex-dir pt-5">
         <h2 class="pb-1 align-text">Special offers</h2>
         <div *ngFor="let offer of adventure.specialOffers">
             <app-adventure-special-offer [offer]="offer" class="p-3"></app-adventure-special-offer>
