@@ -10,3 +10,11 @@
     width: 80%;
     background-color: rgba(237, 242, 248, 0.664);
 }
+
+.align-text {
+    text-align: center;
+}
+
+.flex-dir {
+    flex-direction: column;
+}

@@ -54,4 +54,7 @@ public class VacationHome {
     @JoinColumn(name = "home_owner_id")
     private HomeOwner homeOwner;
 
+    @OneToMany(targetEntity = VacationHomeAvailability.class,mappedBy = "vacationHome",fetch = FetchType.EAGER)
+    private Set<VacationHomeAvailability> availableTimePeriods;
+
 }

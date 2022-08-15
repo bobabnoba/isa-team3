@@ -9,7 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register-components/register/register.component';
 import { MaterialModule } from './material/material.module';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -53,8 +53,6 @@ import { VacationHouseProfileComponent } from './components/vacation-home-compon
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { InstructorCalendarComponent } from './components/instructor-components/instructor-calendar/instructor-calendar.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
 import { BrowseCardComponent } from './components/browse-card/browse-card.component';
 import { TruncatePipe } from './pipes/truncate-pipe';
 import { SearchCardComponent } from './components/search-card/search-card.component';
@@ -75,6 +73,14 @@ import { AdventurePreviewComponent } from './components/adventure-components/adv
 import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
 import { InstructorProfileComponent } from './components/instructor-components/instructor-profile/instructor-profile.component';
 import { AccDeletionExplanationComponent } from './components/instructor-components/acc-deletion-explanation/acc-deletion-explanation.component';
+import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
+import { BoatReservationsComponent } from './components/client-components/boat-reservations/boat-reservations.component';
+import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { AddSpecialOfferComponent } from './components/instructor-components/add-special-offer/add-special-offer.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { AdventureSpecialOfferComponent } from './components/adventure-components/adventure-special-offer/adventure-special-offer.component';
+
 
 
 @NgModule({
@@ -127,7 +133,12 @@ import { AccDeletionExplanationComponent } from './components/instructor-compone
     AdventurePreviewComponent,
     InstructorServiceListComponent,
     InstructorProfileComponent,
-    AccDeletionExplanationComponent
+    AccDeletionExplanationComponent,
+    HomeReservationsComponent,
+    BoatReservationsComponent,
+    AdventureReservationsComponent,
+    AddSpecialOfferComponent,
+    AdventureSpecialOfferComponent,
   ],
   imports: [
     BrowserModule,
@@ -182,12 +193,8 @@ import { AccDeletionExplanationComponent } from './components/instructor-compone
     MatButtonModule,
     MatDialogModule,
     CalendarModule,
-  
-
-
-
   ],
-  providers: [HttpClientModule,
+  providers: [HttpClientModule, DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: MAT_DIALOG_DATA, useValue: {} },
      { provide: MatDialogRef, useValue: {} }

@@ -13,7 +13,11 @@ public class ReservationMapper {
         for (Reservation res : reservations
         ) {
             ReservationDto reservationDto = new ReservationDto();
-            reservationDto.setMaxGuests(res.getMaxGuests());
+            reservationDto.setMaxGuests(res.getGuests());
+            reservationDto.setDiscount(res.getDiscount());
+            reservationDto.setId(res.getId());
+            reservationDto.setIsCancelled(res.getIsCancelled());
+            reservationDto.setType(res.getType());
             reservationDto.setPrice(res.getPrice());
             reservationDto.setEndDate(res.getEndDate());
             reservationDto.setStartDate(res.getStartDate());

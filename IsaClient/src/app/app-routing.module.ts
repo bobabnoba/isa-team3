@@ -9,6 +9,8 @@ import { AdminRegistrationRequestsComponent } from './components/admin-component
 import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
 import { AdventurePreviewComponent } from './components/adventure-components/adventure-preview/adventure-preview.component';
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
+import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
+import { BoatReservationsComponent } from './components/client-components/boat-reservations/boat-reservations.component';
 import { ClientBoatsComponent } from './components/client-components/client-boats/client-boats.component';
 import { ClientBrowseComponent } from './components/client-components/client-browse/client-browse.component';
 import { ClientHomesComponent } from './components/client-components/client-homes/client-homes.component';
@@ -16,6 +18,7 @@ import { ClientInstructorsComponent } from './components/client-components/clien
 import { ClientProfileComponent } from './components/client-components/client-profile/client-profile.component';
 import { ClientReservationsHistoryComponent } from './components/client-components/client-reservations-history/client-reservations-history.component';
 import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
+import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
 import { InstructorDashboardComponent } from './components/instructor-components/instructor-dashboard/instructor-dashboard.component';
 import { InstructorProfileComponent } from './components/instructor-components/instructor-profile/instructor-profile.component';
 import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
@@ -53,6 +56,18 @@ const routes: Routes = [
     component: ClientInstructorsComponent
   },
   {
+    path: 'client/homes/reservation',
+    component: HomeReservationsComponent
+  },
+  {
+    path: 'client/boats/reservation',
+    component: BoatReservationsComponent
+  },
+  {
+    path: 'client/adventures/reservation',
+    component: AdventureReservationsComponent
+  },
+  {
     path: 'client/reservations',
     component: ClientReservationsComponent
   },
@@ -76,10 +91,6 @@ const routes: Routes = [
   {
     path: 'ownerRegistration',
     component: OwnerRegisterComponent,
-  },
-  {
-    path: 'instructor/dashboard',
-    component: InstructorDashboardComponent,
   },
   {
     path: 'admin/dashboard',
@@ -106,17 +117,21 @@ const routes: Routes = [
     component : AddAdventureComponent
   },
   {
-    path : 'instructor/adventure/:id',
-    component : InstructorServiceComponent
+    path: 'instructor/dashboard',
+    component: InstructorDashboardComponent,
+  },
+  {
+    path: 'instructor/profile',
+    component: InstructorProfileComponent
   },
   {
     path : 'instructor/services',
     component: InstructorServiceListComponent
   },
   {
-    path: 'instructor/profile',
-    component: InstructorProfileComponent
-  }
+    path : 'instructor/adventure/:id',
+    component : InstructorServiceComponent
+  },
 
 ];
 @NgModule({

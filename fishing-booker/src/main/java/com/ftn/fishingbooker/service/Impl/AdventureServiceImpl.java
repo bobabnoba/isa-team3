@@ -114,5 +114,10 @@ import java.util.*;
         adventureRepository.save(found);
     }
 
+    @Override
+    public Adventure save(Adventure adventure) {
+        return adventureRepository.save(adventure);
+    }
+
 }
 
