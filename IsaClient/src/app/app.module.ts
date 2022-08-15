@@ -80,6 +80,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AddSpecialOfferComponent } from './components/instructor-components/add-special-offer/add-special-offer.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdventureSpecialOfferComponent } from './components/adventure-components/adventure-special-offer/adventure-special-offer.component';
+import { AdventureSearchPipe } from './components/pipes/adventure-search.pipe';
 
 
 
@@ -139,6 +140,7 @@ import { AdventureSpecialOfferComponent } from './components/adventure-component
     AdventureReservationsComponent,
     AddSpecialOfferComponent,
     AdventureSpecialOfferComponent,
+    AdventureSearchPipe,
   ],
   imports: [
     BrowserModule,

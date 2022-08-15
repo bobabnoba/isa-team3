@@ -15,6 +15,7 @@ import { AddSpecialOfferComponent } from '../add-special-offer/add-special-offer
 export class InstructorServiceListComponent implements OnInit {
 
   adventures : Adventure[] = []
+  searchText : string = "";
 
   constructor(private _adventureService: AdventureService, private _storageService : StorageService,
               private _matDialog : MatDialog, private _snackBar : MatSnackBar) { }
@@ -25,6 +26,10 @@ export class InstructorServiceListComponent implements OnInit {
         this.adventures = data;
       }
     )
+  }
+
+  handleMe(searchText : string){
+    this.searchText = searchText;
   }
 
   addOffer() {

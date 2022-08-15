@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-instructor-topbar',
@@ -7,13 +7,17 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class InstructorTopbarComponent implements OnInit {
 
+  @Output() searchInput : EventEmitter<string> = new EventEmitter();
   @Input() instructor : string = ""
-  constructor() { }
-
   toggle : boolean = false;
 
-  
+  constructor() { }
+
   ngOnInit(): void {
+  }
+
+  emitMe( searchText : any){
+    this.searchInput.emit(searchText.target.value);
   }
 
   toggleMe(){
