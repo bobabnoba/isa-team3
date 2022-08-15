@@ -967,7 +967,10 @@ a:focus {
 
 .sidebar {
     width: 6.5rem;
-    min-height: 100vh
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .sidebar .nav-item {
