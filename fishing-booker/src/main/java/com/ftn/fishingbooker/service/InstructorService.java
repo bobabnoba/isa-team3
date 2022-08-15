@@ -20,4 +20,6 @@ public interface InstructorService {
     Collection<Instructor> getAll();
 
     boolean checkAvailability(Date from, Date to, String instructorEmail);
+
+    void updateAvailability(InstructorAvailability periodToDelete, String email);
 }

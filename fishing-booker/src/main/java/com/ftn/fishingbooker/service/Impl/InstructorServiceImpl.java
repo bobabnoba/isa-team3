@@ -47,12 +47,28 @@ public class InstructorServiceImpl implements InstructorService {
 
         instructor.setAvailability(new HashSet<>(checkForOverlapping(added, availabilities)));
 
-        //instructor.setAvailability(availabilities);
         instructorRepository.save(instructor);
 
         //TODO: delete all availabilities that overlapped and got replaced // availabilityService
 
         return added;
+    }
+
+    @Override
+    @Transactional
+    public void updateAvailability(InstructorAvailability periodToDelete, String email) {
+        Instructor instructor = instructorRepository.findByEmail(email);
+        List<InstructorAvailability> availabilities = new ArrayList<>();
+        for (var a : new ArrayList<>(instructor.getAvailability())) {
+            if (periodToDelete.getStartDate().after(a.getStartDate())
+                    && periodToDelete.getEndDate().before(a.getEndDate())) {
+                InstructorAvailability parted = new InstructorAvailability(periodToDelete.getEndDate(), a.getEndDate());
+                a.setEndDate(periodToDelete.getStartDate());
+                availabilities.add(availabilityService.save(parted));
+            } availabilities.add(a);
+        }
+        instructor.setAvailability(new HashSet<>(availabilities));
+        instructorRepository.save(instructor);
     }
 
     private List<InstructorAvailability> checkForOverlapping(InstructorAvailability availability, List<InstructorAvailability> availabilities) {
