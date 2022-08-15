@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -24,9 +25,9 @@ public class SpecialOffer {
 
     private double price;
 
-    private Date availableFrom;
+    private Date activeFrom;
 
-    private Date availableTo;
+    private Date activeTo;
 
     @Enumerated(EnumType.STRING)
     private ReservationType type;
@@ -36,6 +37,9 @@ public class SpecialOffer {
     private Date reservationEndDate;
 
     private int guests;
+
+    @ManyToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Utility> utilities;
 
     private boolean isUsed = false;
 

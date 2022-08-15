@@ -3,7 +3,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { IAddress } from 'src/app/interfaces/address';
 import {  Adventure, FishingEquipment, Utility } from 'src/app/interfaces/adventure';
 import { Rule } from 'src/app/interfaces/rule';
@@ -34,7 +33,6 @@ export class AddAdventureComponent implements OnInit {
 
   editMode : boolean = false
   adventureId! : string
-
 
   equi = new FormControl()
   servi = new FormControl()

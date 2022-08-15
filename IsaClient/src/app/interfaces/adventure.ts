@@ -27,4 +27,5 @@ export interface Adventure {
     fishingEquipment : FishingEquipment[];
     utilities : Utility[];
     instructorEmail : string;
+    durationInHours : number;
 }

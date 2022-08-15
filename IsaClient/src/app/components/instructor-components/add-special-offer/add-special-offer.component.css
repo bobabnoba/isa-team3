@@ -3,20 +3,30 @@ mat-form-field {
     margin-left: 2px;
 }
 
+.cont {
+    display: grid;
+    grid-template-areas:
+        "main aside"
+}
+
+main {
+    grid-area: main;
+}
+
+aside {
+    grid-area: aside;
+    background-color: rgb(216, 201, 201);
+    text-align: center;
+    border-bottom: solid 1px red;
+    display: inline-block;
+    align-self: flex-end;
+}
+
 mat-form-field input {
     width: 100%;
     margin-left: 2px;
 }
 
-button {
-    margin-top: 4px;
-    height: 60px;
-    border-radius: 0px 4px 4px 0px;
-    padding-left: 30px;
-    padding-right: 30px;
-    background-color: white;
-    color: black;
-}
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
     color: black !important;
@@ -38,9 +48,4 @@ button {
 
 .d-flex input {
     margin-left: 2px;
-}
-
-.example-additional-selection {
-    opacity: 0.75;
-    font-size: 0.75em;
 }

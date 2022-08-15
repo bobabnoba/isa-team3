@@ -24,6 +24,7 @@ public class AdventureMapper {
         dto.setFishingEquipment(FishingEquipmentMapper.toDto(adventure.getFishingEquipment()));
         dto.setCodeOfConduct(adventure.getCodeOfConduct());
         dto.setUtilities(UtilityMapper.map(adventure.getUtilities()));
+        dto.setDurationInHours(adventure.getDurationInHours());
         return dto;
     }
 

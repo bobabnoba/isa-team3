@@ -9,7 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register-components/register/register.component';
 import { MaterialModule } from './material/material.module';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -80,9 +80,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { InstructorOffersComponent } from './components/instructor-components/instructor-offers/instructor-offers.component';
 import { AddSpecialOfferComponent } from './components/instructor-components/add-special-offer/add-special-offer.component';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MtxDatetimepickerModule } from '@ng-matero/extensions/datetimepicker';
-import { MtxNativeDatetimeModule } from '@ng-matero/extensions/core';
-
 
 
 
@@ -175,8 +172,6 @@ import { MtxNativeDatetimeModule } from '@ng-matero/extensions/core';
     }),
     MatStepperModule,
     MatFileUploadModule,
-    MtxDatetimepickerModule,
-    MtxNativeDatetimeModule
   ],
   exports: [
     BrowserModule,
@@ -198,12 +193,8 @@ import { MtxNativeDatetimeModule } from '@ng-matero/extensions/core';
     MatButtonModule,
     MatDialogModule,
     CalendarModule,
-  
-
-
-
   ],
-  providers: [HttpClientModule,
+  providers: [HttpClientModule, DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: MAT_DIALOG_DATA, useValue: {} },
      { provide: MatDialogRef, useValue: {} }

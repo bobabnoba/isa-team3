@@ -54,7 +54,7 @@ public class Adventure {
 
     private Boolean isDeleted = false;
 
-    private Duration duration;
+    private double durationInHours;
 
     @Transient
     public List<String> getImagePaths() {

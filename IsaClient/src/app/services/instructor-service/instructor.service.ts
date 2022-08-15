@@ -21,7 +21,7 @@ export class InstructorService {
   }
 
   checkAvailability(from : string, to : string, instructorEmail : string) {
-    return this._http.get(`${this.baseURL}/instructor/check-availability?from=${from}&to=${to}&instructorEmail=${instructorEmail}`);
+    return this._http.get(`${this.baseURL}/instructor/check-if-available?from=${from}&to=${to}&instructorEmail=${instructorEmail}`);
   }
  
 }

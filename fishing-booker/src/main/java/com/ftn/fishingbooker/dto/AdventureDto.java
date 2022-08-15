@@ -23,4 +23,5 @@ public class AdventureDto {
     public String instructorBio;
     public Collection<FishingEquipmentDto> fishingEquipment;
     public Collection<UtilityDto> utilities;
+    public double durationInHours;
 }
