@@ -77,9 +77,9 @@ import { HomeReservationsComponent } from './components/client-components/home-r
 import { BoatReservationsComponent } from './components/client-components/boat-reservations/boat-reservations.component';
 import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { InstructorOffersComponent } from './components/instructor-components/instructor-offers/instructor-offers.component';
 import { AddSpecialOfferComponent } from './components/instructor-components/add-special-offer/add-special-offer.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AdventureSpecialOfferComponent } from './components/adventure-components/adventure-special-offer/adventure-special-offer.component';
 
 
 
@@ -137,8 +137,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     HomeReservationsComponent,
     BoatReservationsComponent,
     AdventureReservationsComponent,
-    InstructorOffersComponent,
-    AddSpecialOfferComponent
+    AddSpecialOfferComponent,
+    AdventureSpecialOfferComponent,
   ],
   imports: [
     BrowserModule,

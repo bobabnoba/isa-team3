@@ -5,6 +5,7 @@ import { Adventure } from 'src/app/interfaces/adventure';
 import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { AddAdventureComponent } from '../../adventure-components/add-adventure/add-adventure.component';
+import { AddSpecialOfferComponent } from '../add-special-offer/add-special-offer.component';
 
 @Component({
   selector: 'app-instructor-service-list',
@@ -24,6 +25,15 @@ export class InstructorServiceListComponent implements OnInit {
         this.adventures = data;
       }
     )
+  }
+
+  addOffer() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = 'modal-component';
+    dialogConfig.width = '600px';
+    dialogConfig.height = '650px';
+    this._matDialog.open(AddSpecialOfferComponent, dialogConfig);
   }
 
   addNew(){

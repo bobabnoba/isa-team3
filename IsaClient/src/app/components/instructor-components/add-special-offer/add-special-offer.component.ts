@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { addHours } from 'date-fns';
 import { Adventure, Utility } from 'src/app/interfaces/adventure';
@@ -39,7 +40,8 @@ export class AddSpecialOfferComponent implements OnInit {
 
   constructor(private _offerService : SpecialOfferService, private _advService : AdventureService,
      private _storageService : StorageService, private _insService : InstructorService,
-     private _snackBar : MatSnackBar, private _datePipe : DatePipe) { }
+     private _snackBar : MatSnackBar, private _datePipe : DatePipe,
+     private _dialogRef: MatDialogRef<AddSpecialOfferComponent>) { }
 
   ngOnInit(): void {
     this._advService.getAllByInstructor(this._storageService.getEmail()).subscribe(
@@ -108,10 +110,10 @@ export class AddSpecialOfferComponent implements OnInit {
       && this.guests.valid && this.price.valid){
         this._offerService.createSpecialOffer(this.createOfferObj(), this.selectedAdventure.id).subscribe(
           res => {
-            // send it outside this dialog and add it to the offers list :)
             this._snackBar.open('Offer created!', '',
                 { duration: 3000, panelClass: ['snack-bar'] }
             );
+            this._dialogRef.close();
           }
         );
       }

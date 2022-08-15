@@ -11,3 +11,7 @@
 #wrapper #content-wrapper #content {
     flex: 1 0 auto;
 }
+
+.mright {
+    margin-right: 10px;
+}

@@ -24,4 +24,5 @@ public class AdventureDto {
     public Collection<FishingEquipmentDto> fishingEquipment;
     public Collection<UtilityDto> utilities;
     public double durationInHours;
+    public Collection<SpecialOfferDto> specialOffers;
 }

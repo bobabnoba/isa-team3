@@ -1,5 +1,6 @@
 import { IAddress } from "./address";
 import { Rule } from "./rule";
+import { SpecialOffer } from "./special-offer";
 
 export interface FishingEquipment {
     id : number;
@@ -28,4 +29,5 @@ export interface Adventure {
     utilities : Utility[];
     instructorEmail : string;
     durationInHours : number;
+    specialOffers : SpecialOffer[];
 }

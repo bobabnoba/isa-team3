@@ -78,7 +78,6 @@ public class InstructorServiceImpl implements InstructorService {
             if (!a.getId().equals(availability.getId()) && (isBetween(availability.getStartDate(), a) || isBetween(availability.getEndDate(), a))) {
                 Date newStartDate = a.getStartDate();
                 Date newEndDate = a.getEndDate();
-                availabilities.remove(a);
                 a = calculateNew(newStartDate, newEndDate, availability);
             }
             else if (availability.getStartDate().before(a.getStartDate()) &&
