@@ -1,7 +1,5 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.dto.UserDto;
-import com.ftn.fishingbooker.mapper.UserMapper;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.User;
@@ -39,10 +37,10 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean hasOverlappingReservation(Long clientId, Date startDate, Date endDate) {
-        UserDto client = UserMapper.mapToDto(userRepository.getById(clientId));
+    public boolean hasOverlappingReservation(String email, Date startDate, Date endDate) {
+        User client = userRepository.findByEmail(email);
         if (client != null) {
-            Collection<Reservation> clientReservations = reservationService.findAllForClient(clientId);
+            Collection<Reservation> clientReservations = reservationService.findAllForClient(client.getId());
             if (clientReservations == null) {
                 return false;
             }
@@ -54,6 +52,11 @@ public class ClientServiceImpl implements ClientService {
         }
 
         return false;
+    }
+
+    @Override
+    public Client getClientByEmail(String userEmail) {
+        return (Client) userRepository.findByEmail(userEmail);
     }
 
 }

@@ -7,14 +7,17 @@ import { Observable } from 'rxjs';
 })
 export class InstructorService {
 
-  constructor(private _http : HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
-  getInstructor(email : string ) : Observable<any> {
+  getInstructor(email: string): Observable<any> {
     return this._http.get('http://localhost:8090/instructor?email=' + email);
   }
 
-  addAvailability(body : any ) : Observable<any> {
+  addAvailability(body: any): Observable<any> {
     return this._http.post('http://localhost:8090/instructor/add-availability', body);
   }
- 
+  getAllActiveInstructors() {
+    return this._http.get<any>('http://localhost:8090/instructor/available');
+  }
+
 }

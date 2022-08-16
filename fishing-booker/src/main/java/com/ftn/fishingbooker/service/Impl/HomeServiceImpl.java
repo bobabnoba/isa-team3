@@ -56,6 +56,13 @@ public class HomeServiceImpl implements HomeService {
         return filteredHomeList;
     }
 
+    @Override
+    public void makeReservation(Long homeId, Reservation reservation) {
+        VacationHome home = vacationHomeRepository.getById(homeId);
+        home.getReservations().add(reservation);
+        vacationHomeRepository.save(home);
+    }
+
     private boolean dateOverlapsWithReservation(Collection<Reservation> reservations, Date startDate, Date endDate) {
         if (reservations == null) {
             return false;

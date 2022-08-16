@@ -1,0 +1,17 @@
+.image {
+  max-height: 200px;
+  width: 250px;
+}
+
+.stretch-width {
+  width: 100% !important;
+}
+
+.fa-star::before {
+  color: rgb(241, 207, 11);
+  font-size: 20px;
+}
+
+.example-margin {
+  margin: 2px;
+}

@@ -34,10 +34,10 @@ values (43, 'Ljubljana', 'Slovenia', 'Jana Kustosa', 1000);
 
 --Client
 insert into client(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, type)
-values (10,'Whatever Bio',  'ClientEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 'SILVER');
+values (10,'Whatever Bio',  'ClientEmail1', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 'SILVER');
 
 insert into client(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, type)
-values (12,'Whatever Bio',  'ClientEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 'SILVER');
+values (12,'Whatever Bio',  'ClientEmail2', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 'SILVER');
 
 ----Admin
 insert into admin(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id)
@@ -104,43 +104,62 @@ insert into room(
 	values (100, 4, 100);
 
 
---Code of Conduct
-insert into vacation_home_code_of_conduct(
-	vacation_home_id, code_of_conduct)
-	values (100, 'No Smoking'),
-	 (100, 'No Pets'),
-	 (100, 'No Party');
+--Utilities
+insert into utility(
+	id, name, price)
+	values (100, 'WIFI', 10),
+	(101, 'A/C', 20),
+	(102, 'PETS', 23),
+	(103, 'CLEANING', 40),
+	(104, 'You keep catch', 40),
+    (106,'Catch cleaning & filleting', 20),
+	(107,'Snorkeling Equipment', 5),
+	(108,'Fighting Chair', 10),
+	(109,'Drinks', 10);
 
+insert into vacation_home_utilities(
+	vacation_home_id, utilities_id)
+	values (100, 100),
+	(100, 101),
+	(100, 102),
+	(100, 103),
+	(100, 104),
+	(100, 106),
+	(100, 107),
+	(100, 108),
+	(100, 109),
+	(102, 102),
+	(103, 103);
 
----- Reservations
+-- Reservations
+--insert into reservation(
+--	id, discount, end_date, is_cancelled, max_guests, price, start_date, type, client_id)
+--	values (100, 0.0,  '2020-08-17', 'false', 5, 200, '2020-08-11', 'VACATION_HOME', 10); -- 100 Has no reservations
 insert into reservation(
-	id, discount, end_date, is_cancelled, max_guests, price, start_date, type, client_id)
-	values (100, 0.0,  '2020-08-17', 'false', 5, 200, '2020-08-11', 'VACATION_HOME', 10); -- perfect
+	id, end_date, is_cancelled, guests, price, start_date, type, client_id)
+	values (101, '2022-08-17', 'false', 3, 200, '2022-08-11', 'VACATION_HOME', 10);
 insert into reservation(
-	id, discount, end_date, is_cancelled, max_guests, price, start_date, type, client_id)
-	values (101, 0.0,  '2020-08-17', 'false', 3, 200, '2020-08-11', 'VACATION_HOME', 10); -- quest limit
-insert into reservation(
-	id, discount, end_date, is_cancelled, max_guests, price, start_date, type, client_id)
-	values (102, 0.0,  '2020-08-07', 'false', 5, 200, '2020-08-01', 'VACATION_HOME', 12); --overlapping reservation
+	id, end_date, is_cancelled, guests, price, start_date, type, client_id)
+	values (102, '2022-08-30', 'false', 5, 200, '2022-08-25', 'VACATION_HOME', 12);
 
 -- Vacation Home Availability
 insert into vacation_home_availability(
 	id, end_date, start_date, home_id)
-	values (100,  '2020-08-30', '2020-08-01', 100); --  available
+	values (100,  '2022-08-30', '2022-08-01', 100); --  availability
 insert into vacation_home_availability(
 	id, end_date, start_date, home_id)
-	values (101,  '2020-08-30', '2020-08-01', 101); --  available
+	values (101,  '2022-08-30', '2022-08-01', 101); --  availability
 insert into vacation_home_availability(
 	id, end_date, start_date, home_id)
-	values (102,  '2020-08-30', '2020-08-01', 102); --  available
+	values (102,  '2022-08-30', '2022-08-01', 102); --  availability
 insert into vacation_home_availability(
 	id, end_date, start_date, home_id)
-	values (103, '2020-08-21', '2020-08-11', 103); -- not available
+	values (103, '2022-09-14', '2022-08-26', 103); -- availability
 
 -- Vacation Home Reservations
-insert into vacation_home_reservations(
-	vacation_home_id, reservations_id)
-	values (100, 100);
+--insert into vacation_home_reservations(
+--	vacation_home_id, reservations_id)
+--	values (100, 100);
 --
 insert into vacation_home_reservations(
 	vacation_home_id, reservations_id)

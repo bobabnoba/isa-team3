@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SearchFilter } from 'src/app/filters/search-filter';
 
 @Component({
@@ -7,13 +8,11 @@ import { SearchFilter } from 'src/app/filters/search-filter';
   styleUrls: ['./client-search-card.component.css']
 })
 export class ClientSearchCardComponent implements OnInit {
-
   @Output() doSearch: EventEmitter<SearchFilter> = new EventEmitter();
   searchFilter: SearchFilter = new SearchFilter();
-
+  
   constructor() { }
   ngOnInit(): void {
-
   }
 
   onChangeDemo(ob: any) {
@@ -21,11 +20,9 @@ export class ClientSearchCardComponent implements OnInit {
   }
 
   filterAll() {
-    this.searchFilter.type.push('home')
     this.doSearch.emit(this.searchFilter);
-
   }
-  
+
   formatLabel(value: number) {
     if (value >= 0) {
       return Math.round(value);

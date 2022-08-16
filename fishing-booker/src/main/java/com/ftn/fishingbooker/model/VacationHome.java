@@ -38,7 +38,7 @@ public class VacationHome {
     @ElementCollection(targetClass = String.class, fetch = FetchType.LAZY)
     private Set<String> codeOfConduct;
 
-    @OneToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Utility> utilities;
 
     @OneToMany(targetEntity = Image.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SearchFilter } from 'src/app/filters/search-filter';
 import { IAddress } from 'src/app/interfaces/address';
+import { IFilter } from 'src/app/interfaces/filter';
 import { IProfileView } from 'src/app/interfaces/rental-view';
 import { InstructorBrowse } from '../../interfaces/instructor-browse';
 import { IUtility, IVacationHouseProfile } from '../../interfaces/vacation-house-profile';
@@ -10,6 +11,7 @@ import { IUtility, IVacationHouseProfile } from '../../interfaces/vacation-house
   providedIn: 'root'
 })
 export class SearchService {
+ 
 
   constructor() { }
 
@@ -191,7 +193,7 @@ export class SearchService {
 
     for (let item of items) {
 
-      if (this.matchType(item.rentalType, filter.type)) {
+      // if (this.matchType(item.rentalType, filter.type)) 
         //Match rating
         if (this.matchRating(item.rating, filter.rating)) {
           if (
@@ -210,7 +212,7 @@ export class SearchService {
             }
 
             if (flag) retVal.push(item)
-          }
+          
         }
       }
     }

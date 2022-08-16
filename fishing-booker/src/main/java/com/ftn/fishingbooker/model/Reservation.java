@@ -22,8 +22,6 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double discount;
-
     private Boolean isCancelled = false;
 
     @Enumerated(EnumType.STRING)
@@ -33,9 +31,11 @@ public class Reservation {
 
     private Date endDate;
 
-    private int maxGuests;
+    private int guests;
 
-    private float price;
+    private double price;
+    @ManyToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Utility> utilities;
 
     @ManyToOne(targetEntity = Client.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")

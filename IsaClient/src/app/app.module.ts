@@ -69,8 +69,8 @@ import { BrowseInstructorCardComponent } from './components/browse-instructor-ca
 import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
 import { BoatReservationsComponent } from './components/client-components/boat-reservations/boat-reservations.component';
 import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
-
-
+import { ClientSearchCardReservationComponent } from './components/client-components/client-search-card-reservation/client-search-card-reservation.component';
+import { BrowseCardReservationComponent } from './components/client-components/browse-card-reservation/browse-card-reservation.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +119,9 @@ import { AdventureReservationsComponent } from './components/client-components/a
     BrowseInstructorCardComponent,
     HomeReservationsComponent,
     BoatReservationsComponent,
-    AdventureReservationsComponent
+    AdventureReservationsComponent,
+    ClientSearchCardReservationComponent,
+    BrowseCardReservationComponent
   ],
   imports: [
     BrowserModule,

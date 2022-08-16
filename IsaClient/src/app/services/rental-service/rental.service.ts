@@ -1,13 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { IFilter } from 'src/app/interfaces/filter';
+import { Observable } from 'rxjs';
+import { INewReservation } from 'src/app/interfaces/new-reservation';
+import { StorageService } from '../storage-service/storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentalService {
+  userEmail: string = ""
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient,
+    private _storageService: StorageService) {
+    this.userEmail = this._storageService.getEmail();
+  }
 
+  rentVacationHome(newReservation: INewReservation, homeId: number): Observable<any> {
+    return this._http.post('http://localhost:8090/vacation/homes/rent/' + homeId + "/" + this.userEmail,
+      newReservation);
+  }
   getAllRentals() {
     return this._http.get<any>(
       'http://localhost:8090/rentals'
@@ -23,10 +35,12 @@ export class RentalService {
       'http://localhost:8090/boats'
     );
   }
-  getAllActiveInstructors() {
-    return this._http.get<any>(
-      'http://localhost:8090/instructor/available'
-    );
+  filterVacationHomes(requestFilter: IFilter): Observable<any> {
+    return this._http.post('http://localhost:8090/vacation/homes/search', requestFilter);
   }
 
 }
+function requestFilter(arg0: string, requestFilter: any) {
+  throw new Error('Function not implemented.');
+}
+
