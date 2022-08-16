@@ -54,6 +54,7 @@ export class InstructorServiceListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res =>
       {
+        console.log(res.data.adventure)
           this.adventures.push(res.data.adventure) 
       })
   }

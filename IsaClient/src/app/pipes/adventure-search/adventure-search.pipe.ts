@@ -33,8 +33,7 @@ export class AdventureSearchPipe implements PipeTransform {
 
       searchList.forEach(d => {
         d.utilities.forEach( ut => {
-          if (ut.name.toLowerCase()
-          .indexOf(search.toLowerCase()) > -1) {
+          if (search.toLowerCase().includes(ut.name.toLowerCase())) {
             retVal.push(d)
           }
          })
@@ -42,8 +41,7 @@ export class AdventureSearchPipe implements PipeTransform {
 
       searchList.forEach(d => {
         d.fishingEquipment.forEach( ut => {
-          if (ut.name.toLowerCase()
-          .indexOf(search.toLowerCase()) > -1) {
+          if (search.toLowerCase().includes(ut.name.toLowerCase())) {
             retVal.push(d)
           }
          })
