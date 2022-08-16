@@ -1,5 +1,5 @@
 <div class="container-fluid h-100 d-flex justify-content-center p-0 pic">
-        <div class="jumbotron my-auto mx-auto tabs">
+        <div class="jumbotron mx-auto tabs">
             <mat-tab-group mat-align-tabs="center">
                 <mat-tab label="About"> 
                 
@@ -9,7 +9,7 @@
                     <app-adventure-addtional-info [adventure]="adventure" ></app-adventure-addtional-info>
                 </mat-tab>
                 <mat-tab label="Location"> 
-                    <app-adventure-location></app-adventure-location>
+                    <app-adventure-location [adventure]="adventure"></app-adventure-location>
                 </mat-tab>
                 <mat-tab label="Additional Services"> 
                     <app-adventure-services [adventure]="adventure"></app-adventure-services>
@@ -24,10 +24,13 @@
                 </mat-tab>
               </mat-tab-group>
         </div>
-       <div class="justify-content-center d-flex flex-dir" >
-        <h2 class="pb-1 align-text">Special offers</h2>
+       <div class="justify-content-center d-flex flex-dir pt-5">
+        <h2 *ngIf="adventure.specialOffers.length === 0" class="pb-1 align-text">No special offers available.</h2>
+        <div  *ngIf="adventure.specialOffers.length > 0">
+            <h2 class="pb-1 align-text">Special offers</h2>
         <div *ngFor="let offer of adventure.specialOffers">
             <app-adventure-special-offer [offer]="offer" class="p-3"></app-adventure-special-offer>
+        </div>
         </div>
        </div>
         <br><br><br>

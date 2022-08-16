@@ -3,15 +3,61 @@
         <button id="sidebarToggleTop" (click)="toggleMe()" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
         </button>
-        <form
-            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                    aria-label="Search" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">
-                        <i class="fa fa-search fa-sm"></i>
-                    </button>
+        <form *ngIf ="serviceSearch"
+            class="d-none d-sm-inline-block form-inline mw-100 navbar-search">
+            <div class="row w-100 b-0 p-0"  >
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            aria-label="Search" aria-describedby="basic-addon2" (input)="emitMe($event)">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fa fa-search fa-sm" (click)="startSearch()"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div  class="col-md-8 d-flex flex-row">
+                    <mat-form-field appearance="standard" style="width: 30%; margin-right: 3%;"> 
+                        <mat-label>Fishing equipment</mat-label>
+                        <mat-select [formControl]="equi" [compareWith]="compareObjects" [(ngModel)]="equipment" multiple>
+                          <mat-select-trigger>
+                            {{equipment?.[0]?.name || ''}}
+                            <span *ngIf="(equipment?.length || 0) > 1" class="example-additional-selection">
+                              (+{{(equipment?.length || 0) - 1}} {{equipment?.length === 2 ? 'other' : 'others'}})
+                            </span>
+                          </mat-select-trigger>
+                          <mat-option (click) ="equipmentPicked()" *ngFor="let e of existingEquipment" [value]="e">{{e.name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field appearance="standard" style="width: 30%;">
+                        <mat-label>Utilities</mat-label>
+                        <mat-select [formControl]="servi" [compareWith]="compareObjects" [(ngModel)]="services" multiple>
+                          <mat-select-trigger>
+                            {{services?.[0]?.name || ''}}
+                            <span *ngIf="(services?.length || 0) > 1" class="example-additional-selection">
+                              (+{{(services?.length || 0) - 1}} {{services?.length === 2 ? 'other' : 'others'}})
+                            </span>
+                          </mat-select-trigger>
+                          <mat-option (click) = "servicesPicked" *ngFor="let e of existingServices" [value]="e">{{e.name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+            </div>
+        </form>
+        <form *ngIf ="!serviceSearch"
+            class="d-none d-sm-inline-block form-inline mw-100 navbar-search">
+            <div class="row w-100 b-0 p-0"  >
+                <div class="col-md-4">
+                    <div class="input-group p-0">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            aria-label="Search" aria-describedby="basic-addon2" (input)="emitMe($event)">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fa fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>

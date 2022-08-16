@@ -1,9 +1,11 @@
 <div class = "container slider">
-<h2 class="py-2">Photos from previous adventures</h2>
+  <h2 *ngIf="adventure.images.length === 0" class="py-2">No photos from previous adventures provided.</h2>
+  <div *ngIf="adventure.images.length > 0">
+    <h2 class="py-2">Photos from previous adventures</h2>
 <div #crsl id="crsl" class="carousel slide" data-ride="carousel" data-interval="3000">
   <ng-container class="carousel-inner" *ngFor="let img of adventure.images; first as isFirst">
     <div [ngClass] = " isFirst ? 'carousel-item active' : 'carousel-item' ">
-      <img class="d-block w-100" src="{{baseUrl}}{{img}}" alt="Unable to display image">
+      <img class="d-block w-100" src="{{baseUrl}}{{img}}" onerror="this.onerror;this.src='../../../../assets/images/no-img.png'" alt="Unable to display image">
     </div>
   </ng-container>
   <a class="carousel-control-prev" href="#crsl" role="button" data-slide="prev">
@@ -15,4 +17,6 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
+  </div>
+
 </div>
