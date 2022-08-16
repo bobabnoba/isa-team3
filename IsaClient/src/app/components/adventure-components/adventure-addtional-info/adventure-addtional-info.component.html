@@ -1,23 +1,29 @@
 <div class="container wrapper">
   <div class="row">
-    <h6>Instructor takes {{ adventure.cancelingPercentage }} of the price in case of canceling. </h6>
+    <h6>Instructor takes {{ adventure.cancelingPercentage }}% of the price in case of canceling. </h6>
   </div>
   <br>
     <div class = "row ">
         <div class="col-md">
           <div class="row px-2" style="border-right: 1px solid #333;">
-            <p class="mx-auto">Fishing equipment:</p>
+          <p  *ngIf="adventure.fishingEquipment.length === 0" class="mx-auto">No fishing equipment provided.</p>
+           <div *ngIf="adventure.fishingEquipment.length > 0">
+            <p  class="mx-auto">Fishing equipment:</p>
             <ul class="lists">
                 <li *ngFor="let fe of adventure.fishingEquipment"><i class="fa-solid fa-angles-right fa-2xs"></i>  {{ fe.name }} </li>
             </ul>
+           </div>
         </div>
       </div>
         <div class="col-md">
           <div class="row px-2">
+            <p *ngIf= "adventure.codeOfConduct.length === 0" class="mx-auto ">No rules of conduct specified.</p>
+           <div *ngIf= "adventure.codeOfConduct.length > 0">
             <p class="mx-auto ">Code of conduct:</p>
             <ul class="lists">
-                <li><i class="fa-solid fa-angles-right fa-2xs"></i> {{ adventure.codeOfConduct }} </li>
+                <li *ngFor="let fe of adventure.codeOfConduct"><i class="fa-solid fa-angles-right fa-2xs"></i> {{ fe.name }} </li>
             </ul>
+           </div>
         </div>
       </div>
     </div>

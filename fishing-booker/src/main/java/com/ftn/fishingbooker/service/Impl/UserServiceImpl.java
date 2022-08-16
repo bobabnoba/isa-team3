@@ -32,8 +32,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private ClientService clientService;
     @Autowired
     RegistrationRepository registrationRepository;
-    @Autowired
-    private RegistrationService registrationService;
 
     private static String url = "<a href=\"http://localhost:4200/login\"> Login </a>";
 

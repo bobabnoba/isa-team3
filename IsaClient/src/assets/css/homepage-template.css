@@ -828,12 +828,13 @@ a:focus {
 }
 
 .topbar .navbar-search {
-    width: 25rem
+    width: 100%;
 }
 
 .topbar .navbar-search input {
     font-size: .85rem;
-    height: auto
+    height: auto;
+    max-width: 100%;
 }
 
 .topbar .topbar-divider {
@@ -967,7 +968,10 @@ a:focus {
 
 .sidebar {
     width: 6.5rem;
-    min-height: 100vh
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .sidebar .nav-item {
@@ -1424,9 +1428,15 @@ a:focus {
     font-size: .75rem
 }
 
+
+
 .btn-circle.btn-lg,
 .btn-group-lg>.btn-circle.btn {
     height: 3.5rem;
     width: 3.5rem;
     font-size: 1.35rem
+}
+
+.input-group {
+    padding-top: 20px;
 }

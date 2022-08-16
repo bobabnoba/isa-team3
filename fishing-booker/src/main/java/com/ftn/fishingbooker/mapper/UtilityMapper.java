@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UtilityMapper {
+
     public static Collection<UtilityDto> map(Collection<Utility> utilities) {
         Collection<UtilityDto> utilitiesDto = new ArrayList<>();
 
@@ -45,4 +46,11 @@ public class UtilityMapper {
 
         return utility;
     }
+
+    public static Set<Utility> toEntitySet(Collection<UtilityDto> dtos) {
+            Set<Utility> entities = new HashSet<>();
+            dtos.forEach(dto -> entities.add(new Utility(dto.getId(), dto.getName(), dto.getPrice())));
+            return entities;
+    }
+
 }

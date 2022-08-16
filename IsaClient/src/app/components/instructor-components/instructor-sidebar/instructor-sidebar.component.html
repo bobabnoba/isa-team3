@@ -26,13 +26,19 @@
             <span>My services</span>
         </a>
     </li>
-
+   
   
     <li class="nav-item">
       <a class="nav-link" href="/instructor/reservations">
           <i class="fa fa-fw fa-ticket"></i>
           <span>Reservations</span></a>
     </li>
+
+    <!-- <li class="nav-item">
+        <a class="nav-link" href="/instructor/special-offers">
+            <i class="fa fa-fw fa-tags"></i>
+            <span>Special offers</span></a>
+      </li> -->
 
     <li class="nav-item">
       <a class="nav-link" href="/instructor/occupancy">
@@ -55,9 +61,9 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" style="cursor: pointer;" (click)="deleteAccount()">
-          <i class="fa fa-fw fa-cog"></i>
-          <span>Delete account</span></a>
+        <a class="nav-link" (click)="logout()" style="cursor:pointer">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Log out</span></a>
     </li>
     <hr class="sidebar-divider d-none d-md-block">
 

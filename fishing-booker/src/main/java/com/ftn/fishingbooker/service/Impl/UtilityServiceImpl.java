@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 
 @Service
 @Transactional
@@ -18,5 +19,9 @@ public class UtilityServiceImpl implements UtilityService {
     @Override
     public Utility getByName(String name) {
         return utilityRepository.findByName(name);
+    }
+    @Override
+    public Collection<Utility> getAll() {
+        return utilityRepository.findAll();
     }
 }

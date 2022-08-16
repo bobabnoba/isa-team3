@@ -5,6 +5,7 @@ import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.Utility;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
@@ -42,6 +43,4 @@ public class ReservationMapper {
         reservation.setStartDate(reservationDto.getStartDate());
         return reservation;
     }
-
-
 }

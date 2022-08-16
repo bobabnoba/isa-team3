@@ -1,8 +1,13 @@
+import { IAddress } from "./address";
+import { Rule } from "./rule";
+import { SpecialOffer } from "./special-offer";
+
 export interface FishingEquipment {
+    id : number;
     name: string;
 }
 
-export interface AdditionalService{
+export interface Utility{
     name: string;
     price : number;
 }
@@ -10,10 +15,10 @@ export interface AdditionalService{
 export interface Adventure {
     id: number;
     title : string;
-    address : string;
+    address : IAddress;
     description : string;
     images : string[];
-    codeOfConduct : string;
+    codeOfConduct : Rule[];
     pricePerDay : number;
     cancelingPercentage : number;
     maxNumberOfParticipants : number;
@@ -21,5 +26,8 @@ export interface Adventure {
     instructorLastName: string;
     instructorBio : string;
     fishingEquipment : FishingEquipment[];
-    additionalServices : AdditionalService[];
+    utilities : Utility[];
+    instructorEmail : string;
+    durationInHours : number;
+    specialOffers : SpecialOffer[];
 }

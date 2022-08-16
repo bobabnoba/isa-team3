@@ -2,10 +2,7 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
-import com.ftn.fishingbooker.model.Instructor;
-import com.ftn.fishingbooker.model.InstructorAvailability;
-import com.ftn.fishingbooker.model.Registration;
-import com.ftn.fishingbooker.model.User;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.InstructorRepository;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.service.*;
@@ -16,7 +13,6 @@ import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class InstructorServiceImpl implements InstructorService {
 
@@ -51,12 +47,28 @@ public class InstructorServiceImpl implements InstructorService {
 
         instructor.setAvailability(new HashSet<>(checkForOverlapping(added, availabilities)));
 
-        //instructor.setAvailability(availabilities);
         instructorRepository.save(instructor);
 
         //TODO: delete all availabilities that overlapped and got replaced // availabilityService
 
         return added;
+    }
+
+    @Override
+    @Transactional
+    public void updateAvailability(InstructorAvailability periodToDelete, String email) {
+        Instructor instructor = instructorRepository.findByEmail(email);
+        List<InstructorAvailability> availabilities = new ArrayList<>();
+        for (var a : new ArrayList<>(instructor.getAvailability())) {
+            if (periodToDelete.getStartDate().after(a.getStartDate())
+                    && periodToDelete.getEndDate().before(a.getEndDate())) {
+                InstructorAvailability parted = new InstructorAvailability(periodToDelete.getEndDate(), a.getEndDate());
+                a.setEndDate(periodToDelete.getStartDate());
+                availabilities.add(availabilityService.save(parted));
+            } availabilities.add(a);
+        }
+        instructor.setAvailability(new HashSet<>(availabilities));
+        instructorRepository.save(instructor);
     }
 
     private List<InstructorAvailability> checkForOverlapping(InstructorAvailability availability, List<InstructorAvailability> availabilities) {
@@ -66,7 +78,6 @@ public class InstructorServiceImpl implements InstructorService {
             if (!a.getId().equals(availability.getId()) && (isBetween(availability.getStartDate(), a) || isBetween(availability.getEndDate(), a))) {
                 Date newStartDate = a.getStartDate();
                 Date newEndDate = a.getEndDate();
-                availabilities.remove(a);
                 a = calculateNew(newStartDate, newEndDate, availability);
             }
             else if (availability.getStartDate().before(a.getStartDate()) &&
@@ -101,9 +112,24 @@ public class InstructorServiceImpl implements InstructorService {
     public Instructor getWithAvailability(String email) {
         return instructorRepository.findByEmail(email);
     }
+
     @Override
     public Collection<Instructor> getAll() {
         return instructorRepository.getAll();
+    }
+
+    @Override
+    public boolean checkAvailability(Date from, Date to, String instructorEmail) {
+        boolean isAvailable = false;
+        Instructor instructor = instructorRepository.findByEmail(instructorEmail);
+        List<InstructorAvailability> availabilityPeriods = new ArrayList<>(instructor.getAvailability());
+
+        for (InstructorAvailability period : availabilityPeriods) {
+            if (from.after(period.getStartDate()) && to.before(period.getEndDate())) {
+                isAvailable = true;
+            }
+        }
+        return isAvailable;
     }
 
 }

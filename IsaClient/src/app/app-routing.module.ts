@@ -6,6 +6,8 @@ import { AdminDashboardComponent } from './components/admin-components/admin-das
 import { AdminDeleteRequestsComponent } from './components/admin-components/admin-delete-requests/admin-delete-requests.component';
 import { AdminProfileComponent } from './components/admin-components/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin-components/admin-registration-requests/admin-registration-requests.component';
+import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
+import { AdventurePreviewComponent } from './components/adventure-components/adventure-preview/adventure-preview.component';
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
 import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
 import { BoatReservationsComponent } from './components/client-components/boat-reservations/boat-reservations.component';
@@ -18,6 +20,9 @@ import { ClientReservationsHistoryComponent } from './components/client-componen
 import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
 import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
 import { InstructorDashboardComponent } from './components/instructor-components/instructor-dashboard/instructor-dashboard.component';
+import { InstructorProfileComponent } from './components/instructor-components/instructor-profile/instructor-profile.component';
+import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
+import { InstructorServiceComponent } from './components/instructor-components/instructor-service/instructor-service.component';
 import { LoginComponent } from './components/login/login.component';
 import { OwnerRegisterComponent } from './components/register-components/owner-register/owner-register.component';
 import { RegisterComponent } from './components/register-components/register/register.component';
@@ -88,10 +93,6 @@ const routes: Routes = [
     component: OwnerRegisterComponent,
   },
   {
-    path: 'instructor/dashboard',
-    component: InstructorDashboardComponent,
-  },
-  {
     path: 'admin/dashboard',
     component: AdminDashboardComponent
   },
@@ -110,6 +111,26 @@ const routes: Routes = [
   {
     path: 'adventure',
     component: AdventureProfileComponent
+  },
+  {
+    path: 'add-adventure',
+    component : AddAdventureComponent
+  },
+  {
+    path: 'instructor/dashboard',
+    component: InstructorDashboardComponent,
+  },
+  {
+    path: 'instructor/profile',
+    component: InstructorProfileComponent
+  },
+  {
+    path : 'instructor/services',
+    component: InstructorServiceListComponent
+  },
+  {
+    path : 'instructor/adventure/:id',
+    component : InstructorServiceComponent
   },
 
 ];

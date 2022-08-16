@@ -58,3 +58,11 @@
     margin-bottom: 5px;
     color: #9A9A9A;
 }
+
+.btn {
+    padding: 5px;
+}
+
+.body-improv {
+    min-height: 90px;
+}

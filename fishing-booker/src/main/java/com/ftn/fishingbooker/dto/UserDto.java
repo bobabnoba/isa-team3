@@ -15,4 +15,5 @@ public class UserDto {
     public String phone;
     public boolean activated;
     public boolean blocked;
+    public String biography;
 }

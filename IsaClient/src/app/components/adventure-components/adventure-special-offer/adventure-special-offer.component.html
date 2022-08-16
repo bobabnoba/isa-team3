@@ -1,0 +1,28 @@
+<div class="container cardi">
+    <div class = "row " >
+        <div class="col-md-10 d-flex flex-dir" >
+            <h3> {{ offer.reservationStartDate | date: 'short'}} - 
+                {{ offer.reservationEndDate | date: 'short' }}   </h3>
+            <h6>Offer ends in {{ endsIn }} </h6>
+            <p>For {{ offer.guests }} persons </p>
+            <p>Price: {{ offer.price }}e </p>
+            <div class="d-flex">
+            <mat-label class="mright">Utilities: </mat-label>
+            <mat-select multiple [(ngModel)]="offer.utilities" [compareWith]="compareObjects">
+                <mat-select-trigger>
+                  {{offer.utilities?.[0]?.name || ''}}
+                  <span *ngIf="(offer.utilities?.length || 0) > 1"  class="example-additional-selection">
+                    (+{{(offer.utilities?.length || 0) - 1}} {{offer.utilities?.length === 2 ? 'other' : 'others'}})
+                  </span>
+                </mat-select-trigger>
+                <mat-option *ngIf="offer.utilities.length == 0">No utilities included</mat-option>
+                <mat-option disabled *ngFor="let e of offer.utilities" [value]="e">{{e.name}}</mat-option>
+            </mat-select>
+            </div>
+        </div>
+        <div class="col-md-2 d-flex flex-dir" >
+            <div class="stick-right"><h5 style="font-weight: 600; letter-spacing: 1px;"><i class="fa-solid fa-tags"></i>&nbsp;  {{ offer.discount }}% OFF! </h5></div>
+            <button *ngIf="isClient" class="book-btn btn btn-outline-dark">Book now</button>
+        </div>
+    </div>
+</div>

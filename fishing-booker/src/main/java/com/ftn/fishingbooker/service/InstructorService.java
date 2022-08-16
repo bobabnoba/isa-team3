@@ -7,6 +7,7 @@ import com.ftn.fishingbooker.model.VacationHome;
 
 import javax.mail.MessagingException;
 import java.util.Collection;
+import java.util.Date;
 
 public interface InstructorService {
 
@@ -15,5 +16,10 @@ public interface InstructorService {
     InstructorAvailability addAvailabilityPeriod(InstructorAvailability availability, String email);
 
     Instructor getWithAvailability(String email);
+
     Collection<Instructor> getAll();
+
+    boolean checkAvailability(Date from, Date to, String instructorEmail);
+
+    void updateAvailability(InstructorAvailability periodToDelete, String email);
 }

@@ -9,8 +9,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register-components/register/register.component';
 import { MaterialModule } from './material/material.module';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -27,7 +27,7 @@ import { AdminRegistrationRequestsComponent } from './components/admin-component
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdminResponseComponent } from './components/admin-components/admin-response/admin-response.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -53,8 +53,6 @@ import { VacationHouseProfileComponent } from './components/vacation-home-compon
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { InstructorCalendarComponent } from './components/instructor-components/instructor-calendar/instructor-calendar.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
 import { BrowseCardComponent } from './components/browse-card/browse-card.component';
 import { TruncatePipe } from './pipes/truncate-pipe';
 import { SearchCardComponent } from './components/search-card/search-card.component';
@@ -66,9 +64,23 @@ import { ClientInstructorsComponent } from './components/client-components/clien
 import { ClientBoatsComponent } from './components/client-components/client-boats/client-boats.component';
 import { ClientSearchCardComponent } from './components/client-components/client-search-card/client-search-card.component';
 import { BrowseInstructorCardComponent } from './components/browse-instructor-card/browse-instructor-card.component';
+import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import { MatFileUploadModule } from 'angular-material-fileupload';
+import { InstructorServiceComponent } from './components/instructor-components/instructor-service/instructor-service.component';
+import { JwtInterceptor } from './JwtInterceptor/jwt-interceptor';
+import { AdventurePreviewComponent } from './components/adventure-components/adventure-preview/adventure-preview.component';
+import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
+import { InstructorProfileComponent } from './components/instructor-components/instructor-profile/instructor-profile.component';
+import { AccDeletionExplanationComponent } from './components/instructor-components/acc-deletion-explanation/acc-deletion-explanation.component';
 import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
 import { BoatReservationsComponent } from './components/client-components/boat-reservations/boat-reservations.component';
 import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { AddSpecialOfferComponent } from './components/instructor-components/add-special-offer/add-special-offer.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import { AdventureSpecialOfferComponent } from './components/adventure-components/adventure-special-offer/adventure-special-offer.component';
+import { AdventureSearchPipe } from './pipes/adventure-search/adventure-search.pipe';
 import { ClientSearchCardReservationComponent } from './components/client-components/client-search-card-reservation/client-search-card-reservation.component';
 import { BrowseCardReservationComponent } from './components/client-components/browse-card-reservation/browse-card-reservation.component';
 
@@ -117,9 +129,18 @@ import { BrowseCardReservationComponent } from './components/client-components/b
     ClientBoatsComponent,
     ClientSearchCardComponent,
     BrowseInstructorCardComponent,
+    AddAdventureComponent,
+    InstructorServiceComponent,
+    AdventurePreviewComponent,
+    InstructorServiceListComponent,
+    InstructorProfileComponent,
+    AccDeletionExplanationComponent,
     HomeReservationsComponent,
     BoatReservationsComponent,
     AdventureReservationsComponent,
+    AddSpecialOfferComponent,
+    AdventureSpecialOfferComponent,
+    AdventureSearchPipe,,
     ClientSearchCardReservationComponent,
     BrowseCardReservationComponent
   ],
@@ -153,7 +174,8 @@ import { BrowseCardReservationComponent } from './components/client-components/b
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
-
+    MatStepperModule,
+    MatFileUploadModule,
   ],
   exports: [
     BrowserModule,
@@ -175,12 +197,12 @@ import { BrowseCardReservationComponent } from './components/client-components/b
     MatButtonModule,
     MatDialogModule,
     CalendarModule,
-  
-
-
-
   ],
-  providers: [HttpClientModule],
+  providers: [HttpClientModule, DatePipe,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: MAT_DIALOG_DATA, useValue: {} },
+     { provide: MatDialogRef, useValue: {} }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

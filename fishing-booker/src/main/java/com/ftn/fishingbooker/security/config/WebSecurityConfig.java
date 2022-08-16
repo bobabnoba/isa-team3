@@ -68,6 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService),
                         BasicAuthenticationFilter.class);
         http.csrf().disable();
+
     }
 
     //Za koje rute i fajlove Spring Security ignorise bilo kakve promjene

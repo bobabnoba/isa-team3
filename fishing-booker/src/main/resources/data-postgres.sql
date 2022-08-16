@@ -131,10 +131,7 @@ insert into vacation_home_utilities(
 	(102, 102),
 	(103, 103);
 
--- Reservations
---insert into reservation(
---	id, discount, end_date, is_cancelled, max_guests, price, start_date, type, client_id)
---	values (100, 0.0,  '2020-08-17', 'false', 5, 200, '2020-08-11', 'VACATION_HOME', 10); -- 100 Has no reservations
+---- Reservations
 insert into reservation(
 	id, end_date, is_cancelled, guests, price, start_date, type, client_id)
 	values (101, '2022-08-17', 'false', 3, 200, '2022-08-11', 'VACATION_HOME', 10);
@@ -168,3 +165,42 @@ insert into vacation_home_reservations(
 insert into vacation_home_reservations(
 	vacation_home_id, reservations_id)
 	values (102, 102);
+
+
+-- Adventure
+INSERT INTO adventure(
+	id, duration_in_hours, canceling_percentage, description, max_number_of_participants, price_per_day, rating, title, is_deleted, address_id, instructor_id)
+	VALUES (111, 2.00, 20, 'Description', 3, 45, 4, 'title', false, 40, 110);
+
+-- equipment
+INSERT INTO fishing_equipment(id, name)
+	VALUES (99, 'Fishing Reels'),
+	       (100, 'Lures'),
+	       (101, 'Fishing Rods'),
+	       (102, 'Rod Holders'),
+	       (103, 'Rod Racks'),
+	       (104, 'Fishing Nets'),
+	       (105, 'Tackle Boxes'),
+	       (106, 'Rain Gear');
+
+-- utilities
+INSERT INTO utility(name, price)
+	VALUES ('You keep catch', 40),
+			('Child friendly', 0),
+			('Catch cleaning & filleting', 20),
+			('Snorkeling Equipment', 5),
+			('Fighting Chair', 10),
+			('Drinks', 10);
+
+-- code of conduct
+INSERT INTO rule(id, name)
+    VALUES (99, 'No smoking'),
+            (100, 'No pets'),
+            (101, 'No alcohol'),
+            (102, 'No littering'),
+            (103, '18+'),
+            (104, 'WiFi included'),
+            (105, 'No kids');
+
+           insert into adventure_code_of_conduct(adventure_id, code_of_conduct_id)
+            values (111, 100);

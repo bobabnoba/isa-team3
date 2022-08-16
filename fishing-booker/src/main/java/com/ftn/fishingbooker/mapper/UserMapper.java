@@ -18,7 +18,7 @@ public class UserMapper {
         userDto.setPhone(user.getPhone());
         userDto.setActivated(user.isActivated());
         userDto.setBlocked(user.isBlocked());
-
+        userDto.setBiography(user.getBiography());
         return userDto;
     }
 
@@ -32,8 +32,8 @@ public class UserMapper {
         user.setAddress(dto.getAddress());
         user.setPhone(dto.getPhone());
         user.setActivated(dto.isActivated());
-        user.setBlocked(user.isBlocked());
-
+        user.setBlocked(dto.isBlocked());
+        user.setBiography(dto.getBiography());
         return user;
     }
 }
