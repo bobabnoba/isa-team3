@@ -23,7 +23,6 @@ export class AuthService {
     return this.http.post('http://localhost:8090/auth/login', value).pipe(
       map((response: any) => {
         if (response && response.jwt) {
-          console.log(response.jwt)
           this._storageService.storeTokenData(response.jwt);
         }
       })
