@@ -43,6 +43,11 @@ public class User implements UserDetails {
 
     private String biography;
 
+    private double points;
+
+    @ManyToOne(targetEntity = UserRank.class)
+    private UserRank rank;
+
     private boolean isActivated;
 
     private boolean isBlocked;
@@ -54,10 +59,6 @@ public class User implements UserDetails {
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
 
-    /**
-     * TODO: Svugdje staviti targetEntity
-     * Nije radilo dok nisam stavila targetEntity
-     */
     @ManyToOne(targetEntity = UserRole.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private UserRole role;
@@ -83,7 +84,6 @@ public class User implements UserDetails {
         return getClass().hashCode();
     }
 
-    //TODO: Da li mi treba granted authority
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

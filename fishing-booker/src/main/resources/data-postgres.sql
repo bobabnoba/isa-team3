@@ -33,36 +33,36 @@ id, city, country, street, zip_code)
 values (43, 'Ljubljana', 'Slovenia', 'Jana Kustosa', 1000);
 
 --Client
-insert into client(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, type)
-values (10,'Whatever Bio',  'ClientEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 'SILVER');
+insert into client(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points)
+values (10,'Whatever Bio',  'ClientEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2, 0 );
 
-insert into client(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, type)
-values (12,'Whatever Bio',  'ClientEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 'SILVER');
+insert into client(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points)
+values (12,'Whatever Bio',  'ClientEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2, 0 );
 
 ----Admin
-insert into admin(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id)
-values (11,'Whatever Bio',  'AdminEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 1 );
+insert into admin(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points)
+values (11,'Whatever Bio',  'AdminEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 1, 0 );
 
 ----Home Owner
 insert into home_owner(id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password,
- phone, test_rebase_again, address_id, role_id)
+ phone, test_rebase_again, address_id, role_id, points)
 	values (110,'Whatever Bio', 'VacationOwnerEmail', 'VacationOwnerFirstName'
 	, 'true' , 'false', 'false', 'VacationOwnerLastName', null , /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.',
-	 '0943242342','false',41, 4);
+	 '0943242342','false',41, 4, 0);
 
 --Boat Owner
 insert into boat_owner(
 
 	id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password,
-	 phone, test_rebase_again, address_id, role_id, type)
+	 phone, test_rebase_again, address_id, role_id, type, points)
 
 	values (110,'Whatever Bio', 'BoatOwnerEmail', 'BoatOwnerFirstName'
 	, 'true' , 'false', 'false', 'BoatOwnerLastName', null , /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.',
-	 '0943242342','false', 41, 3,'BOAT_OWNER');
+	 '0943242342','false', 41, 3,'BOAT_OWNER', 0);
 
 -- Instructor
-insert into instructor(	id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, rating)
-	values (110, 'biography', 'InstructorEmail', 'first_name', 'true', 'false', 'false', 'last_name', null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '4324234', 'false', 41, 5, 4.3);
+insert into instructor(	id, biography, email, first_name, is_activated, is_blocked, is_deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, rating, points)
+	values (110, 'biography', 'InstructorEmail', 'first_name', 'true', 'false', 'false', 'last_name', null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '4324234', 'false', 41, 5, 4.3, 0);
 
 
 --Vacation Home
@@ -186,5 +186,14 @@ INSERT INTO rule(id, name)
             (104, 'WiFi included'),
             (105, 'No kids');
 
-           insert into adventure_code_of_conduct(adventure_id, code_of_conduct_id)
-            values (111, 100);
+insert into adventure_code_of_conduct(adventure_id, code_of_conduct_id)
+values (111, 100);
+
+-- rank
+INSERT INTO user_rank(id, name, min_points, reservation_percentage, percentage)
+    VALUES (1, 'REGULAR_CLIENT', 0, 80, 0),
+            (2, 'SILVER_CLIENT', 4000, 80, 4),
+            (3, 'GOLD_CLIENT', 8000, 80, 7),
+            (4, 'REGULAR_ADVERTISER', 0, 90, 8),
+            (5, 'SILVER_ADVERTISER', 4500, 90, 6),
+            (6, 'GOLD_ADVERTISER', 8000, 90, 4);
