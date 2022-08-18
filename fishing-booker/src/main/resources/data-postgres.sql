@@ -143,8 +143,12 @@ values
 
 --Instructor Availability
 insert into instructor_availability_periods(
-	id, end_date, start_date, instructor_id)
-	values (100,  '2022-08-30', '2022-08-01', 110); --available
+	id, end_date, start_date)
+	values (100,  '2022-08-30', '2022-08-01'); --available
+
+insert into instructor_availability(
+	instructor_id, availability_id)
+	values (110, 100);
 
 --Boats Availability
 insert into boat_availability(id, end_date, start_date, boat_id)
