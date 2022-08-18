@@ -2,10 +2,14 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.dto.AdventureAdditionalInfo;
 import com.ftn.fishingbooker.dto.AdventureInfo;
+import com.ftn.fishingbooker.dto.FilterDto;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.repository.*;
+import com.ftn.fishingbooker.repository.AdventureRepository;
+import com.ftn.fishingbooker.repository.InstructorRepository;
 import com.ftn.fishingbooker.service.AdventureService;
+import com.ftn.fishingbooker.service.DateService;
+import com.ftn.fishingbooker.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,10 +19,13 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
- public class AdventureServiceImpl implements AdventureService {
+public class AdventureServiceImpl implements AdventureService {
 
     private final AdventureRepository adventureRepository;
     private final InstructorRepository instructorRepository;
+
+    private final DateService dateService;
+    private final ReservationService reservationService;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class)
@@ -29,7 +36,7 @@ import java.util.*;
     @Override
     public Collection<Adventure> getAllByInstructorEmail(String email) {
         Instructor instructor = instructorRepository.findByEmail(email);
-        if(instructor == null) {
+        if (instructor == null) {
             throw new ResourceConflictException("Instructor with email " + email + " does not exist");
         }
         return adventureRepository.findAllByInstructorId(instructor.getId());
@@ -60,7 +67,7 @@ import java.util.*;
 
     @Override
     @Transactional
-    public Adventure updateAdventureInfo(Long id,  AdventureInfo updated) {
+    public Adventure updateAdventureInfo(Long id, AdventureInfo updated) {
         Adventure found = adventureRepository.findById(id)
                 .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
 
@@ -117,6 +124,49 @@ import java.util.*;
     @Override
     public Adventure save(Adventure adventure) {
         return adventureRepository.save(adventure);
+    }
+
+    @Override
+    public Collection<Adventure> filterAll(FilterDto filter) {
+        ArrayList<Adventure> adventuresList = (ArrayList<Adventure>) adventureRepository.findAllWithInstructor();
+        ArrayList<Adventure> filteredAdventuresList = new ArrayList<>();
+
+        for (Adventure adventure : adventuresList) {
+
+            if (adventure.getMaxNumberOfParticipants() >= filter.getPeople()) {
+                // Date should overlap with vacation home availability
+                if (doPeriodsOverlap(filter.getStartDate(), filter.getEndDate(), adventure.getInstructor().getAvailability())) {
+
+
+                    Collection<Long> adventures = adventureRepository.getAllIdsByInstructorId(adventure.getInstructor().getId());
+                    Collection<Reservation> reservations = reservationService.getReservationsForAdventures(adventures);
+                    boolean overlaps = reservationService.dateOverlapsWithReservation(reservations, filter.getStartDate(), filter.getEndDate());
+
+                    if (!overlaps) {
+                        filteredAdventuresList.add(adventure);
+                    }
+                }
+            }
+        }
+        return filteredAdventuresList;
+    }
+
+    @Override
+    public void makeReservation(Long adventureId, Reservation reservation) {
+        Adventure adventure = adventureRepository.getById(adventureId);
+        adventure.getReservations().add(reservation);
+        adventureRepository.save(adventure);
+    }
+
+
+    private boolean doPeriodsOverlap(Date startDate, Date endDate, Set<InstructorAvailability> availableTimePeriods) {
+
+        for (InstructorAvailability period : availableTimePeriods) {
+            if (dateService.doPeriodsOverlap(period.getStartDate(), period.getEndDate(), startDate, endDate)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

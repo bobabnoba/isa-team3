@@ -1,0 +1,31 @@
+@import '../../../../assets/css/homepage-template.css';
+
+.people {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  .people i {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  
+  .people input {
+    border-bottom: solid;
+    border-width: 1px;
+  }
+  
+  .submitBtn {
+    margin-top: 10px;
+  }
+  .parent {
+    display: flex;
+    flex-direction: column;
+  }
+  .mycontainer {
+    margin-top: 20px;
+    height: fit-content;
+  }
+  .navcontainer{
+    height: fit-content;
+  }

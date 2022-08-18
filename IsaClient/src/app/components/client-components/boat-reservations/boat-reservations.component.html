@@ -1,16 +1,60 @@
 <div id="wrapper" class="container">
     <app-client-sidebar></app-client-sidebar>
-    <div id="content-wrapper"  class="d-flex flex-column">
+    <div id="content-wrapper" class="d-flex flex-column">
         <div class="searchCard">
-            <!-- <app-client-search-card (doSearch)="search($event)"></app-client-search-card>
-        --></div> 
+            <app-client-search-card-reservation (doSearch)="search($event)"></app-client-search-card-reservation>
+        </div>
+        <!-- Before Search -->
+        <div class=" messages card shadow mb-4" *ngIf="didSearch == false">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Costumize & Select your journey !</h6>
+            </div>
+            <div class="card-body">
+                <p>Create your personalized property search by choosing multiple criteria and advanced filters to get
+                    the results that suit your needs.</p>
+                <p class="mb-0">Make sure to select <b>dates</b> and <b>number</b> of people for the
+                    reservation.</p>
+            </div>
+        </div>
+        <!-- Dates overlap -->
+        <div class=" messages card shadow mb-4" *ngIf="datesOverlap == true">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Oops!</h6>
+            </div>
+            <div class="card-body">
+                <p>Looks like you already have a reservation for selected time period :( </p>
+                <p class="mb-0"> Take a look at your upcomming
+                    reservations. </p>
+            </div>
+        </div>
+        <!-- Nothing found -->
+        <div class=" messages card shadow mb-4" *ngIf="didSearch == true && datesOverlap == false && filteredItems.length == 0">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Oops!</h6>
+            </div>
+            <div class="card-body">
+                <p>No Boats to show :( </p>
+                <p class="mb-0"> Try changing the dates or search parameters. </p>
+            </div>
+        </div>
         <div class="displaySection">
             <div class="sectionOverflow">
-                <!-- <div *ngFor="let item of filteredItems">
-                    <app-browse-card [name]="item.name" [description]="item.description" [address]="item.address"
-                        [utilities]="item.utilities" [price]="item.pricePerDay" [rating]="item.rating" [id]="item.id"
-                        [type]="item.rentalType" [ownerName]="item.owner.firstName"></app-browse-card>
-                </div> -->
+                <div *ngFor="let item of filteredItems">
+                    <app-browse-card-reservation
+                    [startDate]="requestFilter.startDate"
+                    [endDate]="requestFilter.endDate"
+                    [guests] = "requestFilter.people"
+                    [type]="item.rentalType"
+                    [name]="item.name" 
+                    [description]="item.description" 
+                    [address]="item.address"
+                    [utilities]="item.utilities" 
+                    [price]="item.pricePerDay" 
+                    [rating]="item.rating" 
+                    [id]="item.id"
+                    [type]="item.rentalType" 
+                    [ownerName]="item.owner.firstName"></app-browse-card-reservation>
+                </div>
             </div>
         </div>
     </div>

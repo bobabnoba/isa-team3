@@ -37,7 +37,7 @@ public class ReservationMapper {
         reservation.setGuests(reservationDto.getGuests());
         reservation.setId(reservationDto.getId());
         reservation.setIsCancelled(false);
-        reservation.setType(ReservationType.VACATION_HOME);
+        reservation.setType(reservationDto.getType());
         reservation.setPrice(reservationDto.getPrice());
         reservation.setEndDate(reservationDto.getEndDate());
         reservation.setStartDate(reservationDto.getStartDate());

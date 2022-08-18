@@ -6,5 +6,6 @@ export interface INewReservation {
     endDate: Date,
     guests:number,
     price:number,
-    utilities: IUtility[]
+    utilities: IUtility[],
+    duration: number,
 }

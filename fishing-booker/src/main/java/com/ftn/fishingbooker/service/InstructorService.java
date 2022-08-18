@@ -1,9 +1,6 @@
 package com.ftn.fishingbooker.service;
 
-import com.ftn.fishingbooker.model.Instructor;
-import com.ftn.fishingbooker.model.InstructorAvailability;
-import com.ftn.fishingbooker.model.User;
-import com.ftn.fishingbooker.model.VacationHome;
+import com.ftn.fishingbooker.model.*;
 
 import javax.mail.MessagingException;
 import java.util.Collection;
@@ -22,4 +19,8 @@ public interface InstructorService {
     boolean checkAvailability(Date from, Date to, String instructorEmail);
 
     void updateAvailability(InstructorAvailability periodToDelete, String email);
+
+    void makeReservation(Long adventureId, Reservation reservation);
+
+
 }

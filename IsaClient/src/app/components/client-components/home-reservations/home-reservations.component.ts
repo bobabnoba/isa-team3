@@ -28,7 +28,7 @@ export class HomeReservationsComponent implements OnInit {
     private _searchService: SearchService,
     private _snackBar: MatSnackBar,
     private _storageService: StorageService,) {
-      this.today.setMilliseconds(0);
+    this.today.setMilliseconds(0);
   }
 
   ngOnInit(): void {
@@ -42,14 +42,14 @@ export class HomeReservationsComponent implements OnInit {
     this.endDate = filter.endDate;
     this.startDate.setMilliseconds(0);
     this.endDate.setMilliseconds(0);
-    
+
     if (this.startDate.getTime() == this.today.getTime() && this.endDate.getTime() == this.today.getTime()) {
       this._snackBar.open('Please enter date for your reservation !', '',
-      {
-        duration: 3000,
-        panelClass: ['snack-bar']
-      });
-      
+        {
+          duration: 3000,
+          panelClass: ['snack-bar']
+        });
+
       return;
     }
     this.requestFilter.email = this._storageService.getEmail();
@@ -59,6 +59,10 @@ export class HomeReservationsComponent implements OnInit {
     console.log(filter.startDate);
     console.log(filter.endDate);
 
+    console.log(filter.startDate.getDay());
+    console.log(filter.endDate.getDay());
+
+
 
 
     if (
@@ -67,6 +71,13 @@ export class HomeReservationsComponent implements OnInit {
       this.startDate > this.endDate
     ) {
       this._snackBar.open('Invalid date input!', '',
+        {
+          duration: 3000,
+          panelClass: ['snack-bar']
+        });
+    }
+    else if (filter.startDate.getDay() == filter.endDate.getDay()) {
+      this._snackBar.open('Must choose two different days! ', '',
         {
           duration: 3000,
           panelClass: ['snack-bar']

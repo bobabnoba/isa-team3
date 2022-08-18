@@ -10,7 +10,7 @@
                 <div>
                     <p>
                         <strong>
-                            <p>{{ name }}</p>
+                            {{ name }}
                         </strong>
                         <small>, @{{ ownerName }} </small>
                         <br />
@@ -28,9 +28,14 @@
                     <div class="column is-flex is-justify-content-flex-end is-align-items-center">
                         <strong class="mr-1 star-text">{{ rating }} </strong>
                         <i class="fa fa-star"></i>
+                        <div>
+                            <strong *ngIf="duration" class="mr-1 star-text"> Adventure duration - {{ duration }}
+                                h</strong>
+                        </div>
                         <div class="buttons ml-5">
                             <button mat-raised-button color="primary" (click)="reserve()">Make a reservation</button>
-                            <button mat-raised-button color="primary" (click)="preview()" style="margin-left: 10px;">See More</button>
+                            <button mat-raised-button color="primary" (click)="preview()" style="margin-left: 10px;">See
+                                More</button>
 
                         </div>
                     </div>

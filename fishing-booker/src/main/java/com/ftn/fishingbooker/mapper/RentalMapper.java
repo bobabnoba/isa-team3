@@ -80,6 +80,7 @@ public class RentalMapper {
         rentalDto.setPricePerDay(adventure.getPricePerDay());
         rentalDto.setUtilities(UtilityMapper.map(adventure.getUtilities()));
         rentalDto.setOwner(OwnerMapper.map(adventure.getInstructor()));
+        rentalDto.setDuration(adventure.getDurationInHours());
 
         return rentalDto;
     }

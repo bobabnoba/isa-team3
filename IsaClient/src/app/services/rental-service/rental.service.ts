@@ -9,6 +9,7 @@ import { StorageService } from '../storage-service/storage.service';
   providedIn: 'root'
 })
 export class RentalService {
+
   userEmail: string = ""
 
   constructor(private _http: HttpClient,
@@ -20,6 +21,15 @@ export class RentalService {
     return this._http.post('http://localhost:8090/vacation/homes/rent/' + homeId + "/" + this.userEmail,
       newReservation);
   }
+  rentBoat(newReservation: INewReservation, boatId: number) : Observable <any>{
+    return this._http.post('http://localhost:8090/boats/rent/' + boatId + "/" + this.userEmail,
+    newReservation);
+  }
+  rentAdventure(newReservation: INewReservation, adventureId: number) {
+    return this._http.post('http://localhost:8090/adventures/rent/' + adventureId + "/" + this.userEmail,
+    newReservation);
+  }
+ 
   getAllRentals() {
     return this._http.get<any>(
       'http://localhost:8090/rentals'
@@ -38,9 +48,12 @@ export class RentalService {
   filterVacationHomes(requestFilter: IFilter): Observable<any> {
     return this._http.post('http://localhost:8090/vacation/homes/search', requestFilter);
   }
+  filterBoats(requestFilter: IFilter) {
+    return this._http.post('http://localhost:8090/boats/search', requestFilter);
+  }
+  filterAdventures(requestFilter: IFilter) {
+    return this._http.post('http://localhost:8090/adventures/search', requestFilter);
+  }
 
-}
-function requestFilter(arg0: string, requestFilter: any) {
-  throw new Error('Function not implemented.');
 }
 

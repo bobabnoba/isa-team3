@@ -49,7 +49,6 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatListModule } from '@angular/material/list';
 import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReservationViewComponent } from './components/reservation-view/reservation-view.component';
-import { VacationHouseProfileComponent } from './components/vacation-home-components/vacation-house-profile/vacation-house-profile.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { InstructorCalendarComponent } from './components/instructor-components/instructor-calendar/instructor-calendar.component';
@@ -65,7 +64,7 @@ import { ClientBoatsComponent } from './components/client-components/client-boat
 import { ClientSearchCardComponent } from './components/client-components/client-search-card/client-search-card.component';
 import { BrowseInstructorCardComponent } from './components/browse-instructor-card/browse-instructor-card.component';
 import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import { InstructorServiceComponent } from './components/instructor-components/instructor-service/instructor-service.component';
 import { JwtInterceptor } from './JwtInterceptor/jwt-interceptor';
@@ -83,11 +82,12 @@ import { AdventureSpecialOfferComponent } from './components/adventure-component
 import { AdventureSearchPipe } from './pipes/adventure-search/adventure-search.pipe';
 import { ClientSearchCardReservationComponent } from './components/client-components/client-search-card-reservation/client-search-card-reservation.component';
 import { BrowseCardReservationComponent } from './components/client-components/browse-card-reservation/browse-card-reservation.component';
+import { ClientTopBarComponent } from './components/client-components/client-top-bar/client-top-bar.component';
 
 @NgModule({
   declarations: [
-    TruncatePipe,
     AppComponent,
+    TruncatePipe,
     HeaderComponent,
     FooterComponent,
     LoginComponent,
@@ -116,9 +116,7 @@ import { BrowseCardReservationComponent } from './components/client-components/b
     UnauthenticatedHeaderComponent,
     VacationHomePageComponent,
     ReservationViewComponent,
-    VacationHouseProfileComponent,
     InstructorCalendarComponent,
-    VacationHouseProfileComponent,
     BrowseCardComponent,
     SearchCardComponent,
     ClientReservationsComponent,
@@ -140,9 +138,10 @@ import { BrowseCardReservationComponent } from './components/client-components/b
     AdventureReservationsComponent,
     AddSpecialOfferComponent,
     AdventureSpecialOfferComponent,
-    AdventureSearchPipe,,
+    AdventureSearchPipe,
     ClientSearchCardReservationComponent,
-    BrowseCardReservationComponent
+    BrowseCardReservationComponent,
+    ClientTopBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -201,7 +200,7 @@ import { BrowseCardReservationComponent } from './components/client-components/b
   providers: [HttpClientModule, DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: MAT_DIALOG_DATA, useValue: {} },
-     { provide: MatDialogRef, useValue: {} }
+    { provide: MatDialogRef, useValue: {} }
   ],
   bootstrap: [AppComponent],
 })

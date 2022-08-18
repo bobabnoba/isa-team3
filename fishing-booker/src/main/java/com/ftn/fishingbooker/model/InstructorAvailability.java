@@ -1,12 +1,11 @@
 package com.ftn.fishingbooker.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -24,6 +23,9 @@ public class InstructorAvailability {
     private Date startDate;
 
     private Date endDate;
+    @ManyToOne
+    @JoinColumn(name = "instructor_id", nullable = false)
+    private Instructor instructor;
 
     public InstructorAvailability(Date startDate, Date endDate) {
         this.startDate = startDate;

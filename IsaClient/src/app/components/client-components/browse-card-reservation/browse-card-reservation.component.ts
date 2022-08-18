@@ -23,9 +23,11 @@ export class BrowseCardReservationComponent implements OnInit {
     zipCode: 1
   };
   @Input() price: number = 0;
+  @Input() duration: number = 0;
   @Input() guests: number = 0;
   @Input() rating: number = 0;
   @Input() ownerName: string = '';
+  @Input() ownerId: number = 0;
   @Input() utilities: IUtility[] = [];
   @Input() imageUrls: string[] = [];
   image: any;
@@ -85,9 +87,9 @@ export class BrowseCardReservationComponent implements OnInit {
     }
     if (checked == false) {
       var utility = this.utilities.find(x => x.name == utilityName);
-      this.newReservation.utilities = this.newReservation.utilities.filter(item=>item.name !== utility?.name)
-     
-     
+      this.newReservation.utilities = this.newReservation.utilities.filter(item => item.name !== utility?.name)
+
+
     }
     console.log(this.newReservation.utilities);
 
@@ -98,34 +100,47 @@ export class BrowseCardReservationComponent implements OnInit {
     this.newReservation.endDate = this.endDate;
     this.newReservation.startDate = this.startDate;
     this.newReservation.guests = this.guests;
-    this.newReservation.price = this.price; 
-   
-     
+    this.newReservation.price = this.price;
+  
     console.log(this.newReservation);
-    const makeReservation ={
-      next : (res:any)=>{
+    const makeReservation = {
+      next: (res: any) => {
 
         //redirect to rental page
         this._snackBar.open('Reservation made successfully!', '',
-        {
-          duration: 3000,
-          panelClass: ['snack-bar']
-        });
+          {
+            duration: 3000,
+            panelClass: ['snack-bar']
+          });
         window.location.href = '/client/reservations'
       },
-      error:(err:HttpErrorResponse)=>{
+      error: (err: HttpErrorResponse) => {
         this._snackBar.open('Sorry :( it seems like we have a problem. Try again in few minutes!', '',
-        {
-          duration: 3000,
-          panelClass: ['snack-bar']
-        });
+          {
+            duration: 3000,
+            panelClass: ['snack-bar']
+          });
       }
     }
-    this._rentalService.rentVacationHome(this.newReservation,this.id).subscribe(makeReservation);
-    
+    if (this.type == 'home') {
+      this._rentalService.rentVacationHome(this.newReservation, this.id).subscribe(makeReservation);
+    }
+    if (this.type == 'boat') {
+      this._rentalService.rentBoat(this.newReservation, this.id).subscribe(makeReservation);
+    }
+    if (this.type == 'adventure') {
+      this._rentalService.rentAdventure(this.newReservation, this.id).subscribe(makeReservation);
+
+    }
   }
-  preview() {  
-    window.location.href = '/' + this.type + '/' + this.id;
+  preview() {
+    if (this.type == 'adventure') {
+      console.log("ishere");
+
+      window.location.href = '/instructor/' + this.ownerId;
+    } else {
+      window.location.href = '/' + this.type + '/' + this.id;
+    }
   }
 
 
