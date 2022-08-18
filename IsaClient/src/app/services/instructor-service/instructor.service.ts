@@ -23,5 +23,8 @@ export class InstructorService {
   checkAvailability(from : string, to : string, instructorEmail : string) {
     return this._http.get(`${this.baseURL}/instructor/check-if-available?from=${from}&to=${to}&instructorEmail=${instructorEmail}`);
   }
- 
+  getAllActiveInstructors() {
+    return this._http.get<any>('http://localhost:8090/instructor/available');
+  }
+
 }

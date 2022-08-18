@@ -1,0 +1,61 @@
+<div class="my-5  stretch-width">
+    <article class="media shadow p-4">
+        <figure class="media-left">
+            <p class="image">
+                <img class="image center-cropped" [src]="image" />
+            </p>
+        </figure>
+        <div class="media-content">
+            <div class="content">
+                <div>
+                    <p>
+                        <strong>
+                            {{ name }}
+                        </strong>
+                        <small>, @{{ ownerName }} </small>
+                        <br />
+                        {{ description | truncate: [200] }}
+                    </p>
+
+                    <div>
+                        <strong *ngIf="address"><i class="fa fa-map-marker"></i> {{ address.street }}, {{ address.city
+                            }},
+                            {{ address.country }}, {{ address.zipCode }}</strong>
+                        <h4 *ngIf="price">${{ price }}/day</h4>
+                    </div>
+                </div>
+                <div class="columns is-vcentered">
+                    <div class="column is-flex is-justify-content-flex-end is-align-items-center">
+                        <strong class="mr-1 star-text">{{ rating }} </strong>
+                        <i class="fa fa-star"></i>
+                        <div>
+                            <strong *ngIf="duration" class="mr-1 star-text"> Adventure duration - {{ duration }}
+                                h</strong>
+                        </div>
+                        <div class="buttons ml-5">
+                            <button mat-raised-button color="primary" (click)="reserve()">Make a reservation</button>
+                            <button mat-raised-button color="primary" (click)="preview()" style="margin-left: 10px;">See
+                                More</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+    <div class="card shadow mb-4" *ngIf="utilities.length!=0">
+        <!-- Card Header - Accordion -->
+        <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button"
+            aria-expanded="true" aria-controls="collapseCardExample">
+            <h6 class="m-0 font-weight-bold text-primary">Utilites list</h6>
+        </a>
+        <!-- Card Content - Collapse -->
+        <div class="collapse show" id="collapseCardExample" style="margin: 10px; margin-right: 50px;">
+            <mat-checkbox *ngFor="let utility of utilities " class="example-margin" [value]="utility.name"
+                (change)="onChangeDemo($event)">
+                {{utility.name}} </mat-checkbox>
+
+        </div>
+    </div>
+
+</div>

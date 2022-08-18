@@ -1,12 +1,18 @@
 package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.*;
+import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.mapper.AddressMapper;
 import com.ftn.fishingbooker.mapper.AdventureMapper;
-import com.ftn.fishingbooker.model.Adventure;
-import com.ftn.fishingbooker.model.Rule;
+import com.ftn.fishingbooker.mapper.RentalMapper;
+import com.ftn.fishingbooker.mapper.ReservationMapper;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.AdventureService;
+import com.ftn.fishingbooker.service.ClientService;
+import com.ftn.fishingbooker.service.InstructorService;
+import com.ftn.fishingbooker.service.ReservationService;
 import com.ftn.fishingbooker.util.FIleUploadUtil;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +27,15 @@ import static org.springframework.http.ResponseEntity.ok;
 public class AdventureController {
 
     private final AdventureService adventureService;
+    private final ClientService clientService;
+    private final ReservationService reservationService;
+    private final InstructorService instructorService;
 
-    public AdventureController(AdventureService adventureService){
+    public AdventureController(AdventureService adventureService, ClientService clientService, ReservationService reservationService, InstructorService instructorService){
         this.adventureService = adventureService;
+        this.clientService = clientService;
+        this.reservationService = reservationService;
+        this.instructorService = instructorService;
     }
 
     @GetMapping
@@ -103,5 +115,26 @@ public class AdventureController {
 
         return ResponseEntity.ok().build();
     }
+    @PostMapping("/search")
+    public ResponseEntity<Collection<RentalDto>> FilterAll(@RequestBody FilterDto filter) {
+        if (clientService.hasOverlappingReservation(filter.getEmail(), filter.getStartDate(), filter.getEndDate())) {
 
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
+        Collection<Adventure> adventures = adventureService.filterAll(filter);
+        Collection<RentalDto> rentals = RentalMapper.mapAdventureToRental(adventures);
+        return new ResponseEntity<>(rentals, HttpStatus.OK);
+    }
+
+    @PostMapping("/rent/{adventureId}/{userEmail}")
+    public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
+        Client client = clientService.getClientByEmail(userEmail);
+        Adventure adventure = adventureService.getById(adventureId);
+        reservationDto.setType(ReservationType.ADVENTURE);
+        Reservation reservation = reservationService.makeReservation(client, reservationDto, adventure.getDurationInHours());
+
+        adventureService.makeReservation(adventureId,reservation);
+
+        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+    }
 }

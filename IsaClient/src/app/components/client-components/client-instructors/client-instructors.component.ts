@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchFilter } from 'src/app/filters/search-filter';
 import { InstructorBrowse } from 'src/app/interfaces/instructor-browse';
-import { IProfileView } from 'src/app/interfaces/rental-view';
+import { InstructorService } from 'src/app/services/instructor-service/instructor.service';
 import { RentalService } from 'src/app/services/rental-service/rental.service';
 import { SearchService } from 'src/app/services/search-service/search.service';
 
@@ -16,7 +16,7 @@ export class ClientInstructorsComponent implements OnInit {
   filteredItems!: InstructorBrowse[];
   name:string=""
   instructor:string= "instructor"
-  constructor(private _service: RentalService, private searchService: SearchService) {
+  constructor(private _service: InstructorService, private searchService: SearchService) {
     this._service.getAllActiveInstructors().subscribe(
       res => {
         console.log(res);

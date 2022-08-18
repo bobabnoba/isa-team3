@@ -3,6 +3,7 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.dto.FilterDto;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.VacationHome;
+import com.ftn.fishingbooker.model.VacationHomeAvailability;
 import com.ftn.fishingbooker.repository.HomeRepository;
 import com.ftn.fishingbooker.service.DateService;
 import com.ftn.fishingbooker.service.HomeService;
@@ -14,6 +15,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -42,10 +44,10 @@ public class HomeServiceImpl implements HomeService {
 
             if (home.getGuestLimit() >= filter.getPeople()) {
                 // Date should overlap with vacation home availability
-                if (dateService.doPeriodsOverlap(filter.getStartDate(), filter.getEndDate(), home.getAvailableTimePeriods())) {
+                if (doPeriodsOverlap(filter.getStartDate(), filter.getEndDate(), home.getAvailableTimePeriods())) {
 
                     Collection<Reservation> reservations = reservationService.getReservationForVacationHome(home.getId());
-                    boolean overlaps = dateOverlapsWithReservation(reservations, filter.getStartDate(), filter.getEndDate());
+                    boolean overlaps = reservationService.dateOverlapsWithReservation(reservations, filter.getStartDate(), filter.getEndDate());
 
                     if (!overlaps) {
                         filteredHomeList.add(home);
@@ -55,17 +57,23 @@ public class HomeServiceImpl implements HomeService {
         }
         return filteredHomeList;
     }
+    private boolean doPeriodsOverlap(Date startDate, Date endDate, Set<VacationHomeAvailability> availableTimePeriods) {
 
-    private boolean dateOverlapsWithReservation(Collection<Reservation> reservations, Date startDate, Date endDate) {
-        if (reservations == null) {
-            return false;
-        }
-        for (Reservation reservation : reservations) {
-            if (dateService.doPeriodsOverlap(reservation.getStartDate(), reservation.getEndDate(), startDate, endDate)) {
+        for (VacationHomeAvailability period : availableTimePeriods) {
+            if (dateService.doPeriodsOverlap(period.getStartDate(), period.getEndDate(), startDate, endDate)) {
                 return true;
             }
         }
         return false;
     }
+
+    @Override
+    public void makeReservation(Long homeId, Reservation reservation) {
+        VacationHome home = vacationHomeRepository.getById(homeId);
+        home.getReservations().add(reservation);
+        vacationHomeRepository.save(home);
+    }
+
+
 
 }

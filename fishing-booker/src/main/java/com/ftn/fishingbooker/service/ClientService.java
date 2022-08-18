@@ -10,5 +10,7 @@ public interface ClientService {
 
     void registerClient(Client client) throws MessagingException;
 
-    boolean hasOverlappingReservation(Long clientId, Date startDate, Date endDate);
+    boolean hasOverlappingReservation(String email, Date startDate, Date endDate);
+
+    Client getClientByEmail(String userEmail);
 }

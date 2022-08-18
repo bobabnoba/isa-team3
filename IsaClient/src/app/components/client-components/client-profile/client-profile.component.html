@@ -1,7 +1,7 @@
 <div  id="wrapper">
   <app-client-sidebar></app-client-sidebar>
     <div id="content-wrapper" style="margin-top: 50px;" class="d-flex flex-column">
-        <div class="container-fluid">
+        <div *ngIf="user" class="container-fluid">
             <div class="content">
                 <div class="row">
                     <div class="col-xl-4 col-lg-5">
@@ -16,7 +16,7 @@
                                   <h5 class="title">{{ user.firstName }} {{ user.lastName }}</h5>
                                 </a><br>
                               </div>
-                              <h2>Welcome {{user.firstName }} !</h2>
+                              <h2 >Welcome {{user.firstName }} !</h2>
                               <p class="description text-justify">
                                 With over 2 million bookable vacation rentals, Booker Easy&Peady connects Homeowners, Boatowners and
                                 Adventure Instructors with families and vacationers looking for something more than a hotel for their

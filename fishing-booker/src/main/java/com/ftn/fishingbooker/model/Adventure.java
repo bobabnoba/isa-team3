@@ -56,6 +56,10 @@ public class Adventure {
 
     private double durationInHours;
 
+    //mappedBy = "adventure"
+    @OneToMany(targetEntity = Reservation.class,cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    private Set<Reservation> reservations;
+
     @Transient
     public List<String> getImagePaths() {
         List<String> retVal = new ArrayList<>();
