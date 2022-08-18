@@ -23,9 +23,6 @@ public class InstructorAvailability {
     private Date startDate;
 
     private Date endDate;
-    @ManyToOne
-    @JoinColumn(name = "instructor_id", nullable = false)
-    private Instructor instructor;
 
     public InstructorAvailability(Date startDate, Date endDate) {
         this.startDate = startDate;
