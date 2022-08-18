@@ -7,6 +7,7 @@ public class OwnerMapper {
 
     public static OwnerDto map(User owner) {
         OwnerDto homeOwnerDto = new OwnerDto();
+
         homeOwnerDto.setEmail(owner.getEmail());
         homeOwnerDto.setFirstName(owner.getFirstName());
         homeOwnerDto.setPhone(owner.getPhone());

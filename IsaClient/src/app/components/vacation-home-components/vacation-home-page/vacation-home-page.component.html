@@ -1,6 +1,7 @@
-<router-outlet></router-outlet>
-<app-unauthenticated-header></app-unauthenticated-header>
-<div *ngIf="item" class="container">
+<div id="wrapper" class="container">
+    <app-client-sidebar></app-client-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+<div *ngIf="item" class="containersss">
     <div class="about">
         <mat-card class="example-card">
             <mat-card-title-group>
@@ -26,8 +27,8 @@
 
         <mat-card class="wrapper">
             <div class="box">
-                <mat-card-title>Number of rooms - {{roomsNumber}}</mat-card-title>
-                <mat-card-subtitle>Beds - {{bedsNumber}}</mat-card-subtitle>
+                <mat-card-title>Number of rooms : {{roomsNumber}}</mat-card-title>
+                <mat-card-subtitle>Beds : {{bedsNumber}}</mat-card-subtitle>
             </div>
         </mat-card>
 
@@ -42,7 +43,10 @@
         <mat-card class="wrapper">
             <mat-card-title>Services/Utilities</mat-card-title>
             <div class="box">
-                <li *ngFor="let item of item.utilities;">{{item}}</li>
+                <span *ngFor="let item of item.utilities;" style="width: 100px">
+                <label style="font-weight: bold;">{{item.name}}</label>
+                <h6 >- ${{ item.price }}/day</h6>
+            </span>
             </div>
         </mat-card>
 
@@ -53,4 +57,6 @@
         <app-reservation-view [action]="item"></app-reservation-view>
     </div>
 
+</div>
+</div>
 </div>

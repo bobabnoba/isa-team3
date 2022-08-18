@@ -16,4 +16,6 @@ public interface AdventureRepository extends JpaRepository<Adventure, Long> {
     @Query("SELECT a FROM Adventure a WHERE a.instructor.id = ?1 and a.isDeleted = false")
     Collection<Adventure> findAllByInstructorId(Long id);
 
+    @Query("SELECT a.id FROM Adventure a WHERE a.instructor.id = ?1 and a.isDeleted = false")
+    Collection<Long> getAllIdsByInstructorId(Long id);
 }

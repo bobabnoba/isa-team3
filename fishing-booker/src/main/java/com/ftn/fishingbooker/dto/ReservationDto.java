@@ -7,23 +7,25 @@ import lombok.Data;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 public class ReservationDto {
-    private Long id;
 
-    private double discount;
+    private Long id;
 
     private Boolean isCancelled;
 
     @Enumerated(EnumType.STRING)
     private ReservationType type;
 
-    private int maxGuests;
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    private int guests;
+
     private Date startDate;
-    @JsonFormat(pattern = "dd/MM/yyyy")
+
     private Date endDate;
 
-    private float price;
+    private double price;
+
+    private Set<UtilityDto> utilities;
 }

@@ -5,9 +5,12 @@ import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.InstructorRepository;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
-import com.ftn.fishingbooker.service.*;
+import com.ftn.fishingbooker.service.AdventureService;
+import com.ftn.fishingbooker.service.InstructorAvailabilityService;
+import com.ftn.fishingbooker.service.InstructorService;
+import com.ftn.fishingbooker.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.*;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -21,6 +24,7 @@ public class InstructorServiceImpl implements InstructorService {
     private final RegistrationRepository registrationRepository;
     private final InstructorAvailabilityService availabilityService;
     private final InstructorRepository instructorRepository;
+    private final AdventureService adventureService;
 
     @Transactional
     @Override
@@ -65,10 +69,16 @@ public class InstructorServiceImpl implements InstructorService {
                 InstructorAvailability parted = new InstructorAvailability(periodToDelete.getEndDate(), a.getEndDate());
                 a.setEndDate(periodToDelete.getStartDate());
                 availabilities.add(availabilityService.save(parted));
-            } availabilities.add(a);
+            }
+            availabilities.add(a);
         }
         instructor.setAvailability(new HashSet<>(availabilities));
         instructorRepository.save(instructor);
+    }
+
+    @Override
+    public void makeReservation(Long adventureId, Reservation reservation) {
+        Adventure adventure = adventureService.getById(adventureId);
     }
 
     private List<InstructorAvailability> checkForOverlapping(InstructorAvailability availability, List<InstructorAvailability> availabilities) {
@@ -79,9 +89,8 @@ public class InstructorServiceImpl implements InstructorService {
                 Date newStartDate = a.getStartDate();
                 Date newEndDate = a.getEndDate();
                 a = calculateNew(newStartDate, newEndDate, availability);
-            }
-            else if (availability.getStartDate().before(a.getStartDate()) &&
-                    availability.getEndDate().after(a.getEndDate())){
+            } else if (availability.getStartDate().before(a.getStartDate()) &&
+                    availability.getEndDate().after(a.getEndDate())) {
                 a.setStartDate(availability.getStartDate());
                 a.setEndDate(availability.getEndDate());
             }
@@ -92,7 +101,7 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     private InstructorAvailability calculateNew(Date newStartDate, Date newEndDate, InstructorAvailability availability) {
-        if ( newStartDate.before(availability.getStartDate())) {
+        if (newStartDate.before(availability.getStartDate())) {
             availability.setStartDate(newStartDate);
         }
         if (newEndDate.after(availability.getEndDate())) {

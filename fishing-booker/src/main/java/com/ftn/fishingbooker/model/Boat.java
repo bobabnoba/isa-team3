@@ -40,7 +40,7 @@ public class Boat {
 
     private float maxSpeed;
 
-    private int capacity;
+    private Integer guestLimit;
 
     private double pricePerDay = 0.0;
 
@@ -59,7 +59,7 @@ public class Boat {
     private Set<Image> images;
 
     @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    private Set<Reservation> availableReservations;
+    private Set<Reservation> reservations;
 
     @OneToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Utility> utilities;
@@ -78,5 +78,8 @@ public class Boat {
     @ManyToOne
     @JoinColumn(name = "boat_owner_id")
     private BoatOwner boatOwner;
+
+    @OneToMany(targetEntity = BoatAvailability.class, mappedBy = "boat", fetch = FetchType.EAGER)
+    private Set<BoatAvailability> availableTimePeriods;
 
 }

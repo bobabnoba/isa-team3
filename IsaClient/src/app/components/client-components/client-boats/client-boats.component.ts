@@ -12,6 +12,7 @@ import { SearchService } from 'src/app/services/search-service/search.service';
 export class ClientBoatsComponent implements OnInit {
   currentItems!: IProfileView[];
   filteredItems!: IProfileView[];
+  boat:string= "boat"
   constructor(private _service: RentalService,private searchService: SearchService) {
     this._service.getAllBoats().subscribe(
       res => {

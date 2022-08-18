@@ -4,11 +4,15 @@ import com.ftn.fishingbooker.dto.FilterDto;
 import com.ftn.fishingbooker.dto.RentalDto;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.VacationHomeDto;
+import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.mapper.RentalMapper;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.mapper.VacationHomeMapper;
+import com.ftn.fishingbooker.model.Client;
+import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.VacationHome;
 import com.ftn.fishingbooker.service.ClientService;
+import com.ftn.fishingbooker.service.EmailService;
 import com.ftn.fishingbooker.service.HomeService;
 import com.ftn.fishingbooker.service.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +29,7 @@ public class HomeController {
     private final HomeService vacationHomeService;
     private final ClientService clientService;
     private final ReservationService reservationService;
+    private final EmailService emailService;
 
     @GetMapping("/{id}")
     public VacationHomeDto GetVacationHome(@PathVariable("id") Long id) {
@@ -40,9 +45,9 @@ public class HomeController {
         return RentalMapper.mapVacationHomeToRental(homes);
     }
 
-    @PostMapping("/search/{clientId}")
-    public ResponseEntity<Collection<RentalDto>> FilterAll(@PathVariable Long clientId, @RequestBody FilterDto filter) {
-        if (clientService.hasOverlappingReservation(clientId, filter.getStartDate(), filter.getEndDate())) {
+    @PostMapping("/search")
+    public ResponseEntity<Collection<RentalDto>> FilterAll(@RequestBody FilterDto filter) {
+        if (clientService.hasOverlappingReservation(filter.getEmail(), filter.getStartDate(), filter.getEndDate())) {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
         Collection<VacationHome> vacationHomes = vacationHomeService.filterAll(filter);
@@ -55,6 +60,19 @@ public class HomeController {
 
         return ReservationMapper.map(reservationService.getReservationForVacationHome(homeId));
     }
+
+    @PostMapping("/rent/{homeId}/{userEmail}")
+    public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long homeId, @RequestBody ReservationDto reservationDto) {
+        Client client = clientService.getClientByEmail(userEmail);
+
+        reservationDto.setType(ReservationType.VACATION_HOME);
+        Reservation reservation = reservationService.makeReservation(client, reservationDto);
+        vacationHomeService.makeReservation(homeId, reservation);
+
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+    }
+
 
 }
 
