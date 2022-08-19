@@ -6,6 +6,7 @@ import com.ftn.fishingbooker.model.VacationHome;
 import com.ftn.fishingbooker.model.VacationHomeAvailability;
 import com.ftn.fishingbooker.repository.HomeRepository;
 import com.ftn.fishingbooker.service.DateService;
+import com.ftn.fishingbooker.service.HomeOwnerService;
 import com.ftn.fishingbooker.service.HomeService;
 import com.ftn.fishingbooker.service.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class HomeServiceImpl implements HomeService {
     private final HomeRepository vacationHomeRepository;
     private final ReservationService reservationService;
     private final DateService dateService;
+    private final HomeOwnerService homeOwnerService;
 
     @Override
     public Collection<VacationHome> getAll() {
@@ -72,6 +74,7 @@ public class HomeServiceImpl implements HomeService {
         VacationHome home = vacationHomeRepository.getById(homeId);
         home.getReservations().add(reservation);
         vacationHomeRepository.save(home);
+        homeOwnerService.updatePoints(home.getHomeOwner(), reservation.getPrice());
     }
 
 

@@ -25,4 +25,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "select * from users u where u.deleted = false and u.role_id = 5", nativeQuery = true)
     Collection<Instructor> getAllActiveInstructors();
+
+    Collection<User> findAllByDeleted(boolean deleted);
 }

@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ftn.fishingbooker.enumeration.BoatOwnerType;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,7 @@ public class BoatOwner extends User {
 
     @OneToMany(mappedBy = "boatOwner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
+    @JsonIgnore
     private Set<Boat> boats;
 
     @OneToMany(mappedBy = "boatOwner", fetch = FetchType.LAZY)

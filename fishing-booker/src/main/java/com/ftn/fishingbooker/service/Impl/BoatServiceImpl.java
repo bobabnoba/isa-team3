@@ -6,6 +6,7 @@ import com.ftn.fishingbooker.model.BoatAvailability;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.VacationHome;
 import com.ftn.fishingbooker.repository.BoatRepository;
+import com.ftn.fishingbooker.service.BoatOwnerService;
 import com.ftn.fishingbooker.service.BoatService;
 import com.ftn.fishingbooker.service.DateService;
 import com.ftn.fishingbooker.service.ReservationService;
@@ -25,6 +26,7 @@ public class BoatServiceImpl implements BoatService {
     private final BoatRepository boatRepository;
     private final DateService dateService;
     private final ReservationService reservationService;
+    private final BoatOwnerService boatOwnerService;
 
     @Override
     public Collection<Boat> getAll() {
@@ -59,6 +61,7 @@ public class BoatServiceImpl implements BoatService {
         Boat boat = boatRepository.getById(boatId);
         boat.getReservations().add(reservation);
         boatRepository.save(boat);
+        boatOwnerService.updatePoints(boat.getBoatOwner(), reservation.getPrice());
     }
 
     private boolean dateOverlapsWithReservation(Collection<Reservation> reservations, Date startDate, Date endDate) {

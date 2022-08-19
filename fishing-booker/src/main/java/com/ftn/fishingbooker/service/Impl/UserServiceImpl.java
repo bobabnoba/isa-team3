@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
+import java.util.Collection;
 
 @Service
 @Transactional
@@ -119,6 +120,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User save(User user) {
         return userRepository.save(user);
+    }
+
+    @Override
+    public Collection<User> getAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public Collection<User> saveAll(Collection<User> users) {
+        return userRepository.saveAll(users);
     }
 
 

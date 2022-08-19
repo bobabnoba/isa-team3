@@ -1,6 +1,6 @@
 package com.ftn.fishingbooker.model;
 
-import com.ftn.fishingbooker.enumeration.ClientType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,12 +14,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class Client extends User {
 
-    private float points;
-
-    @Enumerated(EnumType.STRING)
-    private ClientType type;
-
     @OneToMany(targetEntity = Reservation.class, mappedBy = "client", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JsonIgnore
     private Set<Reservation> reservationsMade;
 
 

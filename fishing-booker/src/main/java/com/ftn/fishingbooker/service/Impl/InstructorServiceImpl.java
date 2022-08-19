@@ -5,10 +5,7 @@ import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.InstructorRepository;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
-import com.ftn.fishingbooker.service.AdventureService;
-import com.ftn.fishingbooker.service.InstructorAvailabilityService;
-import com.ftn.fishingbooker.service.InstructorService;
-import com.ftn.fishingbooker.service.UserService;
+import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +22,7 @@ public class InstructorServiceImpl implements InstructorService {
     private final InstructorAvailabilityService availabilityService;
     private final InstructorRepository instructorRepository;
     private final AdventureService adventureService;
+    private final UserRankService userRankService;
 
     @Transactional
     @Override
@@ -79,6 +77,19 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public void makeReservation(Long adventureId, Reservation reservation) {
         Adventure adventure = adventureService.getById(adventureId);
+    }
+
+    @Override
+    public void updatePoints(Instructor instructor, double reservationPrice) {
+
+        instructor.setPoints(instructor.getPoints() + reservationPrice * instructor.getRank().getReservationPercentage() / 100);
+
+        userRankService.getLoyaltyProgram().forEach(rank -> {
+            if (rank.getName().contains("ADVERTISER") && rank.getMinPoints() < instructor.getPoints()){
+                instructor.setRank(rank);
+            }
+        });
+        instructorRepository.save(instructor);
     }
 
     private List<InstructorAvailability> checkForOverlapping(InstructorAvailability availability, List<InstructorAvailability> availabilities) {

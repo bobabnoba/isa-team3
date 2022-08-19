@@ -6,8 +6,8 @@ import { AdminDashboardComponent } from './components/admin-components/admin-das
 import { AdminDeleteRequestsComponent } from './components/admin-components/admin-delete-requests/admin-delete-requests.component';
 import { AdminProfileComponent } from './components/admin-components/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin-components/admin-registration-requests/admin-registration-requests.component';
+import { AdminUsersComponent } from './components/admin-components/admin-users/admin-users.component';
 import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
-import { AdventurePreviewComponent } from './components/adventure-components/adventure-preview/adventure-preview.component';
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
 import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
 import { BoatReservationsComponent } from './components/client-components/boat-reservations/boat-reservations.component';
@@ -107,6 +107,10 @@ const routes: Routes = [
   {
     path: 'admin/account-deletion-requests',
     component: AdminDeleteRequestsComponent
+  },
+  {
+    path : 'admin/users',
+    component: AdminUsersComponent
   },
   {
     path: 'adventure',

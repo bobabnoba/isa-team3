@@ -83,6 +83,8 @@ import { AdventureSearchPipe } from './pipes/adventure-search/adventure-search.p
 import { ClientSearchCardReservationComponent } from './components/client-components/client-search-card-reservation/client-search-card-reservation.component';
 import { BrowseCardReservationComponent } from './components/client-components/browse-card-reservation/browse-card-reservation.component';
 import { ClientTopBarComponent } from './components/client-components/client-top-bar/client-top-bar.component';
+import { AdminUsersComponent } from './components/admin-components/admin-users/admin-users.component';
+import { LoyaltyProgramComponent } from './components/admin-components/loyalty-program/loyalty-program.component';
 
 @NgModule({
   declarations: [
@@ -142,6 +144,8 @@ import { ClientTopBarComponent } from './components/client-components/client-top
     ClientSearchCardReservationComponent,
     BrowseCardReservationComponent,
     ClientTopBarComponent,
+    AdminUsersComponent,
+    LoyaltyProgramComponent,
   ],
   imports: [
     BrowserModule,

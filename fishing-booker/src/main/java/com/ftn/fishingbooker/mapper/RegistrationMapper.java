@@ -3,7 +3,6 @@ package com.ftn.fishingbooker.mapper;
 import com.ftn.fishingbooker.dto.OwnerRegisterDto;
 import com.ftn.fishingbooker.dto.RegisterDto;
 import com.ftn.fishingbooker.dto.RegistrationResponseDto;
-import com.ftn.fishingbooker.enumeration.ClientType;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,6 @@ public class RegistrationMapper {
         client.setActivated(false);
         client.setBlocked(false);
         client.setPoints(0);
-        client.setType(ClientType.SILVER);
         UserRole role = roleService.findByName("ROLE_CLIENT");
         client.setRole(role);
 

@@ -13,4 +13,6 @@ public interface ClientService {
     boolean hasOverlappingReservation(String email, Date startDate, Date endDate);
 
     Client getClientByEmail(String userEmail);
+
+    void updatePoints(Client client, double reservationPrice);
 }

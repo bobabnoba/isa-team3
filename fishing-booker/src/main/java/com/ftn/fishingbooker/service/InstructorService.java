@@ -22,5 +22,6 @@ public interface InstructorService {
 
     void makeReservation(Long adventureId, Reservation reservation);
 
+    void updatePoints(Instructor instructor, double reservationPrice);
 
 }
