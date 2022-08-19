@@ -1,0 +1,22 @@
+.outline-silver {
+    outline: 3px solid silver;
+}
+
+.outline-gold {
+    outline: 3px solid gold;
+}
+
+.lbl {
+    width: 60%;
+    text-align: end;
+    margin-top: auto;
+    padding: 0 5px 6px 0;
+}
+
+.border-right {
+    border-right: 1px solid rgb(177, 175, 175);
+}
+
+.padd {
+    padding-left: 30px;
+}

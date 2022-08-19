@@ -184,3 +184,12 @@ insert into rule(id, name)
 
            insert into adventure_code_of_conduct(adventure_id, code_of_conduct_id)
             values (111, 100);
+
+-- rank
+INSERT INTO user_rank(id, name, min_points, reservation_percentage, percentage)
+    VALUES (1, 'REGULAR_CLIENT', 0, 80, 0),
+            (2, 'SILVER_CLIENT', 4000, 80, 4),
+            (3, 'GOLD_CLIENT', 8000, 80, 7),
+            (4, 'REGULAR_ADVERTISER', 0, 90, 8),
+            (5, 'SILVER_ADVERTISER', 4500, 90, 6),
+            (6, 'GOLD_ADVERTISER', 8000, 90, 4);
