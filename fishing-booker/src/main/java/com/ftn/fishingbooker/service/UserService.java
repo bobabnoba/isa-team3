@@ -6,6 +6,7 @@ import com.ftn.fishingbooker.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.mail.MessagingException;
+import java.util.Collection;
 import java.util.List;
 
 public interface UserService {
@@ -30,4 +31,7 @@ public interface UserService {
 
     User save(User user);
 
+    Collection<User> getAll();
+
+    Collection<User> saveAll(Collection<User> users);
 }

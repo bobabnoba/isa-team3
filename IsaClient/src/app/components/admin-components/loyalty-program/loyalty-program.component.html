@@ -14,13 +14,13 @@
                         <div class="col-md-6 pr-1">
                             <div class="form-group">
                               <label>Min points</label>
-                              <input [disabled]="false" type="text" class="form-control outline-silver" name="minPointsSC"  placeholder="Min points" [(ngModel)]="silverClient.minPoints">
+                              <input [disabled]="false" type="number" min="0" class="form-control outline-silver" name="minPointsSC"  placeholder="Min points" [(ngModel)]="silverClient.minPoints">
                             </div>
                           </div>
                           <div class="col-md-6 pl-1">
                             <div class="form-group">
                               <label>Discount percentage</label>
-                              <input [disabled]="false" type="text" class="form-control outline-silver" name="percentageSC" placeholder="Discount %" [(ngModel)]="silverClient.percentage">
+                              <input [disabled]="false" type="number"  min="0" max="100" class="form-control outline-silver" name="percentageSC" placeholder="Discount %" [(ngModel)]="silverClient.percentage">
                             </div>
                         </div>
                     </div>
@@ -29,12 +29,12 @@
                             <div class="row p-2">
                                 <div class="col-md-6 pr-1">
                                     <div class="form-group">
-                                      <input [disabled]="false" type="text" class="form-control outline-gold" name="minPointsGC"  placeholder="Min points" [(ngModel)]="goldClient.minPoints">
+                                      <input [disabled]="false" type="number" min="0"  class="form-control outline-gold" name="minPointsGC"  placeholder="Min points" [(ngModel)]="goldClient.minPoints">
                                     </div>
                                   </div>
                                   <div class="col-md-6 pl-1">
                                     <div class="form-group">
-                                      <input [disabled]="false" type="text" class="form-control outline-gold" name="percentageGC" placeholder="Discount %" [(ngModel)]="goldClient.percentage">
+                                      <input [disabled]="false" type="number" min="silverClient.percentage" class="form-control outline-gold" name="percentageGC" placeholder="Discount %" [(ngModel)]="goldClient.percentage">
                                     </div>
                                 </div>
                             </div>
@@ -49,13 +49,13 @@
                         <div class="col-md-6 pr-1">
                             <div class="form-group">
                               <label>Min points</label>
-                              <input [disabled]="false" type="text" class="form-control outline-silver" name="minPointsSA"  placeholder="Min points" [(ngModel)]="silverAdvertiser.minPoints">
+                              <input [disabled]="false" type="number" min="0"  class="form-control outline-silver" name="minPointsSA"  placeholder="Min points" [(ngModel)]="silverAdvertiser.minPoints">
                             </div>
                           </div>
                           <div class="col-md-6 pl-1">
                             <div class="form-group">
                               <label>Earnings percentage</label>
-                              <input [disabled]="false" type="text" class="form-control outline-silver" name="percentageSA" placeholder="Earnings %" [(ngModel)]="silverAdvertiser.percentage">
+                              <input [disabled]="false" type="number" min="0" max="100" class="form-control outline-silver" name="percentageSA" placeholder="Earnings %" [(ngModel)]="silverAdvertiser.percentage">
                             </div>
                         </div>
                     </div>
@@ -64,12 +64,12 @@
                             <div class="row p-2">
                                 <div class="col-md-6 pr-1">
                                     <div class="form-group">
-                                      <input [disabled]="false" type="text" class="form-control outline-gold" name="minPointsGA"  placeholder="Min points" [(ngModel)]="goldAdvertiser.minPoints">
+                                      <input [disabled]="false" type="number"  min="0"   class="form-control outline-gold" name="minPointsGA"  placeholder="Min points" [(ngModel)]="goldAdvertiser.minPoints">
                                     </div>
                                   </div>
                                   <div class="col-md-6 pl-1">
                                     <div class="form-group">
-                                      <input [disabled]="false" type="text" class="form-control outline-gold" name="percentageGA" placeholder="Earnings %" [(ngModel)]="goldAdvertiser.percentage">
+                                      <input [disabled]="false" type="number" [min]="silverAdvertiser.percentage" max="100" class="form-control outline-gold" name="percentageGA" placeholder="Earnings %" [(ngModel)]="goldAdvertiser.percentage">
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
             <div class="col-sm-4">
                 <div class="form-group d-flex flex-row f-1">
                     <label class="lbl">Website cut(%): </label>
-                    <input style="width: 40%;" [disabled]="false" type="text" class="form-control col-sm-6" name="websiteCut" placeholder="Website cut %" [(ngModel)]="regularAdvertiser.percentage">
+                    <input style="width: 40%;" [disabled]="false" type="number" [min]="100-silverAdvertiser.percentage" max="100" type="text" class="form-control col-sm-6" name="websiteCut" placeholder="Website cut %" [(ngModel)]="websiteCut">
                 </div>
             </div>
         </div>

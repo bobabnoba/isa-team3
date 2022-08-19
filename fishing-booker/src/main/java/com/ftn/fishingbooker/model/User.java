@@ -53,7 +53,7 @@ public class User implements UserDetails {
 
     private boolean isBlocked;
 
-    private boolean isDeleted;
+    private boolean deleted = false;
 
     private boolean testRebaseAgain;
 

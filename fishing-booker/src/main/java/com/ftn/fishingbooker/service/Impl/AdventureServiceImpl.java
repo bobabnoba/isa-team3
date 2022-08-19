@@ -117,7 +117,7 @@ public class AdventureServiceImpl implements AdventureService {
     public void deleteById(Long id) {
         Adventure found = adventureRepository.findById(id)
                 .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
-        found.setIsDeleted(true);
+        found.setDeleted(true);
         adventureRepository.save(found);
     }
 

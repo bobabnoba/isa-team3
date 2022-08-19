@@ -16,6 +16,7 @@ export class LoyaltyProgramComponent implements OnInit {
   goldAdvertiser : UserRank = {} as UserRank;
   regularAdvertiser : UserRank = {} as UserRank;
   regularClient : UserRank = {} as UserRank;
+  websiteCut : number = 0;
   program : UserRank[] = [];
 
 
@@ -39,6 +40,7 @@ export class LoyaltyProgramComponent implements OnInit {
         }
         if(this.isRegularAdvertiser(el)){
           this.regularAdvertiser = el;
+          this.websiteCut = 100 - this.regularAdvertiser.percentage;
         }
         if(this.isRegularClient(el)){
           this.regularClient = el;
@@ -48,6 +50,13 @@ export class LoyaltyProgramComponent implements OnInit {
   }
 
   save() {
+    if(this.websiteCut < (100 - this.silverAdvertiser.percentage) || this.websiteCut < (100 - this.goldAdvertiser.percentage)) {
+      this._snackBar.open('Website cut cannot be less than ' + (100 - this.silverAdvertiser.percentage) + '%!', '', {
+        duration: 2000, panelClass: ['snack-bar']
+      });
+      return;
+    }
+    this.regularAdvertiser.percentage = 100 - this.websiteCut;
     let retVal = [] as UserRank[];
     retVal.push(this.regularClient);
     retVal.push(this.silverClient);
@@ -57,7 +66,7 @@ export class LoyaltyProgramComponent implements OnInit {
     retVal.push(this.regularAdvertiser);
     this._userService.saveLoyaltyProgram(retVal).subscribe(
       () => {
-        this._snackBar.open('Successfully saved', '',        
+        this._snackBar.open('Loyalty program successfully updated!', '',        
          { duration: 3000, panelClass: ['snack-bar'] });
         });
   }
