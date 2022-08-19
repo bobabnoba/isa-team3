@@ -53,6 +53,7 @@ public class BoatController {
         reservationDto.setType(ReservationType.BOAT);
         Reservation reservation = reservationService.makeReservation(client, reservationDto);
         boatService.makeReservation(boatId, reservation);
+        clientService.updatePoints(client, reservation.getPrice());
 
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }

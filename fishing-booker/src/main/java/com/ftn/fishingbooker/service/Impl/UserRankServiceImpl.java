@@ -2,6 +2,7 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.model.UserRank;
+import com.ftn.fishingbooker.model.UserRole;
 import com.ftn.fishingbooker.repository.UserRankRepository;
 import com.ftn.fishingbooker.service.UserRankService;
 import com.ftn.fishingbooker.service.UserService;
@@ -28,17 +29,22 @@ public class UserRankServiceImpl implements UserRankService {
 
     @Override
     public Collection<UserRank> saveLoyaltyProgram(Collection<UserRank> ranks) {
-
         Collection<User> users = new ArrayList<>();
 
-        userService.getAll().forEach( u-> {
-            ranks.forEach(r -> {
-                if (u.getRank().getName() == r.getName() && u.getPoints() >= r.getMinPoints()){
+        for (User u : userService.getAll()) {
+            String userType;
+            if( u.getRole().getName().equalsIgnoreCase("ROLE_CLIENT")) {
+                userType = "CLIENT";
+            } else {
+                userType = "ADVERTISER";
+            }
+            for(var r : ranks) {
+                if (r.getName().contains(userType) && r.getMinPoints() < u.getPoints() ){
                     u.setRank(r);
                 }
-            });
+            }
             users.add(u);
-        });
+        }
         userService.saveAll(users);
 
         return userRankRepository.saveAll(ranks);

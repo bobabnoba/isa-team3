@@ -124,7 +124,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Collection<User> getAll() {
-        return userRepository.findAllByDeleted(false);
+        return userRepository.findAll();
     }
 
     @Override

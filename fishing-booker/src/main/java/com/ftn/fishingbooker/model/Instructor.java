@@ -19,6 +19,7 @@ public class Instructor extends User {
     private double rating = 0.0;
 
     @OneToMany(targetEntity = InstructorAvailability.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "instructor")
+    @ToString.Exclude
     private Set<InstructorAvailability> availability;
 
 

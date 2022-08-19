@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Rank, UserRank } from 'src/app/interfaces/user-rank';
+import {  UserRank } from 'src/app/interfaces/user-rank';
 import { UserService } from 'src/app/services/user-service/user.service';
 
 @Component({
@@ -20,7 +21,7 @@ export class LoyaltyProgramComponent implements OnInit {
   program : UserRank[] = [];
 
 
-  constructor(private _userService : UserService, private _snackBar : MatSnackBar) { }
+  constructor(private _userService : UserService, private _snackBar : MatSnackBar, private _dialogRef : MatDialogRef<LoyaltyProgramComponent>) { }
 
   ngOnInit(): void {
     this._userService.getLoyaltyProgram().subscribe(data => {
@@ -68,6 +69,7 @@ export class LoyaltyProgramComponent implements OnInit {
       () => {
         this._snackBar.open('Loyalty program successfully updated!', '',        
          { duration: 3000, panelClass: ['snack-bar'] });
+        this._dialogRef.close();
         });
   }
 

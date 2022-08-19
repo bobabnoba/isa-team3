@@ -3,11 +3,9 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.User;
+import com.ftn.fishingbooker.model.UserRank;
 import com.ftn.fishingbooker.repository.UserRepository;
-import com.ftn.fishingbooker.service.ClientService;
-import com.ftn.fishingbooker.service.DateService;
-import com.ftn.fishingbooker.service.RegistrationService;
-import com.ftn.fishingbooker.service.ReservationService;
+import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +26,8 @@ public class ClientServiceImpl implements ClientService {
     private ReservationService reservationService;
     @Autowired
     private DateService dateService;
+    @Autowired
+    private UserRankService userRankService;
 
     @Override
     public void registerClient(Client client) throws MessagingException {
@@ -59,5 +59,16 @@ public class ClientServiceImpl implements ClientService {
         return (Client) userRepository.findByEmail(userEmail);
     }
 
+    @Override
+    public void updatePoints(Client client, double reservationPrice) {
+        client.setPoints(client.getPoints() + reservationPrice * client.getRank().getReservationPercentage() / 100);
+
+        userRankService.getLoyaltyProgram().forEach(rank -> {
+            if (rank.getName().contains("CLIENT") && rank.getMinPoints() < client.getPoints()){
+                client.setRank(rank);
+            }
+        });
+        userRepository.save(client);
+    }
 }
 
