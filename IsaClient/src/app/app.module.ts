@@ -85,6 +85,14 @@ import { BrowseCardReservationComponent } from './components/client-components/b
 import { ClientTopBarComponent } from './components/client-components/client-top-bar/client-top-bar.component';
 import { AdminUsersComponent } from './components/admin-components/admin-users/admin-users.component';
 import { LoyaltyProgramComponent } from './components/admin-components/loyalty-program/loyalty-program.component';
+import { BoatOwnerSidebarComponent } from './components/boat-owner-components/boat-owner-sidebar/boat-owner-sidebar.component';
+import { BoatOwnerDashboardComponent } from './components/boat-owner-components/boat-owner-dashboard/boat-owner-dashboard.component';
+import { BoatOwnerProfileComponent } from './components/boat-owner-components/boat-owner-profile/boat-owner-profile.component';
+import { HomeOwnerSidebarComponent } from './components/home-owner-components/home-owner-sidebar/home-owner-sidebar.component';
+import { HomeOwnerProfileComponent } from './components/home-owner-components/home-owner-profile/home-owner-profile.component';
+import { HomeOwnerDashboardComponent } from './components/home-owner-components/home-owner-dashboard/home-owner-dashboard.component';
+import { HomeOwnerAccDeletionExplanationComponent } from './components/home-owner-components/home-owner-acc-deletion-explanation/home-owner-acc-deletion-explanation.component';
+import { BoatOwnerAccDeletionExplanationComponent } from './components/boat-owner-components/boat-owner-acc-deletion-explanation/boat-owner-acc-deletion-explanation.component';
 
 @NgModule({
   declarations: [
@@ -146,6 +154,14 @@ import { LoyaltyProgramComponent } from './components/admin-components/loyalty-p
     ClientTopBarComponent,
     AdminUsersComponent,
     LoyaltyProgramComponent,
+    BoatOwnerSidebarComponent,
+    BoatOwnerDashboardComponent,
+    BoatOwnerProfileComponent,
+    HomeOwnerSidebarComponent,
+    HomeOwnerProfileComponent,
+    HomeOwnerDashboardComponent,
+    HomeOwnerAccDeletionExplanationComponent,
+    BoatOwnerAccDeletionExplanationComponent,
   ],
   imports: [
     BrowserModule,

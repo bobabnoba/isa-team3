@@ -9,6 +9,8 @@ import { AdminRegistrationRequestsComponent } from './components/admin-component
 import { AdminUsersComponent } from './components/admin-components/admin-users/admin-users.component';
 import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
+import { BoatOwnerDashboardComponent } from './components/boat-owner-components/boat-owner-dashboard/boat-owner-dashboard.component';
+import { BoatOwnerProfileComponent } from './components/boat-owner-components/boat-owner-profile/boat-owner-profile.component';
 import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
 import { BoatReservationsComponent } from './components/client-components/boat-reservations/boat-reservations.component';
 import { ClientBoatsComponent } from './components/client-components/client-boats/client-boats.component';
@@ -19,6 +21,8 @@ import { ClientProfileComponent } from './components/client-components/client-pr
 import { ClientReservationsHistoryComponent } from './components/client-components/client-reservations-history/client-reservations-history.component';
 import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
 import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
+import { HomeOwnerDashboardComponent } from './components/home-owner-components/home-owner-dashboard/home-owner-dashboard.component';
+import { HomeOwnerProfileComponent } from './components/home-owner-components/home-owner-profile/home-owner-profile.component';
 import { InstructorDashboardComponent } from './components/instructor-components/instructor-dashboard/instructor-dashboard.component';
 import { InstructorProfileComponent } from './components/instructor-components/instructor-profile/instructor-profile.component';
 import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
@@ -135,6 +139,22 @@ const routes: Routes = [
   {
     path : 'instructor/adventure/:id',
     component : InstructorServiceComponent
+  },
+  {
+    path: 'home-owner/dashboard',
+    component: HomeOwnerDashboardComponent,
+  },
+  {
+    path: 'home-owner/profile',
+    component: HomeOwnerProfileComponent
+  },
+  {
+    path: 'boat-owner/dashboard',
+    component: BoatOwnerDashboardComponent,
+  },
+  {
+    path: 'boat-owner/profile',
+    component: BoatOwnerProfileComponent
   },
 
 ];

@@ -58,7 +58,7 @@ insert into boat_owner(
 
 	values (110,'Whatever Bio', 'BoatOwnerEmail', 'BoatOwnerFirstName'
 	, 'true' , 'false', 'false', 'BoatOwnerLastName', null , /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.',
-	 '0943242342','false', 41, 3,'BOAT_OWNER', 0, 4);
+	 '0943242342','false', 42, 3,'BOAT_OWNER', 0, 4);
 
 -- Instructor
 insert into instructor(	id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, rating, points, rank_id)
