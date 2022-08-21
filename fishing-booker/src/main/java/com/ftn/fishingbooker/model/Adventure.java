@@ -52,7 +52,7 @@ public class Adventure {
     @ManyToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Utility> utilities;
 
-    private Boolean isDeleted = false;
+    private Boolean deleted = false;
 
     private double durationInHours;
 

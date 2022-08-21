@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,12 @@ public class UserController {
     private final UserService userService;
     private final ClientService clientService;
     private final ReservationService reservationService;
+
+    @GetMapping
+    public ResponseEntity<Collection<User>> getAllUsers(){
+        Collection<User> found = userService.getAll();
+        return ResponseEntity.ok(found);
+    }
 
     @GetMapping("{email}")
     public ResponseEntity<UserDto> getUserInfo(@PathVariable String email) {

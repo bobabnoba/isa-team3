@@ -132,9 +132,9 @@ public class AdventureController {
         Adventure adventure = adventureService.getById(adventureId);
         reservationDto.setType(ReservationType.ADVENTURE);
         Reservation reservation = reservationService.makeReservation(client, reservationDto, adventure.getDurationInHours());
-
         adventureService.makeReservation(adventureId,reservation);
-
+        clientService.updatePoints(client, reservation.getPrice());
+        instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 }

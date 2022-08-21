@@ -68,7 +68,7 @@ public class HomeController {
         reservationDto.setType(ReservationType.VACATION_HOME);
         Reservation reservation = reservationService.makeReservation(client, reservationDto);
         vacationHomeService.makeReservation(homeId, reservation);
-
+        clientService.updatePoints(client, reservation.getPrice());
         emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }

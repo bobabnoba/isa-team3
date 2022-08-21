@@ -7,4 +7,6 @@ import com.ftn.fishingbooker.model.User;
 public interface HomeOwnerService {
 
     User register(HomeOwner homeOwner, String motivation) throws ResourceConflictException;
+
+    void updatePoints(HomeOwner owner, double reservationPrice);
 }

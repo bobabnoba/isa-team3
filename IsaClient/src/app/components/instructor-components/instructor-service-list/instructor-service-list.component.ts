@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject } from 'rxjs';
 import { Adventure } from 'src/app/interfaces/adventure';
 import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
@@ -55,7 +56,10 @@ export class InstructorServiceListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res =>
       {
         console.log(res.data.adventure)
-          this.adventures.push(res.data.adventure) 
+          this.adventures = [
+            ...this.adventures,
+            res.data.adventure,
+          ];
       })
   }
 
@@ -67,7 +71,10 @@ export class InstructorServiceListComponent implements OnInit {
       }
     });
           if (index !== -1){
-            this.adventures[index] = adventure
+            this.adventures[index] = adventure;
+            this.adventures = [
+              ...this.adventures
+            ];
           }
   }
 
@@ -80,6 +87,9 @@ export class InstructorServiceListComponent implements OnInit {
     });
     if (index !== -1){
       this.adventures.splice(index, 1)
+      this.adventures = [
+        ...this.adventures
+      ];
     }
   }
 

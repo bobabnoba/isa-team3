@@ -15,6 +15,8 @@ public interface ClientService {
 
     Client getClientByEmail(String userEmail);
 
+    void updatePoints(Client client, double reservationPrice);
+
     List<Reservation> getUpcomingReservations(String email);
 
     boolean cancelUpcomingReservation(Long reservationId, String userEmail);
