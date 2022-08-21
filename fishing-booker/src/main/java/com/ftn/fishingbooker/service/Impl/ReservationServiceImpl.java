@@ -4,7 +4,9 @@ import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.UtilityDto;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
-import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.model.Client;
+import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.model.Utility;
 import com.ftn.fishingbooker.repository.ReservationRepository;
 import com.ftn.fishingbooker.service.DateService;
 import com.ftn.fishingbooker.service.ReservationService;
@@ -14,7 +16,10 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -55,6 +60,7 @@ public class ReservationServiceImpl implements ReservationService {
             utilitySet.add(utility);
         }
         newReservation.setUtilities(utilitySet);
+
         return reservationRepository.save(newReservation);
     }
 
@@ -102,7 +108,7 @@ public class ReservationServiceImpl implements ReservationService {
         try {
             var diff = 1.0;
             if (reservationDto.getType() != ReservationType.ADVENTURE) {
-                 diff = dateService.DifferenceBetweenDates(reservationDto.getStartDate(), reservationDto.getEndDate());
+                diff = dateService.DifferenceBetweenDates(reservationDto.getStartDate(), reservationDto.getEndDate());
             }
             double utilities = 0.0;
             for (UtilityDto utility : reservationDto.getUtilities()

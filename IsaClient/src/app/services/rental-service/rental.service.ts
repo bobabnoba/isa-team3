@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { IFilter } from 'src/app/interfaces/filter';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { INewReservation } from 'src/app/interfaces/new-reservation';
+import { IFilter } from 'src/app/interfaces/filter';
+import { IReservation } from 'src/app/interfaces/new-reservation';
 import { StorageService } from '../storage-service/storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentalService {
+
 
   userEmail: string = ""
 
@@ -17,19 +18,19 @@ export class RentalService {
     this.userEmail = this._storageService.getEmail();
   }
 
-  rentVacationHome(newReservation: INewReservation, homeId: number): Observable<any> {
+  rentVacationHome(newReservation: IReservation, homeId: number): Observable<any> {
     return this._http.post('http://localhost:8090/vacation/homes/rent/' + homeId + "/" + this.userEmail,
       newReservation);
   }
-  rentBoat(newReservation: INewReservation, boatId: number) : Observable <any>{
+  rentBoat(newReservation: IReservation, boatId: number): Observable<any> {
     return this._http.post('http://localhost:8090/boats/rent/' + boatId + "/" + this.userEmail,
-    newReservation);
+      newReservation);
   }
-  rentAdventure(newReservation: INewReservation, adventureId: number) {
+  rentAdventure(newReservation: IReservation, adventureId: number) {
     return this._http.post('http://localhost:8090/adventures/rent/' + adventureId + "/" + this.userEmail,
-    newReservation);
+      newReservation);
   }
- 
+
   getAllRentals() {
     return this._http.get<any>(
       'http://localhost:8090/rentals'

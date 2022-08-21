@@ -41,8 +41,4 @@ public class Reservation {
     @JoinColumn(name = "client_id")
     private Client client;
 
-//    @ManyToOne(targetEntity = Client.class, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "adventure_id")
-//    private Adventure adventure;
-
 }

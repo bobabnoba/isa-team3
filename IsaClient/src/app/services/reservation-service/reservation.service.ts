@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoggedUser } from 'src/app/interfaces/logged-user';
 import { StorageService } from '../storage-service/storage.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class ReservationService {
+
 
   userEmail: string = ""
   constructor(
@@ -16,12 +17,16 @@ export class UserService {
     this.userEmail = this._storageService.getEmail();
   }
 
-  getUserInfo(email: string): Observable<any> {
-    return this._http.get('http://localhost:8090/users/' + email);
+  getUpcomingReservations() {
+    return this._http.get<any>(
+      'http://localhost:8090/users/reservations/upcoming/' + this.userEmail
+    );
   }
-
-  updateUser(user: LoggedUser): Observable<LoggedUser> {
-    return this._http.put<LoggedUser>('http://localhost:8090/users/update', user);
+  cancelUpcomingReservation(id: any): Observable<any> {
+    return this._http.post<any>(
+      'http://localhost:8090/users/cancel/reservation/' + this.userEmail,
+      id
+    );
   }
 
 }

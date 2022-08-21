@@ -1,6 +1,6 @@
 import { IUtility } from "./vacation-house-profile"
 
-export interface INewReservation {
+export interface IReservation {
     id: number,
     startDate:Date,
     endDate: Date,

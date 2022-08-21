@@ -2,10 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IAddress } from 'src/app/interfaces/address';
-import { INewReservation } from 'src/app/interfaces/new-reservation';
+import { IReservation } from 'src/app/interfaces/new-reservation';
 import { IUtility } from 'src/app/interfaces/vacation-house-profile';
 import { RentalService } from 'src/app/services/rental-service/rental.service';
-import { StorageService } from 'src/app/services/storage-service/storage.service';
 
 @Component({
   selector: 'app-browse-card-reservation',
@@ -35,7 +34,7 @@ export class BrowseCardReservationComponent implements OnInit {
   @Input() type: string = 'entity';
   @Input() startDate: Date = new Date();
   @Input() endDate: Date = new Date();
-  newReservation: INewReservation = {} as INewReservation;
+  newReservation: IReservation = {} as IReservation;
 
   constructor(
     private _rentalService: RentalService,
@@ -101,7 +100,7 @@ export class BrowseCardReservationComponent implements OnInit {
     this.newReservation.startDate = this.startDate;
     this.newReservation.guests = this.guests;
     this.newReservation.price = this.price;
-  
+
     console.log(this.newReservation);
     const makeReservation = {
       next: (res: any) => {

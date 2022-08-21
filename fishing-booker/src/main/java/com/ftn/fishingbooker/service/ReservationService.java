@@ -24,4 +24,5 @@ public interface ReservationService {
     Reservation makeReservation(Client client, ReservationDto reservationDto, double durationInHours);
 
     Collection<Reservation> getReservationsForAdventures(Collection<Long> id);
+
 }

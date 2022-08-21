@@ -1,10 +1,11 @@
 package com.ftn.fishingbooker.service;
 
 import com.ftn.fishingbooker.model.Client;
+import com.ftn.fishingbooker.model.Reservation;
 
 import javax.mail.MessagingException;
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 public interface ClientService {
 
@@ -13,4 +14,8 @@ public interface ClientService {
     boolean hasOverlappingReservation(String email, Date startDate, Date endDate);
 
     Client getClientByEmail(String userEmail);
+
+    List<Reservation> getUpcomingReservations(String email);
+
+    boolean cancelUpcomingReservation(Long reservationId, String userEmail);
 }

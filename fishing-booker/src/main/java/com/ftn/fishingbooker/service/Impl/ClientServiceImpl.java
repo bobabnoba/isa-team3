@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
@@ -57,6 +59,45 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client getClientByEmail(String userEmail) {
         return (Client) userRepository.findByEmail(userEmail);
+    }
+
+    @Override
+    public List<Reservation> getUpcomingReservations(String email) {
+        List<Reservation> reservationList = new ArrayList<>();
+        Client client = getClientByEmail(email);
+        Date now = new Date();
+        Collection<Reservation> reservations = client.getReservationsMade();
+
+        for (Reservation reservation : reservations) {
+            if (reservation.getIsCancelled() == false && (reservation.getStartDate().after(now)) || reservation.getStartDate().equals(now)) {
+                reservationList.add(reservation);
+            }
+        }
+        return reservationList;
+    }
+
+    @Override
+    public boolean cancelUpcomingReservation(Long reservationId, String userEmail) {
+        Client client = (Client) userRepository.findByEmail(userEmail);
+        for (Reservation reservation : client.getReservationsMade()) {
+            if (reservation.getId() == reservationId) {
+                if (canBeCanceled(reservation)) {
+                    reservation.setIsCancelled(true);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean canBeCanceled(Reservation reservation) {
+        Date inThreeDays = dateService.addDaysToJavaUtilDate(new Date(), 3);
+
+        if (inThreeDays.before(reservation.getStartDate())) {
+            return true;
+        }
+        return false;
     }
 
 }

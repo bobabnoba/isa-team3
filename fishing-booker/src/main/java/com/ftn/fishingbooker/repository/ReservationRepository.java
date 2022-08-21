@@ -30,4 +30,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "    join reservation as r on r.id = vhr.reservations_id\n" +
             "    where vhr.adventure_id in ?1 and r.is_cancelled = false ", nativeQuery = true)
     Collection<Reservation> getReservationsForAdventures(Collection<Long> ids);
+
+
 }

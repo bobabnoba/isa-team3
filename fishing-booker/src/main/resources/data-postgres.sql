@@ -95,7 +95,10 @@ insert into utility(
     (106, 'Catch cleaning & filleting', 20),
 	(107, 'Snorkeling Equipment', 5),
 	(108, 'Fighting Chair', 10),
-	(109, 'Drinks', 10);
+	(109, 'Bla', 10),
+	(110, 'Raw Fish', 20),
+	(111, 'Treasure Hunting', 5),
+	(112, 'Gospodje Pufna Fish', 10);
 insert into vacation_home_utilities(
 	vacation_home_id, utilities_id)
 	values (100, 100),
@@ -108,7 +111,10 @@ insert into vacation_home_utilities(
 	(100, 108),
 	(100, 109),
 	(102, 102),
-	(103, 103);
+	(103, 103),
+	(100, 110),
+	(100, 111),
+	(100, 112);
 
 insert into boat_utilities(
 	boat_id, utilities_id)

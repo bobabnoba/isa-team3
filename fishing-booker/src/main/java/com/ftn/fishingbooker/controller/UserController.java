@@ -4,14 +4,18 @@ import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.UserDto;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.mapper.UserMapper;
+import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.User;
+import com.ftn.fishingbooker.service.ClientService;
 import com.ftn.fishingbooker.service.ReservationService;
 import com.ftn.fishingbooker.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -19,6 +23,7 @@ import java.util.Collection;
 public class UserController {
 
     private final UserService userService;
+    private final ClientService clientService;
     private final ReservationService reservationService;
 
     @GetMapping("{email}")
@@ -34,9 +39,21 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.mapToDto(user));
     }
 
-    @GetMapping("/reservations/{userId}")
-    public Collection<ReservationDto> GetClientReservations(@PathVariable Long userId) {
-
-        return ReservationMapper.map(reservationService.getReservationsForClient(userId));
+    @GetMapping("/reservations/upcoming/{userEmail}")
+    public Collection<ReservationDto> GetClientReservations(@PathVariable String userEmail) {
+        List<Reservation> reservationList = clientService.getUpcomingReservations(userEmail);
+        return ReservationMapper.map(reservationList);
     }
+
+    @PostMapping("/cancel/reservation/{userEmail}")
+    public ResponseEntity<Collection<ReservationDto>> CancelUpcomingReservation(@PathVariable String userEmail, @RequestBody Long reservationId) {
+        ResponseEntity response;
+        boolean isCanceled = clientService.cancelUpcomingReservation(reservationId, userEmail);
+        List<Reservation> reservationList = clientService.getUpcomingReservations(userEmail);
+        if (isCanceled == true) {
+            return ResponseEntity.ok(ReservationMapper.map(reservationList));
+        }
+        return new ResponseEntity<>(ReservationMapper.map(reservationList), HttpStatus.CONFLICT);
+    }
+
 }
