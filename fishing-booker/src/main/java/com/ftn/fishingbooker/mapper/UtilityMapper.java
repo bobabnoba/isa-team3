@@ -33,6 +33,7 @@ public class UtilityMapper {
 
     public static UtilityDto map(Utility utility) {
         UtilityDto utilityDto = new UtilityDto();
+        utilityDto.setId(utility.getId());
         utilityDto.setName(utility.getName());
         utilityDto.setPrice(utility.getPrice());
 

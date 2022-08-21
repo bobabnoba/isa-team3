@@ -26,6 +26,7 @@ public class AdventureMapper {
         dto.setUtilities(UtilityMapper.map(adventure.getUtilities()));
         dto.setDurationInHours(adventure.getDurationInHours());
         dto.setSpecialOffers(SpecialOfferMapper.toDtoSet(adventure.getSpecialOffers()));
+        dto.setDurationInHours(adventure.getDurationInHours());
         return dto;
     }
 
@@ -40,7 +41,7 @@ public class AdventureMapper {
         adventure.setFishingEquipment(FishingEquipmentMapper.toEntity(dto.getFishingEquipment()));
         adventure.setUtilities(UtilityMapper.toEntitySet(dto.getUtilities()));
         adventure.setAddress(AddressMapper.toEntity(dto.getAddress()));
-
+        adventure.setDurationInHours(dto.getDurationInHours());
         return adventure;
     }
 

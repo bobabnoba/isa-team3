@@ -4,11 +4,16 @@ public class AdventureInfo {
     public String title;
     public String description;
     public double price;
+    public double durationInHours;
     public int maxParticipants;
     public int cancelingPercentage;
 
     public String getTitle() {
         return title;
+    }
+
+    public double getDurationInHours() {
+        return durationInHours;
     }
 
     public String getDescription() {

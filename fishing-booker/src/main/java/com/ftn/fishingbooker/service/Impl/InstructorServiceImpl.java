@@ -23,6 +23,7 @@ public class InstructorServiceImpl implements InstructorService {
     private final InstructorRepository instructorRepository;
     private final AdventureService adventureService;
     private final UserRankService userRankService;
+    private final ReservationService reservationService;
 
     @Transactional
     @Override
@@ -90,6 +91,14 @@ public class InstructorServiceImpl implements InstructorService {
             }
         });
         instructorRepository.save(instructor);
+    }
+
+    @Override
+    @Transactional
+    public Collection<Reservation> getReservationsForInstructor(String email) {
+        Instructor instructor = instructorRepository.findByEmail(email);
+        Collection<Long> adventureIds = adventureService.getAllIdsByInstructorId(instructor.getId());
+        return reservationService.getReservationsForAdventures(adventureIds);
     }
 
     private List<InstructorAvailability> checkForOverlapping(InstructorAvailability availability, List<InstructorAvailability> availabilities) {

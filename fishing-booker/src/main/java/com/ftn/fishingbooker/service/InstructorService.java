@@ -24,4 +24,6 @@ public interface InstructorService {
 
     void updatePoints(Instructor instructor, double reservationPrice);
 
+    Collection<Reservation> getReservationsForInstructor(String email);
+
 }
