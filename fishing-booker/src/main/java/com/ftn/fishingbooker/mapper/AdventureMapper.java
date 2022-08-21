@@ -27,6 +27,7 @@ public class AdventureMapper {
         dto.setDurationInHours(adventure.getDurationInHours());
         dto.setSpecialOffers(SpecialOfferMapper.toDtoSet(adventure.getSpecialOffers()));
         dto.setDurationInHours(adventure.getDurationInHours());
+        dto.setRating(adventure.getRating());
         return dto;
     }
 
