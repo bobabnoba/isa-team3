@@ -85,6 +85,13 @@ import { BrowseCardReservationComponent } from './components/client-components/b
 import { ClientTopBarComponent } from './components/client-components/client-top-bar/client-top-bar.component';
 import { AdminUsersComponent } from './components/admin-components/admin-users/admin-users.component';
 import { LoyaltyProgramComponent } from './components/admin-components/loyalty-program/loyalty-program.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { MatIconModule } from '@angular/material/icon';
+import { ReservationPreviewComponent } from './components/instructor-components/reservation-preview/reservation-preview.component';
+import { ReservationsUpcomingComponent } from './components/instructor-components/reservations-upcoming/reservations-upcoming.component';
+import { ReservationsHistoryComponent } from './components/instructor-components/reservations-history/reservations-history.component';
+import { ClientInfoComponent } from './components/instructor-components/client-info/client-info.component';
+import { ReservationInfoComponent } from './components/instructor-components/reservation-info/reservation-info.component';
 
 @NgModule({
   declarations: [
@@ -146,6 +153,12 @@ import { LoyaltyProgramComponent } from './components/admin-components/loyalty-p
     ClientTopBarComponent,
     AdminUsersComponent,
     LoyaltyProgramComponent,
+    StarRatingComponent,
+    ReservationPreviewComponent,
+    ReservationsUpcomingComponent,
+    ReservationsHistoryComponent,
+    ClientInfoComponent,
+    ReservationInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -179,6 +192,7 @@ import { LoyaltyProgramComponent } from './components/admin-components/loyalty-p
     }),
     MatStepperModule,
     MatFileUploadModule,
+    MatIconModule
   ],
   exports: [
     BrowserModule,

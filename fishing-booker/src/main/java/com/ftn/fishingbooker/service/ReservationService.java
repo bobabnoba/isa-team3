@@ -3,6 +3,7 @@ package com.ftn.fishingbooker.service;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.projection.ReservationInfo;
 
 import java.util.Collection;
 import java.util.Date;
@@ -25,4 +26,9 @@ public interface ReservationService {
 
     Collection<Reservation> getReservationsForAdventures(Collection<Long> id);
 
+    Collection<ReservationInfo> getUpcomingReservationsForInstructor(Long id);
+
+    Collection<Reservation> getPastReservationsForInstructor(Long id);
+
+    Reservation getReservationById(Long id);
 }

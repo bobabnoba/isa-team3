@@ -1,12 +1,12 @@
 package com.ftn.fishingbooker.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.util.*;
 
 @Entity
@@ -15,6 +15,7 @@ import java.util.*;
 @ToString
 @RequiredArgsConstructor
 public class Adventure {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -56,8 +57,7 @@ public class Adventure {
 
     private double durationInHours;
 
-    //mappedBy = "adventure"
-    @OneToMany(targetEntity = Reservation.class,cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Reservation.class,cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     private Set<Reservation> reservations;
 
     @Transient

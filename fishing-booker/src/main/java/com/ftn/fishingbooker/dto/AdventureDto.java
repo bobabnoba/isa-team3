@@ -25,4 +25,5 @@ public class AdventureDto {
     public Collection<UtilityDto> utilities;
     public double durationInHours;
     public Collection<SpecialOfferDto> specialOffers;
+    public double rating;
 }

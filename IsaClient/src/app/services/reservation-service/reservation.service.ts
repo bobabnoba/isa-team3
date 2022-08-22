@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Reservation } from 'src/app/interfaces/reservation';
+import { environment } from 'src/environments/environment';
 import { StorageService } from '../storage-service/storage.service';
+
 
 
 @Injectable({
@@ -9,12 +12,15 @@ import { StorageService } from '../storage-service/storage.service';
 })
 export class ReservationService {
 
-
+  baseURL = environment.apiURL;
   userEmail: string = ""
   constructor(
     private _http: HttpClient,
     private _storageService: StorageService) {
     this.userEmail = this._storageService.getEmail();
+  }
+  getReservation(id : number ) : Observable<Reservation> {
+    return this._http.get<Reservation>(`${this.baseURL}/reservations/${id}`);
   }
 
   getUpcomingReservations() {

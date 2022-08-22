@@ -6,6 +6,12 @@
 
 .title {
     letter-spacing: 1px;
+    width: max-content;
+}
+
+.people-w {
+    text-align: left;
+    padding: 10px 0px 0px 20px;
 }
 
 .people {
