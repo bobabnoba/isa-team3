@@ -33,7 +33,7 @@ export class InstructorService {
     return this._http.get<AdventureReservation[]>(`${this.baseURL}/instructor/reservations/upcoming?instructorEmail=${instructorEmail}`);
   }
 
-  getInstructorReservationsHistory(instructorEmail : string) : Observable<Reservation[]>{
-    return this._http.get<Reservation[]>(`${this.baseURL}/instructor/reservations/past?instructorEmail=${instructorEmail}`);
+  getInstructorReservationsHistory(instructorEmail : string) : Observable<AdventureReservation[]>{
+    return this._http.get<AdventureReservation[]>(`${this.baseURL}/instructor/reservations/past?instructorEmail=${instructorEmail}`);
   }
 }
