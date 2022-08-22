@@ -33,8 +33,9 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
+    @Transactional
     public VacationHome getById(Long id) {
-        return vacationHomeRepository.getById(id);
+        return vacationHomeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Home with id " + id + " does not exist"));
     }
 
     @Override

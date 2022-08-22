@@ -39,7 +39,8 @@ export class BrowseCardReservationComponent implements OnInit {
 
   constructor(
     private _rentalService: RentalService,
-    private _snackBar: MatSnackBar) {
+    private _snackBar: MatSnackBar,
+    private _storageService : StorageService) {
     this.newReservation.utilities = [];
 
   }
@@ -129,7 +130,7 @@ export class BrowseCardReservationComponent implements OnInit {
       this._rentalService.rentBoat(this.newReservation, this.id).subscribe(makeReservation);
     }
     if (this.type == 'adventure') {
-      this._rentalService.rentAdventure(this.newReservation, this.id).subscribe(makeReservation);
+      this._rentalService.rentAdventure(this.newReservation, this.id, this._storageService.getEmail()).subscribe(makeReservation);
 
     }
   }

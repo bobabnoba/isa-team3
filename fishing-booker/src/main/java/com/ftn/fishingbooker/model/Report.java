@@ -11,38 +11,19 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@Table(name = "reports")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Report {
+
     @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "reportSeqGen", sequenceName = "reportGen", initialValue = 1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reportSeqGen")
     private Long id;
 
-    private int reservationId;
+    private String comment;
 
-    private String text;
+    private boolean clientShowedUp;
 
-    @ManyToOne
-    @JoinColumn(name = "boat_owner_id")
-    private BoatOwner boatOwner;
+    private boolean adminReviewed;
 
-    @ManyToOne
-    @JoinColumn(name = "home_owner_id")
-    private HomeOwner homeOwner;
-
-    @ManyToOne
-    @JoinColumn(name = "instructor_id")
-    private Instructor instructor;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Report report = (Report) o;
-        return id != null && Objects.equals(id, report.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

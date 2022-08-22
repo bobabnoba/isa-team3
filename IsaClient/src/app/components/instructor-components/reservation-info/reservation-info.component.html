@@ -22,7 +22,7 @@
             <hr>
             <div class="d-flex flex-dir">
                 <div class="d-flex flex-row"><span class="client">Client:</span> <h4>{{ reservation.client.firstName }} {{ reservation.client.lastName }}</h4> </div>
-                <p>Contact info: {{ reservation.client.phone }}, {{ reservation.client.email }} </p>
+                <div class="d-flex flex-row pt-2"><span class="contact">Contact info:</span> <h6>{{ reservation.client.phone }}, {{ reservation.client.email }}</h6> </div>
             </div>
         </div>
     </div>
