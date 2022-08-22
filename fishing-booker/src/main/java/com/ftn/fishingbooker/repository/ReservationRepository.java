@@ -1,8 +1,10 @@
 package com.ftn.fishingbooker.repository;
 
 import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.projection.ReservationInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
 
@@ -30,4 +32,17 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "    join reservation as r on r.id = vhr.reservations_id\n" +
             "    where vhr.adventure_id in ?1 and r.is_cancelled = false ", nativeQuery = true)
     Collection<Reservation> getReservationsForAdventures(Collection<Long> ids);
+
+        @Query(value = "select r.id as id, r.startDate as startDate, a.durationInHours as durationInHours, " +
+                " r.price as price, r.guests as guests" +
+            "    from Adventure a " +
+            "    join a.reservations r " +
+            "    where a.instructor.id = :id and r.isCancelled = false and r.startDate > current_date")
+    Collection<ReservationInfo> getUpcomingReservationsForInstructor(@Param("id") Long id);
+
+    @Query(value = "select r " +
+            "    from Adventure a " +
+            "    join a.reservations r " +
+            "    where a.instructor.id = :id and r.isCancelled = false and r.startDate <= current_date")
+    Collection<Reservation> getPastReservationsForInstructor(@Param("id") Long id);
 }

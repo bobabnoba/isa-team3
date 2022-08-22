@@ -23,6 +23,8 @@ import { InstructorDashboardComponent } from './components/instructor-components
 import { InstructorProfileComponent } from './components/instructor-components/instructor-profile/instructor-profile.component';
 import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
 import { InstructorServiceComponent } from './components/instructor-components/instructor-service/instructor-service.component';
+import { ReservationsHistoryComponent } from './components/instructor-components/reservations-history/reservations-history.component';
+import { ReservationsUpcomingComponent } from './components/instructor-components/reservations-upcoming/reservations-upcoming.component';
 import { LoginComponent } from './components/login/login.component';
 import { OwnerRegisterComponent } from './components/register-components/owner-register/owner-register.component';
 import { RegisterComponent } from './components/register-components/register/register.component';
@@ -136,6 +138,14 @@ const routes: Routes = [
     path : 'instructor/adventure/:id',
     component : InstructorServiceComponent
   },
+  {
+    path : 'instructor/reservations/upcoming',
+    component : ReservationsUpcomingComponent
+  },
+  {
+    path : 'instructor/reservations/history',
+    component : ReservationsHistoryComponent
+  }
 
 ];
 @NgModule({

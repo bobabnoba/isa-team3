@@ -1,6 +1,7 @@
 package com.ftn.fishingbooker.service;
 
 import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.projection.ReservationInfo;
 
 import javax.mail.MessagingException;
 import java.util.Collection;
@@ -24,6 +25,7 @@ public interface InstructorService {
 
     void updatePoints(Instructor instructor, double reservationPrice);
 
-    Collection<Reservation> getReservationsForInstructor(String email);
+    Collection<ReservationInfo> getUpcomingReservationsForInstructor(String email);
 
+    Collection<Reservation> getPastReservationsForInstructor(String email);
 }

@@ -3,6 +3,7 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.projection.ReservationInfo;
 import com.ftn.fishingbooker.repository.InstructorRepository;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.service.*;
@@ -95,10 +96,16 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     @Transactional
-    public Collection<Reservation> getReservationsForInstructor(String email) {
+    public Collection<ReservationInfo> getUpcomingReservationsForInstructor(String email) {
         Instructor instructor = instructorRepository.findByEmail(email);
-        Collection<Long> adventureIds = adventureService.getAllIdsByInstructorId(instructor.getId());
-        return reservationService.getReservationsForAdventures(adventureIds);
+        //Collection<Long> adventureIds = adventureService.getAllIdsByInstructorId(instructor.getId());
+        return reservationService.getUpcomingReservationsForInstructor(instructor.getId());
+    }
+
+    @Override
+    public Collection<Reservation> getPastReservationsForInstructor(String email) {
+        Instructor instructor = instructorRepository.findByEmail(email);
+        return reservationService.getPastReservationsForInstructor(instructor.getId());
     }
 
     private List<InstructorAvailability> checkForOverlapping(InstructorAvailability availability, List<InstructorAvailability> availabilities) {

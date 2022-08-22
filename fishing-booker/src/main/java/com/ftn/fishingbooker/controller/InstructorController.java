@@ -6,6 +6,7 @@ import com.ftn.fishingbooker.model.Instructor;
 import com.ftn.fishingbooker.model.InstructorAvailability;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.User;
+import com.ftn.fishingbooker.projection.ReservationInfo;
 import com.ftn.fishingbooker.service.InstructorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -61,9 +62,18 @@ public class InstructorController {
         return ok(instructorService.checkAvailability(from, to, instructorEmail));
     }
 
-    @GetMapping("/reservations")
-    ResponseEntity<Collection<ReservationDto>> getReservations(@RequestParam String instructorEmail) {
-        Collection<Reservation> reservations = instructorService.getReservationsForInstructor(instructorEmail);
+    @GetMapping("/reservations/upcoming")
+    ResponseEntity<Collection<ReservationInfo>> getUpcomingReservations(@RequestParam String instructorEmail) {
+        Collection<ReservationInfo> reservations = instructorService.getUpcomingReservationsForInstructor(instructorEmail);
+//        Collection<ReservationDto> dtos = reservations.stream()
+//                .map(ReservationMapper::map)
+//                .collect(Collectors.toList());
+        return ok(reservations);
+    }
+
+    @GetMapping("/reservations/past")
+    ResponseEntity<Collection<ReservationDto>> getReservationsHistory(@RequestParam String instructorEmail) {
+        Collection<Reservation> reservations = instructorService.getPastReservationsForInstructor(instructorEmail);
         Collection<ReservationDto> dtos = reservations.stream()
                 .map(ReservationMapper::map)
                 .collect(Collectors.toList());
