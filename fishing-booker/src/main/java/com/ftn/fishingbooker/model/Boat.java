@@ -2,7 +2,6 @@ package com.ftn.fishingbooker.model;
 
 import com.ftn.fishingbooker.enumeration.BoatType;
 import com.ftn.fishingbooker.enumeration.CancelingCondition;
-import com.ftn.fishingbooker.enumeration.FishingEquipment;
 import com.ftn.fishingbooker.enumeration.NavigationType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -19,7 +18,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class Boat {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -49,7 +47,8 @@ public class Boat {
     private String information;
 
     @Column
-    @ElementCollection(targetClass = Integer.class)
+//    @Enumerated(EnumType.STRING)
+    @ElementCollection
     private Set<NavigationType> navigationType;
 
     @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
@@ -61,19 +60,18 @@ public class Boat {
     @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private Set<Reservation> reservations;
 
-    @OneToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Utility> utilities;
 
-    @Column
-    @ElementCollection(targetClass = String.class, fetch = FetchType.LAZY)
-    private Set<String> codeOfConduct;
+    @ManyToMany(targetEntity = Rule.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Rule> codeOfConduct;
 
-    @Column
-    @ElementCollection(targetClass = Integer.class)
+    @ManyToMany(targetEntity = FishingEquipment.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<FishingEquipment> fishingEquipment;
 
-    @Enumerated(EnumType.STRING)
-    private CancelingCondition reservationCanceling;
+//    @Enumerated(EnumType.STRING)
+//    private CancelingCondition reservationCanceling;
+    private double cancelingPercentage;
 
     @ManyToOne
     @JoinColumn(name = "boat_owner_id")
@@ -82,4 +80,14 @@ public class Boat {
     @OneToMany(targetEntity = BoatAvailability.class, mappedBy = "boat", fetch = FetchType.EAGER)
     private Set<BoatAvailability> availableTimePeriods;
 
+    @Transient
+    public List<String> getImagePaths() {
+        List<String> retVal = new ArrayList<>();
+        if (this.getImages() != null) {
+            this.getImages().forEach(
+                    image ->
+                            retVal.add("/images/boats/" + this.getId() + "/" + image.getUrl()));
+        }
+        return retVal;
+    }
 }

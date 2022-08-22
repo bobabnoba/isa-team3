@@ -93,6 +93,11 @@ import { HomeOwnerProfileComponent } from './components/home-owner-components/ho
 import { HomeOwnerDashboardComponent } from './components/home-owner-components/home-owner-dashboard/home-owner-dashboard.component';
 import { HomeOwnerAccDeletionExplanationComponent } from './components/home-owner-components/home-owner-acc-deletion-explanation/home-owner-acc-deletion-explanation.component';
 import { BoatOwnerAccDeletionExplanationComponent } from './components/boat-owner-components/boat-owner-acc-deletion-explanation/boat-owner-acc-deletion-explanation.component';
+import { BoatOwnerBoatsComponent } from './components/boat-owner-components/boat-owner-boats/boat-owner-boats.component';
+import { BoatPreviewComponent } from './components/boat-components/boat-preview/boat-preview.component';
+import { BoatOwnerTopbarComponent } from './components/boat-owner-components/boat-owner-topbar/boat-owner-topbar.component';
+import { AddBoatComponent } from './components/boat-components/add-boat/add-boat.component';
+import { BoatSearchPipe } from './pipes/boat-search/boat-search.pipe';
 
 @NgModule({
   declarations: [
@@ -162,6 +167,11 @@ import { BoatOwnerAccDeletionExplanationComponent } from './components/boat-owne
     HomeOwnerDashboardComponent,
     HomeOwnerAccDeletionExplanationComponent,
     BoatOwnerAccDeletionExplanationComponent,
+    BoatOwnerBoatsComponent,
+    BoatPreviewComponent,
+    BoatOwnerTopbarComponent,
+    AddBoatComponent,
+    BoatSearchPipe,
   ],
   imports: [
     BrowserModule,

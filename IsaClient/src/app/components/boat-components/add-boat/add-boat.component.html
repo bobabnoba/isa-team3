@@ -1,0 +1,199 @@
+<!-- <div style="width: 1100px; height: 100vh;"> -->
+    <div>
+        <mat-stepper [linear]="true" #stepper>
+          <mat-step [stepControl]="info">
+            <form [formGroup]="info">
+              <ng-template matStepLabel>Info</ng-template>
+              <mat-form-field appearance="standard">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Boat name" formControlName="name" required>
+              </mat-form-field>
+              <mat-form-field appearance="standard">
+                  <mat-label>Type</mat-label>
+                  <mat-select [formControl]="ty" [(ngModel)]="typeSelect" >
+                    <mat-option value="SMOL" >SMOL</mat-option>
+                    <mat-option value="MEDIUM" >MEDIUM</mat-option>
+                    <mat-option value="BIG" >BIG</mat-option>
+                  </mat-select>              
+                </mat-form-field>
+              <div class="d-flex">
+                <mat-form-field appearance="standard">
+                    <mat-label>Length</mat-label>
+                    <input matInput  type="number" min="0" placeholder="" formControlName="length" required>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                    <mat-label>Engine power</mat-label>
+                    <input matInput  type="number" min="0" placeholder="" formControlName="enginePower" required>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                    <mat-label>Engine count</mat-label>
+                    <input matInput  type="number" min="0" placeholder="" formControlName="engineCount" required>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                    <mat-label>Max speed</mat-label>
+                    <input matInput  type="number" min="0" placeholder="" formControlName="maxSpeed" required>
+                </mat-form-field>
+                  
+              </div>
+              <div class="d-flex">
+                <mat-form-field appearance="standard">
+                  <mat-label>Price per day</mat-label>
+                  <input matInput  type="number" min="0" placeholder="" formControlName="pricePerDay" required>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                <mat-label>Description</mat-label>
+                  <input matInput  placeholder="" formControlName="description" required>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                <mat-label>Information</mat-label>
+                  <input matInput   formControlName="information" required>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                  <mat-label>Guest limit</mat-label>
+                  <input matInput type="number" min="0" formControlName="guestsLimit" required>
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                  <mat-label>Cancellation percentage</mat-label>
+                  <input matInput type="number" min="0" max="100" placeholder="" formControlName="cancelingPercentage" required>
+                  <span matSuffix>%</span>
+                </mat-form-field>
+              </div>
+  
+              <div>
+                <button *ngIf="!editMode" mat-button matStepperNext>Next</button>
+                <button *ngIf="editMode" mat-button (click)="updateInfo()">Update</button>
+  
+              </div>
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="additional" label="Additional info" optional>
+            <form [formGroup]="additional">
+                  <mat-form-field appearance="standard">
+                      <mat-label>Fishing equipment</mat-label>
+                      <mat-select [formControl]="equi" [compareWith]="compareObjects" [(ngModel)]="equipment" multiple>
+                        <mat-select-trigger>
+                          {{equipment?.[0]?.name || ''}}
+                          <span *ngIf="(equipment?.length || 0) > 1" class="example-additional-selection">
+                            (+{{(equipment?.length || 0) - 1}} {{equipment?.length === 2 ? 'other' : 'others'}})
+                          </span>
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let e of existingEquipment" [value]="e">{{e.name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+  
+                    <mat-form-field appearance="standard">
+                      <mat-label>Additional services</mat-label>
+                      <mat-select [formControl]="servi" [compareWith]="compareObjects" [(ngModel)]="services" multiple>
+                        <mat-select-trigger>
+                          {{services?.[0]?.name || ''}}
+                          <span *ngIf="(services?.length || 0) > 1" class="example-additional-selection">
+                            (+{{(services?.length || 0) - 1}} {{services?.length === 2 ? 'other' : 'others'}})
+                          </span>
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let e of existingServices" [value]="e">{{e.name}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="standard">
+                        <mat-label>Navigation </mat-label>
+                        <mat-select [formControl]="nav" [compareWith]="compareObjects" [(ngModel)]="navigation" multiple>
+                            <mat-option value="GPS" >GPS</mat-option>  
+                            <mat-option value="RADAR">RADAR</mat-option>
+                            <mat-option value="VHF_RADIO">VHF_RADIO</mat-option>
+                            <mat-option value="FISHFINDER">FISHFINDER</mat-option></mat-select>
+                    </mat-form-field>
+              <div>
+                <button *ngIf="!editMode" mat-button matStepperNext>Next</button>
+                <button *ngIf="editMode" mat-button (click)="updateAdditional()">Update</button>
+              </div>
+            </form>
+          </mat-step>
+  
+          <mat-step [stepControl]="location" label="Location" optional>
+            <form [formGroup]="location">
+                  <mat-form-field appearance="standard">
+                      <mat-label>Street</mat-label>
+                      <input matInput formControlName="street" placeholder="">
+                  </mat-form-field>
+                  <div class="d-flex">
+                      <mat-form-field appearance="standard">
+                          <mat-label>City</mat-label>
+                          <input matInput formControlName="city" placeholder="">
+                      </mat-form-field>
+                      <mat-form-field appearance="standard">
+                          <mat-label>Country</mat-label>
+                          <input matInput formControlName="country" placeholder="">
+                      </mat-form-field>
+                      <mat-form-field appearance="standard">
+                        <mat-label>Zip code</mat-label>
+                        <input matInput formControlName="zipCode" placeholder="">
+                    </mat-form-field>
+                  </div>
+                  <button *ngIf="!editMode" mat-button matStepperNext>Next</button>
+                  <button *ngIf="editMode" mat-button (click)="updateAddress()">Update</button>
+            </form>
+          </mat-step>
+         
+          <mat-step [stepControl]="additional" label="Code of conduct" optional>
+            <form [formGroup]="conduct">
+              <mat-form-field appearance="standard">
+                <mat-label>Code of conduct</mat-label>
+                <mat-select [formControl]="rul" [compareWith]="compareObjects" [(ngModel)]="rules" multiple>
+                  <mat-select-trigger>
+                    {{rules?.[0]?.name || ''}}
+                    <span *ngIf="(rules?.length || 0) > 1" class="example-additional-selection">
+                      (+{{(rules?.length || 0) - 1}} {{rules?.length === 2 ? 'other' : 'others'}})
+                    </span>
+                  </mat-select-trigger>
+                  <mat-option *ngFor="let e of existingRules" [value]="e">{{e.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button *ngIf="!editMode" mat-button matStepperNext>Next</button>
+              <button *ngIf="editMode" mat-button (click)="updateRules()">Update</button>
+            </form>
+          </mat-step>
+          
+          
+          <mat-step *ngIf="!editMode">
+            <ng-template matStepLabel>Save boat</ng-template>
+            <br>
+            <p *ngIf="!showImgUpload">You are done. Confirm to save adventure. Back if you need to correct something. </p>
+            <p *ngIf="showImgUpload">Boat successfuly created! Now you can add photos from previous adventures if you want.</p>
+            <div>
+              <button *ngIf="!showImgUpload" mat-button matStepperPrevious>Back</button>
+              <button *ngIf="!showImgUpload" mat-button (click)="createBoat()">Confirm</button>
+              <button *ngIf="showImgUpload" mat-button (click)="closeDialog()">No, I'm good</button>
+              <button *ngIf="showImgUpload" mat-button matStepperNext>Add photos</button>
+            </div>
+          </mat-step>
+  
+  
+         <template *ngIf="showImgUpload || editMode">
+          <mat-step [stepControl]="images" label="Previous adventures" optional>
+            <form [formGroup]="images">
+  
+                  <br>
+  
+                  <input id="singleFile" type="file" [fileUploadInputFor]= "fileUploadQueue"/>
+            
+                  <br><br>
+  
+                <mat-file-upload-queue #fileUploadQueue
+                    [fileAlias]="'file'"
+                    [httpUrl]="requestUrl"
+                    [httpRequestHeaders]="headers">
+  
+                     <mat-file-upload [file]="file" [id]="i" 
+                       *ngFor="let file of fileUploadQueue.files; let i = index">
+                    </mat-file-upload>
+                </mat-file-upload-queue>
+  
+                <button *ngIf="!editMode" mat-button (click)="formEnd()">Next</button>
+                <button *ngIf="editMode" mat-button (click)="updateImg()">Update</button>
+            </form>
+          </mat-step>
+         </template>
+  
+         
+        </mat-stepper>
+  
+  </div>

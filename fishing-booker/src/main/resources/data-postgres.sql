@@ -76,8 +76,8 @@ values
 
 --Boat
 insert into boat(
-	id, guest_limit, deleted, description, engine_count, engine_power, information, length, max_speed, name, price_per_day,  rating, type, address_id, boat_owner_id)
-	values (100, 4, 'false' ,'DESCRIIIIIIIIIIIIPTION', 2, 30, 'iNFORMATION', 20, 40, 'Titanic',35, 3.2, 'SMOL' , 43, 110);
+	id, guest_limit, deleted, description, engine_count, engine_power, information, length, max_speed, name, price_per_day,  rating, type, address_id, boat_owner_id, canceling_percentage)
+	values (100, 4, 'false' ,'DESCRIIIIIIIIIIIIPTION', 2, 30, 'iNFORMATION', 20, 40, 'Titanic',35, 3, 'SMOL' , 43, 110, 5);
 
 
 -- Adventure
