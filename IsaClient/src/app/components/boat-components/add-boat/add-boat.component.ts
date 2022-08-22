@@ -100,9 +100,7 @@ export class AddBoatComponent implements OnInit {
                   this.requestUrl =  environment.apiURL + '/boats/image-upload/' + this.boatId;
                   this._boatService.getById(this.boatId).subscribe(
                     res => {
-                      console.log(res)
                       this.boat = res;
-                      console.log(this.boat)
                       this.info.setValue({
                         name : this.boat.name,
                         length : res.length,
@@ -131,7 +129,6 @@ export class AddBoatComponent implements OnInit {
                    )
                    
                 }
-                console.log(this.boat)
                }
 
   ngOnInit(): void {
@@ -167,6 +164,7 @@ export class AddBoatComponent implements OnInit {
         this.dataBoat = data;
         this.showImgUpload = true;
         this.requestUrl =  environment.apiURL + '/boats/image-upload/' + data.id;
+        this.boatId = String(data.id);
       }
     );
   }
@@ -278,11 +276,14 @@ export class AddBoatComponent implements OnInit {
 
   formEnd(){
     // snack??
-    this.closeDialog();
+    this._boatService.getById(this.boatId).subscribe(
+      res => {
+        this.dataBoat = res;
+        this.closeDialog();
+      })
   }
 
   closeDialog(){
-    console.log(this.dataBoat)
     this.dialogRef.close({data: {
       editMode : this.editMode,
       boat : this.dataBoat,

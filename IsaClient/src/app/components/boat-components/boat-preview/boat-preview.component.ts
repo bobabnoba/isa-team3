@@ -43,13 +43,11 @@ export class BoatPreviewComponent implements OnInit {
     dialogConfig.id = 'modal-component';
     dialogConfig.width = '1100px';
     dialogConfig.data = myData;
-    console.log(dialogConfig)
     const dialogRef = this._matDialog.open(AddBoatComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(res =>
       {
         if(res.data.editMode){
-          console.log(res.data.boat)
         this.boatEdited.emit(res.data.boat);
         }
         

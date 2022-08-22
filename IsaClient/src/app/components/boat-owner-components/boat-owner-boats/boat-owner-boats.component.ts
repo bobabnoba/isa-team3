@@ -53,7 +53,6 @@ export class BoatOwnerBoatsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res =>
       {
-        console.log(res.data.boat)
           this.boats = [
             ...this.boats,
             res.data.boat,
@@ -64,8 +63,6 @@ export class BoatOwnerBoatsComponent implements OnInit {
   boatEdited(boat : Boat){
     let index = -1;
     this.boats.forEach(element => {
-      console.log(element.id) 
-      console.log(boat.id)
       if(element.id == boat.id){
         index = this.boats.indexOf(element);
       }

@@ -9,9 +9,6 @@ export class BoatSearchPipe implements PipeTransform {
 
   transform(searchList : Array<Boat>, search : string): any {
 
-
-    console.log('transform je, dobio sam ' + search);
-
     searchList.forEach(boat => {
       boat = {} as Boat;
       boat.utilities = [] as Utility[];
