@@ -85,6 +85,19 @@ import { BrowseCardReservationComponent } from './components/client-components/b
 import { ClientTopBarComponent } from './components/client-components/client-top-bar/client-top-bar.component';
 import { AdminUsersComponent } from './components/admin-components/admin-users/admin-users.component';
 import { LoyaltyProgramComponent } from './components/admin-components/loyalty-program/loyalty-program.component';
+import { BoatOwnerSidebarComponent } from './components/boat-owner-components/boat-owner-sidebar/boat-owner-sidebar.component';
+import { BoatOwnerDashboardComponent } from './components/boat-owner-components/boat-owner-dashboard/boat-owner-dashboard.component';
+import { BoatOwnerProfileComponent } from './components/boat-owner-components/boat-owner-profile/boat-owner-profile.component';
+import { HomeOwnerSidebarComponent } from './components/home-owner-components/home-owner-sidebar/home-owner-sidebar.component';
+import { HomeOwnerProfileComponent } from './components/home-owner-components/home-owner-profile/home-owner-profile.component';
+import { HomeOwnerDashboardComponent } from './components/home-owner-components/home-owner-dashboard/home-owner-dashboard.component';
+import { HomeOwnerAccDeletionExplanationComponent } from './components/home-owner-components/home-owner-acc-deletion-explanation/home-owner-acc-deletion-explanation.component';
+import { BoatOwnerAccDeletionExplanationComponent } from './components/boat-owner-components/boat-owner-acc-deletion-explanation/boat-owner-acc-deletion-explanation.component';
+import { BoatOwnerBoatsComponent } from './components/boat-owner-components/boat-owner-boats/boat-owner-boats.component';
+import { BoatPreviewComponent } from './components/boat-components/boat-preview/boat-preview.component';
+import { BoatOwnerTopbarComponent } from './components/boat-owner-components/boat-owner-topbar/boat-owner-topbar.component';
+import { AddBoatComponent } from './components/boat-components/add-boat/add-boat.component';
+import { BoatSearchPipe } from './pipes/boat-search/boat-search.pipe';
 
 @NgModule({
   declarations: [
@@ -146,6 +159,19 @@ import { LoyaltyProgramComponent } from './components/admin-components/loyalty-p
     ClientTopBarComponent,
     AdminUsersComponent,
     LoyaltyProgramComponent,
+    BoatOwnerSidebarComponent,
+    BoatOwnerDashboardComponent,
+    BoatOwnerProfileComponent,
+    HomeOwnerSidebarComponent,
+    HomeOwnerProfileComponent,
+    HomeOwnerDashboardComponent,
+    HomeOwnerAccDeletionExplanationComponent,
+    BoatOwnerAccDeletionExplanationComponent,
+    BoatOwnerBoatsComponent,
+    BoatPreviewComponent,
+    BoatOwnerTopbarComponent,
+    AddBoatComponent,
+    BoatSearchPipe,
   ],
   imports: [
     BrowserModule,

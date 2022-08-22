@@ -145,6 +145,7 @@ export class AddAdventureComponent implements OnInit {
         this.dataAdventure = data;
         this.showImgUpload = true;
         this.requestUrl =  environment.apiURL + '/adventures/image-upload/' + data.id;
+        this.adventureId = String(data.id);
       }
     );
   }
@@ -242,7 +243,11 @@ export class AddAdventureComponent implements OnInit {
 
   formEnd(){
     // snack??
-    this.closeDialog();
+    this._adventureService.getById(this.adventureId).subscribe(
+      res => {
+        this.dataAdventure = res;
+        this.closeDialog();
+      })
   }
 
   closeDialog(){
