@@ -34,9 +34,8 @@ public class VacationHome {
     @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
     private Address address;
 
-    @Column
-    @ElementCollection(targetClass = String.class, fetch = FetchType.LAZY)
-    private Set<String> codeOfConduct;
+    @ManyToMany(targetEntity = Rule.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<Rule> codeOfConduct;
 
     @ManyToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Utility> utilities;
