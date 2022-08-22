@@ -1,0 +1,11 @@
+<div class="container wrapper">
+    <p *ngIf = "boat.utilities.length === 0"> No additional services provided.</p>
+    <div class = "row inner" *ngFor="let service of boat.utilities">
+        <div class="col-md" >
+          {{ service.name }}
+        </div>
+        <div class="col-md price">
+            ${{service.price}}
+        </div>
+    </div>
+</div>

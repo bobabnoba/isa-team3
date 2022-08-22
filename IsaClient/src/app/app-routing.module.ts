@@ -9,6 +9,8 @@ import { AdminRegistrationRequestsComponent } from './components/admin-component
 import { AdminUsersComponent } from './components/admin-components/admin-users/admin-users.component';
 import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
+import { BoatProfileComponent } from './components/boat-components/boat-profile/boat-profile.component';
+import { BoatOwnerBoatProfileComponent } from './components/boat-owner-components/boat-owner-boat-profile/boat-owner-boat-profile.component';
 import { BoatOwnerBoatsComponent } from './components/boat-owner-components/boat-owner-boats/boat-owner-boats.component';
 import { BoatOwnerDashboardComponent } from './components/boat-owner-components/boat-owner-dashboard/boat-owner-dashboard.component';
 import { BoatOwnerProfileComponent } from './components/boat-owner-components/boat-owner-profile/boat-owner-profile.component';
@@ -160,6 +162,10 @@ const routes: Routes = [
   {
     path: 'boat-owner/boats',
     component: BoatOwnerBoatsComponent
+  },
+  {
+    path: 'boat-owner/boat/:id',
+    component: BoatOwnerBoatProfileComponent
   },
 
 ];

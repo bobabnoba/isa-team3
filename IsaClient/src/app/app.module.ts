@@ -98,6 +98,13 @@ import { BoatPreviewComponent } from './components/boat-components/boat-preview/
 import { BoatOwnerTopbarComponent } from './components/boat-owner-components/boat-owner-topbar/boat-owner-topbar.component';
 import { AddBoatComponent } from './components/boat-components/add-boat/add-boat.component';
 import { BoatSearchPipe } from './pipes/boat-search/boat-search.pipe';
+import { BoatProfileComponent } from './components/boat-components/boat-profile/boat-profile.component';
+import { BoatOwnerBoatProfileComponent } from './components/boat-owner-components/boat-owner-boat-profile/boat-owner-boat-profile.component';
+import { BoatInfoComponent } from './components/boat-components/boat-info/boat-info.component';
+import { BoatAdditionalInfoComponent } from './components/boat-components/boat-additional-info/boat-additional-info.component';
+import { BoatLocationComponent } from './components/boat-components/boat-location/boat-location.component';
+import { BoatServicesComponent } from './components/boat-components/boat-services/boat-services.component';
+import { BoatOwnerInfoComponent } from './components/boat-components/boat-owner-info/boat-owner-info.component';
 
 @NgModule({
   declarations: [
@@ -172,6 +179,13 @@ import { BoatSearchPipe } from './pipes/boat-search/boat-search.pipe';
     BoatOwnerTopbarComponent,
     AddBoatComponent,
     BoatSearchPipe,
+    BoatProfileComponent,
+    BoatOwnerBoatProfileComponent,
+    BoatInfoComponent,
+    BoatAdditionalInfoComponent,
+    BoatLocationComponent,
+    BoatServicesComponent,
+    BoatOwnerInfoComponent,
   ],
   imports: [
     BrowserModule,
