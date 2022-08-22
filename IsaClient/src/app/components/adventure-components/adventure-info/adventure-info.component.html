@@ -10,7 +10,7 @@
       </div>
         <div class="col-md">
           <div class="row">
-            <h5 class="people"> {{ adventure.rating === 0 ? 'Not rated yet' : adventure.rating }} <i class="fa-solid fa-star"></i> </h5>
+            <h5 class="people"><app-star-rating [disabled]="true" [rating]="adventure.rating" [color]="starColor" [starCount]="5" ></app-star-rating> </h5>
         </div>
       </div>
     </div>

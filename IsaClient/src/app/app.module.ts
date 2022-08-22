@@ -85,6 +85,8 @@ import { BrowseCardReservationComponent } from './components/client-components/b
 import { ClientTopBarComponent } from './components/client-components/client-top-bar/client-top-bar.component';
 import { AdminUsersComponent } from './components/admin-components/admin-users/admin-users.component';
 import { LoyaltyProgramComponent } from './components/admin-components/loyalty-program/loyalty-program.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -146,6 +148,7 @@ import { LoyaltyProgramComponent } from './components/admin-components/loyalty-p
     ClientTopBarComponent,
     AdminUsersComponent,
     LoyaltyProgramComponent,
+    StarRatingComponent,
   ],
   imports: [
     BrowserModule,
@@ -179,6 +182,7 @@ import { LoyaltyProgramComponent } from './components/admin-components/loyalty-p
     }),
     MatStepperModule,
     MatFileUploadModule,
+    MatIconModule
   ],
   exports: [
     BrowserModule,
