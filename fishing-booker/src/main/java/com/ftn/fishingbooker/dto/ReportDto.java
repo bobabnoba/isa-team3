@@ -8,7 +8,13 @@ public class ReportDto {
     public String comment;
     public boolean clientShowedUp;
     public String ownerEmail;
+    public String clientEmail;
     public ReservationType reportType;
+    public boolean penaltySuggested;
+
+    public void setPenaltySuggested(boolean penaltySuggested) {
+        this.penaltySuggested = penaltySuggested;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -28,5 +34,9 @@ public class ReportDto {
 
     public void setReportType(ReservationType reportType) {
         this.reportType = reportType;
+    }
+
+    public void setClientEmail(String clientEmail) {
+        this.clientEmail = clientEmail;
     }
 }

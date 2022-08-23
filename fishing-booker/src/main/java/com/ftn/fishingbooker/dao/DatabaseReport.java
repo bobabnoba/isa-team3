@@ -16,5 +16,7 @@ public interface DatabaseReport {
 
     Long getHomeOwnerId();
 
+    Boolean getPenaltySuggested();
+
     String getType();
 }

@@ -15,6 +15,7 @@ export class InstructorService {
   constructor(private _http : HttpClient) { }
 
   getInstructor(email : string ) : Observable<any> {
+    email = this.handlePlusInEmail(email);
     return this._http.get(`${this.baseURL}/instructor?email=${email}`);
   }
 
@@ -23,6 +24,7 @@ export class InstructorService {
   }
 
   checkAvailability(from : string, to : string, instructorEmail : string) {
+    instructorEmail = this.handlePlusInEmail(instructorEmail);
     return this._http.get(`${this.baseURL}/instructor/check-if-available?from=${from}&to=${to}&instructorEmail=${instructorEmail}`);
   }
   getAllActiveInstructors() {
@@ -30,10 +32,16 @@ export class InstructorService {
   }
 
   getInstructorUpcomingReservations(instructorEmail : string) : Observable<AdventureReservation[]>{
+    instructorEmail = this.handlePlusInEmail(instructorEmail);
     return this._http.get<AdventureReservation[]>(`${this.baseURL}/instructor/reservations/upcoming?instructorEmail=${instructorEmail}`);
   }
 
   getInstructorReservationsHistory(instructorEmail : string) : Observable<AdventureReservation[]>{
+    instructorEmail = this.handlePlusInEmail(instructorEmail);
     return this._http.get<AdventureReservation[]>(`${this.baseURL}/instructor/reservations/past?instructorEmail=${instructorEmail}`);
+  }
+
+  private handlePlusInEmail(email : string) {
+    return encodeURIComponent(email);
   }
 }

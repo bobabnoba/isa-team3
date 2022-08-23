@@ -65,9 +65,6 @@ public class InstructorController {
     @GetMapping("/reservations/upcoming")
     ResponseEntity<Collection<ReservationInfo>> getUpcomingReservations(@RequestParam String instructorEmail) {
         Collection<ReservationInfo> reservations = instructorService.getUpcomingReservationsForInstructor(instructorEmail);
-//        Collection<ReservationDto> dtos = reservations.stream()
-//                .map(ReservationMapper::map)
-//                .collect(Collectors.toList());
         return ok(reservations);
     }
 

@@ -8,6 +8,7 @@ export interface Report {
     comment : string;
     clientShowedUp : boolean;
     adminReviewed : boolean;
+    penaltySuggested : boolean;
 
     instructorId : number;
     boatOwnerId : number;

@@ -9,6 +9,11 @@ public class NewReportDto {
     public String ownerEmail;
     public String clientEmail;
     public ReservationType type;
+    public boolean penaltySuggested;
+
+    public boolean isPenaltySuggested() {
+        return penaltySuggested;
+    }
 
     public ReservationType getType() {
         return type;

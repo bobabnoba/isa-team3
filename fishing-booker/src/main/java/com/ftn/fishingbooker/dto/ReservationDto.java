@@ -16,7 +16,6 @@ public class ReservationDto {
 
     private Boolean isCancelled;
 
-    @Enumerated(EnumType.STRING)
     private ReservationType type;
 
     private int guests;
@@ -28,4 +27,6 @@ public class ReservationDto {
     private double price;
 
     private Set<UtilityDto> utilities;
+
+    private ReportDto report;
 }

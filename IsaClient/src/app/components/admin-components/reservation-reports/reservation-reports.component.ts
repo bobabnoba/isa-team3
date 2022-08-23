@@ -18,7 +18,7 @@ import { ReportResponseComponent } from '../report-response/report-response.comp
 })
 export class ReservationReportsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['type', 'ownerEmail', 'clientEmail', 'comment', 'clientShowedUp', 'respond'];
+  displayedColumns: string[] = ['type', 'ownerEmail', 'clientEmail', 'clientShowedUp', 'comment', 'penaltySuggested', 'respond'];
   dataSource = new MatTableDataSource<Report>();
 
   @ViewChild(MatPaginator)
@@ -76,7 +76,7 @@ export class ReservationReportsComponent implements OnInit, AfterViewInit {
           response : res.data.response,
           ownerEmail : report.ownerEmail,
           clientEmail : report.clientEmail,
-          penalty : res.data.penalty,
+          penalty : res.data.penalty
         } as ReportResponse;
 
         this._reportService.adminReview(response).subscribe(

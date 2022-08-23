@@ -3,8 +3,12 @@ package com.ftn.fishingbooker.mapper;
 import com.ftn.fishingbooker.dao.AdminReportResponse;
 import com.ftn.fishingbooker.dto.AdminReportResponseDto;
 import com.ftn.fishingbooker.dto.NewReportDto;
+import com.ftn.fishingbooker.dto.ReportDto;
 import com.ftn.fishingbooker.model.AdventureReservationReport;
 import com.ftn.fishingbooker.model.Instructor;
+import com.ftn.fishingbooker.model.Report;
+
+import java.util.Set;
 
 public class ReportMapper {
 
@@ -15,6 +19,7 @@ public class ReportMapper {
         newReport.setAdminReviewed(false);
         newReport.setInstructor(instructor);
         newReport.setClientEmail(report.getClientEmail());
+        newReport.setPenaltySuggested(report.isPenaltySuggested());
         return newReport;
     }
 
@@ -28,4 +33,13 @@ public class ReportMapper {
         return response;
     }
 
+    public static ReportDto toDto(Report report) {
+        ReportDto dto = new ReportDto();
+        dto.setId(report.getId());
+        dto.setComment(report.getComment());
+        dto.setClientShowedUp(report.isClientShowedUp());
+        dto.setClientEmail(report.getClientEmail());
+        dto.setPenaltySuggested(report.isPenaltySuggested());
+        return dto;
+    }
 }

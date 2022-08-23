@@ -13,6 +13,9 @@ export class ReportService {
 
   constructor(private _http : HttpClient) { }
 
+  sendReport(reservationId : number, newReport : Report) {
+    return this._http.post( `${this.baseURL}/reservation-reports/${reservationId}`, newReport);
+  }
   
   getAllUprocessedReports() : Observable<Report[]> {
       return this._http.get<Report[]>( `${this.baseURL}/reservation-reports/unprocessed`);
@@ -21,5 +24,6 @@ export class ReportService {
   adminReview(response : any) : Observable<any> {
     return this._http.post( `${this.baseURL}/reservation-reports/admin-review`, response);
   }
+
 
 }

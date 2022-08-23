@@ -38,7 +38,7 @@ INSERT INTO user_rank(id, name, min_points, reservation_percentage, percentage)
 --Client
 insert into client(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id, no_of_penalties) values
 (10,'Whatever Bio',  'majablgic505@gmail.com', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 1, 0),
-(12,'Whatever Bio',  'ClientEmail2', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 7990, 2, 2);
+(12,'Whatever Bio',  'bobabla7@gmail.com', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 7990, 2, 2);
 
 ----Admin
 insert into admin(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id)
@@ -47,7 +47,7 @@ values (11,'Whatever Bio',  'AdminEmail', 'Edgar Alan', 'true' , 'false', 'false
 ----Home Owner
 insert into home_owner(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password,
  phone, test_rebase_again, address_id, role_id, points, rank_id)
-	values (109,'Whatever Bio', 'VacationOwnerEmail', 'VacationOwnerFirstName'
+	values (111,'Whatever Bio', 'VacationOwnerEmail', 'VacationOwnerFirstName'
 	, 'true' , 'false', 'false', 'VacationOwnerLastName', null , /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.',
 	 '0943242342','false',41, 4, 0, 4);
 
@@ -56,28 +56,28 @@ insert into boat_owner(
 	id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password,
 	 phone, test_rebase_again, address_id, role_id, type, points, rank_id)
 
-	values (111,'Whatever Bio', 'BoatOwnerEmail', 'BoatOwnerFirstName'
+	values (109,'Whatever Bio', 'BoatOwnerEmail', 'BoatOwnerFirstName'
 	, 'true' , 'false', 'false', 'BoatOwnerLastName', null , /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.',
 	 '0943242342','false', 42, 3,'BOAT_OWNER', 0, 4);
 
 -- Instructor
 insert into instructor(	id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, rating, points, rank_id)
-	values (110, 'biography', 'bobaruljic+dd@gmail.com', 'first_name', 'true', 'false', 'false', 'last_name', null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '4324234', 'false', 41, 5, 4.3, 2500, 4);
+	values (110, 'biography', 'bobaruljic@gmail.com', 'first_name', 'true', 'false', 'false', 'last_name', null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '4324234', 'false', 41, 5, 4.3, 2500, 4);
 
 
 --Vacation Home
 insert into vacation_home(id, deleted, description, guest_limit, name, price_per_day, rating, address_id, home_owner_id)
 values
-(100, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' 55 Horseshoe Bend, Antelope Canyon, and Lake Powell', 50, 4.5, 40 , 110),
-(101, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 3, ' Whatever you say',44, 3, 41 , 110),
-(102, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' Yo soy tu madre', 60, 1.5, 42 , 110),
-(103, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' Home 103 ', 60, 1.5, 42 , 110);
+(100, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' 55 Horseshoe Bend, Antelope Canyon, and Lake Powell', 50, 4.5, 40 , 111),
+(101, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 3, ' Whatever you say',44, 3, 41 , 111),
+(102, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' Yo soy tu madre', 60, 1.5, 42 , 111),
+(103, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' Home 103 ', 60, 1.5, 42 , 111);
 
 
 --Boat
 insert into boat(
 	id, guest_limit, deleted, description, engine_count, engine_power, information, length, max_speed, name, price_per_day,  rating, type, address_id, boat_owner_id, canceling_percentage)
-	values (100, 4, 'false' ,'DESCRIIIIIIIIIIIIPTION', 2, 30, 'iNFORMATION', 20, 40, 'Titanic',35, 3, 'SMOL' , 43, 110, 5);
+	values (100, 4, 'false' ,'DESCRIIIIIIIIIIIIPTION', 2, 30, 'iNFORMATION', 20, 40, 'Titanic',35, 3, 'SMOL' , 43, 109, 5);
 
 
 -- Adventure

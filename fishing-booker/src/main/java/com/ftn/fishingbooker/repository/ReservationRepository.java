@@ -43,6 +43,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query(value = "select r " +
             "    from Adventure a " +
             "    join a.reservations r " +
+            "    left join r.report report " +
             "    where a.instructor.id = :id and r.isCancelled = false and r.startDate <= current_date")
     Collection<Reservation> getPastReservationsForInstructor(@Param("id") Long id);
 }

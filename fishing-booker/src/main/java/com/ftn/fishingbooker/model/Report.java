@@ -25,4 +25,6 @@ public class Report {
 
     private String clientEmail;
 
+    private boolean penaltySuggested;
+
 }
