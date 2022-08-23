@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-report-response',
@@ -10,11 +10,13 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class ReportResponseComponent implements OnInit {
   
   createForm!: FormGroup;
+  shownUp! : boolean;
 
-  constructor(private _formBuilder: FormBuilder, public dialogRef : MatDialogRef<ReportResponseComponent>) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _formBuilder: FormBuilder, public dialogRef : MatDialogRef<ReportResponseComponent>) {
+    this.shownUp = data.shownUp;
     this.createForm = this._formBuilder.group({
       response: new FormControl('', Validators.required),
-      penalty: new FormControl(false, Validators.required)
+      penalty: new FormControl(!data.shownUp, Validators.required)
     })
    }
 

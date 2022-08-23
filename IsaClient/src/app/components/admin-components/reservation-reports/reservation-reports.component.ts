@@ -62,11 +62,14 @@ export class ReservationReportsComponent implements OnInit, AfterViewInit {
   }
 
   respond(report : Report) {
-
+    let myData = {
+      shownUp : report.clientShowedUp
+     }
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.id = 'modal-component';
     dialogConfig.width = '600px';
+    dialogConfig.data = myData;
     const dialogRef = this._matDialog.open(ReportResponseComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe({
@@ -87,7 +90,7 @@ export class ReservationReportsComponent implements OnInit, AfterViewInit {
         );
           },
           (err) => {
-            this._snackBar.open(err.error.message, '',
+            this._snackBar.open("Couldn't send email responses. Try again later!", '',
             {duration : 3000, panelClass: ['snack-bar']}
         );
           }
