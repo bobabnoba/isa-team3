@@ -35,5 +35,5 @@ public interface UserService {
 
     Collection<User> saveAll(Collection<User> users);
 
-    User getById(Long id);
+    User getUserById(Long id);
 }

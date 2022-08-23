@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.ManyToOne;
 public class BoatReservationReport extends Report{
 
     @ManyToOne(targetEntity = BoatOwner.class, fetch = FetchType.LAZY)
+    @JsonIgnore
     private BoatOwner boatOwner;
 
 }

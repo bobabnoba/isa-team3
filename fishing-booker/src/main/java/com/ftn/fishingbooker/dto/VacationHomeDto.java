@@ -1,9 +1,11 @@
 package com.ftn.fishingbooker.dto;
 
 import com.ftn.fishingbooker.model.Address;
+import com.ftn.fishingbooker.model.Rule;
 import lombok.Data;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Data
 public class VacationHomeDto {
@@ -27,7 +29,7 @@ public class VacationHomeDto {
 
     private Collection<ReservationDto> availableReservations;
 
-    private Collection<String> codeOfConduct;
+    private Set<Rule> codeOfConduct;
 
     private Collection<UtilityDto> utilities;
 

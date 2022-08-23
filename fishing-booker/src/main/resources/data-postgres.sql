@@ -47,7 +47,7 @@ values (11,'Whatever Bio',  'AdminEmail', 'Edgar Alan', 'true' , 'false', 'false
 ----Home Owner
 insert into home_owner(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password,
  phone, test_rebase_again, address_id, role_id, points, rank_id)
-	values (110,'Whatever Bio', 'VacationOwnerEmail', 'VacationOwnerFirstName'
+	values (109,'Whatever Bio', 'VacationOwnerEmail', 'VacationOwnerFirstName'
 	, 'true' , 'false', 'false', 'VacationOwnerLastName', null , /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.',
 	 '0943242342','false',41, 4, 0, 4);
 
@@ -56,9 +56,9 @@ insert into boat_owner(
 	id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password,
 	 phone, test_rebase_again, address_id, role_id, type, points, rank_id)
 
-	values (110,'Whatever Bio', 'BoatOwnerEmail', 'BoatOwnerFirstName'
+	values (111,'Whatever Bio', 'BoatOwnerEmail', 'BoatOwnerFirstName'
 	, 'true' , 'false', 'false', 'BoatOwnerLastName', null , /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.',
-	 '0943242342','false', 41, 3,'BOAT_OWNER', 0, 4);
+	 '0943242342','false', 42, 3,'BOAT_OWNER', 0, 4);
 
 -- Instructor
 insert into instructor(	id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, rating, points, rank_id)
@@ -76,8 +76,8 @@ values
 
 --Boat
 insert into boat(
-	id, guest_limit, deleted, description, engine_count, engine_power, information, length, max_speed, name, price_per_day,  rating, type, address_id, boat_owner_id)
-	values (100, 4, 'false' ,'DESCRIIIIIIIIIIIIPTION', 2, 30, 'iNFORMATION', 20, 40, 'Titanic',35, 3.2, 'SMOL' , 43, 110);
+	id, guest_limit, deleted, description, engine_count, engine_power, information, length, max_speed, name, price_per_day,  rating, type, address_id, boat_owner_id, canceling_percentage)
+	values (100, 4, 'false' ,'DESCRIIIIIIIIIIIIPTION', 2, 30, 'iNFORMATION', 20, 40, 'Titanic',35, 3, 'SMOL' , 43, 110, 5);
 
 
 -- Adventure

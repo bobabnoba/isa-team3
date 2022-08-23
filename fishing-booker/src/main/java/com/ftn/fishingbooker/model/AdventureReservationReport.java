@@ -16,6 +16,6 @@ import javax.persistence.ManyToOne;
 public class AdventureReservationReport extends Report {
 
     @ManyToOne(targetEntity = Instructor.class, fetch = FetchType.LAZY)
-    @ToString.Exclude
+    @JsonIgnore
     private Instructor instructor;
 }

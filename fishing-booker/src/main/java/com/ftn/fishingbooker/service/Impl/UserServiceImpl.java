@@ -133,7 +133,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User getById(Long id) {
+    @Transactional
+    public User getUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new ResourceConflictException("User not found"));
     }
 
