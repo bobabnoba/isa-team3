@@ -1,6 +1,7 @@
 
 export interface Report {
 
+    id : number;
     type: string;
     ownerEmail : string;
     clientEmail : string;

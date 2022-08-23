@@ -18,4 +18,8 @@ export class ReportService {
       return this._http.get<Report[]>( `${this.baseURL}/reservation-reports/unprocessed`);
   }
 
+  adminReview(response : any) : Observable<any> {
+    return this._http.post( `${this.baseURL}/reservation-reports/admin-review`, response);
+  }
+
 }

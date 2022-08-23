@@ -33,7 +33,8 @@ public class ReservationReportController {
 
     @GetMapping("/unprocessed")
     public ResponseEntity<Collection<DatabaseReport>> getAllUnreviewedReports() {
-        return ResponseEntity.ok(reportService.getAllUnreviewedReports());
+        Collection<DatabaseReport> reports = reportService.getAllUnreviewedReports();
+        return ResponseEntity.ok(reports);
     }
 
     @PostMapping("/{reservationId}")

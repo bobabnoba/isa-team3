@@ -1,11 +1,14 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Report } from 'src/app/interfaces/report';
+import { ReportResponse } from 'src/app/interfaces/report-response';
 import { ReportService } from 'src/app/services/report-service/report.service';
 import { UserService } from 'src/app/services/user-service/user.service';
+import { AdminResponseComponent } from '../admin-response/admin-response.component';
+import { ReportResponseComponent } from '../report-response/report-response.component';
 
 
 @Component({
@@ -58,9 +61,41 @@ export class ReservationReportsComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  approve(report : Report) {
-   
-    }
+  respond(report : Report) {
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = 'modal-component';
+    dialogConfig.width = '600px';
+    const dialogRef = this._matDialog.open(ReportResponseComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe({
+      next: (res) => {
+        let response : ReportResponse = {
+          reportId : report.id,
+          response : res.data.response,
+          ownerEmail : report.ownerEmail,
+          clientEmail : report.clientEmail,
+          penalty : res.data.penalty,
+        } as ReportResponse;
+
+        this._reportService.adminReview(response).subscribe(
+          () => {
+            this.updateTable(report);
+            this._snackBar.open('Reservation report reviewed.', '',
+            {duration : 3000, panelClass: ['snack-bar']}
+        );
+          },
+          (err) => {
+            this._snackBar.open(err.error.message, '',
+            {duration : 3000, panelClass: ['snack-bar']}
+        );
+          }
+        );
+      }
+    })
+    
+  }
 
 
   updateTable(report : Report) {
