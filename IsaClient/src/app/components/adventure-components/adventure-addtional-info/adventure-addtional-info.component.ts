@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Adventure } from 'src/app/interfaces/adventure';
+import { Adventure, FishingEquipment } from 'src/app/interfaces/adventure';
 
 @Component({
   selector: 'app-adventure-addtional-info',
@@ -11,7 +11,10 @@ export class AdventureAddtionalInfoComponent implements OnInit {
   @Input()
   adventure! : Adventure;
   
-  constructor() { }
+  constructor() { 
+    this.adventure = {} as Adventure;
+    this.adventure.fishingEquipment = [] as FishingEquipment[];
+  }
 
   ngOnInit(): void {
   }

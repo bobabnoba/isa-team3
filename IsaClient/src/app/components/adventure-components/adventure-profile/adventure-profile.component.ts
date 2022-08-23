@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Adventure, Utility } from 'src/app/interfaces/adventure';
+import { SpecialOffer } from 'src/app/interfaces/special-offer';
 import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class AdventureProfileComponent implements OnInit {
   constructor(private _adventureService : AdventureService) { 
     this.adventure = {} as Adventure;
     this.adventure.utilities = [] as Utility[];
+    this.adventure.specialOffers = [] as SpecialOffer[];
   }
 
   ngOnInit(): void {
