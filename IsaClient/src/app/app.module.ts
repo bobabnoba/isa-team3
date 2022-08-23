@@ -98,6 +98,16 @@ import { BoatPreviewComponent } from './components/boat-components/boat-preview/
 import { BoatOwnerTopbarComponent } from './components/boat-owner-components/boat-owner-topbar/boat-owner-topbar.component';
 import { AddBoatComponent } from './components/boat-components/add-boat/add-boat.component';
 import { BoatSearchPipe } from './pipes/boat-search/boat-search.pipe';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { MatIconModule } from '@angular/material/icon';
+import { ReservationPreviewComponent } from './components/instructor-components/reservation-preview/reservation-preview.component';
+import { ReservationsUpcomingComponent } from './components/instructor-components/reservations-upcoming/reservations-upcoming.component';
+import { ReservationsHistoryComponent } from './components/instructor-components/reservations-history/reservations-history.component';
+import { ClientInfoComponent } from './components/instructor-components/client-info/client-info.component';
+import { ReservationInfoComponent } from './components/instructor-components/reservation-info/reservation-info.component';
+import { ReservationReportsComponent } from './components/admin-components/reservation-reports/reservation-reports.component';
+import { ReportResponseComponent } from './components/admin-components/report-response/report-response.component';
+import { InstructorReportComponent } from './components/instructor-components/instructor-report/instructor-report.component';
 
 @NgModule({
   declarations: [
@@ -172,6 +182,15 @@ import { BoatSearchPipe } from './pipes/boat-search/boat-search.pipe';
     BoatOwnerTopbarComponent,
     AddBoatComponent,
     BoatSearchPipe,
+    StarRatingComponent,
+    ReservationPreviewComponent,
+    ReservationsUpcomingComponent,
+    ReservationsHistoryComponent,
+    ClientInfoComponent,
+    ReservationInfoComponent,
+    ReservationReportsComponent,
+    ReportResponseComponent,
+    InstructorReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -205,6 +224,7 @@ import { BoatSearchPipe } from './pipes/boat-search/boat-search.pipe';
     }),
     MatStepperModule,
     MatFileUploadModule,
+    MatIconModule
   ],
   exports: [
     BrowserModule,

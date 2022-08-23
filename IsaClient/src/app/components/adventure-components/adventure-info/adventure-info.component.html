@@ -2,13 +2,15 @@
     <div class = "row ">
         <div class="col-md">
           <div class="row">
-            <h2 class="title"> {{ adventure.title }} </h2>
+            <div class="d-flex flex-row">
+              <h2 class="title"> {{ adventure.title }} </h2>
+            <span class="people-w"><i class="fa-solid fa-user"></i> {{ adventure.maxNumberOfParticipants }} </span>
+            </div>
         </div>
       </div>
         <div class="col-md">
           <div class="row">
-  
-            <h5 class="people"><i class="fa-solid fa-user"></i> {{ adventure.maxNumberOfParticipants }} </h5>
+            <h5 class="people"><app-star-rating [disabled]="true" [rating]="adventure.rating" [color]="starColor" [starCount]="5" ></app-star-rating> </h5>
         </div>
       </div>
     </div>
@@ -17,6 +19,7 @@
     <div class="col-lg-12 col-md-12 description"> {{ adventure.description }} </div>
   </div>
   <div class="row">
+    <div class="col-md"><i class="fa-solid fa-hourglass-start"></i> {{ adventure.durationInHours }}h </div>
     <div class="col-md"> <h5 class="people"> ${{adventure.pricePerDay}} per person </h5> </div>
   </div>
  

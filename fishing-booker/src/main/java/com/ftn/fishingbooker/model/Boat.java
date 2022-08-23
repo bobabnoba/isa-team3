@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ftn.fishingbooker.enumeration.BoatType;
 import com.ftn.fishingbooker.enumeration.CancelingCondition;
 import com.ftn.fishingbooker.enumeration.NavigationType;
@@ -75,6 +76,8 @@ public class Boat {
 
     @ManyToOne
     @JoinColumn(name = "boat_owner_id")
+    @ToString.Exclude
+    @JsonManagedReference
     private BoatOwner boatOwner;
 
     @OneToMany(targetEntity = BoatAvailability.class, mappedBy = "boat", fetch = FetchType.EAGER)

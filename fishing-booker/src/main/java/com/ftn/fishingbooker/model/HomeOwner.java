@@ -22,13 +22,6 @@ public class HomeOwner extends User {
     @ToString.Exclude
     private Set<VacationHome> vacationHomes;
 
-    @OneToMany(mappedBy = "homeOwner", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private Set<Report> reservationReport;
-
-    @OneToMany(mappedBy = "homeOwner", fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private Set<Complaint> complaints;
 
 
 }

@@ -76,7 +76,7 @@ public class AdventureServiceImpl implements AdventureService {
         found.setPricePerDay(updated.getPrice());
         found.setMaxNumberOfParticipants(updated.getMaxParticipants());
         found.setCancelingPercentage(updated.getCancelingPercentage());
-
+        found.setDurationInHours(updated.getDurationInHours());
         return adventureRepository.save(found);
     }
 
@@ -110,6 +110,11 @@ public class AdventureServiceImpl implements AdventureService {
 
         found.setAddress(updated);
         return adventureRepository.save(found);
+    }
+
+    @Override
+    public Collection<Long> getAllIdsByInstructorId(Long instructorId) {
+        return adventureRepository.getAllIdsByInstructorId(instructorId);
     }
 
     @Override
@@ -152,8 +157,14 @@ public class AdventureServiceImpl implements AdventureService {
     }
 
     @Override
+    @Transactional
     public void makeReservation(Long adventureId, Reservation reservation) {
-        Adventure adventure = adventureRepository.getById(adventureId);
+        Adventure adventure = adventureRepository.getWithReservations(adventureId);
+        if (adventure == null) {
+            adventure = adventureRepository.findById(adventureId)
+                    .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
+            adventure.setReservations(new HashSet<>());
+        }
         adventure.getReservations().add(reservation);
         adventureRepository.save(adventure);
     }
@@ -168,6 +179,7 @@ public class AdventureServiceImpl implements AdventureService {
         }
         return false;
     }
+
 
 }
 

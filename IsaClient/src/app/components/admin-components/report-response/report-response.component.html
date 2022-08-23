@@ -1,0 +1,27 @@
+<mat-card class="container">
+    <div class="text-center">
+        <h3> Reservation Report Review </h3>
+    </div>
+    <div class="col-12">
+        <div [formGroup]="createForm" class="content">
+            <div>
+                <div class="w-100 d-flex py-3 px-1">
+                    <mat-checkbox class ="mr-4"  formControlName="penalty"></mat-checkbox>
+                    <mat-label class="moveME">add penalty</mat-label>
+                </div>
+                <mat-form-field appearance="fill" style="width: 100%">
+                    <mat-label>Response</mat-label>
+                    <textarea id="text" matInput required formControlName="response"></textarea>
+                </mat-form-field>
+
+            </div>
+        
+            <div class="buttons">
+                <button (click)="submit()" class="btn btn-primary text-center">
+                    Submit
+                </button>
+            </div>
+        </div>
+        <br>
+    </div>
+</mat-card>

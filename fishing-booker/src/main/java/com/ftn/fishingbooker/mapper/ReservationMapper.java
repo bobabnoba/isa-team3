@@ -1,14 +1,11 @@
 package com.ftn.fishingbooker.mapper;
 
 import com.ftn.fishingbooker.dto.ReservationDto;
-import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.model.Utility;
 
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 public class ReservationMapper {
     public static Collection<ReservationDto> map(Collection<Reservation> reservations) {
@@ -30,6 +27,9 @@ public class ReservationMapper {
         reservationDto.setPrice(reservation.getPrice());
         reservationDto.setEndDate(reservation.getEndDate());
         reservationDto.setStartDate(reservation.getStartDate());
+        if (reservation.getReport() != null){
+            reservationDto.setReport(ReportMapper.toDto(reservation.getReport()));
+        }
         return reservationDto;
     }
     public static Reservation map(ReservationDto reservationDto) {
@@ -43,4 +43,5 @@ public class ReservationMapper {
         reservation.setStartDate(reservationDto.getStartDate());
         return reservation;
     }
+
 }

@@ -30,4 +30,5 @@ export interface Adventure {
     instructorEmail : string;
     durationInHours : number;
     specialOffers : SpecialOffer[];
+    rating : number;
 }

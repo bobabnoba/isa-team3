@@ -17,4 +17,5 @@ public class NewAdventureDto {
     public String instructorEmail;
     public List<FishingEquipmentDto> fishingEquipment;
     public List<UtilityDto> utilities;
+    public double durationInHours;
 }
