@@ -1,4 +1,4 @@
-package com.ftn.fishingbooker.projection;
+package com.ftn.fishingbooker.dao;
 
 public interface DatabaseReport {
 

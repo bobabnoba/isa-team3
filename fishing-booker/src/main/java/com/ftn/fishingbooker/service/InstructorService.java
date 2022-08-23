@@ -1,7 +1,7 @@
 package com.ftn.fishingbooker.service;
 
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.projection.ReservationInfo;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 
 import javax.mail.MessagingException;
 import java.util.Collection;

@@ -1,7 +1,7 @@
 package com.ftn.fishingbooker.repository;
 
 import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.projection.ReservationInfo;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

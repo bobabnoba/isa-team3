@@ -3,7 +3,7 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.projection.ReservationInfo;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.repository.InstructorRepository;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.service.*;

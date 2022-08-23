@@ -6,7 +6,7 @@ import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.projection.ReservationInfo;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.repository.ReservationRepository;
 import com.ftn.fishingbooker.service.DateService;
 import com.ftn.fishingbooker.service.ReservationService;

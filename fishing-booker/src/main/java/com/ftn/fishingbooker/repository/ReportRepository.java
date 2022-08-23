@@ -1,7 +1,7 @@
 package com.ftn.fishingbooker.repository;
 
 import com.ftn.fishingbooker.model.Report;
-import com.ftn.fishingbooker.projection.DatabaseReport;
+import com.ftn.fishingbooker.dao.DatabaseReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

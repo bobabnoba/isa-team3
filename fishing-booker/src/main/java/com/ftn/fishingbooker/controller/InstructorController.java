@@ -6,7 +6,7 @@ import com.ftn.fishingbooker.model.Instructor;
 import com.ftn.fishingbooker.model.InstructorAvailability;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.User;
-import com.ftn.fishingbooker.projection.ReservationInfo;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.service.InstructorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

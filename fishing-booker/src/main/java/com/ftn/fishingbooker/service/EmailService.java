@@ -16,4 +16,6 @@ public interface EmailService {
     String createDeleteAccountResponseEmail(String message, boolean isApproved);
 
     void sendReservationEmail(ReservationDto map, Client client);
+
+    String createAdminReportResponseEmail(String s, boolean addPenalty);
 }
