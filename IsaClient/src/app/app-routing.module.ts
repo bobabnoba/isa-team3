@@ -7,6 +7,7 @@ import { AdminDeleteRequestsComponent } from './components/admin-components/admi
 import { AdminProfileComponent } from './components/admin-components/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin-components/admin-registration-requests/admin-registration-requests.component';
 import { AdminUsersComponent } from './components/admin-components/admin-users/admin-users.component';
+import { ReservationReportsComponent } from './components/admin-components/reservation-reports/reservation-reports.component';
 import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
 import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
@@ -113,6 +114,10 @@ const routes: Routes = [
   {
     path : 'admin/users',
     component: AdminUsersComponent
+  },
+  {
+    path: 'admin/reservation-reports',
+    component: ReservationReportsComponent
   },
   {
     path: 'adventure',

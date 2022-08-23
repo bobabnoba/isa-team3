@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 @RequiredArgsConstructor
 public class BoatReservationReport extends Report{
 
-    @ManyToOne(targetEntity = BoatOwner.class)
+    @ManyToOne(targetEntity = BoatOwner.class, fetch = FetchType.LAZY)
     private BoatOwner boatOwner;
 
 }

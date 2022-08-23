@@ -1,10 +1,7 @@
 package com.ftn.fishingbooker.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
-
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -25,5 +22,7 @@ public class Report {
     private boolean clientShowedUp;
 
     private boolean adminReviewed;
+
+    private String clientEmail;
 
 }

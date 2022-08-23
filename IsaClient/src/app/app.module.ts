@@ -92,6 +92,7 @@ import { ReservationsUpcomingComponent } from './components/instructor-component
 import { ReservationsHistoryComponent } from './components/instructor-components/reservations-history/reservations-history.component';
 import { ClientInfoComponent } from './components/instructor-components/client-info/client-info.component';
 import { ReservationInfoComponent } from './components/instructor-components/reservation-info/reservation-info.component';
+import { ReservationReportsComponent } from './components/admin-components/reservation-reports/reservation-reports.component';
 
 @NgModule({
   declarations: [
@@ -159,6 +160,7 @@ import { ReservationInfoComponent } from './components/instructor-components/res
     ReservationsHistoryComponent,
     ClientInfoComponent,
     ReservationInfoComponent,
+    ReservationReportsComponent,
   ],
   imports: [
     BrowserModule,

@@ -28,4 +28,8 @@ public interface InstructorService {
     Collection<ReservationInfo> getUpcomingReservationsForInstructor(String email);
 
     Collection<Reservation> getPastReservationsForInstructor(String email);
+
+    Instructor findByEmail(String email);
+
+    Instructor findById(Long instructorId);
 }

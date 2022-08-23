@@ -31,4 +31,6 @@ public interface ReservationService {
     Collection<Reservation> getPastReservationsForInstructor(Long id);
 
     Reservation getReservationById(Long id);
+
+    void save(Reservation reservation);
 }

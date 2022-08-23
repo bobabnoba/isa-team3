@@ -108,6 +108,16 @@ public class InstructorServiceImpl implements InstructorService {
         return reservationService.getPastReservationsForInstructor(instructor.getId());
     }
 
+    @Override
+    public Instructor findByEmail(String email) {
+        return instructorRepository.findByEmail(email);
+    }
+
+    @Override
+    public Instructor findById(Long instructorId) {
+        return instructorRepository.findById(instructorId).orElseThrow( () -> new IllegalArgumentException("Instructor not found"));
+    }
+
     private List<InstructorAvailability> checkForOverlapping(InstructorAvailability availability, List<InstructorAvailability> availabilities) {
 
         List<InstructorAvailability> retVal = new ArrayList<>();

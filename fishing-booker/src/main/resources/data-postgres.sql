@@ -36,9 +36,9 @@ INSERT INTO user_rank(id, name, min_points, reservation_percentage, percentage)
             (6, 'GOLD_ADVERTISER', 8000, 90, 96);
 
 --Client
-insert into client(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id) values
-(10,'Whatever Bio',  'majablgic505@gmail.com', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 1),
-(12,'Whatever Bio',  'ClientEmail2', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 7990, 2);
+insert into client(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id, no_of_penalties) values
+(10,'Whatever Bio',  'majablgic505@gmail.com', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 1, 0),
+(12,'Whatever Bio',  'ClientEmail2', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 7990, 2, 2);
 
 ----Admin
 insert into admin(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id)

@@ -132,5 +132,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.saveAll(users);
     }
 
+    @Override
+    public User getById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new ResourceConflictException("User not found"));
+    }
+
 
 }
