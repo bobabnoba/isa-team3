@@ -105,6 +105,16 @@ import { BoatAdditionalInfoComponent } from './components/boat-components/boat-a
 import { BoatLocationComponent } from './components/boat-components/boat-location/boat-location.component';
 import { BoatServicesComponent } from './components/boat-components/boat-services/boat-services.component';
 import { BoatOwnerInfoComponent } from './components/boat-components/boat-owner-info/boat-owner-info.component';
+import { StarRatingComponent } from './components/star-rating/star-rating.component';
+import { MatIconModule } from '@angular/material/icon';
+import { ReservationPreviewComponent } from './components/instructor-components/reservation-preview/reservation-preview.component';
+import { ReservationsUpcomingComponent } from './components/instructor-components/reservations-upcoming/reservations-upcoming.component';
+import { ReservationsHistoryComponent } from './components/instructor-components/reservations-history/reservations-history.component';
+import { ClientInfoComponent } from './components/instructor-components/client-info/client-info.component';
+import { ReservationInfoComponent } from './components/instructor-components/reservation-info/reservation-info.component';
+import { ReservationReportsComponent } from './components/admin-components/reservation-reports/reservation-reports.component';
+import { ReportResponseComponent } from './components/admin-components/report-response/report-response.component';
+import { InstructorReportComponent } from './components/instructor-components/instructor-report/instructor-report.component';
 
 @NgModule({
   declarations: [
@@ -186,6 +196,15 @@ import { BoatOwnerInfoComponent } from './components/boat-components/boat-owner-
     BoatLocationComponent,
     BoatServicesComponent,
     BoatOwnerInfoComponent,
+    StarRatingComponent,
+    ReservationPreviewComponent,
+    ReservationsUpcomingComponent,
+    ReservationsHistoryComponent,
+    ClientInfoComponent,
+    ReservationInfoComponent,
+    ReservationReportsComponent,
+    ReportResponseComponent,
+    InstructorReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -219,6 +238,7 @@ import { BoatOwnerInfoComponent } from './components/boat-components/boat-owner-
     }),
     MatStepperModule,
     MatFileUploadModule,
+    MatIconModule
   ],
   exports: [
     BrowserModule,

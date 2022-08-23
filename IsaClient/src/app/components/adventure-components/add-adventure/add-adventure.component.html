@@ -19,8 +19,13 @@
                 </mat-form-field>
                 <mat-form-field appearance="standard">
                     <mat-label>Max participants</mat-label>
-                    <input matInput type="number" min="0" formControlName="maxPersons" required>
+                    <input matInput type="number" min="1" formControlName="maxPersons" required>
                 </mat-form-field>
+                <mat-form-field appearance="standard">
+                  <mat-label>Duration in hours</mat-label>
+                  <input matInput type="number" min="0" placeholder="" formControlName="duration" required>
+                  <span matSuffix>h</span>
+              </mat-form-field>
                 <mat-form-field appearance="standard">
                     <mat-label>Cancellation percentage</mat-label>
                     <input matInput type="number" min="0" max="100" placeholder="" formControlName="cancellationPercentage" required>

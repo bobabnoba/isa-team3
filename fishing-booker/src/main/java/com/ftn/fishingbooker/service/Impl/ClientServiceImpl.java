@@ -4,6 +4,7 @@ import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.model.UserRank;
+import com.ftn.fishingbooker.repository.ClientRepository;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ public class ClientServiceImpl implements ClientService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ClientRepository clientRepository;
     @Autowired
     private RegistrationService registrationService;
     @Autowired
@@ -56,7 +59,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getClientByEmail(String userEmail) {
-        return (Client) userRepository.findByEmail(userEmail);
+        return clientRepository.findByEmail(userEmail);
     }
 
     @Override
@@ -68,6 +71,13 @@ public class ClientServiceImpl implements ClientService {
                 client.setRank(rank);
             }
         });
+        userRepository.save(client);
+    }
+
+    @Override
+    public void addPenalty(String email) {
+        Client client = getClientByEmail(email);
+        client.setNoOfPenalties(client.getNoOfPenalties() + 1);
         userRepository.save(client);
     }
 }

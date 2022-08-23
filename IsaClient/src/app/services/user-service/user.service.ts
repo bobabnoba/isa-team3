@@ -19,8 +19,11 @@ export class UserService {
   constructor(private _http : HttpClient) { }
 
   getUserInfo(email : string) : Observable<any>{
-    return this._http.get(`${this.baseURL}/users/${email}`);
-    
+    return this._http.get(`${this.baseURL}/users/${email}`); 
+  }
+
+  getUserById(id : number) : Observable<LoggedUser> {
+    return this._http.get<LoggedUser>(`${this.baseURL}/users/by-id/${id}`);
   }
 
   updateUser(user : LoggedUser) : Observable<LoggedUser>{

@@ -19,5 +19,6 @@ public class Client extends User {
     @JsonIgnore
     private Set<Reservation> reservationsMade;
 
+    private int noOfPenalties;
 
 }

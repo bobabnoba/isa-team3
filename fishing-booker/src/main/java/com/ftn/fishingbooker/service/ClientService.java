@@ -15,4 +15,6 @@ public interface ClientService {
     Client getClientByEmail(String userEmail);
 
     void updatePoints(Client client, double reservationPrice);
+
+    void addPenalty(String email);
 }

@@ -1,0 +1,29 @@
+<div  >
+    <div class = "row p-2" >
+        <div class="col-md-12 d-flex flex-dir" >
+            <h3> {{ reservation.startDate | date : 'short'}}  - 
+                {{ reservation.endDate | date : 'short'}}  </h3>
+            <p class="pt-2"> <i class="fa-solid fa-user"></i> {{ reservation.guests }} guests </p>
+            <p> <i class="fa-solid fa-dollar-sign fa-md"></i>{{ reservation.price }} </p>
+            <div class="d-flex">
+            <mat-label class="mright">{{ reservation.utilities == null ? 'No utilities providing.' : 'Utilities: ' }} </mat-label>
+            <div *ngIf="reservation.utilities?.length === 0">
+                <mat-select multiple [(ngModel)]="reservation.utilities" [compareWith]="compareObjects">
+                    <mat-select-trigger>
+                      {{reservation.utilities?.[0]?.name || ''}}
+                      <span *ngIf="(reservation.utilities?.length || 0) > 1"  class="example-additional-selection">
+                        (+{{(reservation.utilities?.length || 0) - 1}} {{reservation.utilities?.length === 2 ? 'other' : 'others'}})
+                      </span>
+                    </mat-select-trigger>
+                    <mat-option disabled *ngFor="let e of reservation.utilities" [value]="e">{{e.name}}</mat-option>
+                </mat-select>
+            </div>
+            </div>
+            <hr>
+            <div class="d-flex flex-dir">
+                <div class="d-flex flex-row"><span class="client">Client:</span> <h4>{{ reservation.client.firstName }} {{ reservation.client.lastName }}</h4> </div>
+                <div class="d-flex flex-row pt-2"><span class="contact">Contact info:</span> <h6>{{ reservation.client.phone }}, {{ reservation.client.email }}</h6> </div>
+            </div>
+        </div>
+    </div>
+</div>

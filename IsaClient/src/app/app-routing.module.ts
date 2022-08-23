@@ -7,6 +7,7 @@ import { AdminDeleteRequestsComponent } from './components/admin-components/admi
 import { AdminProfileComponent } from './components/admin-components/admin-profile/admin-profile.component';
 import { AdminRegistrationRequestsComponent } from './components/admin-components/admin-registration-requests/admin-registration-requests.component';
 import { AdminUsersComponent } from './components/admin-components/admin-users/admin-users.component';
+import { ReservationReportsComponent } from './components/admin-components/reservation-reports/reservation-reports.component';
 import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
 import { BoatProfileComponent } from './components/boat-components/boat-profile/boat-profile.component';
@@ -30,6 +31,8 @@ import { InstructorDashboardComponent } from './components/instructor-components
 import { InstructorProfileComponent } from './components/instructor-components/instructor-profile/instructor-profile.component';
 import { InstructorServiceListComponent } from './components/instructor-components/instructor-service-list/instructor-service-list.component';
 import { InstructorServiceComponent } from './components/instructor-components/instructor-service/instructor-service.component';
+import { ReservationsHistoryComponent } from './components/instructor-components/reservations-history/reservations-history.component';
+import { ReservationsUpcomingComponent } from './components/instructor-components/reservations-upcoming/reservations-upcoming.component';
 import { LoginComponent } from './components/login/login.component';
 import { OwnerRegisterComponent } from './components/register-components/owner-register/owner-register.component';
 import { RegisterComponent } from './components/register-components/register/register.component';
@@ -120,6 +123,10 @@ const routes: Routes = [
     component: AdminUsersComponent
   },
   {
+    path: 'admin/reservation-reports',
+    component: ReservationReportsComponent
+  },
+  {
     path: 'adventure',
     component: AdventureProfileComponent
   },
@@ -162,6 +169,14 @@ const routes: Routes = [
   {
     path: 'boat-owner/boats',
     component: BoatOwnerBoatsComponent
+  },
+  {
+    path : 'instructor/reservations/upcoming',
+    component : ReservationsUpcomingComponent
+  },
+  {
+    path : 'instructor/reservations/history',
+    component : ReservationsHistoryComponent
   },
   {
     path: 'boat-owner/boat/:id',

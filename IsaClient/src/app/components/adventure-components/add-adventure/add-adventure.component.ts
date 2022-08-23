@@ -48,6 +48,7 @@ export class AddAdventureComponent implements OnInit {
     price: ['', Validators.required],
     cancellationPercentage: ['', Validators.required],
     maxPersons: ['', Validators.required],
+    duration: ['', Validators.required]
 
   })
 
@@ -95,6 +96,7 @@ export class AddAdventureComponent implements OnInit {
                         price : res.pricePerDay,
                         cancellationPercentage : res.cancelingPercentage,
                         maxPersons : res.maxNumberOfParticipants,
+                        duration : res.durationInHours
                       })
                       this.location.setValue({
                         street : res.address.street,
@@ -165,7 +167,7 @@ export class AddAdventureComponent implements OnInit {
     this.newAdventure.instructorEmail = this._storageService.getEmail();
     this.newAdventure.fishingEquipment = this.equipment;
     this.newAdventure.utilities = this.services;
-
+    this.newAdventure.durationInHours = this.info.value.duration;
   }
 
   updateInfo(){
@@ -175,7 +177,8 @@ export class AddAdventureComponent implements OnInit {
         description: this.info.value.description,
         price: this.info.value.price,
         cancelingPercentage: this.info.value.cancellationPercentage,
-        maxParticipants: this.info.value.maxPersons
+        maxParticipants: this.info.value.maxPersons,
+        durationInHours : this.info.value.duration,
       }
       ).subscribe(
         (res) => { 
