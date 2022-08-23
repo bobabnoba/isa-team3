@@ -108,6 +108,8 @@ public class BoatServiceImpl implements BoatService {
     public void deleteById(Long id) {
         Boat found = boatRepository.findById(id)
                 .orElseThrow(() -> new ResourceConflictException("Boat not found"));
+        //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
+        //ako ima ne moze se obrisati ako nema brisi ga
         found.setDeleted(true);
         boatRepository.save(found);
     }
@@ -139,7 +141,8 @@ public class BoatServiceImpl implements BoatService {
     public Boat updateBoatInfo(Long id, BoatInfo updated) {
         Boat found = boatRepository.findById(id)
                 .orElseThrow(() -> new ResourceConflictException("Boat not found"));
-
+        //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
+        //ako ima ne moze se editovati ako nema edituj ga
         found.setName(updated.getName());
         found.setType(BoatType.valueOf(updated.getType()));
         found.setLength(updated.getLength());
@@ -161,7 +164,8 @@ public class BoatServiceImpl implements BoatService {
 
         Boat found = boatRepository.findById(id)
                 .orElseThrow(() -> new ResourceConflictException("Boat not found"));
-
+        //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
+        //ako ima ne moze se editovati ako nema edituj ga
         found.setFishingEquipment(new HashSet<>(updated.getFishingEquipment()));
         found.setUtilities(new HashSet<>(updated.getUtilities()));
         found.setNavigationType(updated.getNavigationTypes().stream().map(NavigationType::valueOf).collect(Collectors.toSet()));
@@ -174,7 +178,8 @@ public class BoatServiceImpl implements BoatService {
     public Boat updateBoatRules(Long id, Collection<Rule> updated) {
         Boat found = boatRepository.findById(id)
                 .orElseThrow(() -> new ResourceConflictException("Boat not found"));
-
+        //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
+        //ako ima ne moze se editovati ako nema edituj ga
         found.setCodeOfConduct(new HashSet<>(updated));
         return boatRepository.save(found);
     }
@@ -184,7 +189,8 @@ public class BoatServiceImpl implements BoatService {
     public Boat updateBoatAddress(Long id, Address updated) {
         Boat found = boatRepository.findById(id)
                 .orElseThrow(() -> new ResourceConflictException("Boat not found"));
-
+        //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
+        //ako ima ne moze se editovati ako nema edituj ga
         found.setAddress(updated);
         return boatRepository.save(found);
     }
