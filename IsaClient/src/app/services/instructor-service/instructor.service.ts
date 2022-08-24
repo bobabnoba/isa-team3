@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AdventureReservation } from 'src/app/interfaces/adventure-reservation';
-import { Reservation } from 'src/app/interfaces/reservation';
+import { LoggedUser } from 'src/app/interfaces/logged-user';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,7 +15,6 @@ export class InstructorService {
   constructor(private _http : HttpClient) { }
 
   getInstructor(email : string ) : Observable<any> {
-    email = this.handlePlusInEmail(email);
     return this._http.get(`${this.baseURL}/instructor?email=${email}`);
   }
 
@@ -24,24 +23,27 @@ export class InstructorService {
   }
 
   checkAvailability(from : string, to : string, instructorEmail : string) {
-    instructorEmail = this.handlePlusInEmail(instructorEmail);
     return this._http.get(`${this.baseURL}/instructor/check-if-available?from=${from}&to=${to}&instructorEmail=${instructorEmail}`);
   }
+
   getAllActiveInstructors() {
     return this._http.get<any>(`${this.baseURL}/instructor/available`);
   }
 
   getInstructorUpcomingReservations(instructorEmail : string) : Observable<AdventureReservation[]>{
-    instructorEmail = this.handlePlusInEmail(instructorEmail);
     return this._http.get<AdventureReservation[]>(`${this.baseURL}/instructor/reservations/upcoming?instructorEmail=${instructorEmail}`);
   }
 
   getInstructorReservationsHistory(instructorEmail : string) : Observable<AdventureReservation[]>{
-    instructorEmail = this.handlePlusInEmail(instructorEmail);
     return this._http.get<AdventureReservation[]>(`${this.baseURL}/instructor/reservations/past?instructorEmail=${instructorEmail}`);
   }
 
-  private handlePlusInEmail(email : string) {
-    return encodeURIComponent(email);
+  getOngoingResClient(email: string) : Observable<LoggedUser>{
+    return this._http.get<LoggedUser>(`${this.baseURL}/instructor/ongoing-reservation-client/${email}`);
   }
+
+  checkForOverlappingReservation(from : string, to : string, instructorEmail : string) {
+    return this._http.get(`${this.baseURL}/instructor/check-for-overlapping-reservations?from=${from}&to=${to}&instructorEmail=${instructorEmail}`);
+  }
+
 }

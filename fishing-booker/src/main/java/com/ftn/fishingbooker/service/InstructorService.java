@@ -32,4 +32,8 @@ public interface InstructorService {
     Instructor findByEmail(String email);
 
     Instructor findById(Long instructorId);
+
+    boolean hasOverlappingReservation(String email, Date from, Date to);
+
+    Reservation getOngoingReservationForInstructor(String email);
 }

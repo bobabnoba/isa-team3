@@ -142,7 +142,9 @@ insert into reservation(
 	id, end_date, is_cancelled, guests, price, start_date, type, client_id)
 	values
 	(101, '2022-08-24', 'false', 3, 200, '2022-08-20', 'VACATION_HOME', 10),
-	(104, '2022-08-30', 'false', 3, 200, '2022-08-29', 'ADVENTURE', 10);
+	(104, '2022-08-30', 'false', 3, 200, '2022-08-29', 'ADVENTURE', 10),
+	(105, '2022-08-24 07:00:00', 'false', 3, 200, '2022-08-24 02:00:00', 'ADVENTURE', 10);
+
 --	(102, '2022-08-30', 'false', 5, 200, '2022-08-25', 'VACATION_HOME', 12);
 
 
@@ -200,7 +202,7 @@ insert into rule(id, name)
            insert into adventure_code_of_conduct(adventure_id, code_of_conduct_id)
             values (111, 100);
 
---insert into adventure_reservations(
---    adventure_id, reservations_id)
---    values
---    (111, 104);
+insert into adventure_reservations(
+    adventure_id, reservations_id)
+    values
+    (112, 105);

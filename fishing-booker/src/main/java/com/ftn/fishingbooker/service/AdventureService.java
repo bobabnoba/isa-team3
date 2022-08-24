@@ -40,4 +40,6 @@ public interface AdventureService {
     void makeReservation(Long adventureId, Reservation reservation);
 
     Collection<Long> getAllIdsByInstructorId(Long instructorId);
+
+    Collection<Adventure> findAllWithInstructor();
 }
