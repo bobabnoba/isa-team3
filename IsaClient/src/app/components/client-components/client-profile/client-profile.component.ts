@@ -13,16 +13,21 @@ export class ClientProfileComponent implements OnInit {
 
   user!: LoggedUser;
   updateMode: boolean = false;
+  rank!: string;
 
   constructor(private _userService: UserService, private _storageService: StorageService,
-    private _snackBar: MatSnackBar) { }
-
-  ngOnInit(): void {
+    private _snackBar: MatSnackBar,
+  ) {
     this._userService.getUserInfo(this._storageService.getEmail()).subscribe(
       (data) => {
         this.user = data;
+        this.rank = this.user.rank.name.split('_')[0];
       }
     );
+  }
+
+  ngOnInit(): void {
+
   }
 
   doSth() {
@@ -42,5 +47,10 @@ export class ClientProfileComponent implements OnInit {
     }
     this.updateMode = !this.updateMode
   }
-
+  info() {
+    this._snackBar.open("You are a " + this.rank + " user, which means you have " + this.user.rank.percentage + "%  discount"
+      + " on every reservation !", "", {
+      duration: 3000,
+    });
+  }
 }

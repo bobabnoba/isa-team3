@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class InstructorService {
 
+
   baseURL = environment.apiURL;
 
   constructor(private _http : HttpClient) { }
@@ -17,7 +18,9 @@ export class InstructorService {
   getInstructor(email : string ) : Observable<any> {
     return this._http.get(`${this.baseURL}/instructor?email=${email}`);
   }
-
+  getInstructorInfo(id: string) : Observable<any>  {
+    return this._http.get(`${this.baseURL}/instructor/info?id=${id}`);
+  }
   addAvailability(body : any ) : Observable<any> {
     return this._http.post(`${this.baseURL}/instructor/add-availability`, body);
   }

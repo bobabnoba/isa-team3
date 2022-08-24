@@ -1,13 +1,11 @@
 package com.ftn.fishingbooker.mapper;
 
-import com.ftn.fishingbooker.dto.FishingEquipmentDto;
 import com.ftn.fishingbooker.dto.NewSpecialOfferDto;
 import com.ftn.fishingbooker.dto.SpecialOfferDto;
 import com.ftn.fishingbooker.model.SpecialOffer;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 public class SpecialOfferMapper {

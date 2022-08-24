@@ -20,9 +20,10 @@ public class ReservationDto {
     private ReservationType type;
 
     private int guests;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Europe/Belgrade")
     private Date startDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Europe/Belgrade")
     private Date endDate;
 
     private double price;

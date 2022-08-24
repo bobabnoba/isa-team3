@@ -21,4 +21,5 @@ public interface AdventureRepository extends JpaRepository<Adventure, Long> {
 
     @Query("SELECT a FROM Adventure a JOIN FETCH a.reservations WHERE a.id = ?1 AND a.deleted = false")
     Adventure getWithReservations(Long id);
+
 }

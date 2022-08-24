@@ -1,0 +1,57 @@
+<div id="wrapper" class="container">
+    <app-client-sidebar></app-client-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div *ngIf="item" class="containersss">
+            <div class="about">
+                <mat-card class="example-card">
+                    <mat-card-title-group>
+                        <mat-card-title>{{item.instructor.firstName}} {{item.instructor.lastName}} </mat-card-title>
+                        <mat-card-subtitle>{{item.instructor.address.country}},
+                            {{item.instructor.address.city}},
+                            {{item.instructor.address.street}},
+                            {{item.instructor.address.zipCode}} </mat-card-subtitle>
+                        <mat-card-subtitle>
+                            {{item.instructor.email}}
+
+                        </mat-card-subtitle>
+                        <div class="image-display">
+                            <img class="img1" src="../../../assets/images/beach-houses.jpg">
+                        </div>
+                    </mat-card-title-group>
+                    <label style="margin-bottom:5px;">Average rating : </label>
+                    <ngb-rating [max]="5" [(rate)]="item.instructor.rating" [readonly]="true" style="margin-left: 5px;">
+                    </ngb-rating>
+
+                    <mat-card-content>
+                        {{item.instructor.biography}}
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="moreInfo">
+
+
+                <mat-card class="wrapper">
+                    <mat-card-title>Instructor Availability Period </mat-card-title>
+                    <div class="box">
+                        <span *ngFor="let item of item.availability; index as i;" class="listing">
+                            <label style="font-weight: bold;">{{item.startDate | date:"short"}} - {{item.endDate |
+                                date:"short"}} </label>
+                        </span>
+                    </div>
+                </mat-card>
+
+
+            </div>
+            <hr>
+            <h2 style="margin-left: 15px; color: blue;">Available adventures</h2>
+            <div class="displaySection">
+                <div class="sectionOverflow">
+                    <div *ngFor="let adv of adventures">
+                        <app-adventure-preview [adventure]="adv"></app-adventure-preview>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

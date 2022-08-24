@@ -17,11 +17,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @Transactional
@@ -93,6 +92,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation makeReservation(Client client, ReservationDto reservationDto) {
+
         Reservation newReservation = ReservationMapper.map(reservationDto);
         newReservation.setClient(client);
         newReservation.setPrice(calculatePrice(reservationDto));

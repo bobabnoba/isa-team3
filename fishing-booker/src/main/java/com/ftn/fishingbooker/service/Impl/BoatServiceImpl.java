@@ -4,7 +4,6 @@ import com.ftn.fishingbooker.dto.FilterDto;
 import com.ftn.fishingbooker.model.Boat;
 import com.ftn.fishingbooker.model.BoatAvailability;
 import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.model.VacationHome;
 import com.ftn.fishingbooker.repository.BoatRepository;
 import com.ftn.fishingbooker.service.BoatOwnerService;
 import com.ftn.fishingbooker.service.BoatService;

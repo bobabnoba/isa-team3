@@ -56,8 +56,9 @@ export class BrowseCardComponent implements OnInit {
     // });
   }
 
-  preview() {  
-    window.location.href = '/' + this.type + '/' + this.id;
+  preview() {
+      window.location.href = '/unauth/' + this.type + '/page/' + this.id;
+    
   }
 
 

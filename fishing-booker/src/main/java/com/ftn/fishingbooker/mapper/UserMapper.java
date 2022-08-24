@@ -19,6 +19,9 @@ public class UserMapper {
         userDto.setActivated(user.isActivated());
         userDto.setBlocked(user.isBlocked());
         userDto.setBiography(user.getBiography());
+        userDto.setRank(UserRankMapper.toDto(user.getRank()));
+        userDto.setPoints(user.getPoints());
+
         return userDto;
     }
 

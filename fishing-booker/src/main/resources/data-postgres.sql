@@ -1,6 +1,5 @@
 delete from vacation_home_reservations;
 delete from reservation;
-delete from vacation_home_code_of_conduct;
 delete from boat;
 delete from room;
 delete from vacation_home;
@@ -27,8 +26,8 @@ id, city, country, street, zip_code) values
 (43, 'Ljubljana', 'Slovenia', 'Jana Kustosa', 1000);
 
 -- rank
-INSERT INTO user_rank(id, name, min_points, reservation_percentage, percentage)
-    VALUES (1, 'REGULAR_CLIENT', 0, 80, 0),
+insert into user_rank(id, name, min_points, reservation_percentage, percentage)
+    values (1, 'REGULAR_CLIENT', 0, 80, 0),
             (2, 'SILVER_CLIENT', 4000, 80, 4),
             (3, 'GOLD_CLIENT', 8000, 80, 7),
             (4, 'REGULAR_ADVERTISER', 0, 90, 92),
@@ -37,7 +36,7 @@ INSERT INTO user_rank(id, name, min_points, reservation_percentage, percentage)
 
 --Client
 insert into client(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id) values
-(10,'Whatever Bio',  'majablgic505@gmail.com', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 1),
+(10,'Whatever Bio',  'majablgic505@gmail.com', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 5000, 2),
 (12,'Whatever Bio',  'ClientEmail2', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 7990, 2);
 
 ----Admin
@@ -152,21 +151,31 @@ insert into reservation(
 
 
 -- Vacation Home Availability
-insert into vacation_home_availability(id, end_date, start_date, home_id)
+insert into vacation_home_availability_periods(id, end_date, start_date)
 values
-(100,  '2022-08-30', '2022-08-01', 100), --available
-(101,  '2022-08-30', '2022-08-01', 101), --available
-(102,  '2022-08-30', '2022-08-01', 102), --available
-(103,  '2022-09-14', '2022-08-26', 103); --available
+(100,  '2022-08-30', '2022-08-01'), --available
+(101,  '2022-08-30', '2022-08-01'), --available
+(102,  '2022-08-30', '2022-08-01'), --available
+(103,  '2022-09-14', '2022-08-26'); --available
 
+insert into vacation_home_availability(
+	vacation_home_id, availability_id)
+	values (100, 100),
+	(101,101),
+	(102,102),
+	(103,103);
 --Instructor Availability
 insert into instructor_availability_periods(
 	id, end_date, start_date)
-	values (100,  '2022-08-30', '2022-08-01'); --available
+	values (100,  '2022-08-30', '2022-08-01'), --available
+	(101,  '2022-09-30', '2022-09-01'), --available
+	(102,  '2022-10-30', '2022-10-01'); --available
 
 insert into instructor_availability(
 	instructor_id, availability_id)
-	values (110, 100);
+	values (110, 100),
+	(110, 101),
+	(110, 102);
 
 --Boats Availability
 insert into boat_availability(id, end_date, start_date, boat_id)

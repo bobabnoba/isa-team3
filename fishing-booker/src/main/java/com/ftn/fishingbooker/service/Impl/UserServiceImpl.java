@@ -11,7 +11,6 @@ import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.ClientService;
-import com.ftn.fishingbooker.service.RegistrationService;
 import com.ftn.fishingbooker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

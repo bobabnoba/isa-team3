@@ -1,6 +1,8 @@
 package com.ftn.fishingbooker.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -16,6 +18,8 @@ public class Room {
 
     @ManyToOne
     @JoinColumn(name = "home_id")
+    @ToString.Exclude
+    @JsonManagedReference
     private VacationHome vacationHome;
 
 }

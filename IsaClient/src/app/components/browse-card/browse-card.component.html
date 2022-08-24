@@ -10,9 +10,9 @@
           <div>
             <p>
               <strong
-                ><a href="{{ type }}/{{ id }}">{{ name }}</a></strong
+                ><a href="{{ type }}/page/{{ id }}">{{ name }}</a></strong
               >
-              <small>, @{{ ownerName }} </small>
+              <small *ngIf="ownerName">, @{{ ownerName }} </small>
               <br />
               {{ description | truncate: [200] }}
             </p>

@@ -20,7 +20,7 @@ export class SearchCardComponent implements OnInit {
   ratingSearch = 0;
   vacation = new FormControl();
   boats = new FormControl();
-  adventure = new FormControl();
+  instructor = new FormControl();
 
   constructor() { }
 
@@ -89,30 +89,30 @@ export class SearchCardComponent implements OnInit {
       this.searchFilter.tags.push('Exclusive');
     }
   
-    if (this.vacation.value && this.adventure.value && this.boats.value) {
+    if (this.vacation.value && this.instructor.value && this.boats.value) {
     
-      this.searchFilter.type.push('home', 'adventure', 'boat')
+      this.searchFilter.type.push('home', 'instructor', 'boat')
     }
-    if (this.vacation.value && this.adventure.value && !this.boats.value) {
-      this.searchFilter.type.push('home', 'adventure')
+    if (this.vacation.value && this.instructor.value && !this.boats.value) {
+      this.searchFilter.type.push('home', 'instructor')
     }
-    if (this.vacation.value && !this.adventure.value && this.boats.value) {
+    if (this.vacation.value && !this.instructor.value && this.boats.value) {
       this.searchFilter.type.push('home', 'boat')
     }
-    if (!this.vacation.value && this.adventure.value && this.boats.value) {
-      this.searchFilter.type.push('adventure', 'boat')
+    if (!this.vacation.value && this.instructor.value && this.boats.value) {
+      this.searchFilter.type.push('instructor', 'boat')
     }
 
-    if (!this.vacation.value && !this.adventure.value && !this.boats.value) {
-      this.searchFilter.type.push('home', 'adventure', 'boat')
+    if (!this.vacation.value && !this.instructor.value && !this.boats.value) {
+      this.searchFilter.type.push('home', 'instructor', 'boat')
     }
-    if (!this.vacation.value && !this.adventure.value && this.boats.value) {
+    if (!this.vacation.value && !this.instructor.value && this.boats.value) {
       this.searchFilter.type.push('boat')
     }
-    if (!this.vacation.value && this.adventure.value && !this.boats.value) {
-      this.searchFilter.type.push('adventure')
+    if (!this.vacation.value && this.instructor.value && !this.boats.value) {
+      this.searchFilter.type.push('instructor')
     }
-    if (this.vacation.value && !this.adventure.value && !this.boats.value) {
+    if (this.vacation.value && !this.instructor.value && !this.boats.value) {
       this.searchFilter.type.push('home')
     }
   

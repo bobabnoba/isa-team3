@@ -72,7 +72,5 @@ public class HomeController {
         emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
-
-
 }
 

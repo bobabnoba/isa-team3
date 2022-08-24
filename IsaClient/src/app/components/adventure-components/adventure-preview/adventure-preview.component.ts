@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Adventure } from 'src/app/interfaces/adventure';
 import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
+import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { environment } from 'src/environments/environment';
 import { AddAdventureComponent } from '../add-adventure/add-adventure.component';
 
@@ -14,29 +15,34 @@ import { AddAdventureComponent } from '../add-adventure/add-adventure.component'
 export class AdventurePreviewComponent implements OnInit {
 
   @Input()
-  adventure : Adventure = {} as Adventure; 
-  
+  adventure: Adventure = {} as Adventure;
+
   @Output() adventureEdited = new EventEmitter<Adventure>();
-    
+
   @Output() adventureDeleted = new EventEmitter<number>();
 
   baseUrl = environment.apiURL
+  instructor: boolean = false;
 
-  constructor(private _router : Router, private _matDialog : MatDialog,
-              private _adventureService : AdventureService) { }
+  constructor(private _router: Router, private _matDialog: MatDialog,
+    private _adventureService: AdventureService, private _service: StorageService) {
+    if(_service.getRole() == 'ROLE_INSTRUCTOR'){
+      this.instructor = true;
+    } 
+  }
 
   ngOnInit(): void {
   }
 
-  openDetailed(){
+  openDetailed() {
     this._router.navigate(['/instructor/adventure/' + this.adventure.id]);
   }
 
-  edit(){
-    
+  edit() {
+
     let myData = {
-      editMode : true,
-      adventureId  : this.adventure.id
+      editMode: true,
+      adventureId: this.adventure.id
     }
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
@@ -45,16 +51,15 @@ export class AdventurePreviewComponent implements OnInit {
     dialogConfig.data = myData;
     const dialogRef = this._matDialog.open(AddAdventureComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(res =>
-      {
-        if(res.data.editMode){
+    dialogRef.afterClosed().subscribe(res => {
+      if (res.data.editMode) {
         this.adventureEdited.emit(res.data.adventure);
-        }
-        
-      })
+      }
+
+    })
   }
 
-  delete(){
+  delete() {
     this._adventureService.deleteAdventure(this.adventure.id).subscribe(() => {
       this.adventureDeleted.emit(this.adventure.id);
     });

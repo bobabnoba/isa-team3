@@ -3,8 +3,6 @@ package com.ftn.fishingbooker.mapper;
 import com.ftn.fishingbooker.dto.UserRankDto;
 import com.ftn.fishingbooker.model.UserRank;
 
-import java.util.Collection;
-
 public class UserRankMapper {
 
     public static UserRankDto toDto(UserRank userRank) {

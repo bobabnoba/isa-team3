@@ -35,7 +35,7 @@ public class VacationHome {
     private Address address;
 
     @Column
-    @ElementCollection(targetClass = String.class, fetch = FetchType.LAZY)
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     private Set<String> codeOfConduct;
 
     @ManyToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -54,7 +54,7 @@ public class VacationHome {
     @JoinColumn(name = "home_owner_id")
     private HomeOwner homeOwner;
 
-    @OneToMany(targetEntity = VacationHomeAvailability.class,mappedBy = "vacationHome",fetch = FetchType.EAGER)
-    private Set<VacationHomeAvailability> availableTimePeriods;
+    @OneToMany(targetEntity = VacationHomeAvailability.class, fetch = FetchType.EAGER)
+    private Set<VacationHomeAvailability> availability;
 
 }

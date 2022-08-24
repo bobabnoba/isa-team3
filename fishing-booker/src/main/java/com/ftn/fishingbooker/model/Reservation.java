@@ -38,7 +38,7 @@ public class Reservation {
     private Set<Utility> utilities;
 
     @ManyToOne(targetEntity = Client.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
 }

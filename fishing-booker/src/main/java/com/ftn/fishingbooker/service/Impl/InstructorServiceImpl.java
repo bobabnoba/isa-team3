@@ -87,7 +87,7 @@ public class InstructorServiceImpl implements InstructorService {
         instructor.setPoints(instructor.getPoints() + reservationPrice * instructor.getRank().getReservationPercentage() / 100);
 
         userRankService.getLoyaltyProgram().forEach(rank -> {
-            if (rank.getName().contains("ADVERTISER") && rank.getMinPoints() < instructor.getPoints()){
+            if (rank.getName().contains("ADVERTISER") && rank.getMinPoints() < instructor.getPoints()) {
                 instructor.setRank(rank);
             }
         });
@@ -106,6 +106,11 @@ public class InstructorServiceImpl implements InstructorService {
     public Collection<Reservation> getPastReservationsForInstructor(String email) {
         Instructor instructor = instructorRepository.findByEmail(email);
         return reservationService.getPastReservationsForInstructor(instructor.getId());
+    }
+
+    @Override
+    public Instructor getWithAvailabilityById(Long id) {
+        return instructorRepository.getActiveById(id);
     }
 
     private List<InstructorAvailability> checkForOverlapping(InstructorAvailability availability, List<InstructorAvailability> availabilities) {

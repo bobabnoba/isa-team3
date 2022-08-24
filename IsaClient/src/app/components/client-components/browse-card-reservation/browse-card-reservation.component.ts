@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -5,6 +6,7 @@ import { IAddress } from 'src/app/interfaces/address';
 import { IReservation } from 'src/app/interfaces/new-reservation';
 import { IUtility } from 'src/app/interfaces/vacation-house-profile';
 import { RentalService } from 'src/app/services/rental-service/rental.service';
+import { StorageService } from 'src/app/services/storage-service/storage.service';
 
 @Component({
   selector: 'app-browse-card-reservation',
@@ -38,7 +40,9 @@ export class BrowseCardReservationComponent implements OnInit {
 
   constructor(
     private _rentalService: RentalService,
-    private _snackBar: MatSnackBar) {
+    private _snackBar: MatSnackBar,
+    private _storageService: StorageService,
+    private _datePipe: DatePipe) {
     this.newReservation.utilities = [];
 
   }
@@ -96,8 +100,8 @@ export class BrowseCardReservationComponent implements OnInit {
 
   reserve() {
 
-    this.newReservation.endDate = this.endDate;
-    this.newReservation.startDate = this.startDate;
+    this.newReservation.endDate = this._datePipe.transform(new Date(this.endDate), 'yyyy-MM-ddTHH:mm')!;
+    this.newReservation.startDate = this._datePipe.transform(new Date(this.startDate), 'yyyy-MM-ddTHH:mm')!;
     this.newReservation.guests = this.guests;
     this.newReservation.price = this.price;
 
@@ -122,23 +126,22 @@ export class BrowseCardReservationComponent implements OnInit {
       }
     }
     if (this.type == 'home') {
-      this._rentalService.rentVacationHome(this.newReservation, this.id).subscribe(makeReservation);
+      this._rentalService.rentVacationHome(this.newReservation, this.id, this._storageService.getEmail()).subscribe(makeReservation);
     }
     if (this.type == 'boat') {
-      this._rentalService.rentBoat(this.newReservation, this.id).subscribe(makeReservation);
+      this._rentalService.rentBoat(this.newReservation, this.id, this._storageService.getEmail()).subscribe(makeReservation);
     }
     if (this.type == 'adventure') {
-      this._rentalService.rentAdventure(this.newReservation, this.id).subscribe(makeReservation);
+      this._rentalService.rentAdventure(this.newReservation, this.id, this._storageService.getEmail()).subscribe(makeReservation);
 
     }
   }
   preview() {
     if (this.type == 'adventure') {
-      console.log("ishere");
-
-      window.location.href = '/instructor/' + this.ownerId;
+     
+      window.location.href = '/instructor/page/' + this.ownerId;
     } else {
-      window.location.href = '/' + this.type + '/' + this.id;
+      window.location.href = '/' + this.type + '/page/' + this.id;
     }
   }
 

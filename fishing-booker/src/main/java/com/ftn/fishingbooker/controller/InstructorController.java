@@ -41,6 +41,11 @@ public class InstructorController {
         Instructor found = instructorService.getWithAvailability(email);
         return ok(InstructorMapper.toDto(found));
     }
+    @GetMapping("/info")
+    public ResponseEntity<InstructorInfoDto> getInstructorWithAvailability(Long id) {
+        Instructor found = instructorService.getWithAvailabilityById(id);
+        return ok(InstructorMapper.mapToInstructorInfo(found));
+    }
 
     @PostMapping("/add-availability")
     public ResponseEntity<InstructorAvailabilityResponseDto> addAvailabilityPeriod(@RequestBody InstructorAvailabilityRequestDto availability) {

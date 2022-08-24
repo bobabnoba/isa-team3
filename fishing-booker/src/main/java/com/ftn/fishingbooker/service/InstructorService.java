@@ -1,6 +1,9 @@
 package com.ftn.fishingbooker.service;
 
-import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.model.Instructor;
+import com.ftn.fishingbooker.model.InstructorAvailability;
+import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.projection.ReservationInfo;
 
 import javax.mail.MessagingException;
@@ -28,4 +31,6 @@ public interface InstructorService {
     Collection<ReservationInfo> getUpcomingReservationsForInstructor(String email);
 
     Collection<Reservation> getPastReservationsForInstructor(String email);
+
+    Instructor getWithAvailabilityById(Long id);
 }

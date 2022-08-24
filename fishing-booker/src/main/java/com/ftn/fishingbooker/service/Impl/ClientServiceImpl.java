@@ -3,7 +3,6 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.User;
-import com.ftn.fishingbooker.model.UserRank;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;

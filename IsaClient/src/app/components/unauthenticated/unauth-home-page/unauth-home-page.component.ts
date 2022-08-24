@@ -4,19 +4,18 @@ import { Router } from '@angular/router';
 import { HomeService } from 'src/app/services/vacation-home-service/home.service';
 import { IAvailableReservations, IVacationHouseProfile } from 'src/app/interfaces/vacation-house-profile';
 @Component({
-  selector: 'app-vacation-home-page',
-  templateUrl: './vacation-home-page.component.html',
-  styleUrls: ['./vacation-home-page.component.css']
+  selector: 'app-unauth-home-page',
+  templateUrl: './unauth-home-page.component.html',
+  styleUrls: ['./unauth-home-page.component.css']
 })
-export class VacationHomePageComponent implements OnInit {
-
+export class UnauthHomePageComponent implements OnInit {
   item!: IVacationHouseProfile;
   actions!: IAvailableReservations[];
   roomsNumber!: number;
   bedsNumber!: number;
   id!: string;
   constructor(private homeService: HomeService, private _router: Router) {
-    this.id = this._router.url.substring(6) ?? '';
+    this.id = this._router.url.substring(18) ?? '';
     console.log(this.id); 
     this.getHomeDetails();
 

@@ -2,6 +2,7 @@ package com.ftn.fishingbooker.mapper;
 
 import com.ftn.fishingbooker.dto.InstructorBrowseDto;
 import com.ftn.fishingbooker.dto.InstructorDto;
+import com.ftn.fishingbooker.dto.InstructorInfoDto;
 import com.ftn.fishingbooker.model.Instructor;
 
 import java.util.ArrayList;
@@ -32,10 +33,19 @@ public class InstructorMapper {
 
         return instructorDto;
     }
-    public static InstructorDto toDto(Instructor instructor){
+
+    public static InstructorDto toDto(Instructor instructor) {
         InstructorDto dto = new InstructorDto();
         dto.setUser(UserMapper.mapToDto(instructor));
         dto.setAvailability(instructor.getAvailability());
         return dto;
+    }
+
+    public static InstructorInfoDto mapToInstructorInfo(Instructor instructor) {
+        InstructorInfoDto dto = new InstructorInfoDto();
+        dto.setInstructor(InstructorMapper.map(instructor));
+        dto.setAvailability(instructor.getAvailability());
+        return dto;
+
     }
 }
