@@ -87,7 +87,7 @@ public class InstructorServiceImpl implements InstructorService {
         instructor.setPoints(instructor.getPoints() + reservationPrice * instructor.getRank().getReservationPercentage() / 100);
 
         userRankService.getLoyaltyProgram().forEach(rank -> {
-            if (rank.getName().contains("ADVERTISER") && rank.getMinPoints() < instructor.getPoints()){
+            if (rank.getName().contains("ADVERTISER") && rank.getMinPoints() < instructor.getPoints()) {
                 instructor.setRank(rank);
             }
         });
@@ -115,7 +115,17 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public Instructor findById(Long instructorId) {
-        return instructorRepository.findById(instructorId).orElseThrow( () -> new IllegalArgumentException("Instructor not found"));
+        return instructorRepository.findById(instructorId).orElseThrow(() -> new IllegalArgumentException("Instructor not found"));
+    }
+
+    @Override
+    public boolean hasOverlappingReservation(String email, Date from, Date to) {
+        Instructor instructor = instructorRepository.findByEmail(email);
+
+        Collection<Long> adventures = adventureService.getAllIdsByInstructorId(instructor.getId());
+        Collection<Reservation> reservations = reservationService.getReservationsForAdventures(adventures);
+
+        return reservationService.dateOverlapsWithReservation(reservations, from, to);
     }
 
     private List<InstructorAvailability> checkForOverlapping(InstructorAvailability availability, List<InstructorAvailability> availabilities) {

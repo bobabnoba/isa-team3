@@ -76,4 +76,12 @@ public class InstructorController {
                 .collect(Collectors.toList());
         return ok(dtos);
     }
+
+    @GetMapping("/has-overlapping-reservation")
+    public ResponseEntity<Boolean> checkIfAvailable(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
+                                                    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
+                                                    @RequestParam String email) {
+        return ResponseEntity.ok(instructorService.hasOverlappingReservation(email, from, to));
+    }
+
 }
