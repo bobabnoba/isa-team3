@@ -11,7 +11,9 @@ export class BoatInfoComponent implements OnInit {
   @Input()
   boat! : Boat;
   
-  constructor() { }
+  constructor() {
+    this.boat = {} as Boat;
+  }
 
   ngOnInit(): void {
   }

@@ -10,6 +10,7 @@ import { AdminUsersComponent } from './components/admin-components/admin-users/a
 import { ReservationReportsComponent } from './components/admin-components/reservation-reports/reservation-reports.component';
 import { AddAdventureComponent } from './components/adventure-components/add-adventure/add-adventure.component';
 import { AdventureProfileComponent } from './components/adventure-components/adventure-profile/adventure-profile.component';
+import { BoatAvailabilityComponent } from './components/boat-components/boat-availability/boat-availability.component';
 import { BoatProfileComponent } from './components/boat-components/boat-profile/boat-profile.component';
 import { BoatOwnerBoatProfileComponent } from './components/boat-owner-components/boat-owner-boat-profile/boat-owner-boat-profile.component';
 import { BoatOwnerBoatsComponent } from './components/boat-owner-components/boat-owner-boats/boat-owner-boats.component';
@@ -181,6 +182,10 @@ const routes: Routes = [
   {
     path: 'boat-owner/boat/:id',
     component: BoatOwnerBoatProfileComponent
+  },
+  {
+    path: 'boat-owner/boat/calendar/:id',
+    component: BoatAvailabilityComponent
   },
 
 ];

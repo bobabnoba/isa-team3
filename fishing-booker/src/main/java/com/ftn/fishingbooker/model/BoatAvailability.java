@@ -12,6 +12,7 @@ import java.util.Date;
 public class BoatAvailability {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "startDate", nullable = false)

@@ -5,8 +5,7 @@ import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.BoatOwner;
 import com.ftn.fishingbooker.model.Registration;
 import com.ftn.fishingbooker.model.User;
-import com.ftn.fishingbooker.repository.RegistrationRepository;
-import com.ftn.fishingbooker.repository.UserRepository;
+import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.stereotype.*;
 
@@ -17,12 +16,15 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
     private final UserRepository userRepository;
     private final RegistrationRepository registrationRepository;
     private final UserRankService userRankService;
+    private final BoatOwnerRepository boatOwnerRepository;
 
-    public BoatOwnerServiceImpl(UserService userService, UserRepository userRepository, RegistrationRepository registrationRepository, UserRankService userRankService) {
+    public BoatOwnerServiceImpl(UserService userService, UserRepository userRepository, RegistrationRepository registrationRepository,
+                                UserRankService userRankService, BoatOwnerRepository boatOwnerRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.registrationRepository = registrationRepository;
         this.userRankService = userRankService;
+        this.boatOwnerRepository = boatOwnerRepository;
     }
 
     @Override
@@ -47,5 +49,10 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
             }
         });
         userRepository.save(owner);
+    }
+
+    @Override
+    public BoatOwner getWithAvailability(String email) {
+        return boatOwnerRepository.findByEmail(email);
     }
 }

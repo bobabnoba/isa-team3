@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Utility } from 'src/app/interfaces/adventure';
 import { Boat } from 'src/app/interfaces/boat';
 
 @Component({
@@ -11,7 +12,10 @@ export class BoatServicesComponent implements OnInit {
   @Input()
   boat! : Boat;
   
-  constructor() { }
+  constructor() {
+    this.boat = {} as Boat;
+    this.boat.utilities = [] as Utility[];
+   }
 
   ngOnInit(): void {
   }

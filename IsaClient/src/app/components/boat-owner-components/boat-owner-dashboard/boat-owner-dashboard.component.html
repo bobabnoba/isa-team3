@@ -1,1 +1,35 @@
-<p>boat-owner-dashboard works!</p>
+<div id="wrapper">
+    <app-boat-owner-sidebar></app-boat-owner-sidebar>
+      <div id="content-wrapper" class="d-flex flex-column">
+        <app-boat-owner-topbar ></app-boat-owner-topbar>
+          <div class="container-fluid">
+            <h1>My calendar</h1>
+  
+              <div class="row">
+  
+                  <div  class="col-xl-8 col-lg-7">
+                    <app-availability-calendar [boatOwnerEmail]="email" ></app-availability-calendar>
+  
+                  </div>
+  
+                  
+              </div>
+  
+              <div class="row">
+  
+                  <div class="col-lg-6 mb-4">
+  
+                    <p>  </p>
+                  </div>
+  
+                  <div class="col-lg-6 mb-4">
+  
+                    <p>   </p>
+                  </div>
+              </div>
+  
+      </div>
+      </div>
+   </div>
+  
+  

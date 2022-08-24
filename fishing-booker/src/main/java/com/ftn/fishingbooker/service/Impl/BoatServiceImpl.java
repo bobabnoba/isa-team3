@@ -5,16 +5,16 @@ import com.ftn.fishingbooker.enumeration.*;
 import com.ftn.fishingbooker.exception.*;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.*;
-import com.ftn.fishingbooker.service.BoatOwnerService;
-import com.ftn.fishingbooker.service.BoatService;
-import com.ftn.fishingbooker.service.DateService;
-import com.ftn.fishingbooker.service.ReservationService;
+import com.ftn.fishingbooker.service.*;
+import com.ftn.fishingbooker.util.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.*;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 
 @Service
@@ -26,6 +26,7 @@ public class BoatServiceImpl implements BoatService {
     private final ReservationService reservationService;
     private final BoatOwnerService boatOwnerService;
     private final BoatOwnerRepository boatOwnerRepository;
+    private final BoatAvailabilityService boatAvailabilityService;
 
     @Override
     public Collection<Boat> getAll() {
@@ -195,5 +196,113 @@ public class BoatServiceImpl implements BoatService {
         return boatRepository.save(found);
     }
 
+//    @Override
+//    public BoatAvailability addAvailabilityPeriod(BoatAvailability newAvailability, Long boatId) {
+//        Boat boat = boatRepository.findById(boatId).orElseThrow(() -> new ResourceConflictException("Boat not found"));
+//        List<BoatAvailability> availabilities = new ArrayList<>(boat.getAvailableTimePeriods());
+////        newAvailability.setBoat(boat);
+//        BoatAvailability added = boatAvailabilityService.save(newAvailability);
+//        availabilities.add(added);
+//
+//        boat.setAvailableTimePeriods(new HashSet<>(checkForOverlapping(added, availabilities)));
+//
+//        boatRepository.save(boat);
+//
+//        //TODO: delete all availabilities that overlapped and got replaced // availabilityService
+//
+//        return added;
+//    }
+    @Override
+    @Transactional
+    public BoatAvailability addAvailabilityPeriod(BoatAvailability newAvailability, Long boatId) {
+        Boat boat = boatRepository.findById(boatId).orElseThrow(() -> new ResourceConflictException("Boat not found"));
+        List<BoatAvailability> availabilities = new ArrayList<>(boat.getAvailableTimePeriods());
+
+        Optional<BoatAvailability> between = availabilities.stream().filter(boatAvailability ->
+            boatAvailability.getStartDate().before(newAvailability.getStartDate()) &&
+                    boatAvailability.getEndDate().after(newAvailability.getEndDate())
+        ).findFirst();
+        if( between.isPresent()){
+            return null;
+        }
+
+        Optional<BoatAvailability> aEnd = availabilities.stream().filter(boatAvailability ->
+                boatAvailability.getEndDate().before(newAvailability.getEndDate()) && boatAvailability.getEndDate().after(newAvailability.getStartDate())).findFirst();
+        Optional<BoatAvailability> aStart = availabilities.stream().filter(boatAvailability ->
+                boatAvailability.getStartDate().after(newAvailability.getStartDate()) && boatAvailability.getStartDate().before(newAvailability.getEndDate())).findFirst();
+
+        if(aEnd.isPresent() || aStart.isPresent()){
+            BoatAvailability missingPeriod = new BoatAvailability();
+            missingPeriod.setStartDate(newAvailability.getStartDate());
+            missingPeriod.setEndDate(newAvailability.getEndDate());
+            //if( aEnd.equals(aStart)){
+                aEnd.ifPresent(boatAvailability -> {
+                    missingPeriod.setStartDate(DateUtil.addDays(boatAvailability.getEndDate(), 1));
+                    boatAvailability.setEndDate(newAvailability.getEndDate());
+                });
+                aStart.ifPresent(boatAvailability -> {
+                    missingPeriod.setEndDate(DateUtil.addDays(boatAvailability.getStartDate(), -1));
+                    boatAvailability.setStartDate(newAvailability.getStartDate());
+                });
+                //TODO: U SLUCAJU DA POCINJE UNATAR JEDNOG A ZAVRSAVA SE UNUTAR DRUGOG PERIODA
+//            }else{
+//                aEnd.ifPresent(boatAvailability -> {
+//                    missingPeriod.setStartDate(DateUtil.addDays(boatAvailability.getEndDate(), 1));
+//                });
+//                aStart.ifPresent(boatAvailability -> {
+//                    missingPeriod.setEndDate(DateUtil.addDays(boatAvailability.getStartDate(), -1));
+//                });
+//               aStart.get().setEndDate(aEnd.get().getEndDate());
+//               availabilities.remove(aEnd);
+//            }
+            return missingPeriod;
+
+        }else{
+            newAvailability.setBoat(boat);
+            BoatAvailability added = boatAvailabilityService.save(newAvailability);
+            availabilities.add(added);
+            boat.setAvailableTimePeriods(new HashSet<>(checkForOverlapping(added, availabilities)));
+            boatRepository.save(boat);
+            return added;
+        }
+    }
+
+
+
+    private List<BoatAvailability> checkForOverlapping(BoatAvailability availability, List<BoatAvailability> availabilities) {
+
+        List<BoatAvailability> retVal = new ArrayList<>();
+        for (BoatAvailability a : availabilities) {
+            if (!a.getId().equals(availability.getId()) && (isBetween(availability.getStartDate(), a) || isBetween(availability.getEndDate(), a))) {
+                Date newStartDate = a.getStartDate();
+                Date newEndDate = a.getEndDate();
+                a = calculateNew(newStartDate, newEndDate, availability);
+            } else if (availability.getStartDate().before(a.getStartDate()) &&
+                    availability.getEndDate().after(a.getEndDate())) {
+                a.setStartDate(availability.getStartDate());
+                a.setEndDate(availability.getEndDate());
+            }
+            retVal.add(a);
+        }
+
+        return retVal;
+    }
+
+    private boolean isBetween(Date newAvailabilityDate, BoatAvailability availability) {
+        return (newAvailabilityDate.after(availability.getStartDate())
+                && newAvailabilityDate.before(availability.getEndDate())) ||
+                newAvailabilityDate.equals(availability.getStartDate())
+                || newAvailabilityDate.equals(availability.getEndDate());
+    }
+
+    private BoatAvailability calculateNew(Date newStartDate, Date newEndDate, BoatAvailability availability) {
+        if (newStartDate.before(availability.getStartDate())) {
+            availability.setStartDate(newStartDate);
+        }
+        if (newEndDate.after(availability.getEndDate())) {
+            availability.setEndDate(newEndDate);
+        }
+        return availability;
+    }
 
 }

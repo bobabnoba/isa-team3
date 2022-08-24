@@ -11,7 +11,10 @@ export class BoatOwnerInfoComponent implements OnInit {
   @Input()
   boat! : Boat;  
   
-  constructor() { }
+  constructor() {
+    this.boat = {} as Boat;
+  
+   }
 
   ngOnInit(): void {
   }

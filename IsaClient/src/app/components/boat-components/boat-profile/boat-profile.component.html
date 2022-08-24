@@ -1,9 +1,11 @@
+
 <div class="container-fluid h-100 d-flex justify-content-center p-0 pic">
     <div class="jumbotron mx-auto tabs">
         <mat-tab-group mat-align-tabs="center">
-            <mat-tab label="About"> 
+             <mat-tab label="About"> 
                 <app-boat-info [boat]="boat"></app-boat-info>
             </mat-tab>
+            
             <mat-tab label="Additional info"> 
                 <app-boat-additional-info [boat]="boat" ></app-boat-additional-info>
             </mat-tab>
@@ -17,7 +19,15 @@
                 <app-boat-owner-info [boat]="boat"></app-boat-owner-info>
             </mat-tab>
             <mat-tab label="Images"> 
+                <div *ngFor="let im of boat.images" >
+                    <div style="display: flex; display: inline-block;" >
+                        <img src="{{baseUrl}}{{im}}" class="img" style="width: 40%; height: 40%;padding: 1rem;position: flex;" onerror="this.onerror;this.src='../../../../assets/images/no-img.png'" alt="Image not available">                    
+                    </div>
+                </div>
             </mat-tab>
+            <!-- <mat-tab label="Availability"> 
+                <app-boat-availability [boat]="boat" ></app-boat-availability> 
+            </mat-tab> -->
           </mat-tab-group>
     </div>
    <!-- <div class="justify-content-center d-flex flex-dir pt-5">

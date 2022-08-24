@@ -3,7 +3,7 @@ package com.ftn.fishingbooker.service;
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.model.*;
 
-import java.util.Collection;
+import java.util.*;
 
 public interface BoatService {
     Collection<Boat> getAll();
@@ -32,4 +32,5 @@ public interface BoatService {
 
     Boat updateBoatRules(Long id, Collection<Rule> updated);
 
+    BoatAvailability addAvailabilityPeriod(BoatAvailability mapToBoatAvailabilityEntity, Long boatId);
 }

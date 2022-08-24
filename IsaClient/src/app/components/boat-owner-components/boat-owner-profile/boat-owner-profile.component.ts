@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { IAddress } from 'src/app/interfaces/address';
 import { DeleteAccoutRequest } from 'src/app/interfaces/delete-accout-request';
 import { LoggedUser } from 'src/app/interfaces/logged-user';
 import { DeleteAccountService } from 'src/app/services/delete-account-service/delete-account.service';
@@ -21,7 +22,10 @@ export class BoatOwnerProfileComponent implements OnInit {
   
   constructor(private _userService : UserService, private _storageService : StorageService,
     private _snackBar : MatSnackBar, private _matDialog : MatDialog,
-    private _deleteAccountService : DeleteAccountService) { }
+    private _deleteAccountService : DeleteAccountService) { 
+      this.user = {} as LoggedUser;
+      this.user.address = {} as IAddress;
+    }
 
   ngOnInit(): void {
     this._userService.getUserInfo(this._storageService.getEmail()).subscribe(

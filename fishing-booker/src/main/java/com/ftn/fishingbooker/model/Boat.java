@@ -49,7 +49,7 @@ public class Boat {
 
     @Column
 //    @Enumerated(EnumType.STRING)
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<NavigationType> navigationType;
 
     @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)

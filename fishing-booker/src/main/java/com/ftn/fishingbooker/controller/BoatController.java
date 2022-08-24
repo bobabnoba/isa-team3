@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.*;
 
 import java.io.*;
-import java.util.Collection;
+import java.util.*;
 import java.util.stream.*;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -74,7 +74,7 @@ public class BoatController {
     @GetMapping("/{id}")
     public ResponseEntity<BoatDto> getBoatById(@PathVariable Long id){
         Boat found = boatService.getById(id);
-        BoatDto dto = BoatMapper.mapToDto(found);
+        BoatDto dto = BoatMapper.mapToDtoWithAvailability(found);
         return ok(dto);
     }
 
@@ -125,6 +125,21 @@ public class BoatController {
         boatService.addImage(id, fileName);
 
         return ResponseEntity.ok().build();
+    }
+
+//    @GetMapping
+//    public ResponseEntity<BoatDto> getBoatWithAvailability(Long id) {
+//        Boat found = boatService.getById(id);
+//        return ok(BoatMapper.mapToDto(found));
+//    }
+
+    @PostMapping("/add-availability")
+    public ResponseEntity<?> addAvailabilityPeriod(@RequestBody BoatAvailabilityRequestDto availability) {
+        BoatAvailability saved = boatService.addAvailabilityPeriod(BoatMapper.mapToBoatAvailabilityEntity(availability), availability.boatId);
+        if (saved != null){
+            return ok(BoatMapper.mapToAvailabilityDto(saved));
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

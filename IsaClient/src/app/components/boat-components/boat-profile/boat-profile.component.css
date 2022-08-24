@@ -19,3 +19,12 @@
 .flex-dir {
     flex-direction: column;
 }
+
+.app {
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  app-image-list {
+    display: inline-block;
+  }

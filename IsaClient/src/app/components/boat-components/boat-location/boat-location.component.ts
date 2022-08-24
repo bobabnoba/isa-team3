@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { IAddress } from 'src/app/interfaces/address';
 import { Boat } from 'src/app/interfaces/boat';
 
 @Component({
@@ -11,7 +12,10 @@ export class BoatLocationComponent implements OnInit {
   @Input()
   boat! : Boat;  
   
-  constructor() { }
+  constructor() { 
+    this.boat = {} as Boat;
+    this.boat.address = {} as IAddress;
+  }
 
   ngOnInit(): void {
   }

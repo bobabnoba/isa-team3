@@ -60,4 +60,8 @@ export class BoatPreviewComponent implements OnInit {
     });
   }
 
+  openCalendar(){
+    this._router.navigate(['/boat-owner/boat/calendar/' + this.boat.id]);
+  }
+
 }

@@ -39,7 +39,7 @@ export class BoatService {
   updateAddress(id : string, updated : any) : Observable<Boat>{
     return this._http.post<Boat>(`${this.baseURL}/boats/address-update/${id}` , updated);
   }
-  getAllByBoatOwner(email: string) {
+  getAllByBoatOwner(email: string) : Observable<Boat[]> {
     return this._http.get<Boat[]>(`${this.baseURL}/boats/by-owner/${email}`);
   }
   
@@ -57,6 +57,14 @@ export class BoatService {
   getById(id : string) : Observable<Boat>{
     return this._http.get<Boat>(`${this.baseURL}/boats/${id}`);
   }
+  addAvailability(body : any ) : Observable<any> {
+    return this._http.post(`${this.baseURL}/boats/add-availability`, body);
+  }
+
+  // checkAvailability(from : string, to : string, instructorEmail : string) {
+  //   instructorEmail = this.handlePlusInEmail(instructorEmail);
+  //   return this._http.get(`${this.baseURL}/instructor/check-if-available?from=${from}&to=${to}&instructorEmail=${instructorEmail}`);
+  // }
 
   
 }

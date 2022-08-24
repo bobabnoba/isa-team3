@@ -204,3 +204,12 @@ insert into rule(id, name)
 --    adventure_id, reservations_id)
 --    values
 --    (111, 104);
+
+
+insert into boat_owner_availability_periods(
+	id, end_date, start_date)
+	values (200,  '2022-08-15', '2022-08-01'); --available
+
+insert into boat_owner_availability(
+	boat_owner_id, availability_id)
+	values (109, 200);

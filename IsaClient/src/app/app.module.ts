@@ -115,6 +115,10 @@ import { ReservationInfoComponent } from './components/instructor-components/res
 import { ReservationReportsComponent } from './components/admin-components/reservation-reports/reservation-reports.component';
 import { ReportResponseComponent } from './components/admin-components/report-response/report-response.component';
 import { InstructorReportComponent } from './components/instructor-components/instructor-report/instructor-report.component';
+import { BoatAvailabilityComponent } from './components/boat-components/boat-availability/boat-availability.component';
+import { AvailabilityCalendarComponent } from './components/boat-components/availability-calendar/availability-calendar.component';
+import { ImageListComponent } from './components/common/image-list/image-list.component';
+import { ImageListItemComponent } from './components/common/image-list-item/image-list-item.component';
 
 @NgModule({
   declarations: [
@@ -205,6 +209,10 @@ import { InstructorReportComponent } from './components/instructor-components/in
     ReservationReportsComponent,
     ReportResponseComponent,
     InstructorReportComponent,
+    BoatAvailabilityComponent,
+    AvailabilityCalendarComponent,
+    ImageListComponent,
+    ImageListItemComponent,
   ],
   imports: [
     BrowserModule,

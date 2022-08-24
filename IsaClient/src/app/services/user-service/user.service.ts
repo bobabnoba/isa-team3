@@ -18,8 +18,8 @@ export class UserService {
   
   constructor(private _http : HttpClient) { }
 
-  getUserInfo(email : string) : Observable<any>{
-    return this._http.get(`${this.baseURL}/users/${email}`); 
+  getUserInfo(email : string) : Observable<LoggedUser>{
+    return this._http.get<LoggedUser>(`${this.baseURL}/users/${email}`); 
   }
 
   getUserById(id : number) : Observable<LoggedUser> {

@@ -1,5 +1,6 @@
 import { IAddress } from "./address";
 import { FishingEquipment, Utility } from "./adventure";
+import { BoatAvailability } from "./boat-availability";
 import { Rule } from "./rule";
 
 export interface Boat {
@@ -26,5 +27,6 @@ export interface Boat {
     ownerEmail : string;
     ownerFirstName: string;
     ownerLastName: string;
+    availability: BoatAvailability[];
     
 }
