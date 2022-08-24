@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.mapper;
 
+
 import com.ftn.fishingbooker.dto.OwnerRegisterDto;
 import com.ftn.fishingbooker.dto.RegisterDto;
 import com.ftn.fishingbooker.dto.RegistrationResponseDto;

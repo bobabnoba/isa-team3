@@ -2,7 +2,6 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.model.UserRank;
-import com.ftn.fishingbooker.model.UserRole;
 import com.ftn.fishingbooker.repository.UserRankRepository;
 import com.ftn.fishingbooker.service.UserRankService;
 import com.ftn.fishingbooker.service.UserService;

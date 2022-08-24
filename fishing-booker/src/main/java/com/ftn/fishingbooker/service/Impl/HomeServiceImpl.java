@@ -13,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -47,7 +44,7 @@ public class HomeServiceImpl implements HomeService {
 
             if (home.getGuestLimit() >= filter.getPeople()) {
                 // Date should overlap with vacation home availability
-                if (doPeriodsOverlap(filter.getStartDate(), filter.getEndDate(), home.getAvailableTimePeriods())) {
+                if (doPeriodsOverlap(filter.getStartDate(), filter.getEndDate(), home.getAvailability())) {
 
                     Collection<Reservation> reservations = reservationService.getReservationForVacationHome(home.getId());
                     boolean overlaps = reservationService.dateOverlapsWithReservation(reservations, filter.getStartDate(), filter.getEndDate());

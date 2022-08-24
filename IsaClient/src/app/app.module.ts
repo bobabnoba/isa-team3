@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { VacationHomePageComponent } from './components/vacation-home-components/vacation-home-page/vacation-home-page.component';
+import { VacationHomePageComponent } from './components/rentals/vacation-home-page/vacation-home-page.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
@@ -109,6 +109,13 @@ import { ReservationReportsComponent } from './components/admin-components/reser
 import { ReportResponseComponent } from './components/admin-components/report-response/report-response.component';
 import { InstructorReportComponent } from './components/instructor-components/instructor-report/instructor-report.component';
 import { InstructorCreateReservationComponent } from './components/instructor-components/instructor-create-reservation/instructor-create-reservation.component';
+import { BoatPageComponent } from './components/rentals/boat-page/boat-page.component';
+import { InstructorPageComponent } from './components/rentals/instructor-page/instructor-page.component';
+import { UnauthBoatPageComponent } from './components/unauthenticated/unauth-boat-page/unauth-boat-page.component';
+import { UnauthHomePageComponent } from './components/unauthenticated/unauth-home-page/unauth-home-page.component';
+import { UnauthInstructorPageComponent } from './components/unauthenticated/unauth-instructor-page/unauth-instructor-page.component';
+
+
 
 @NgModule({
   declarations: [
@@ -193,6 +200,12 @@ import { InstructorCreateReservationComponent } from './components/instructor-co
     ReportResponseComponent,
     InstructorReportComponent,
     InstructorCreateReservationComponent,
+    BoatPageComponent,
+    InstructorPageComponent,
+    UnauthBoatPageComponent,
+    UnauthHomePageComponent,
+    UnauthInstructorPageComponent
+
   ],
   imports: [
     BrowserModule,

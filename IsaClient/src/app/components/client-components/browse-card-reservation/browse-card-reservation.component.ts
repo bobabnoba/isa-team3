@@ -1,11 +1,14 @@
+import { MESSAGES_CONTAINER_ID } from '@angular/cdk/a11y';
+import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IAddress } from 'src/app/interfaces/address';
-import { INewReservation } from 'src/app/interfaces/new-reservation';
+import { IReservation } from 'src/app/interfaces/new-reservation';
 import { IUtility } from 'src/app/interfaces/vacation-house-profile';
 import { RentalService } from 'src/app/services/rental-service/rental.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-browse-card-reservation',
@@ -22,6 +25,7 @@ export class BrowseCardReservationComponent implements OnInit {
     street: '',
     zipCode: 1
   };
+  @Input() imageUrl: string = '';
   @Input() price: number = 0;
   @Input() duration: number = 0;
   @Input() guests: number = 0;
@@ -35,12 +39,14 @@ export class BrowseCardReservationComponent implements OnInit {
   @Input() type: string = 'entity';
   @Input() startDate: Date = new Date();
   @Input() endDate: Date = new Date();
-  newReservation: INewReservation = {} as INewReservation;
+  newReservation: IReservation = {} as IReservation;
+  baseUrl = environment.apiURL
 
   constructor(
     private _rentalService: RentalService,
     private _snackBar: MatSnackBar,
-    private _storageService : StorageService) {
+    private _storageService: StorageService,
+    private _datePipe: DatePipe) {
     this.newReservation.utilities = [];
 
   }
@@ -98,11 +104,11 @@ export class BrowseCardReservationComponent implements OnInit {
 
   reserve() {
 
-    this.newReservation.endDate = this.endDate;
-    this.newReservation.startDate = this.startDate;
+    this.newReservation.endDate = this._datePipe.transform(new Date(this.endDate), 'yyyy-MM-ddTHH:mm')!;
+    this.newReservation.startDate = this._datePipe.transform(new Date(this.startDate), 'yyyy-MM-ddTHH:mm')!;
     this.newReservation.guests = this.guests;
     this.newReservation.price = this.price;
-  
+
     console.log(this.newReservation);
     const makeReservation = {
       next: (res: any) => {
@@ -116,18 +122,25 @@ export class BrowseCardReservationComponent implements OnInit {
         window.location.href = '/client/reservations'
       },
       error: (err: HttpErrorResponse) => {
-        this._snackBar.open('Sorry :( it seems like we have a problem. Try again in few minutes!', '',
+        console.log(err);
+        let message = 'Sorry :( it seems like we have a problem. Try again in few minutes!'
+        if (err.status == 403) {
+          message = 'You have been prevented from making reservations because you have more than 3 penalties. \n ' +
+            ' Penalties are deleted at the start of each month. '
+        }
+
+        this._snackBar.open(message, 'Close',
           {
-            duration: 3000,
+            duration: 10000,
             panelClass: ['snack-bar']
           });
       }
     }
     if (this.type == 'home') {
-      this._rentalService.rentVacationHome(this.newReservation, this.id).subscribe(makeReservation);
+      this._rentalService.rentVacationHome(this.newReservation, this.id, this._storageService.getEmail()).subscribe(makeReservation);
     }
     if (this.type == 'boat') {
-      this._rentalService.rentBoat(this.newReservation, this.id).subscribe(makeReservation);
+      this._rentalService.rentBoat(this.newReservation, this.id, this._storageService.getEmail()).subscribe(makeReservation);
     }
     if (this.type == 'adventure') {
       this._rentalService.rentAdventure(this.newReservation, this.id, this._storageService.getEmail()).subscribe(makeReservation);
@@ -136,11 +149,10 @@ export class BrowseCardReservationComponent implements OnInit {
   }
   preview() {
     if (this.type == 'adventure') {
-      console.log("ishere");
 
-      window.location.href = '/instructor/' + this.ownerId;
+      window.location.href = '/instructor/page/' + this.ownerId;
     } else {
-      window.location.href = '/' + this.type + '/' + this.id;
+      window.location.href = '/' + this.type + '/page/' + this.id;
     }
   }
 

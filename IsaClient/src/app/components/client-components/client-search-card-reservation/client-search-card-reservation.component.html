@@ -1,64 +1,61 @@
 <div class="searchSection">
     <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2"> 
-                        <!-- Center-->
-                        <form [formGroup]="aFormGroup" style="overflow: hidden; width:100%">
-                            <mat-form-field appearance="fill" style="overflow: hidden; width:100%">
-                                <mat-label>Enter a date range</mat-label>
-                                <mat-date-range-input [rangePicker]="picker">
-                                    <input matStartDate formControlName="startDate" placeholder="Start date">
-                                    <input matEndDate formControlName="endDate" placeholder="End date">
-                                </mat-date-range-input>
-                                <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-date-range-picker #picker></mat-date-range-picker>
-                            </mat-form-field>
-                        </form>
-                        <div class="people">
-                            <span class="icon is-small is-left">
-                                <i class="fa fa-user"></i>
-                            </span>
-                            <input matInput type="number" min="1" max="35" [(ngModel)]="searchFilter.people">
-                        </div>
-                        <button class="submitBtn" mat-raised-button color="primary" (click)="addNew()">Submit</button>
-                    </div>
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <form [formGroup]="aFormGroup" style="overflow:hidden;width:100%">
+                        <mat-form-field appearance="fill" style="overflow: hidden; width:100%">
+                            <mat-label>from:</mat-label>
+                            <input matInput type="datetime-local" [min]="today" formControlName="startDate">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="overflow: hidden; width:100%">
+                            <mat-label>to:</mat-label>
+                            <input matInput type="datetime-local" [min]="today" formControlName="endDate">
+                        </mat-form-field>
 
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
-    <form class="example-form" (input)="onChangeDemo($event)">
-        <mat-form-field class="example-full-width">
-            <mat-label>Search anything!</mat-label>
-            <input matInput="Search anything!" [(ngModel)]="searchFilter.text" name="something">
-        </mat-form-field>
-    </form>
-
-    <div style="display: flex;align-items: center;">
-        <label margin="0px"> Select rating: </label>
-        <mat-slider thumbLabel [displayWith]="formatLabel" (change)="onChangeDemo($event)"
-            [(ngModel)]="searchFilter.rating" min="0" max="5" step="1" value="0"></mat-slider>
+    <div class="divGroup">
+        <div class="people">
+            <span class="icon is-small is-left">
+                <i class="fa fa-user"></i>
+            </span>
+            <input matInput type="number" min="1" max="35" [(ngModel)]="searchFilter.people">
+        </div>
+        <form class="example-form" (input)="onChangeDemo($event)">
+            <mat-form-field class="example-full-width">
+                <mat-label>Search anything!</mat-label>
+                <input matInput="Search anything!" [(ngModel)]="searchFilter.text" name="something">
+            </mat-form-field>
+        </form>
     </div>
+    <div class="divGroup">
+        <div style="display: flex;align-items: center;">
+            <label margin="0px"> Select rating: </label>
+            <mat-slider thumbLabel [displayWith]="formatLabel" (change)="onChangeDemo($event)"
+                [(ngModel)]="searchFilter.rating" min="0" max="5" step="1" value="0"></mat-slider>
+        </div>
 
-    <div class="column is-2">
-        <div class="select">
-            <select [(ngModel)]="searchFilter.sort" (change)="onChangeDemo($event)">
-                <option value="NO_SORT">Select sorting:</option>
-                <option value="PRICE_LOWER">Price: Lower first</option>
-                <option value="PRICE_HIGHER">Price: Higher first</option>
-                <option value="RATING_HIGHER">Rating: Higher first</option>
-                <option value="RATING_LOWER">Rating: Lower first</option>
-                <option value="NAME_ACS">Name: Acsending</option>
-                <option value="NAME_DES">Name: Descending</option>
-                <option value="ADDR_ACS">Address: Acsending</option>
-                <option value="ADDR_DES">Address: Descending</option>
-            </select>
+        <div class="column is-2">
+            <div class="select">
+                <select [(ngModel)]="searchFilter.sort" (change)="onChangeDemo($event)">
+                    <option value="NO_SORT">Select sorting:</option>
+                    <option value="PRICE_LOWER">Price: Lower first</option>
+                    <option value="PRICE_HIGHER">Price: Higher first</option>
+                    <option value="RATING_HIGHER">Rating: Higher first</option>
+                    <option value="RATING_LOWER">Rating: Lower first</option>
+                    <option value="NAME_ACS">Name: Acsending</option>
+                    <option value="NAME_DES">Name: Descending</option>
+                    <option value="ADDR_ACS">Address: Acsending</option>
+                    <option value="ADDR_DES">Address: Descending</option>
+                </select>
+            </div>
         </div>
     </div>
+    <button class="submitBtn" mat-raised-button color="primary" (click)="addNew()">Submit</button>
 
 
 </div>

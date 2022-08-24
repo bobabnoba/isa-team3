@@ -15,7 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -40,24 +42,6 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Collection<Reservation> getReservationForBoat(Long boatId) {
         return reservationRepository.getReservationForBoat(boatId);
-    }
-
-    @Override
-    public Reservation makeReservation(Client client, ReservationDto reservationDto, double durationInHours) {
-        Date newEndDate = dateService.addHoursToJavaUtilDate(reservationDto.getStartDate(), durationInHours);
-        reservationDto.setEndDate(newEndDate);
-        Reservation newReservation = ReservationMapper.map(reservationDto);
-
-        newReservation.setClient(client);
-        newReservation.setPrice(calculatePrice(reservationDto));
-        Set<Utility> utilitySet = new HashSet<>();
-        for (UtilityDto utilityDto : reservationDto.getUtilities()
-        ) {
-            Utility utility = utilityService.getByName(utilityDto.getName());
-            utilitySet.add(utility);
-        }
-        newReservation.setUtilities(utilitySet);
-        return reservationRepository.save(newReservation);
     }
 
     @Override
@@ -97,6 +81,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation makeReservation(Client client, ReservationDto reservationDto) {
+
         Reservation newReservation = ReservationMapper.map(reservationDto);
         newReservation.setClient(client);
         newReservation.setPrice(calculatePrice(reservationDto));
@@ -107,6 +92,24 @@ public class ReservationServiceImpl implements ReservationService {
             utilitySet.add(utility);
         }
         newReservation.setUtilities(utilitySet);
+        return reservationRepository.save(newReservation);
+    }
+    @Override
+    public Reservation makeReservation(Client client, ReservationDto reservationDto, double durationInHours) {
+        Date newEndDate = dateService.addHoursToJavaUtilDate(reservationDto.getStartDate(), durationInHours);
+        reservationDto.setEndDate(newEndDate);
+        Reservation newReservation = ReservationMapper.map(reservationDto);
+
+        newReservation.setClient(client);
+        newReservation.setPrice(calculatePrice(reservationDto));
+        Set<Utility> utilitySet = new HashSet<>();
+        for (UtilityDto utilityDto : reservationDto.getUtilities()
+        ) {
+            Utility utility = utilityService.getByName(utilityDto.getName());
+            utilitySet.add(utility);
+        }
+        newReservation.setUtilities(utilitySet);
+
         return reservationRepository.save(newReservation);
     }
 
@@ -129,7 +132,7 @@ public class ReservationServiceImpl implements ReservationService {
         try {
             var diff = 1.0;
             if (reservationDto.getType() != ReservationType.ADVENTURE) {
-                 diff = dateService.DifferenceBetweenDates(reservationDto.getStartDate(), reservationDto.getEndDate());
+                diff = dateService.DifferenceBetweenDates(reservationDto.getStartDate(), reservationDto.getEndDate());
             }
             double utilities = 0.0;
             for (UtilityDto utility : reservationDto.getUtilities()

@@ -29,6 +29,9 @@ export class AdventureService {
   getAllByInstructor(email : string) : Observable<any[]>{
     return this._http.get<any[]>(`${this.baseURL}/adventures/by-instructor/${email}`);
   } 
+  getAllByInstructorId(id : string) : Observable<any[]>{
+    return this._http.get<any[]>(`${this.baseURL}/adventures/by-instructor-id/${id}`);
+  } 
 
   addAdventure(adventure : Adventure) : Observable<Adventure>{
     return this._http.post<any>(`${this.baseURL}/adventures`, adventure);

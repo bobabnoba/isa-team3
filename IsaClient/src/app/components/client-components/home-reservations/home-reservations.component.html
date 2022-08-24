@@ -41,9 +41,10 @@
         <div class="displaySection">
             <div class="sectionOverflow">
                 <div *ngFor="let item of filteredItems">
+                    
                     <app-browse-card-reservation
-                    [startDate]="requestFilter.startDate"
-                    [endDate]="requestFilter.endDate"
+                    [startDate]="startDate"
+                    [endDate]="endDate"
                     [guests] = "requestFilter.people"
                     [type]="item.rentalType"
                     [name]="item.name" 
@@ -54,7 +55,7 @@
                     [rating]="item.rating" 
                     [id]="item.id"
                     [type]="item.rentalType" 
-                    [ownerName]="item.owner.firstName"></app-browse-card-reservation>
+                    [ownerName]="item.owner.firstName" style="max-height:10%"></app-browse-card-reservation>
                 </div>
             </div>
         </div>

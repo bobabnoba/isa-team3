@@ -1,7 +1,6 @@
 package com.ftn.fishingbooker.mapper;
 
 
-import com.ftn.fishingbooker.dto.InstructorDto;
 import com.ftn.fishingbooker.dto.RentalDto;
 import com.ftn.fishingbooker.enumeration.RentalType;
 import com.ftn.fishingbooker.model.Adventure;
@@ -24,6 +23,21 @@ public class RentalMapper {
         }
         for (Boat boat : boats) {
             rentals.add(mapToRental(boat));
+
+        }
+        return rentals;
+    }
+
+
+    public static Collection<RentalDto> mapInstructorToRental(Collection<Instructor> instructors) {
+
+        ArrayList<RentalDto> rentals = new ArrayList<RentalDto>();
+
+        if (instructors == null) {
+            return rentals;
+        }
+        for (Instructor instructor : instructors) {
+            rentals.add(mapToRental(instructor));
 
         }
         return rentals;
@@ -64,6 +78,7 @@ public class RentalMapper {
         rentalDto.setPricePerDay(boat.getPricePerDay());
         rentalDto.setUtilities(UtilityMapper.map(boat.getUtilities()));
         rentalDto.setOwner(OwnerMapper.map(boat.getBoatOwner()));
+        rentalDto.setImages( boat.getImagePaths());
 
         return rentalDto;
     }
@@ -81,6 +96,7 @@ public class RentalMapper {
         rentalDto.setUtilities(UtilityMapper.map(adventure.getUtilities()));
         rentalDto.setOwner(OwnerMapper.map(adventure.getInstructor()));
         rentalDto.setDuration(adventure.getDurationInHours());
+        rentalDto.setImages( adventure.getImagePaths());
 
         return rentalDto;
     }
@@ -97,9 +113,22 @@ public class RentalMapper {
         rentalDto.setPricePerDay(home.getPricePerDay());
         rentalDto.setUtilities(UtilityMapper.map(home.getUtilities()));
         rentalDto.setOwner(OwnerMapper.map(home.getHomeOwner()));
+        rentalDto.setImages( home.getImagePaths());
 
         return rentalDto;
     }
 
+    public static RentalDto mapToRental(Instructor instructor) {
+        //TODO:Images
+        RentalDto rentalDto = new RentalDto();
+        rentalDto.setId(instructor.getId());
+        rentalDto.setAddress(instructor.getAddress());
+        rentalDto.setDescription(instructor.getBiography());
+        rentalDto.setName(instructor.getFirstName() + " " + instructor.getLastName());
+        rentalDto.setRating(instructor.getRating());
+        rentalDto.setRentalType(RentalType.instructor);
+
+        return rentalDto;
+    }
 
 }

@@ -10,6 +10,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Costumize & Select your journey !</h6>
             </div>
             <div class="card-body">
+                
                 <p>Create your personalized property search by choosing multiple criteria and advanced filters to get
                     the results that suit your needs.</p>
                 <p class="mb-0">Make sure to select <b>dates</b> and <b>number</b> of people for the
@@ -41,8 +42,9 @@
             <div class="sectionOverflow">
                 <div *ngFor="let item of filteredItems">
                     <app-browse-card-reservation
-                    [startDate]="requestFilter.startDate"
-                    [endDate]="requestFilter.endDate"
+                    [imageUrl]="item.images[0]"
+                    [startDate]="startDate"
+                    [endDate]="endDate"
                     [guests] = "requestFilter.people"
                     [type]="item.rentalType"
                     [name]="item.name" 
@@ -54,7 +56,8 @@
                     [id]="item.id"
                     [duration]="item.duration"
                     [type]="item.rentalType" 
-                    [ownerName]="item.owner.firstName"></app-browse-card-reservation>
+                    [ownerName]="item.owner.firstName"
+                    [ownerId]="item.owner.id"></app-browse-card-reservation>
                 </div>
             </div>
         </div>

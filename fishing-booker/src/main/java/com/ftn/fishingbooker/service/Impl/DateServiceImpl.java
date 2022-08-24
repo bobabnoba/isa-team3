@@ -36,4 +36,12 @@ public class DateServiceImpl implements DateService {
         calendar.add(Calendar.HOUR_OF_DAY, (int) hours);
         return calendar.getTime();
     }
+
+    @Override
+    public Date addDaysToJavaUtilDate(Date date, int days) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, days);  // number of days to add
+        return c.getTime();
+    }
 }

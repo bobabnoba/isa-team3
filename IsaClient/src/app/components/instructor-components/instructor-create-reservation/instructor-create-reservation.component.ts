@@ -10,7 +10,7 @@ import { ClientService } from 'src/app/services/client-service/client.service';
 import { InstructorService } from 'src/app/services/instructor-service/instructor.service';
 import { RentalService } from 'src/app/services/rental-service/rental.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
-import { INewReservation } from 'src/app/interfaces/new-reservation';
+import { IReservation } from 'src/app/interfaces/new-reservation';
 
 @Component({
   selector: 'app-instructor-create-reservation',
@@ -129,14 +129,15 @@ export class InstructorCreateReservationComponent implements OnInit {
       )}
   }
 
-  createReservationObject() : INewReservation {
-    let res = {} as INewReservation;
+  createReservationObject() : IReservation {
+    let res = {} as IReservation;
       res.startDate = this._datePipe.transform(new Date(this.resFrom.value), 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
       res.endDate = this._datePipe.transform(addHours(new Date(this.resFrom.value), this.data.duration), 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
       res.price = this.price.value;
       res.guests = this.guests.value;
       res.duration = this.data.duration;
       res.utilities = this.services;
+      
     return res;
   }
 

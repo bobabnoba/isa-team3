@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.mail.MessagingException;
 import java.util.Collection;
-import java.util.List;
 
 public interface UserService {
 

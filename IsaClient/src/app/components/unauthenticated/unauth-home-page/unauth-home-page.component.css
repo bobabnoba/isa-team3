@@ -1,0 +1,116 @@
+@import '../../../../assets/css/homepage-template.css';
+
+.containersss {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.about {
+  height: 100%;
+  width: 100%;
+}
+
+.example-card {
+  max-width: 100%;
+  margin-bottom: 8px;
+}
+
+ngb-rating {
+  color: rgb(241, 207, 11);
+  font-size: 30px;
+}
+
+.image-display {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.img1 {
+  width: 500px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.moreInfo {
+  display: flex;
+  height: fit-content;
+  max-width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.wrapper {
+  border: 2px dotted rgb(96, 139, 168);
+  margin: 15px 15px 15px 15px;
+}
+
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -10px;
+  column-gap: 15px;
+}
+
+.box>* {
+  flex: 1 1 160px;
+  margin: 10px;
+}
+
+.box .listing {
+  flex: 0 0 100px;
+}
+
+.card {
+  border: 0;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  border-radius: 3px;
+  color: darkgray;
+  background: white;
+  width: 100%;
+}
+
+.action {
+  display: flex;
+
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0px;
+  max-width: 100%;
+}
+
+.searchCard {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.displaySection {
+  display: flex;
+  max-height: 100%;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.sectionOverflow {
+  overflow-y: scroll;
+  width: 100%;
+  max-height: 900px;
+}
+
+.sectionOverflow::-webkit-scrollbar {
+  display: none;
+}
+
+.messages {
+  margin-top: 100px;
+  width: 50%;
+  align-self: center;
+}

@@ -1,6 +1,19 @@
+.container {
+  display: flex;
+  column-gap: 5%;
+}
+
 .image {
   max-height: 200px;
   width: 250px;
+
+}
+
+
+.fill img {
+  flex-shrink: 0;
+  min-width: 100%;
+  min-height: 100%
 }
 
 .stretch-width {

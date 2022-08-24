@@ -16,4 +16,6 @@ public class UserDto {
     public boolean activated;
     public boolean blocked;
     public String biography;
+    public UserRankDto rank;
+    public double points;
 }
