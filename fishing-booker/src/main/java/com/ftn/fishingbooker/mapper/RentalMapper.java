@@ -78,6 +78,7 @@ public class RentalMapper {
         rentalDto.setPricePerDay(boat.getPricePerDay());
         rentalDto.setUtilities(UtilityMapper.map(boat.getUtilities()));
         rentalDto.setOwner(OwnerMapper.map(boat.getBoatOwner()));
+        rentalDto.setImages( boat.getImagePaths());
 
         return rentalDto;
     }
@@ -95,6 +96,7 @@ public class RentalMapper {
         rentalDto.setUtilities(UtilityMapper.map(adventure.getUtilities()));
         rentalDto.setOwner(OwnerMapper.map(adventure.getInstructor()));
         rentalDto.setDuration(adventure.getDurationInHours());
+        rentalDto.setImages( adventure.getImagePaths());
 
         return rentalDto;
     }
@@ -111,6 +113,7 @@ public class RentalMapper {
         rentalDto.setPricePerDay(home.getPricePerDay());
         rentalDto.setUtilities(UtilityMapper.map(home.getUtilities()));
         rentalDto.setOwner(OwnerMapper.map(home.getHomeOwner()));
+        rentalDto.setImages( home.getImagePaths());
 
         return rentalDto;
     }

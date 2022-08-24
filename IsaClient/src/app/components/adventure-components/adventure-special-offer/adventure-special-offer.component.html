@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-2 d-flex flex-dir" >
             <div class="stick-right"><h5 style="font-weight: 600; letter-spacing: 1px;"><i class="fa-solid fa-tags"></i>&nbsp;  {{ offer.discount }}% OFF! </h5></div>
-            <button *ngIf="isClient" class="book-btn btn btn-outline-dark">Book now</button>
+            <button *ngIf="isClient" class="book-btn btn btn-outline-dark" (click)="bookNow()">Book now</button>
         </div>
     </div>
 </div>

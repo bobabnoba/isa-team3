@@ -9,6 +9,7 @@ export interface IProfileView {
     address: IAddress,
     description: string,
     utilities: IUtility[],
+    images : string[],
     pricePerDay: number,
     rating: number,
     rentalType: string,

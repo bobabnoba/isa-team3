@@ -45,25 +45,6 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation makeReservation(Client client, ReservationDto reservationDto, double durationInHours) {
-        Date newEndDate = dateService.addHoursToJavaUtilDate(reservationDto.getStartDate(), durationInHours);
-        reservationDto.setEndDate(newEndDate);
-        Reservation newReservation = ReservationMapper.map(reservationDto);
-
-        newReservation.setClient(client);
-        newReservation.setPrice(calculatePrice(reservationDto));
-        Set<Utility> utilitySet = new HashSet<>();
-        for (UtilityDto utilityDto : reservationDto.getUtilities()
-        ) {
-            Utility utility = utilityService.getByName(utilityDto.getName());
-            utilitySet.add(utility);
-        }
-        newReservation.setUtilities(utilitySet);
-
-        return reservationRepository.save(newReservation);
-    }
-
-    @Override
     public Collection<Reservation> getReservationsForAdventures(Collection<Long> ids) {
         return reservationRepository.getReservationsForAdventures(ids);
     }
@@ -111,6 +92,24 @@ public class ReservationServiceImpl implements ReservationService {
             utilitySet.add(utility);
         }
         newReservation.setUtilities(utilitySet);
+        return reservationRepository.save(newReservation);
+    }
+    @Override
+    public Reservation makeReservation(Client client, ReservationDto reservationDto, double durationInHours) {
+        Date newEndDate = dateService.addHoursToJavaUtilDate(reservationDto.getStartDate(), durationInHours);
+        reservationDto.setEndDate(newEndDate);
+        Reservation newReservation = ReservationMapper.map(reservationDto);
+
+        newReservation.setClient(client);
+        newReservation.setPrice(calculatePrice(reservationDto));
+        Set<Utility> utilitySet = new HashSet<>();
+        for (UtilityDto utilityDto : reservationDto.getUtilities()
+        ) {
+            Utility utility = utilityService.getByName(utilityDto.getName());
+            utilitySet.add(utility);
+        }
+        newReservation.setUtilities(utilitySet);
+
         return reservationRepository.save(newReservation);
     }
 

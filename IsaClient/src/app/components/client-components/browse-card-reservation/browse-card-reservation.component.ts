@@ -1,3 +1,4 @@
+import { MESSAGES_CONTAINER_ID } from '@angular/cdk/a11y';
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
@@ -7,6 +8,7 @@ import { IReservation } from 'src/app/interfaces/new-reservation';
 import { IUtility } from 'src/app/interfaces/vacation-house-profile';
 import { RentalService } from 'src/app/services/rental-service/rental.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-browse-card-reservation',
@@ -23,6 +25,7 @@ export class BrowseCardReservationComponent implements OnInit {
     street: '',
     zipCode: 1
   };
+  @Input() imageUrl: string = '';
   @Input() price: number = 0;
   @Input() duration: number = 0;
   @Input() guests: number = 0;
@@ -37,6 +40,7 @@ export class BrowseCardReservationComponent implements OnInit {
   @Input() startDate: Date = new Date();
   @Input() endDate: Date = new Date();
   newReservation: IReservation = {} as IReservation;
+  baseUrl = environment.apiURL
 
   constructor(
     private _rentalService: RentalService,
@@ -118,9 +122,16 @@ export class BrowseCardReservationComponent implements OnInit {
         window.location.href = '/client/reservations'
       },
       error: (err: HttpErrorResponse) => {
-        this._snackBar.open('Sorry :( it seems like we have a problem. Try again in few minutes!', '',
+        console.log(err);
+        let message = 'Sorry :( it seems like we have a problem. Try again in few minutes!'
+        if (err.status == 403) {
+          message = 'You have been prevented from making reservations because you have more than 3 penalties. \n ' +
+            ' Penalties are deleted at the start of each month. '
+        }
+
+        this._snackBar.open(message, 'Close',
           {
-            duration: 3000,
+            duration: 10000,
             panelClass: ['snack-bar']
           });
       }
@@ -138,7 +149,7 @@ export class BrowseCardReservationComponent implements OnInit {
   }
   preview() {
     if (this.type == 'adventure') {
-     
+
       window.location.href = '/instructor/page/' + this.ownerId;
     } else {
       window.location.href = '/' + this.type + '/page/' + this.id;

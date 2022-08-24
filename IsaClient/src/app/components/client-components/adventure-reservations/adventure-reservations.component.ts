@@ -37,21 +37,30 @@ export class AdventureReservationsComponent implements OnInit {
 
 
   search(filter: SearchFilter) {
-    console.log(filter.startDate);
-    console.log(filter.endDate);
     let offerFrom = new Date(filter.startDate);
     let offerTo = new Date(filter.endDate);
+    let now = new Date();
+    var twentyMinutesLater = new Date( now.getTime() + (20 * 60 * 1000));
 
     if (offerTo.getTime() < offerFrom.getTime()) {
       this._snackBar.open('End date cannot be before start date!', '',
         { duration: 2000, panelClass: ['snack-bar'] }
       );
+      return;
     }
 
     if (offerTo.getTime() == offerFrom.getTime()) {
       this._snackBar.open('End date cannot be same as  start date!', '',
         { duration: 2000, panelClass: ['snack-bar'] }
       );
+      return;
+    }
+    
+    if (offerFrom.getTime() <= twentyMinutesLater.getTime()) {
+      this._snackBar.open('Reservation must be created at lest 20 mintes from now !', '',
+        { duration: 2000, panelClass: ['snack-bar'] }
+      );
+      return;
     }
 
     this.people = filter.people;

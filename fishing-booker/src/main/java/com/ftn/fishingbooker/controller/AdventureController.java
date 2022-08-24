@@ -146,12 +146,16 @@ public class AdventureController {
     @PostMapping("/rent/{adventureId}/{userEmail}")
     public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
+        if (client.getNoOfPenalties() >= 3){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         Adventure adventure = adventureService.getById(adventureId);
         reservationDto.setType(ReservationType.ADVENTURE);
         Reservation reservation = reservationService.makeReservation(client, reservationDto, adventure.getDurationInHours());
         adventureService.makeReservation(adventureId, reservation);
         clientService.updatePoints(client, reservation.getPrice());
         instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
+        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 }
