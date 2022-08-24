@@ -128,6 +128,12 @@ public class InstructorServiceImpl implements InstructorService {
         return reservationService.dateOverlapsWithReservation(reservations, from, to);
     }
 
+    @Override
+    public Reservation getOngoingReservationForInstructor(String email) {
+        Instructor instructor = instructorRepository.findByEmail(email);
+        return reservationService.getOngoingReservationForInstructor(instructor.getId());
+    }
+
     private List<InstructorAvailability> checkForOverlapping(InstructorAvailability availability, List<InstructorAvailability> availabilities) {
 
         List<InstructorAvailability> retVal = new ArrayList<>();

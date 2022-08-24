@@ -7,7 +7,6 @@ import { Report } from 'src/app/interfaces/report';
 import { ReportResponse } from 'src/app/interfaces/report-response';
 import { ReportService } from 'src/app/services/report-service/report.service';
 import { UserService } from 'src/app/services/user-service/user.service';
-import { AdminResponseComponent } from '../admin-response/admin-response.component';
 import { ReportResponseComponent } from '../report-response/report-response.component';
 
 

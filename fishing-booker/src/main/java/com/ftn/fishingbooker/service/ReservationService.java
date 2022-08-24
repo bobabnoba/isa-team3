@@ -33,4 +33,6 @@ public interface ReservationService {
     Reservation getReservationById(Long id);
 
     void save(Reservation reservation);
+
+    Reservation getOngoingReservationForInstructor(Long id);
 }

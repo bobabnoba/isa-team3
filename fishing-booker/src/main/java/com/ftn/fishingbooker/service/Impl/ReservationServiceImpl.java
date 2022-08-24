@@ -86,6 +86,11 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public Reservation getOngoingReservationForInstructor(Long id) {
+        return reservationRepository.getOngoingReservationForInstructor(id);
+    }
+
+    @Override
     public Collection<Reservation> getReservationsForClient(Long clientId) {
         return reservationRepository.findAllForClient(clientId);
     }

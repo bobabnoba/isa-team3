@@ -108,6 +108,7 @@ import { ReservationInfoComponent } from './components/instructor-components/res
 import { ReservationReportsComponent } from './components/admin-components/reservation-reports/reservation-reports.component';
 import { ReportResponseComponent } from './components/admin-components/report-response/report-response.component';
 import { InstructorReportComponent } from './components/instructor-components/instructor-report/instructor-report.component';
+import { InstructorCreateReservationComponent } from './components/instructor-components/instructor-create-reservation/instructor-create-reservation.component';
 
 @NgModule({
   declarations: [
@@ -191,6 +192,7 @@ import { InstructorReportComponent } from './components/instructor-components/in
     ReservationReportsComponent,
     ReportResponseComponent,
     InstructorReportComponent,
+    InstructorCreateReservationComponent,
   ],
   imports: [
     BrowserModule,
