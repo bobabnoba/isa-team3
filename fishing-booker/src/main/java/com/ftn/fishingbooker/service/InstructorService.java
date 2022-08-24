@@ -4,7 +4,7 @@ import com.ftn.fishingbooker.model.Instructor;
 import com.ftn.fishingbooker.model.InstructorAvailability;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.User;
-import com.ftn.fishingbooker.projection.ReservationInfo;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 
 import javax.mail.MessagingException;
 import java.util.Collection;
@@ -31,6 +31,14 @@ public interface InstructorService {
     Collection<ReservationInfo> getUpcomingReservationsForInstructor(String email);
 
     Collection<Reservation> getPastReservationsForInstructor(String email);
+
+    Instructor findByEmail(String email);
+
+    Instructor findById(Long instructorId);
+
+    boolean hasOverlappingReservation(String email, Date from, Date to);
+
+    Reservation getOngoingReservationForInstructor(String email);
 
     Instructor getWithAvailabilityById(Long id);
 }

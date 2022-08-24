@@ -3,7 +3,7 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.projection.ReservationInfo;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.repository.InstructorRepository;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.service.*;
@@ -106,6 +106,32 @@ public class InstructorServiceImpl implements InstructorService {
     public Collection<Reservation> getPastReservationsForInstructor(String email) {
         Instructor instructor = instructorRepository.findByEmail(email);
         return reservationService.getPastReservationsForInstructor(instructor.getId());
+    }
+
+    @Override
+    public Instructor findByEmail(String email) {
+        return instructorRepository.findByEmail(email);
+    }
+
+    @Override
+    public Instructor findById(Long instructorId) {
+        return instructorRepository.findById(instructorId).orElseThrow(() -> new IllegalArgumentException("Instructor not found"));
+    }
+
+    @Override
+    public boolean hasOverlappingReservation(String email, Date from, Date to) {
+        Instructor instructor = instructorRepository.findByEmail(email);
+
+        Collection<Long> adventures = adventureService.getAllIdsByInstructorId(instructor.getId());
+        Collection<Reservation> reservations = reservationService.getReservationsForAdventures(adventures);
+
+        return reservationService.dateOverlapsWithReservation(reservations, from, to);
+    }
+
+    @Override
+    public Reservation getOngoingReservationForInstructor(String email) {
+        Instructor instructor = instructorRepository.findByEmail(email);
+        return reservationService.getOngoingReservationForInstructor(instructor.getId());
     }
 
     @Override

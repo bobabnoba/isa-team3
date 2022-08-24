@@ -41,4 +41,7 @@ public class Reservation {
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
+    @OneToOne(targetEntity = Report.class, cascade = CascadeType.ALL)
+    private Report report;
+
 }

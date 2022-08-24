@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.Set;
 @ToString
 @RequiredArgsConstructor
 public class VacationHome {
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,9 +36,9 @@ public class VacationHome {
     @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
     private Address address;
 
-    @Column
-    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
-    private Set<String> codeOfConduct;
+    @ManyToMany(targetEntity = Rule.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private Set<Rule> codeOfConduct;
 
     @ManyToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Utility> utilities;

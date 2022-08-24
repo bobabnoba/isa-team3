@@ -1,7 +1,7 @@
 package com.ftn.fishingbooker.repository;
 
 import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.projection.ReservationInfo;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -43,6 +43,17 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query(value = "select r " +
             "    from Adventure a " +
             "    join a.reservations r " +
+            "    left join r.report report " +
             "    where a.instructor.id = :id and r.isCancelled = false and r.startDate <= current_date")
     Collection<Reservation> getPastReservationsForInstructor(@Param("id") Long id);
+
+
+    @Query(value = "select r.* " +
+            "       from adventure as a " +
+            "       join adventure_reservations as  ar on ar.adventure_id = a.id " +
+            "       join reservation as r on ar.reservations_id = r.id " +
+            "       where a.instructor_id = ?1 and r.start_date < NOW() and r.end_date > NOW()", nativeQuery = true)
+    Reservation getOngoingReservationForInstructor(Long id);
+
+
 }

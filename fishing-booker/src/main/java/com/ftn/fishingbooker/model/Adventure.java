@@ -57,6 +57,8 @@ public class Adventure {
     private double durationInHours;
 
     @OneToMany(targetEntity = Reservation.class,cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @ToString.Exclude
     private Set<Reservation> reservations;
 
     @Transient

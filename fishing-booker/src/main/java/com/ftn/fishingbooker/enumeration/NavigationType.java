@@ -1,7 +1,7 @@
 package com.ftn.fishingbooker.enumeration;
 
 public enum NavigationType {
-    GPS,
+    GPS ,
     RADAR,
     VHF_RADIO,
     FISHFINDER

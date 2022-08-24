@@ -85,6 +85,19 @@ import { BrowseCardReservationComponent } from './components/client-components/b
 import { ClientTopBarComponent } from './components/client-components/client-top-bar/client-top-bar.component';
 import { AdminUsersComponent } from './components/admin-components/admin-users/admin-users.component';
 import { LoyaltyProgramComponent } from './components/admin-components/loyalty-program/loyalty-program.component';
+import { BoatOwnerSidebarComponent } from './components/boat-owner-components/boat-owner-sidebar/boat-owner-sidebar.component';
+import { BoatOwnerDashboardComponent } from './components/boat-owner-components/boat-owner-dashboard/boat-owner-dashboard.component';
+import { BoatOwnerProfileComponent } from './components/boat-owner-components/boat-owner-profile/boat-owner-profile.component';
+import { HomeOwnerSidebarComponent } from './components/home-owner-components/home-owner-sidebar/home-owner-sidebar.component';
+import { HomeOwnerProfileComponent } from './components/home-owner-components/home-owner-profile/home-owner-profile.component';
+import { HomeOwnerDashboardComponent } from './components/home-owner-components/home-owner-dashboard/home-owner-dashboard.component';
+import { HomeOwnerAccDeletionExplanationComponent } from './components/home-owner-components/home-owner-acc-deletion-explanation/home-owner-acc-deletion-explanation.component';
+import { BoatOwnerAccDeletionExplanationComponent } from './components/boat-owner-components/boat-owner-acc-deletion-explanation/boat-owner-acc-deletion-explanation.component';
+import { BoatOwnerBoatsComponent } from './components/boat-owner-components/boat-owner-boats/boat-owner-boats.component';
+import { BoatPreviewComponent } from './components/boat-components/boat-preview/boat-preview.component';
+import { BoatOwnerTopbarComponent } from './components/boat-owner-components/boat-owner-topbar/boat-owner-topbar.component';
+import { AddBoatComponent } from './components/boat-components/add-boat/add-boat.component';
+import { BoatSearchPipe } from './pipes/boat-search/boat-search.pipe';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ReservationPreviewComponent } from './components/instructor-components/reservation-preview/reservation-preview.component';
@@ -92,6 +105,10 @@ import { ReservationsUpcomingComponent } from './components/instructor-component
 import { ReservationsHistoryComponent } from './components/instructor-components/reservations-history/reservations-history.component';
 import { ClientInfoComponent } from './components/instructor-components/client-info/client-info.component';
 import { ReservationInfoComponent } from './components/instructor-components/reservation-info/reservation-info.component';
+import { ReservationReportsComponent } from './components/admin-components/reservation-reports/reservation-reports.component';
+import { ReportResponseComponent } from './components/admin-components/report-response/report-response.component';
+import { InstructorReportComponent } from './components/instructor-components/instructor-report/instructor-report.component';
+import { InstructorCreateReservationComponent } from './components/instructor-components/instructor-create-reservation/instructor-create-reservation.component';
 import { BoatPageComponent } from './components/rentals/boat-page/boat-page.component';
 import { InstructorPageComponent } from './components/rentals/instructor-page/instructor-page.component';
 import { UnauthBoatPageComponent } from './components/unauthenticated/unauth-boat-page/unauth-boat-page.component';
@@ -160,12 +177,29 @@ import { UnauthInstructorPageComponent } from './components/unauthenticated/unau
     ClientTopBarComponent,
     AdminUsersComponent,
     LoyaltyProgramComponent,
+    BoatOwnerSidebarComponent,
+    BoatOwnerDashboardComponent,
+    BoatOwnerProfileComponent,
+    HomeOwnerSidebarComponent,
+    HomeOwnerProfileComponent,
+    HomeOwnerDashboardComponent,
+    HomeOwnerAccDeletionExplanationComponent,
+    BoatOwnerAccDeletionExplanationComponent,
+    BoatOwnerBoatsComponent,
+    BoatPreviewComponent,
+    BoatOwnerTopbarComponent,
+    AddBoatComponent,
+    BoatSearchPipe,
     StarRatingComponent,
     ReservationPreviewComponent,
     ReservationsUpcomingComponent,
     ReservationsHistoryComponent,
     ClientInfoComponent,
     ReservationInfoComponent,
+    ReservationReportsComponent,
+    ReportResponseComponent,
+    InstructorReportComponent,
+    InstructorCreateReservationComponent,
     BoatPageComponent,
     InstructorPageComponent,
     UnauthBoatPageComponent,

@@ -18,13 +18,9 @@ public class BoatOwner extends User {
     private BoatOwnerType type;
 
     @OneToMany(mappedBy = "boatOwner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Set<Boat> boats;
 
-    @OneToMany(mappedBy = "boatOwner", fetch = FetchType.LAZY)
-    private Set<Report> reservationReport;
-
-    @OneToMany(mappedBy = "boatOwner", fetch = FetchType.LAZY)
-    private Set<Complaint> complaints;
 
 
 }

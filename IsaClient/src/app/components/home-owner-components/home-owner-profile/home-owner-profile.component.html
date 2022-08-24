@@ -1,0 +1,127 @@
+<div id="wrapper">
+    <app-home-owner-sidebar></app-home-owner-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <app-instructor-topbar ></app-instructor-topbar>
+        <div class="container-fluid">
+
+            <div class="content">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="card card-user">
+                            <div class="image">
+                              <img src="../../../../assets/images/instructor-bgs.jpg" style="width: 100%; height: 100%;" alt="...">
+                            </div>
+                            <div class="card-body">
+                              <div class="author">
+                                <a href="#">
+                                  <img class="avatar border-gray" src="../../../../assets/images/juicy-image-of-a-man-in-the-online-window.png" alt="...">
+                                  <h5 class="title">{{ user.firstName }} {{ user.lastName }}</h5>
+                                </a><br>
+                              </div>
+                              <p class="description text-center">
+                                Here to give you some good time and show you everything you need to know about fishing.
+                              </p>
+                            </div>
+                        </div>  
+                        
+                        <div class="card card-user">
+                            <div class="card-header">
+                                <h5 class="card-title">Settings</h5>
+                              </div>
+                                <div class="d-flex justify-content-center body-improv" style="flex-direction: column;">
+                                    <button mat-button class="btn"(click)="deleteAccount()">Delete my account</button>
+                                    <button mat-button class="btn">Change password</button>
+
+                                </div>
+                            
+                        </div>   
+                    
+                    </div>
+
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="card card-user">
+                            <div class="card-header">
+                              <h5 class="card-title">Profile info</h5>
+                            </div>
+                            <div class="card-body">
+                              <form>
+                                <div class="row">
+                                  <div class="col-md-6 pr-1">
+                                    <div class="form-group">
+                                      <label>First name</label>
+                                      <input [disabled]="!updateMode" type="text" class="form-control" name="firstName"  placeholder="First name" [(ngModel)]="user.firstName">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6 pl-1">
+                                    <div class="form-group">
+                                      <label>Last name</label>
+                                      <input [disabled]="!updateMode" type="text" class="form-control" name="lastName" placeholder="Last name" [(ngModel)]="user.lastName">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+                                      <label>Address</label>
+                                      <input [disabled]="!updateMode" type="text" class="form-control" placeholder="Home Address" name="address" [(ngModel)]="user.address.street">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-6 pr-1">
+                                    <div class="form-group">
+                                      <label>City</label>
+                                      <input [disabled]="!updateMode" type="text" class="form-control" placeholder="City" name="city" [(ngModel)]="user.address.city" required>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6 pr-1">
+                                    <div class="form-group">
+                                      <label>Country</label>
+                                      <input [disabled]="!updateMode" type="text" class="form-control" placeholder="Country" name="country" [(ngModel)]="user.address.country">
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row pl-1">
+                                    <div class="col-md-3 px-1">
+                                      <div class="form-group">
+                                        <label>Phone</label>
+                                        <input [disabled]="!updateMode" type="text" class="form-control" placeholder="Phone" name="phone" [(ngModel)]="user.phone">
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4 pl-1">
+                                      <div class="form-group">
+                                        <label for="exampleInputEmail1">Email address</label>
+                                        <input disabled type="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="user.email">
+                                      </div>
+                                    </div>
+                                    <div class="col-md-5 pr-1">
+                                        <div class="form-group">
+                                          <label>System role</label>
+                                          <input type="text" class="form-control" disabled value="Administrator">
+                                        </div>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-md-12 pl-1">
+                                      <div class="form-group">
+                                        <label>About Me</label>
+                                        <textarea [disabled]="!updateMode"  placeholder="Biography" class="form-control textarea" name="bio" [(ngModel)]="user.biography"></textarea>
+                                      </div>
+                                    </div>
+                                  </div>
+                                 <hr>
+                                <div class="row">
+                                  <div  style="display: flex; align-items: center; justify-content: center;">
+                                    <button type="submit" (click)="doSth()" class="btn btn-primary btn-round">{{ updateMode ? 'Submit' : 'Update' }}</button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                    </div>
+                 </div>
+            </div>
+    </div>
+    </div>
+ </div>
+

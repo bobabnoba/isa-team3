@@ -27,6 +27,9 @@ public class ReservationMapper {
         reservationDto.setPrice(reservation.getPrice());
         reservationDto.setEndDate(reservation.getEndDate());
         reservationDto.setStartDate(reservation.getStartDate());
+        if (reservation.getReport() != null){
+            reservationDto.setReport(ReportMapper.toDto(reservation.getReport()));
+        }
         return reservationDto;
     }
 

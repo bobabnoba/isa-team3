@@ -52,8 +52,9 @@ export class ReservationsUpcomingComponent implements OnInit, AfterViewInit {
      dialogConfig.disableClose = false;
      dialogConfig.id = 'modal-component';
      dialogConfig.width = '570px';
-     dialogConfig.height = '330px';
+     dialogConfig.height = '340px';
      dialogConfig.data = myData;
+     dialogConfig.panelClass = 'custom-modalbox';
      this._matDialog.open(ReservationInfoComponent, dialogConfig);
  
    }

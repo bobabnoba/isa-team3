@@ -1,6 +1,7 @@
 package com.ftn.fishingbooker.model;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,5 +22,6 @@ public class BoatAvailability {
 
     @ManyToOne
     @JoinColumn(name = "boat_id", nullable = false)
+    @ToString.Exclude
     private Boat boat;
 }

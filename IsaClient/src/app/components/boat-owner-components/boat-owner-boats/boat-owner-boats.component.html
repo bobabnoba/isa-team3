@@ -1,0 +1,27 @@
+<div id="wrapper">
+    <app-boat-owner-sidebar></app-boat-owner-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <app-boat-owner-topbar  (searchInput)="handleMe($event)" ></app-boat-owner-topbar>
+        <div class="container-fluid">
+
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 *ngIf="boats.length === 0" class="h3 mb-0 text-gray-800">You dont have any services yet.</h1>
+                <h1 class="h3 mb-0 text-gray-800">My boats</h1>
+               <div class="d-flex align-items-end">
+                <button (click)="addNew()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mright"><i
+                    class="fa-solid fa-plus"></i> Add new boat</button>
+            
+            <button (click)="addOffer()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class="fa-solid fa-tags"></i> Create a special offer</button>
+               </div>
+            </div>
+
+            <div class="row">
+                <div *ngFor="let adv of boats | boatSearch : searchText" >
+                    <app-boat-preview [boat]="adv" (boatEdited)="boatEdited($event)" 
+                    (boatDeleted)="boatDeleted($event)"></app-boat-preview>
+                </div>
+            </div> 
+        </div>
+    </div>
+ </div>

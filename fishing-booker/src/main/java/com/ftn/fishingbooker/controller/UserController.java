@@ -38,6 +38,12 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.mapToDto(userInfo));
     }
 
+    @GetMapping("by-id/{id}")
+    public ResponseEntity<UserDto> getUserInfo(@PathVariable Long id) {
+        User userInfo = userService.getUserById(id);
+        return ResponseEntity.ok(UserMapper.mapToDto(userInfo));
+    }
+
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/update")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {

@@ -5,10 +5,8 @@ import com.ftn.fishingbooker.dto.UtilityDto;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.model.Utility;
-import com.ftn.fishingbooker.projection.ReservationInfo;
+import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.repository.ReservationRepository;
 import com.ftn.fishingbooker.service.DateService;
 import com.ftn.fishingbooker.service.ReservationService;
@@ -83,6 +81,16 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation getReservationById(Long id) {
         return reservationRepository.findById(id).orElseThrow( () -> new ResourceConflictException("Reservation not found"));
+    }
+
+    @Override
+    public void save(Reservation reservation) {
+        reservationRepository.save(reservation);
+    }
+
+    @Override
+    public Reservation getOngoingReservationForInstructor(Long id) {
+        return reservationRepository.getOngoingReservationForInstructor(id);
     }
 
     @Override

@@ -33,3 +33,7 @@ body {
 .mat-tab-body-content {
     transform: none !important;
 }
+
+.custom-modalbox .mat-dialog-container {
+    border: 2px solid #012970;
+}

@@ -2,8 +2,8 @@ import { IUtility } from "./vacation-house-profile"
 
 export interface IReservation {
     id: number,
-    startDate:string,
-    endDate: string,
+    startDate:Date | string,
+    endDate: Date | string,
     guests:number,
     price:number,
     utilities: IUtility[],

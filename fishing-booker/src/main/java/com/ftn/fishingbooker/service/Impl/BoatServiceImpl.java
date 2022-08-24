@@ -1,10 +1,10 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.dto.FilterDto;
-import com.ftn.fishingbooker.model.Boat;
-import com.ftn.fishingbooker.model.BoatAvailability;
-import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.repository.BoatRepository;
+import com.ftn.fishingbooker.dto.*;
+import com.ftn.fishingbooker.enumeration.*;
+import com.ftn.fishingbooker.exception.*;
+import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.BoatOwnerService;
 import com.ftn.fishingbooker.service.BoatService;
 import com.ftn.fishingbooker.service.DateService;
@@ -12,11 +12,10 @@ import com.ftn.fishingbooker.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+import java.util.stream.*;
 
 @Service
 @Transactional
@@ -26,6 +25,7 @@ public class BoatServiceImpl implements BoatService {
     private final DateService dateService;
     private final ReservationService reservationService;
     private final BoatOwnerService boatOwnerService;
+    private final BoatOwnerRepository boatOwnerRepository;
 
     @Override
     public Collection<Boat> getAll() {
@@ -63,6 +63,8 @@ public class BoatServiceImpl implements BoatService {
         boatOwnerService.updatePoints(boat.getBoatOwner(), reservation.getPrice());
     }
 
+
+
     private boolean dateOverlapsWithReservation(Collection<Reservation> reservations, Date startDate, Date endDate) {
         if (reservations == null) {
             return false;
@@ -84,4 +86,108 @@ public class BoatServiceImpl implements BoatService {
         }
         return false;
     }
+
+    @Override
+    public Collection<Boat> getAllByOwner(String email) {
+        BoatOwner owner = boatOwnerRepository.findByEmail(email);
+        if (owner == null) {
+            throw new ResourceConflictException("Instructor with email " + email + " does not exist");
+        }
+        return boatRepository.findAllByOwnerId(owner.getId());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Boat getById(Long id) {
+        return boatRepository.findById(id).orElseThrow(() -> new ResourceConflictException("Boat not found"));
+
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        Boat found = boatRepository.findById(id)
+                .orElseThrow(() -> new ResourceConflictException("Boat not found"));
+        found.setDeleted(true);
+        boatRepository.save(found);
+    }
+
+    @Override
+    @Transactional
+    public Boat addBoat(Boat boat, String ownerEmail) {
+        BoatOwner owner = boatOwnerRepository.findByEmail(ownerEmail);
+        boat.setBoatOwner(owner);
+        return boatRepository.save(boat);
+    }
+
+    @Override
+    @Transactional
+    public void addImage(Long boatId, String fileName) {
+        Boat found = boatRepository.findById(boatId)
+                .orElseThrow(() -> new ResourceConflictException("Boat not found"));
+        found.getImages().add(new Image(fileName));
+        boatRepository.save(found);
+    }
+
+    @Override
+    public Boat save(Boat boat) {
+        return boatRepository.save(boat);
+    }
+
+    @Override
+    @Transactional
+    public Boat updateBoatInfo(Long id, BoatInfo updated) {
+        Boat found = boatRepository.findById(id)
+                .orElseThrow(() -> new ResourceConflictException("Boat not found"));
+
+        found.setName(updated.getName());
+        found.setType(BoatType.valueOf(updated.getType()));
+        found.setLength(updated.getLength());
+        found.setEngineCount(updated.getEngineCount());
+        found.setEnginePower(updated.getEnginePower());
+        found.setMaxSpeed(updated.getMaxSpeed());
+        found.setInformation(updated.getInformation());
+        found.setDescription(updated.getDescription());
+        found.setPricePerDay(updated.getPricePerDay());
+        found.setCancelingPercentage(updated.getCancelingPercentage());
+        found.setGuestLimit(updated.getGuestLimit());
+
+        return boatRepository.save(found);
+    }
+
+    @Override
+    @Transactional
+    public Boat updateBoatAdditionalInfo(Long id, BoatAdditionalInfo updated) {
+
+        Boat found = boatRepository.findById(id)
+                .orElseThrow(() -> new ResourceConflictException("Boat not found"));
+
+        found.setFishingEquipment(new HashSet<>(updated.getFishingEquipment()));
+        found.setUtilities(new HashSet<>(updated.getUtilities()));
+        found.setNavigationType(updated.getNavigationTypes().stream().map(NavigationType::valueOf).collect(Collectors.toSet()));
+
+        return boatRepository.save(found);
+    }
+
+    @Override
+    @Transactional
+    public Boat updateBoatRules(Long id, Collection<Rule> updated) {
+        Boat found = boatRepository.findById(id)
+                .orElseThrow(() -> new ResourceConflictException("Boat not found"));
+
+        found.setCodeOfConduct(new HashSet<>(updated));
+        return boatRepository.save(found);
+    }
+
+    @Override
+    @Transactional
+    public Boat updateBoatAddress(Long id, Address updated) {
+        Boat found = boatRepository.findById(id)
+                .orElseThrow(() -> new ResourceConflictException("Boat not found"));
+
+        found.setAddress(updated);
+        return boatRepository.save(found);
+    }
+
+
 }

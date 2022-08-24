@@ -4,6 +4,7 @@
     min-height: 100vh;
     width: 100%;
     height: 100%;
+    position: relative;
 }
 
 .tabs {
@@ -34,4 +35,11 @@
 
 .sectionOverflow::-webkit-scrollbar {
     display: none;
+}
+
+.custom {
+    max-width: 250px;
+    min-height: 40px;
+    padding: 0px;
+    margin-top: 10px;
 }

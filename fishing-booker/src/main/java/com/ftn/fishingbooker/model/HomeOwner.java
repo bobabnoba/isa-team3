@@ -20,4 +20,6 @@ public class HomeOwner extends User {
     @ToString.Exclude
     private Set<VacationHome> vacationHomes;
 
+
+
 }
