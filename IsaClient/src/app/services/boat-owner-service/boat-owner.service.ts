@@ -16,6 +16,10 @@ export class BoatOwnerService {
     email = this.handlePlusInEmail(email);
     return this._http.get(`${this.baseURL}/boat-owner?email=${email}`);
   }
+  checkOwnerAvailability(from : string, to : string, boatOwnerEmail : string) {
+    boatOwnerEmail = this.handlePlusInEmail(boatOwnerEmail);
+    return this._http.get(`${this.baseURL}/boat-owner/check-if-available?from=${from}&to=${to}&boatOwnerEmail=${boatOwnerEmail}`);
+  }
   private handlePlusInEmail(email : string) {
     return encodeURIComponent(email);
   }

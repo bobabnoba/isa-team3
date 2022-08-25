@@ -60,6 +60,8 @@ public class BoatMapper {
         dto.setUtilities(UtilityMapper.map(boat.getUtilities()));
         dto.setNavigationTypes(boat.getNavigationType().stream().map(Enum::toString).collect(Collectors.toList()));
         dto.setAvailability(boat.getAvailableTimePeriods().stream().map(BoatMapper::mapToAvailabilityDto).collect(Collectors.toSet()));
+        var offers = SpecialOfferMapper.toDtoSet(boat.getSpecialOffers());
+        dto.setSpecialOffers(offers.stream().filter(specialOffer -> specialOffer.getActiveTo().after(new Date())).collect(Collectors.toSet()));
         return dto;
     }
 

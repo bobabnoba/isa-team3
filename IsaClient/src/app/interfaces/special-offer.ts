@@ -17,4 +17,5 @@ export interface SpecialOffer {
     guests : number;
     type : ReservationType;
     utilities : Utility[];
+    isCaptain : boolean;
 }

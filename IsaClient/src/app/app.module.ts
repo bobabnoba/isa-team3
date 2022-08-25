@@ -119,6 +119,9 @@ import { BoatAvailabilityComponent } from './components/boat-components/boat-ava
 import { AvailabilityCalendarComponent } from './components/boat-components/availability-calendar/availability-calendar.component';
 import { ImageListComponent } from './components/common/image-list/image-list.component';
 import { ImageListItemComponent } from './components/common/image-list-item/image-list-item.component';
+import { AddBoatSpecialOfferComponent } from './components/boat-owner-components/add-boat-special-offer/add-boat-special-offer.component';
+import { BoatSpecialOfferComponent } from './components/boat-components/boat-special-offer/boat-special-offer.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -213,6 +216,8 @@ import { ImageListItemComponent } from './components/common/image-list-item/imag
     AvailabilityCalendarComponent,
     ImageListComponent,
     ImageListItemComponent,
+    AddBoatSpecialOfferComponent,
+    BoatSpecialOfferComponent,
   ],
   imports: [
     BrowserModule,
@@ -246,7 +251,8 @@ import { ImageListItemComponent } from './components/common/image-list-item/imag
     }),
     MatStepperModule,
     MatFileUploadModule,
-    MatIconModule
+    MatIconModule,
+    MatFormFieldModule,
   ],
   exports: [
     BrowserModule,
@@ -268,6 +274,7 @@ import { ImageListItemComponent } from './components/common/image-list-item/imag
     MatButtonModule,
     MatDialogModule,
     CalendarModule,
+    MatFormFieldModule,
   ],
   providers: [HttpClientModule, DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

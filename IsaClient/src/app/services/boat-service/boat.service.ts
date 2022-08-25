@@ -61,10 +61,12 @@ export class BoatService {
     return this._http.post(`${this.baseURL}/boats/add-availability`, body);
   }
 
-  // checkAvailability(from : string, to : string, instructorEmail : string) {
-  //   instructorEmail = this.handlePlusInEmail(instructorEmail);
-  //   return this._http.get(`${this.baseURL}/instructor/check-if-available?from=${from}&to=${to}&instructorEmail=${instructorEmail}`);
-  // }
-
+  checkBoatAvailability(from : string, to : string, boatOwnerEmail : string) {
+    boatOwnerEmail = this.handlePlusInEmail(boatOwnerEmail);
+    return this._http.get(`${this.baseURL}/boat/check-if-available?from=${from}&to=${to}&boatOwner=${boatOwnerEmail}`);
+  }
+  private handlePlusInEmail(email : string) {
+    return encodeURIComponent(email);
+  }
   
 }

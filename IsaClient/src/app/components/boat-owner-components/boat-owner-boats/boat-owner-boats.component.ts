@@ -5,6 +5,7 @@ import { Boat } from 'src/app/interfaces/boat';
 import { BoatService } from 'src/app/services/boat-service/boat.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { AddBoatComponent } from '../../boat-components/add-boat/add-boat.component';
+import { AddBoatSpecialOfferComponent } from '../add-boat-special-offer/add-boat-special-offer.component';
 
 @Component({
   selector: 'app-boat-owner-boats',
@@ -37,7 +38,7 @@ export class BoatOwnerBoatsComponent implements OnInit {
     dialogConfig.id = 'modal-component';
     dialogConfig.width = '600px';
     dialogConfig.height = '650px';
-   // this._matDialog.open(AddSpecialOfferComponent, dialogConfig);
+    this._matDialog.open(AddBoatSpecialOfferComponent, dialogConfig);
   }
 
   addNew(){

@@ -23,6 +23,7 @@ public class SpecialOfferMapper {
         entity.setReservationEndDate(dto.getReservationEndDate());
         entity.setGuests(dto.getGuests());
         entity.setUtilities(UtilityMapper.toEntitySet(dto.getUtilities()));
+        entity.setCaptain(dto.isCaptain());
         return entity;
     }
 
@@ -42,6 +43,7 @@ public class SpecialOfferMapper {
                 dto.setReservationEndDate(specialOffer.getReservationEndDate());
                 dto.setGuests(specialOffer.getGuests());
                 dto.setUtilities(UtilityMapper.map(specialOffer.getUtilities()));
+                dto.setCaptain(specialOffer.isCaptain());
                 dtos.add(dto);
             });
         }

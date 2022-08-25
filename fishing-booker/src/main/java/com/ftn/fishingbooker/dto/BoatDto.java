@@ -31,5 +31,5 @@ public class BoatDto {
     public Collection<UtilityDto> utilities;
     public Collection<String> navigationTypes;
     public Collection<BoatAvailabilityDto> availability;
-    //public Collection<SpecialOfferDto> specialOffers;
+    public Collection<SpecialOfferDto> specialOffers;
 }

@@ -268,7 +268,6 @@ public class BoatServiceImpl implements BoatService {
     }
 
 
-
     private List<BoatAvailability> checkForOverlapping(BoatAvailability availability, List<BoatAvailability> availabilities) {
 
         List<BoatAvailability> retVal = new ArrayList<>();
@@ -305,4 +304,12 @@ public class BoatServiceImpl implements BoatService {
         return availability;
     }
 
+    //TODO:
+    //uklanja available period kada je dodata nova rezervacija
+    //ali sta ako ta rezervacija prodje tj niko je ne iskoristi
+    //da li onda trebam da vratim taj period da je opet available
+    @Override
+    public void updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id) {
+        //TODO:
+    }
 }

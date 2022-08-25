@@ -33,4 +33,6 @@ public interface BoatService {
     Boat updateBoatRules(Long id, Collection<Rule> updated);
 
     BoatAvailability addAvailabilityPeriod(BoatAvailability mapToBoatAvailabilityEntity, Long boatId);
+
+    void updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id);
 }

@@ -58,7 +58,9 @@ public class Boat {
     @OneToMany(targetEntity = Image.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Image> images;
 
-    @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @ToString.Exclude
     private Set<Reservation> reservations;
 
     @ManyToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -93,4 +95,7 @@ public class Boat {
         }
         return retVal;
     }
+
+    @OneToMany(targetEntity = SpecialOffer.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    private Set<SpecialOffer> specialOffers;
 }

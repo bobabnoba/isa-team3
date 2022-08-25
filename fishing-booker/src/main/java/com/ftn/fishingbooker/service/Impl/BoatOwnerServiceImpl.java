@@ -2,12 +2,12 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
-import com.ftn.fishingbooker.model.BoatOwner;
-import com.ftn.fishingbooker.model.Registration;
-import com.ftn.fishingbooker.model.User;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.stereotype.*;
+
+import java.util.*;
 
 @Service
 public class BoatOwnerServiceImpl implements BoatOwnerService {
@@ -54,5 +54,20 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
     @Override
     public BoatOwner getWithAvailability(String email) {
         return boatOwnerRepository.findByEmail(email);
+    }
+
+    @Override
+    public boolean checkAvailability(Date from, Date to, String boatOwnerEmail) {
+        boolean isAvailable = false;
+        BoatOwner owner = boatOwnerRepository.findByEmail(boatOwnerEmail);
+        List<BoatOwnerAvailability> availabilityPeriods = new ArrayList<>(owner.getAvailability());
+
+        for (BoatOwnerAvailability period : availabilityPeriods) {
+            if (from.after(period.getStartDate()) && to.before(period.getEndDate())) {
+                isAvailable = true;
+                break;
+            }
+        }
+        return isAvailable;
     }
 }

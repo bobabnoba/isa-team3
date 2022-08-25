@@ -36,4 +36,6 @@ public class SpecialOfferDto {
     public int guests;
 
     public Collection<UtilityDto> utilities;
+
+    public boolean isCaptain;
 }

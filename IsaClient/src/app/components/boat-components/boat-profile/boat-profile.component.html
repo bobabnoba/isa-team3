@@ -18,19 +18,35 @@
             <mat-tab label="Owner"> 
                 <app-boat-owner-info [boat]="boat"></app-boat-owner-info>
             </mat-tab>
-            <mat-tab label="Images"> 
-                <div *ngFor="let im of boat.images" >
-                    <div style="display: flex; display: inline-block;" >
-                        <img src="{{baseUrl}}{{im}}" class="img" style="width: 40%; height: 40%;padding: 1rem;position: flex;" onerror="this.onerror;this.src='../../../../assets/images/no-img.png'" alt="Image not available">                    
+            <!-- <mat-tab label="Images"> 
+                <div>
+                  <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="500">
+                    <div class="carousel-inner">
+                        <div [class]="im.act" *ngFor="let im of images" >
+                            <img class="d-block w-100" src="{{im.src}}" alt="First slide">
+                        </div>
                     </div>
+                  </div>
                 </div>
-            </mat-tab>
+                  
+            </mat-tab> -->
             <!-- <mat-tab label="Availability"> 
                 <app-boat-availability [boat]="boat" ></app-boat-availability> 
             </mat-tab> -->
+
+            
           </mat-tab-group>
     </div>
-   <!-- <div class="justify-content-center d-flex flex-dir pt-5">
+    <div style="padding: 6rem;">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="3000">
+          <div class="carousel-inner">
+              <div [class]="im.act" *ngFor="let im of images" >
+                  <img class="d-block w-100" src="{{im.src}}" alt="First slide">
+              </div>
+          </div>
+        </div>
+      </div>
+   <div class="justify-content-center d-flex flex-dir pt-5">
     <h2 *ngIf="boat.specialOffers.length === 0" class="pb-1 align-text">No special offers available.</h2>
     <div  *ngIf="boat.specialOffers.length > 0">
         <h2 class="pb-1 align-text">Special offers</h2>
@@ -38,6 +54,8 @@
         <app-boat-special-offer [offer]="offer" class="p-3"></app-boat-special-offer>
     </div>
     </div>
-   </div> -->
+   </div>
     <br><br><br>
+
+    
 </div>
