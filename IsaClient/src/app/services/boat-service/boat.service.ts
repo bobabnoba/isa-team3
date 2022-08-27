@@ -61,9 +61,8 @@ export class BoatService {
     return this._http.post(`${this.baseURL}/boats/add-availability`, body);
   }
 
-  checkBoatAvailability(from : string, to : string, boatOwnerEmail : string) {
-    boatOwnerEmail = this.handlePlusInEmail(boatOwnerEmail);
-    return this._http.get(`${this.baseURL}/boat/check-if-available?from=${from}&to=${to}&boatOwner=${boatOwnerEmail}`);
+  checkBoatAvailability(from : string, to : string, boatId : number) {
+    return this._http.get(`${this.baseURL}/boats/check-if-available?from=${from}&to=${to}&boatId=${boatId}`);
   }
   private handlePlusInEmail(email : string) {
     return encodeURIComponent(email);

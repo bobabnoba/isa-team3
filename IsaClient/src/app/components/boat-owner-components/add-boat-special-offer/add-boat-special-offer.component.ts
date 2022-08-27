@@ -103,7 +103,7 @@ export class AddBoatSpecialOfferComponent implements OnInit {
     this._boatService.checkBoatAvailability(
       this._datePipe.transform(resStartDate, 'yyyy-MM-dd HH:mm:ss')!,
       this._datePipe.transform(resEndDate, 'yyyy-MM-dd HH:mm:ss')!,
-      this._storageService.getEmail()).subscribe(
+      this.selectedBoat.id).subscribe(
         res => {
           if (!res) {
             this.reservationStartDate.reset();

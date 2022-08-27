@@ -82,7 +82,7 @@ public class Boat {
     @JsonManagedReference
     private BoatOwner boatOwner;
 
-    @OneToMany(targetEntity = BoatAvailability.class, mappedBy = "boat", fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = BoatAvailability.class, fetch = FetchType.EAGER)
     private Set<BoatAvailability> availableTimePeriods;
 
     @Transient

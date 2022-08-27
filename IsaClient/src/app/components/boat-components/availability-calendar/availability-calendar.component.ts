@@ -7,6 +7,7 @@ import { StorageService } from 'src/app/services/storage-service/storage.service
 import { BoatService } from 'src/app/services/boat-service/boat.service';
 import { Boat } from 'src/app/interfaces/boat';
 import { BoatOwnerService } from 'src/app/services/boat-owner-service/boat-owner.service';
+import { Router } from '@angular/router';
 
 
 const colors: Record<string, EventColor> = {
@@ -69,24 +70,27 @@ export class AvailabilityCalendarComponent implements OnInit {
 
   activeDayIsOpen: boolean = false;
 
-  constructor(private _boatService : BoatService,private _boatOwnerService : BoatOwnerService, private _storageService: StorageService) {
+  constructor(private _boatService : BoatService,private _boatOwnerService : BoatOwnerService,
+     private _storageService: StorageService, private _router : Router) {
     this.newAv = {};
+    this.boat = {} as Boat;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     // now aw is changed 
-    console.log(changes);
-    if( changes.newAv.currentValue){
+    if(this.newAv !== undefined){
+      if( changes.newAv.currentValue){
       this.addEvent(changes.newAv.currentValue.startDate, changes.newAv.currentValue.endDate);
-    }
+      }
+      } 
   }
 
   ngOnInit(): void {
-    if (this.boat){
-      this._boatService.getById(this.boat.id.toString()).subscribe(
+     if (this.boat){
+      this._boatService.getById(this._router.url.substring(26)).subscribe(
         (data) => {
-          data.availability.forEach((e : any) => 
-            this.addEvent(e.startDate, e.endDate)
+          data.availability.forEach((e : any) => {
+            this.addEvent(e.startDate, e.endDate)}
           )
         }
       );

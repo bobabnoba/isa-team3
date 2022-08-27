@@ -9,6 +9,7 @@ import com.ftn.fishingbooker.service.ClientService;
 import com.ftn.fishingbooker.service.ReservationService;
 import com.ftn.fishingbooker.util.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.*;
@@ -65,7 +66,7 @@ public class BoatController {
         Collection<Boat> found = boatService.getAllByOwner(email);
 
         Collection<BoatDto> dtos = found.stream()
-                .map(BoatMapper::mapToDto)
+                .map(BoatMapper::mapToDtoWithAvailability)
                 .collect(Collectors.toList());
 
         return ok(dtos);
@@ -140,6 +141,13 @@ public class BoatController {
             return ok(BoatMapper.mapToAvailabilityDto(saved));
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/check-if-available")
+    ResponseEntity<Boolean> checkAvailability(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
+                                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
+                                              @RequestParam Long boatId) {
+        return ok(boatService.checkAvailability(from, to, boatId));
     }
 
 

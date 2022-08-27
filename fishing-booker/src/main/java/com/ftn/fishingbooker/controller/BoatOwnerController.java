@@ -43,8 +43,8 @@ public class BoatOwnerController {
     @GetMapping("/check-if-available")
     ResponseEntity<Boolean> checkAvailability(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
-                                              @RequestParam String instructorEmail) {
-        return ok(boatOwnerService.checkAvailability(from, to, instructorEmail));
+                                              @RequestParam String boatOwnerEmail) {
+        return ok(boatOwnerService.checkAvailability(from, to, boatOwnerEmail));
     }
 
 }

@@ -5,6 +5,9 @@ import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.stereotype.*;
 
+import java.util.*;
+import java.util.stream.*;
+
 @Service
 public class BoatAvailabilityServiceImpl implements BoatAvailabilityService {
 
@@ -24,5 +27,10 @@ public class BoatAvailabilityServiceImpl implements BoatAvailabilityService {
         BoatAvailability found = boatAvailabilityRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("BoatAvailability not found"));
         boatAvailabilityRepository.delete(found);
+    }
+
+    @Override
+    public void delete(Set<BoatAvailability> availabilities) {
+        boatAvailabilityRepository.deleteAll(availabilities);
     }
 }

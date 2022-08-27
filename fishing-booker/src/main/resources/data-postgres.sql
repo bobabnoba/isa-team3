@@ -163,10 +163,13 @@ insert into instructor_availability(
 	instructor_id, availability_id)
 	values (110, 100);
 
---Boats Availability
-insert into boat_availability(id, end_date, start_date, boat_id)
-values
-(100,  '2022-08-30', '2022-08-01', 100); --available
+----Boats Availability
+--insert into boat_availability_periods(id, end_date, start_date)
+--values
+--(100,  '2022-08-30', '2022-08-01'); --available
+--insert into boat_available_time_periods (boat_id, available_time_periods_id)
+--values
+--(100, 100);
 
 -- Vacation Home Reservations
 insert into vacation_home_reservations(vacation_home_id, reservations_id)
@@ -209,7 +212,7 @@ insert into rule(id, name)
 --Boat owner availability
 insert into boat_owner_availability_periods(
 	id, end_date, start_date)
-	values (200,  '2022-08-15', '2022-08-01'); --available
+	values (200,  '2022-08-30', '2022-08-01'); --available
 
 insert into boat_owner_availability(
 	boat_owner_id, availability_id)

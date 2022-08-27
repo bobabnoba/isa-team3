@@ -17,8 +17,8 @@
             </div>
 
             <div class="row">
-                <div *ngFor="let adv of boats | boatSearch : searchText" >
-                    <app-boat-preview [boat]="adv" (boatEdited)="boatEdited($event)" 
+                <div *ngFor="let boat of boats | boatSearch : searchText" >
+                    <app-boat-preview [boat]="boat" (boatEdited)="boatEdited($event)" 
                     (boatDeleted)="boatDeleted($event)"></app-boat-preview>
                 </div>
             </div> 

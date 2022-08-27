@@ -13,7 +13,7 @@ import { BoatService } from 'src/app/services/boat-service/boat.service';
 })
 export class BoatAvailabilityComponent implements OnInit {
 
-  //@Input()
+  // @Input()
   boat! : Boat;
 
   //boatId! : string;
@@ -23,15 +23,13 @@ export class BoatAvailabilityComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder, private _boatService : BoatService,
                private _snackBar : MatSnackBar, private _router : Router) {
                 this.boat = {} as Boat;
-                this.boat.availability = [] as BoatAvailability[];
+                //this.boat.availability = [] as BoatAvailability[];
                 }
 
   ngOnInit(): void {
-    this._boatService.getById(this._router.url.substring(26)).subscribe( (data : Boat) => {
+    this._boatService.getById(this._router.url.substring(26)).subscribe( (data : any) => {
       this.boat = data;
       });
-    //this.boatId = this._router.url.substring(17);
-    console.log(this.boat);
     this.aFormGroup = this._formBuilder.group({
       startDate: new FormControl('', [
         Validators.required,
@@ -43,22 +41,18 @@ export class BoatAvailabilityComponent implements OnInit {
   }
 
   addNew(){
-    console.log(this.aFormGroup.value.startDate);
-    console.log(this.aFormGroup.value.endDate);
 
     const observer = {
       next: (data : any) => { 
-        console.log(data);
         this.newAv = data;
         this._snackBar.open('New availability period successfully added.', '',
         { duration: 3000, panelClass: ['snack-bar'] });
        },
       error: (err : any) => { 
-        console.log(err);
         this._snackBar.open('Error adding new availability period.', '',
         { duration: 3000, panelClass: ['snack-bar'] }
         ); },
-      complete: () => { console.log('done'); }
+      complete: () => {  }
     };
 
     this._boatService.addAvailability( {
