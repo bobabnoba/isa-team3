@@ -167,17 +167,17 @@ insert into vacation_home_availability(
 	(102,102),
 	(103,103);
 --Instructor Availability
-insert into instructor_availability_periods(
-	id, end_date, start_date)
-	values (100,  '2022-08-30', '2022-08-01'), --available
-	(101,  '2022-09-30', '2022-09-01'), --available
-	(102,  '2022-10-30', '2022-10-01'); --available
-
-insert into instructor_availability(
-	instructor_id, availability_id)
-	values (110, 100),
-	(110, 101),
-	(110, 102);
+--insert into instructor_availability_periods(
+--	id, end_date, start_date)
+--	values (100,  '2022-08-30', '2022-08-01'), --available
+--	(101,  '2022-09-30', '2022-09-01'), --available
+--	(102,  '2022-10-30', '2022-10-01'); --available
+--
+--insert into instructor_availability(
+--	instructor_id, availability_id)
+--	values (110, 100),
+--	(110, 101),
+--	(110, 102);
 
 --Boats Availability
 insert into boat_availability(id, end_date, start_date, boat_id)

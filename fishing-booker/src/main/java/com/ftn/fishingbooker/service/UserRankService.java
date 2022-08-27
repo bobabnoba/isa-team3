@@ -10,4 +10,6 @@ public interface UserRankService {
 
     Collection<UserRank> saveLoyaltyProgram(Collection<UserRank> ranks);
 
+    UserRank findByName(String name);
+
 }

@@ -10,8 +10,5 @@ public class OwnerRegisterDto {
     public String password;
     public AddressDto address;
     public String phone;
-    public String city;
-    public Long zipCode;
-    public String country;
     public String motivation;
 }

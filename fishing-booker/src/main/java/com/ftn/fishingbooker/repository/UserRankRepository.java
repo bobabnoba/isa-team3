@@ -4,4 +4,6 @@ import com.ftn.fishingbooker.model.UserRank;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRankRepository extends JpaRepository<UserRank, Long> {
+
+    UserRank findByName(String name);
 }
