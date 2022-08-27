@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from 'src/app/services/user-service/user.service';
+import { AddAdminComponent } from '../add-admin/add-admin.component';
 import { LoyaltyProgramComponent } from '../loyalty-program/loyalty-program.component';
 
 @Component({
@@ -24,6 +25,15 @@ export class AdminUsersComponent implements OnInit {
     dialogConfig.width = '900px';
     dialogConfig.height = '530px';
     this._matDialog.open(LoyaltyProgramComponent, dialogConfig);
+  }
+
+  addNewAdmin(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = 'modal-component';
+    dialogConfig.width = '700px';
+    dialogConfig.height = '550px';
+    this._matDialog.open(AddAdminComponent, dialogConfig);
   }
 
 }

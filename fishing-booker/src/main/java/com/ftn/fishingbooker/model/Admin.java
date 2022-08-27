@@ -1,7 +1,6 @@
 package com.ftn.fishingbooker.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Entity;
@@ -10,38 +9,12 @@ import java.util.Collection;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Admin extends User {
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        ArrayList<UserRole> roles = new ArrayList<>();
-        roles.add(getRole());
-        return roles;
-    }
+    private boolean firstLogin;
 
-    @Override
-    public String getUsername() {
-        return getEmail();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

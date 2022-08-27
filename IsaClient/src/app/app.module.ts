@@ -114,6 +114,8 @@ import { InstructorPageComponent } from './components/rentals/instructor-page/in
 import { UnauthBoatPageComponent } from './components/unauthenticated/unauth-boat-page/unauth-boat-page.component';
 import { UnauthHomePageComponent } from './components/unauthenticated/unauth-home-page/unauth-home-page.component';
 import { UnauthInstructorPageComponent } from './components/unauthenticated/unauth-instructor-page/unauth-instructor-page.component';
+import { AddAdminComponent } from './components/admin-components/add-admin/add-admin.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 
 
@@ -204,7 +206,9 @@ import { UnauthInstructorPageComponent } from './components/unauthenticated/unau
     InstructorPageComponent,
     UnauthBoatPageComponent,
     UnauthHomePageComponent,
-    UnauthInstructorPageComponent
+    UnauthInstructorPageComponent,
+    AddAdminComponent,
+    ChangePasswordComponent
 
   ],
   imports: [

@@ -7,6 +7,7 @@ import { IRank } from 'src/app/interfaces/rank';
 import { DeleteAccountService } from 'src/app/services/delete-account-service/delete-account.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { UserService } from 'src/app/services/user-service/user.service';
+import { ChangePasswordComponent } from '../../change-password/change-password.component';
 import { AccDeletionExplanationComponent } from '../acc-deletion-explanation/acc-deletion-explanation.component';
 
 @Component({
@@ -85,4 +86,14 @@ export class InstructorProfileComponent implements OnInit {
     }
     this.updateMode = !this.updateMode
   }
+
+  changePassword(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.id = 'modal-component';
+    dialogConfig.width = '500px';
+    dialogConfig.height = '400px';
+    this._matDialog.open(ChangePasswordComponent, dialogConfig);
+  }
+
 }

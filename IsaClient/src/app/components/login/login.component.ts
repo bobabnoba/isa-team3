@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
         if (role === "ROLE_INSTRUCTOR") {
           this._router.navigate(['/instructor/dashboard']);
         } else if (role === "ROLE_ADMIN") {
-          this._router.navigate(['/admin/profile']);
+          this._router.navigate(['/admin/dashboard']);
         } else if (role === "ROLE_BOAT_OWNER") {
           this._router.navigate(['/boat-owner/profile']);
         } else if (role === "ROLE_HOME_OWNER") {
