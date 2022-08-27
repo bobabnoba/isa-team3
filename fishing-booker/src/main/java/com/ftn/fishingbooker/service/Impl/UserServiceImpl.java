@@ -3,6 +3,7 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.dto.PasswordChangeDto;
 import com.ftn.fishingbooker.dto.RegisterDto;
 import com.ftn.fishingbooker.enumeration.RegistrationType;
+import com.ftn.fishingbooker.exception.InvalidPasswordException;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.RegistrationMapper;
 import com.ftn.fishingbooker.model.Admin;
@@ -132,7 +133,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void changePassword(String email, PasswordChangeDto request) {
+    public void changePassword(String email, PasswordChangeDto request)  {
         User user = userRepository.findByEmail(email);
 
         if(encoder.matches(request.getOldPassword(), user.getPassword())){
@@ -142,6 +143,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 adminService.updateFirstLogin(admin);
             }
             userRepository.save(user);
+        } else {
+            throw new InvalidPasswordException("Invalid password!");
         }
     }
 }

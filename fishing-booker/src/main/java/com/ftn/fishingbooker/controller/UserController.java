@@ -3,6 +3,7 @@ package com.ftn.fishingbooker.controller;
 import com.ftn.fishingbooker.dto.PasswordChangeDto;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.UserDto;
+import com.ftn.fishingbooker.exception.InvalidPasswordException;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.mapper.UserMapper;
 import com.ftn.fishingbooker.model.Reservation;
@@ -70,8 +71,8 @@ public class UserController {
     }
 
     @PutMapping(value = "change-password/{email}")
-    public ResponseEntity<HttpStatus> changePassword(@RequestBody PasswordChangeDto request, @PathVariable String email) {
-
+    public ResponseEntity<HttpStatus> changePassword(@RequestBody PasswordChangeDto request, @PathVariable String email)
+    {
         userService.changePassword(email, request);
         return ResponseEntity.noContent().build();
     }
