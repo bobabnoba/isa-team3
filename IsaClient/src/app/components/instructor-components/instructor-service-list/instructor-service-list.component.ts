@@ -21,7 +21,7 @@ export class InstructorServiceListComponent implements OnInit {
   reservations : IReservation[] = []
 
   constructor(private _adventureService: AdventureService, private _storageService : StorageService,
-              private _matDialog : MatDialog, private _snackBar : MatSnackBar) { }
+              private _matDialog : MatDialog) { }
 
   ngOnInit(): void {
     this._adventureService.getAllByInstructor(this._storageService.getEmail()).subscribe(

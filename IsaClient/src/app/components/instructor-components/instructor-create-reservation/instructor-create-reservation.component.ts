@@ -32,6 +32,7 @@ export class InstructorCreateReservationComponent implements OnInit {
   client = new FormControl([Validators.required]);
   guests =new FormControl([Validators.required]);
   price = new FormControl([Validators.required]);
+  priceWDiscount = 0;
   servi = new FormControl();
   today = this._datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm')
 
@@ -40,28 +41,41 @@ export class InstructorCreateReservationComponent implements OnInit {
      private _storageService : StorageService, private _insService : InstructorService,
      private _snackBar : MatSnackBar, private _datePipe : DatePipe, private _rentService : RentalService,
      private _dialogRef : MatDialogRef<InstructorCreateReservationComponent>) { 
+      
       this.data = passedData;
-      this.price.setValue(passedData.price);
       this.guests.setValue(passedData.guests);
+      this.price.setValue(passedData.price * passedData.guests);
       this.existingServices = passedData.utilities;
 
      }
+
+
+     calcDiscount(){
+      let utilitiesSum = 0;
+      this.services.forEach(s => { utilitiesSum += s.price });
+      let totalPrice = this.data.price * this.guests.value + utilitiesSum;
+      this.priceWDiscount = Math.round(totalPrice - (totalPrice * this.chosenClient.rank.percentage / 100));
+      return this.priceWDiscount;
+    }
 
   ngOnInit(): void {
     this._insService.getOngoingResClient(this._storageService.getEmail()).subscribe(
       res =>{
         this.chosenClient = res;
         this.noAvalilableClient = false;
+        this.priceWDiscount =  Math.round((this.data.price * this.data.guests) - ((this.data.price * this.data.guests) * res.rank.percentage / 100));
+
       }
     );
     
   }
 
   updatePrice(){
-    this.price.setValue(this.data.price);
+    this.price.setValue(this.data.price * this.guests.value);
     let utilitiesSum = 0;
     this.services.forEach(s => { utilitiesSum += s.price });
     this.price.setValue(this.price.value + utilitiesSum);
+    this.calcDiscount();
   }
 
   clientChosen(){}
@@ -117,11 +131,17 @@ export class InstructorCreateReservationComponent implements OnInit {
   }
 
   create(){
-    if(true){ // VALIDATE ME
+    if(this.resFrom.valid && this.guests.valid && this.price.valid){ 
 
       this._rentService.rentAdventure(this.createReservationObject(), this.data.adventureId, this.chosenClient.email).subscribe(
         res => {
           this._snackBar.open('Adventure successfully booked!', '',
+            { duration: 3000, panelClass: ['snack-bar'] }
+          );
+          this._dialogRef.close();
+        },
+        err => {
+          this._snackBar.open('Sorry, something went wrong. Please try again later.', '',
             { duration: 3000, panelClass: ['snack-bar'] }
           );
           this._dialogRef.close();
@@ -133,7 +153,7 @@ export class InstructorCreateReservationComponent implements OnInit {
     let res = {} as IReservation;
       res.startDate = this._datePipe.transform(new Date(this.resFrom.value), 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
       res.endDate = this._datePipe.transform(addHours(new Date(this.resFrom.value), this.data.duration), 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
-      res.price = this.price.value;
+      res.price = this.priceWDiscount === 0 ? this.price.value : this.priceWDiscount;
       res.guests = this.guests.value;
       res.duration = this.data.duration;
       res.utilities = this.services;

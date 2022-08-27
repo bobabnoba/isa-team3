@@ -64,4 +64,8 @@ export class AdventureService {
   updateAddress(id : string, updated : any) : Observable<Adventure>{
     return this._http.post<Adventure>(`${this.baseURL}/adventures/address-update/${id}` , updated);
   }
-}
+
+  incomingReservationExists(id : number ) : Observable<boolean>{
+    return this._http.get<boolean>(`${this.baseURL}/adventures/${id}/has-incoming-reservations`);
+  }
+ }

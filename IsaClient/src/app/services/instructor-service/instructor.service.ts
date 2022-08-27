@@ -46,7 +46,7 @@ export class InstructorService {
   }
 
   checkForOverlappingReservation(from : string, to : string, instructorEmail : string) {
-    return this._http.get(`${this.baseURL}/instructor/check-for-overlapping-reservations?from=${from}&to=${to}&instructorEmail=${instructorEmail}`);
+    return this._http.get(`${this.baseURL}/instructor/has-overlapping-reservation?from=${from}&to=${to}&email=${instructorEmail}`);
   }
 
 }

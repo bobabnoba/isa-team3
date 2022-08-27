@@ -11,11 +11,11 @@
     <br>
     <mat-label>Reservation date</mat-label>
     <mat-form-field>
-      <input matInput type="datetime-local" [min]="today" [formControl]="resFrom" (change)="resDateChosen()" >
+      <input matInput type="datetime-local" [min]="today" [formControl]="resFrom" (change)="resDateChosen()" required >
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Number of participants:</mat-label>
-      <input matInput type="number" min="1" [max]="data.guests" [formControl]="guests" >
+      <input matInput type="number" min="1" [max]="data.guests" (change)="updatePrice()" [formControl]="guests" required>
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Additional services</mat-label>
@@ -31,7 +31,11 @@
     </mat-form-field>
     <mat-form-field appearance="standard">
       <mat-label>Price:</mat-label>
-      <input  matInput  [formControl]="price" readonly>
+      <input  matInput  [formControl]="price" required readonly>
+    </mat-form-field>
+      <mat-form-field *ngIf="priceWDiscount != 0" appearance="standard">
+        <mat-label>Price with clients rank discount:</mat-label>
+      <input matInput [(ngModel)]="priceWDiscount" name="priceWDiscount" required readonly>
     </mat-form-field>
     <br>
     <div class="justify-content-center d-flex">
