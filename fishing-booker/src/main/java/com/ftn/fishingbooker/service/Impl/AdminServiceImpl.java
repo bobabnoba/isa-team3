@@ -50,4 +50,15 @@ public class AdminServiceImpl implements AdminService {
         admin.setRole(roleService.findByName("ROLE_ADMIN"));
         return adminRepository.save(admin);
     }
+
+    @Override
+    public void updateFirstLogin(Admin admin) {
+        admin.setFirstLogin(false);
+        adminRepository.save(admin);
+    }
+
+    @Override
+    public boolean isFirstLogin(String email) {
+        return adminRepository.findByEmail(email).isFirstLogin();
+    }
 }

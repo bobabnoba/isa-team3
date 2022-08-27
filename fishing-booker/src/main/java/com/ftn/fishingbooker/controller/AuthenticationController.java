@@ -82,9 +82,4 @@ public class AuthenticationController {
         return new ResponseEntity<>(UserMapper.mapToDto(user), HttpStatus.CREATED);
     }
 
-    @PostMapping("/register/admin")
-    public ResponseEntity<User> registerAdmin(@RequestBody RegisterDto registerDto) {
-        User user = userService.createAdmin(registerDto);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
 }

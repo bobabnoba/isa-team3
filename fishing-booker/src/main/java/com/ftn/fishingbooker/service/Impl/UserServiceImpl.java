@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.service.Impl;
 
+import com.ftn.fishingbooker.dto.PasswordChangeDto;
 import com.ftn.fishingbooker.dto.RegisterDto;
 import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
@@ -10,12 +11,15 @@ import com.ftn.fishingbooker.model.Registration;
 import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.repository.UserRepository;
+import com.ftn.fishingbooker.service.AdminService;
 import com.ftn.fishingbooker.service.ClientService;
 import com.ftn.fishingbooker.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -24,14 +28,14 @@ import java.util.Collection;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private ClientService clientService;
-    @Autowired
-    RegistrationRepository registrationRepository;
+    private final UserRepository userRepository;
+    private final ClientService clientService;
+    private final RegistrationRepository registrationRepository;
+    private final PasswordEncoder encoder;
+    private final AdminService adminService;
 
     private static String url = "<a href=\"http://localhost:4200/login\"> Login </a>";
 
@@ -58,16 +62,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
         Client user = RegistrationMapper.mapToClient(registerDto);
         clientService.registerClient(user);
-        return user;
-    }
-
-    @Override
-    public User createAdmin(RegisterDto registerDto) {
-        if (isEmailRegistered(registerDto.getEmail())) {
-            throw new ResourceConflictException("Email already exists");
-        }
-        Admin user = RegistrationMapper.mapToAdmin(registerDto);
-        //TODO:
         return user;
     }
 
@@ -137,5 +131,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findById(id).orElseThrow(() -> new ResourceConflictException("User not found"));
     }
 
+    @Override
+    public void changePassword(String email, PasswordChangeDto request) {
+        User user = userRepository.findByEmail(email);
 
+        if(encoder.matches(request.getOldPassword(), user.getPassword())){
+            user.setPassword(encoder.encode(request.getNewPassword()));
+            if(user.getRole().getName().equals("ROLE_ADMIN")){
+                Admin admin = (Admin) user;
+                adminService.updateFirstLogin(admin);
+            }
+            userRepository.save(user);
+        }
+    }
 }

@@ -16,8 +16,6 @@ public interface UserService {
 
     User createClient(RegisterDto registerRequest) throws MessagingException;
 
-    User createAdmin(RegisterDto registerRequest);
-
     String enableUser(String email);
 
     User registerOwner(User owner, RegistrationType type, String motivation) throws MessagingException;
@@ -35,4 +33,6 @@ public interface UserService {
     Collection<User> saveAll(Collection<User> users);
 
     User getUserById(Long id);
+
+    void changePassword(String email, PasswordChangeDto request);
 }

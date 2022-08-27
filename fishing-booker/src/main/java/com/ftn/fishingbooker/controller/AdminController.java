@@ -32,6 +32,11 @@ public class AdminController {
         return ResponseEntity.ok(AdminMapper.toDto(added));
     }
 
+    @GetMapping("/first-login/{email}")
+    public ResponseEntity<Boolean> firstLogin(@PathVariable String email){
+        return ResponseEntity.ok(adminService.isFirstLogin(email));
+    }
+
     @GetMapping("registration-requests")
     public ResponseEntity<Object> getAllRegistrationRequests(){
         Collection<Registration> requests = registrationRepository.findUnprocessedRequests();

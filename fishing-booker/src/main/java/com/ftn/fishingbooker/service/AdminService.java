@@ -10,4 +10,8 @@ public interface AdminService {
     void respondToRegistrationRequest(Registration response) throws MessagingException;
 
     Admin addNewAdmin(Admin admin);
+
+    void updateFirstLogin(Admin admin);
+
+    boolean isFirstLogin(String email);
 }
