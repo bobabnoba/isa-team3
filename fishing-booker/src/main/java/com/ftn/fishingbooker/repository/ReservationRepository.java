@@ -56,4 +56,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     Reservation getOngoingReservationForInstructor(Long id);
 
 
+    @Query(value = "select count(r.id) " +
+            "    from Adventure a " +
+            "    join a.reservations r " +
+            "    where a.id = :id and r.isCancelled = false and r.startDate >= current_date")
+    int noOfIncomingReservationsForAdventure(Long id);
 }

@@ -123,6 +123,11 @@ public class AdventureServiceImpl implements AdventureService {
     }
 
     @Override
+    public int getNoOfIncomingReservations(Long id) {
+        return reservationService.getNoOfIncomingReservationsForAdventure(id);
+    }
+
+    @Override
     public Collection<Adventure> findAllWithInstructor() {
         return adventureRepository.findAllWithInstructor();
     }

@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteAccoutRequest } from 'src/app/interfaces/delete-accout-request';
 import { LoggedUser } from 'src/app/interfaces/logged-user';
+import { IRank } from 'src/app/interfaces/rank';
 import { DeleteAccountService } from 'src/app/services/delete-account-service/delete-account.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { UserService } from 'src/app/services/user-service/user.service';
@@ -18,18 +19,29 @@ export class InstructorProfileComponent implements OnInit {
   topbarInfo : string = "";
   user! : LoggedUser;
   updateMode : boolean = false;
+  rank! : string;
   
   constructor(private _userService : UserService, private _storageService : StorageService,
     private _snackBar : MatSnackBar, private _matDialog : MatDialog,
     private _deleteAccountService : DeleteAccountService) { }
 
+  
   ngOnInit(): void {
     this._userService.getUserInfo(this._storageService.getEmail()).subscribe(
       (data) => {
         this.user = data;
+        this.rank = this.user.rank.name.split('_')[0];
         this.topbarInfo = this.user.firstName + " " + this.user.lastName;
       }
     );
+  }
+
+  info(){
+    this._snackBar.open("You are a " + this.rank + " advertiser, which means you have " + this.user.rank.percentage + "%  of"
+    + " the reservation price!", "", {
+    duration: 3000,
+    panelClass: ['snack-bar']
+  });
   }
 
   deleteAccount(){

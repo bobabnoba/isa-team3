@@ -20,6 +20,7 @@
 .flex-dir {
     flex-direction: column;
 }
+
 .displaySection {
     display: flex;
     max-height: 100%;
