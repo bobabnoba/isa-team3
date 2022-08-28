@@ -60,6 +60,8 @@ public class VacationHome {
     @OneToMany(targetEntity = VacationHomeAvailability.class, fetch = FetchType.EAGER)
     private Set<VacationHomeAvailability> availability;
 
+    private double cancelingPercentage;
+
     @Transient
     public List<String> getImagePaths() {
         List<String> retVal = new ArrayList<>();

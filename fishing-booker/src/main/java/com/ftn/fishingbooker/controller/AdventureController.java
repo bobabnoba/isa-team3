@@ -10,11 +10,9 @@ import com.ftn.fishingbooker.model.Adventure;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.Rule;
-import com.ftn.fishingbooker.service.AdventureService;
-import com.ftn.fishingbooker.service.ClientService;
-import com.ftn.fishingbooker.service.InstructorService;
-import com.ftn.fishingbooker.service.ReservationService;
+import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.FIleUploadUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -29,19 +27,14 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/adventures")
+@RequiredArgsConstructor
 public class AdventureController {
 
     private final AdventureService adventureService;
     private final ClientService clientService;
     private final ReservationService reservationService;
     private final InstructorService instructorService;
-
-    public AdventureController(AdventureService adventureService, ClientService clientService, ReservationService reservationService, InstructorService instructorService) {
-        this.adventureService = adventureService;
-        this.clientService = clientService;
-        this.reservationService = reservationService;
-        this.instructorService = instructorService;
-    }
+    private final EarningsService earningsService;
 
     @GetMapping
     public ResponseEntity<Collection<AdventureDto>> getAllAdventures() {
@@ -155,6 +148,7 @@ public class AdventureController {
         adventureService.makeReservation(adventureId, reservation);
         clientService.updatePoints(client, reservation.getPrice());
         instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
+        earningsService.saveEarnings(reservation, adventure.getInstructor().getEmail(), adventure.getInstructor().getRank());
         //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }

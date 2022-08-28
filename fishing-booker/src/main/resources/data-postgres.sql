@@ -65,12 +65,12 @@ insert into instructor(	id, biography, email, first_name, is_activated, is_block
 
 
 --Vacation Home
-insert into vacation_home(id, deleted, description, guest_limit, name, price_per_day, rating, address_id, home_owner_id)
+insert into vacation_home(id, deleted, description, guest_limit, name, price_per_day, rating, address_id, home_owner_id, canceling_percentage)
 values
-(100, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' 55 Horseshoe Bend, Antelope Canyon, and Lake Powell', 50, 4.5, 40 , 111),
-(101, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 3, ' Whatever you say',44, 3, 41 , 111),
-(102, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' Yo soy tu madre', 60, 1.5, 42 , 111),
-(103, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' Home 103 ', 60, 1.5, 42 , 111);
+(100, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' 55 Horseshoe Bend, Antelope Canyon, and Lake Powell', 50, 4.5, 40 , 111, 0),
+(101, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 3, ' Whatever you say',44, 3, 41 , 111, 0),
+(102, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' Yo soy tu madre', 60, 1.5, 42 , 111, 0),
+(103, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' Home 103 ', 60, 1.5, 42 , 111, 0);
 
 
 --Boat
@@ -143,11 +143,11 @@ insert into adventure_utilities(
 
 ---- Reservations
 insert into reservation(
-	id, end_date, is_cancelled, guests, price, start_date, type, client_id)
+	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage)
 	values
-	(101, '2022-08-24', 'false', 3, 200, '2022-08-20', 'VACATION_HOME', 10),
-	(104, '2022-08-30', 'false', 3, 200, '2022-08-29', 'ADVENTURE', 10),
-	(105, '2022-08-24 07:00:00', 'false', 3, 200, '2022-08-24 02:00:00', 'ADVENTURE', 10);
+	(101, '2022-08-24', 'false', 3, 200, '2022-08-20', 'VACATION_HOME', 10, 0),
+	(104, '2022-08-30', 'false', 3, 200, '2022-08-29', 'ADVENTURE', 10, 0),
+	(105, '2022-08-24 07:00:00', 'false', 3, 200, '2022-08-24 02:00:00', 'ADVENTURE', 10, 0);
 
 --	(102, '2022-08-30', 'false', 5, 200, '2022-08-25', 'VACATION_HOME', 12);
 

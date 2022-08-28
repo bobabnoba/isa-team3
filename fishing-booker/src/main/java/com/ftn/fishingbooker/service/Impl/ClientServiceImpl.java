@@ -3,7 +3,6 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.User;
-import com.ftn.fishingbooker.model.UserRank;
 import com.ftn.fishingbooker.repository.ClientRepository;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.*;
@@ -33,6 +32,8 @@ public class ClientServiceImpl implements ClientService {
     private DateService dateService;
     @Autowired
     private UserRankService userRankService;
+    @Autowired
+    private EarningsService earningsService;
 
     @Override
     public void registerClient(Client client) throws MessagingException {
@@ -104,6 +105,7 @@ public class ClientServiceImpl implements ClientService {
             if (reservation.getId() == reservationId) {
                 if (canBeCanceled(reservation)) {
                     reservation.setIsCancelled(true);
+                    earningsService.deleteEarnings(reservation);
                     return true;
                 }
             }

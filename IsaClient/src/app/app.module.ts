@@ -116,6 +116,8 @@ import { UnauthHomePageComponent } from './components/unauthenticated/unauth-hom
 import { UnauthInstructorPageComponent } from './components/unauthenticated/unauth-instructor-page/unauth-instructor-page.component';
 import { AddAdminComponent } from './components/admin-components/add-admin/add-admin.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { AdminEarningsComponent } from './components/admin-components/admin-earnings/admin-earnings.component';
+import { AdvertiserEarningsComponent } from './components/advertiser-earnings/advertiser-earnings.component';
 
 
 
@@ -208,7 +210,9 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     UnauthHomePageComponent,
     UnauthInstructorPageComponent,
     AddAdminComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AdminEarningsComponent,
+    AdvertiserEarningsComponent
 
   ],
   imports: [

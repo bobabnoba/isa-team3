@@ -30,4 +30,6 @@ public class ReservationDto {
     private Set<UtilityDto> utilities;
 
     private ReportDto report;
+
+    private double cancelingPercentage;
 }

@@ -12,4 +12,5 @@ export interface Reservation {
     price: number;
     utilities: Utility[];
     client : LoggedUser;
+    cancelingPercentage : number;
 }

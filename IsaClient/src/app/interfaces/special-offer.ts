@@ -16,5 +16,6 @@ export interface SpecialOffer {
     reservationEndDate : string;
     guests : number;
     type : ReservationType;
+    cancelingPercentage : number;
     utilities : Utility[];
 }
