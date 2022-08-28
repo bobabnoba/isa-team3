@@ -48,7 +48,6 @@ public class Boat {
     private String information;
 
     @Column
-//    @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<NavigationType> navigationType;
 
@@ -72,8 +71,7 @@ public class Boat {
     @ManyToMany(targetEntity = FishingEquipment.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<FishingEquipment> fishingEquipment;
 
-//    @Enumerated(EnumType.STRING)
-//    private CancelingCondition reservationCanceling;
+
     private double cancelingPercentage;
 
     @ManyToOne

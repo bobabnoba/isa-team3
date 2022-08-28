@@ -117,7 +117,6 @@ export class AddBoatSpecialOfferComponent implements OnInit {
         }
       )
 
-      //ako je vlasnik kapetan proveri da li je slobodan tada
    if(this.isCaptain.value){
     this._boatOwnerService.checkOwnerAvailability(
       this._datePipe.transform(resStartDate, 'yyyy-MM-dd HH:mm:ss')!,
@@ -185,7 +184,6 @@ export class AddBoatSpecialOfferComponent implements OnInit {
     offer.activeTo = this._datePipe.transform(new Date(this.activeTo.value), 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
     offer.reservationStartDate = this._datePipe.transform(resStart, 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
     offer.reservationEndDate = this._datePipe.transform(resEndDate, 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
-    // offer.guests = this.numOfDays.value;
     offer.type = ReservationType.BOAT;
     offer.utilities = this.services;
     offer.isCaptain = this.isCaptain.value;

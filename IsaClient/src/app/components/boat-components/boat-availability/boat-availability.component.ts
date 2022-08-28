@@ -13,17 +13,13 @@ import { BoatService } from 'src/app/services/boat-service/boat.service';
 })
 export class BoatAvailabilityComponent implements OnInit {
 
-  // @Input()
   boat! : Boat;
-
-  //boatId! : string;
   
   aFormGroup!: FormGroup;
   newAv! : any;
   constructor(private _formBuilder: FormBuilder, private _boatService : BoatService,
                private _snackBar : MatSnackBar, private _router : Router) {
                 this.boat = {} as Boat;
-                //this.boat.availability = [] as BoatAvailability[];
                 }
 
   ngOnInit(): void {

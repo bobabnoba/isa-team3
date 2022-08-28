@@ -20,9 +20,5 @@ public class BoatAvailability {
 
     @Column(name = "endDate", nullable = false)
     private Date endDate;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "boat_id", nullable = false)
-//    @ToString.Exclude
-//    private Boat boat;
+
 }

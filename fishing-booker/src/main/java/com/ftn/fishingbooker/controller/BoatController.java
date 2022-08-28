@@ -128,11 +128,6 @@ public class BoatController {
         return ResponseEntity.ok().build();
     }
 
-//    @GetMapping
-//    public ResponseEntity<BoatDto> getBoatWithAvailability(Long id) {
-//        Boat found = boatService.getById(id);
-//        return ok(BoatMapper.mapToDto(found));
-//    }
 
     @PostMapping("/add-availability")
     public ResponseEntity<?> addAvailabilityPeriod(@RequestBody BoatAvailabilityRequestDto availability) {

@@ -32,7 +32,6 @@ public class BoatMapper {
         dto.setCodeOfConduct(boat.getCodeOfConduct());
         dto.setUtilities(UtilityMapper.map(boat.getUtilities()));
         dto.setNavigationTypes(boat.getNavigationType().stream().map(Enum::toString).collect(Collectors.toList()));
-        //dto.setAvailability(boat.getAvailableTimePeriods().stream().map(BoatMapper::mapToAvailabilityDto).collect(Collectors.toSet()));
         return dto;
     }
     public static BoatDto mapToDtoWithAvailability(Boat boat) {

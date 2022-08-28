@@ -50,7 +50,6 @@ export class AddBoatComponent implements OnInit {
 
   info = this._formBuilder.group({
     name: ['', Validators.required],
-    //type: ['', Validators.required],
     length: ['', Validators.required],
     enginePower: ['', Validators.required],
     engineCount: ['', Validators.required],

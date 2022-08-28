@@ -29,12 +29,10 @@
       <mat-label>start:</mat-label>
       <input matInput type="date" [min]="activeTo.value" [formControl]="reservationStartDate" (change)="resDateChosen()" >
     </mat-form-field>
-    <!-- <mat-form-field > -->
       <p>
         <mat-checkbox  [formControl]="isCaptain" (change)="resDateChosen()" ></mat-checkbox>
         The owner provides the services of a captain
       </p>
-    <!-- </mat-form-field> -->
     <mat-form-field appearance="standard">
         <mat-label>Number of days:</mat-label>
         <input matInput type="number" min="1"  [formControl]="numOfDays" (change)="resDateChosen();updatePrice() " >

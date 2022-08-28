@@ -23,19 +23,15 @@ export class BoatService {
   getCodeOfConduct() : Observable<Rule[]>{
     return this._http.get<Rule[]>(`${this.baseURL}/code-of-conduct`);
   }
-  //TODO: DODATI TIP UPDATE-A
   updateInfo(id : string, updated : any) : Observable<Boat>{
     return this._http.post<Boat>(`${this.baseURL}/boats/info-update/${id}` , updated);
   }
-  //TODO: DODATI TIP UPDATE-A
   updateAdditionalInfo(id : string, updated : any) : Observable<Boat>{
     return this._http.post<Boat>(`${this.baseURL}/boats/additional-update/${id}` , updated);
   }
-  //TODO: DODATI TIP UPDATE-A
   updateCodeOfConduct(id : string, updated : any) : Observable<Boat>{
     return this._http.post<Boat>(`${this.baseURL}/boats/code-of-conduct-update/${id}` , updated);
   }
-  //TODO: DODATI TIP UPDATE-A
   updateAddress(id : string, updated : any) : Observable<Boat>{
     return this._http.post<Boat>(`${this.baseURL}/boats/address-update/${id}` , updated);
   }
