@@ -19,7 +19,7 @@ public class Earnings {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(targetEntity = Reservation.class, cascade = CascadeType.MERGE)
+    @ManyToOne(targetEntity = Reservation.class, cascade = CascadeType.MERGE)
     private Reservation reservation;
 
     @Column(nullable = false)
@@ -31,10 +31,14 @@ public class Earnings {
     @Column(nullable = false)
     private Date transactionDate;
 
-    public Earnings(Reservation reservation, double amount, String email) {
+    @Column(nullable = false)
+    private boolean goesToApp;
+
+    public Earnings(Reservation reservation, double amount, String email, boolean goesToApp) {
         this.reservation = reservation;
         this.advertiserEmail = email;
         this.amount = amount;
+        this.goesToApp = goesToApp;
         this.transactionDate = new Date();
     }
 }

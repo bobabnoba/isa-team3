@@ -72,7 +72,7 @@ public class HomeServiceImpl implements HomeService {
         home.getReservations().add(reservation);
         vacationHomeRepository.save(home);
         homeOwnerService.updatePoints(home.getHomeOwner(), reservation.getPrice());
-        earningsService.saveApplicationEarnings(reservation, home.getHomeOwner().getEmail(), home.getHomeOwner().getRank());
+        earningsService.saveEarnings(reservation, home.getHomeOwner().getEmail(), home.getHomeOwner().getRank());
 
     }
 

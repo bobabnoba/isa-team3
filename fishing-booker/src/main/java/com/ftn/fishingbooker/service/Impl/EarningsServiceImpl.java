@@ -32,17 +32,21 @@ public class EarningsServiceImpl implements EarningsService {
     }
 
     @Override
-    public void saveApplicationEarnings(Reservation reservation, String email, UserRank advertiserRank) {
-        double amount = reservation.getPrice() - (reservation.getPrice() * advertiserRank.getReservationPercentage()/100);
-        Earnings earnings = new Earnings(reservation, amount, email);
-        earningsRepository.save(earnings);
+    public void saveEarnings(Reservation reservation, String email, UserRank advertiserRank) {
+        double appAmount = reservation.getPrice() - (reservation.getPrice() * advertiserRank.getReservationPercentage()/100);
+        Earnings appEarnings = new Earnings(reservation, appAmount, email, true);
+        earningsRepository.save(appEarnings);
+
+        double advertiserAmount = reservation.getPrice() * advertiserRank.getReservationPercentage()/100;
+        Earnings advertiserEarnings = new Earnings(reservation, advertiserAmount, email, false);
+        earningsRepository.save(advertiserEarnings);
     }
 
     @Override
-    public void deleteApplicationEarnings(Long reservationId) {
-        Earnings earnings = earningsRepository.getByReservationId(reservationId);
+    public void deleteEarnings(Reservation reservation) {
+        Collection<Earnings> earnings = earningsRepository.getByReservationId(reservation.getId());
         if(earnings != null){
-            earningsRepository.delete(earnings);
+            earningsRepository.deleteAll(earnings);
         }
     }
 }

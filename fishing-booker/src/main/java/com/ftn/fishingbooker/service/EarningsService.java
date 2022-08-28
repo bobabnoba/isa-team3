@@ -13,7 +13,7 @@ public interface EarningsService {
 
     Collection<Earnings> getAllForAdvertiserInDateRange(Date from, Date to, String email);
 
-    void saveApplicationEarnings(Reservation reservation, String email, UserRank advertiserRank);
+    void saveEarnings(Reservation reservation, String email, UserRank advertiserRank);
 
-    void deleteApplicationEarnings(Long reservationId);
+    void deleteEarnings(Reservation reservation);
 }

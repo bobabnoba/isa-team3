@@ -29,5 +29,5 @@ public interface EarningsRepository extends JpaRepository<Earnings, Long> {
     @Query(value = "select e " +
             "       from Earnings e " +
             "       where e.reservation.id = :id ")
-    Earnings getByReservationId(@Param("id") Long reservationId);
+    Collection<Earnings> getByReservationId(@Param("id") Long reservationId);
 }

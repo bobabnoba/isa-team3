@@ -44,4 +44,6 @@ public class Reservation {
     @OneToOne(targetEntity = Report.class, cascade = CascadeType.ALL)
     private Report report;
 
+    private double cancelingPercentage;
+
 }
