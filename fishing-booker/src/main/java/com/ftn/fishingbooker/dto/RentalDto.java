@@ -30,4 +30,6 @@ public class RentalDto {
     private RentalType rentalType;
 
     private OwnerDto owner;
+
+    private double cancelingPercentage;
 }

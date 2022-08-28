@@ -29,4 +29,6 @@ public class ReservationWithClientDto {
     private ReportDto report;
 
     private UserDto client;
+
+    private double cancelingPercentage;
 }

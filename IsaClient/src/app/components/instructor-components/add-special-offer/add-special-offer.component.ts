@@ -145,6 +145,7 @@ export class AddSpecialOfferComponent implements OnInit {
     offer.guests = this.guests.value;
     offer.type = ReservationType.ADVENTURE;
     offer.utilities = this.services;
+    offer.cancelingPercentage = this.selectedAdventure.cancelingPercentage;
 
     return offer;
   }

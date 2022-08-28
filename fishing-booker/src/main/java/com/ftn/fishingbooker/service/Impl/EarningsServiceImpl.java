@@ -46,6 +46,11 @@ public class EarningsServiceImpl implements EarningsService {
     public void deleteEarnings(Reservation reservation) {
         Collection<Earnings> earnings = earningsRepository.getByReservationId(reservation.getId());
         if(earnings != null){
+            if(reservation.getCancelingPercentage() > 0) {
+                double cancelingAmount = reservation.getPrice() * reservation.getCancelingPercentage()/100;
+                Earnings cancelingAdvEarnings = new Earnings(reservation, cancelingAmount, earnings.stream().findFirst().get().getAdvertiserEmail(), false);
+                earningsRepository.save(cancelingAdvEarnings);
+            }
             earningsRepository.deleteAll(earnings);
         }
     }

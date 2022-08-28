@@ -8,4 +8,5 @@ export interface AdventureReservation {
     price : number;
     guests : number;
     report : Report;
+    cancelingPercentage : number;
 }
