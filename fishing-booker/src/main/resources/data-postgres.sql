@@ -226,10 +226,10 @@ values (112, 105),
     (112, 108);
 
 
-insert into special_offer(id, active_from, active_to, discount, guests, is_used, price, reservation_end_date, reservation_start_date, type)
-	values (100, '2022-08-25 19:50:00', '2022-09-02 19:50:00', 5, 3, 'false', 202, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE'),
-	 (101, '2022-09-02 19:50:00', '2022-09-03 19:50:00', 5, 3, 'false', 303, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE'),
-	 (102, '2022-09-03 19:50:00', '2022-09-14 19:50:00', 5, 3, 'false', 404, '2022-09-24 00:50:00', '2022-09-25 19:50:00', 'ADVENTURE');
+insert into special_offer(id, active_from, active_to, discount, guests, is_used, price, reservation_end_date, reservation_start_date, type, canceling_percentage)
+	values (100, '2022-08-25 19:50:00', '2022-09-02 19:50:00', 5, 3, 'false', 202, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE',0),
+	 (101, '2022-09-02 19:50:00', '2022-09-03 19:50:00', 5, 3, 'false', 303, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE',0),
+	 (102, '2022-09-03 19:50:00', '2022-09-14 19:50:00', 5, 3, 'false', 404, '2022-09-24 00:50:00', '2022-09-25 19:50:00', 'ADVENTURE',10);
 
 insert into adventure_special_offers(
 	adventure_id, special_offers_id)
