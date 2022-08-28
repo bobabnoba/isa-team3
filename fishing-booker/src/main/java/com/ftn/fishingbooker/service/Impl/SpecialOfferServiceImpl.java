@@ -15,12 +15,14 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
     private final SpecialOfferRepository specialOfferRepository;
     private final InstructorService instructorService;
     private final BoatService boatService;
+    private final BoatOwnerService boatOwnerService;
     public SpecialOfferServiceImpl(AdventureService adventureService, SpecialOfferRepository specialOfferRepository,
-                                   InstructorService instructorService, BoatService boatService) {
+                                   InstructorService instructorService, BoatService boatService, BoatOwnerService boatOwnerService) {
         this.adventureService = adventureService;
         this.specialOfferRepository = specialOfferRepository;
         this.instructorService = instructorService;
         this.boatService = boatService;
+        this.boatOwnerService = boatOwnerService;
     }
 
     @Override
@@ -40,11 +42,11 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
             boatService.save(boat);
 
             String ownerEmail = boat.getBoatOwner().getEmail();
-            BoatAvailability unavailability = new BoatAvailability();
             boatService.updateAvailability(saved.getReservationStartDate(), saved.getReservationEndDate(), boat.getId());
 
-            //TODO: u slucaju da je otkaceno da je vlasnik kapetan onda updateovati i njegov availability
-
+             if(specialOffer.isCaptain()){
+                boatOwnerService.updateAvailability(saved.getReservationStartDate(),saved.getReservationEndDate(), ownerEmail);
+            }
         }
         return saved;
     }

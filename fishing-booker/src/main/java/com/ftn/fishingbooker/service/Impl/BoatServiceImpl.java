@@ -197,7 +197,6 @@ public class BoatServiceImpl implements BoatService {
     }
 
 
-    //TODO: SVUGDJE DODATI USLOV STA AKO JE JEDNAKO BAS TOM DATUMU!!!!
     @Override
     @Transactional
     public BoatAvailability addAvailabilityPeriod(BoatAvailability newAvailability, Long boatId) {
@@ -205,9 +204,11 @@ public class BoatServiceImpl implements BoatService {
         Set<BoatAvailability> availabilities = new HashSet<>(boat.getAvailableTimePeriods());
 
         Optional<BoatAvailability> endOfNewPartOfSecond = availabilities.stream().filter(boatAvailability ->
-                isBetween(newAvailability.getEndDate(), boatAvailability.getStartDate(), boatAvailability.getEndDate())).findFirst();
+                isBetween(newAvailability.getEndDate(), boatAvailability.getStartDate(), boatAvailability.getEndDate()) ||
+                newAvailability.getEndDate().equals(boatAvailability.getStartDate())).findFirst();
         Optional<BoatAvailability> startOfNewPartOfFirst = availabilities.stream().filter(boatAvailability ->
-                isBetween(newAvailability.getStartDate(), boatAvailability.getStartDate(), boatAvailability.getEndDate())).findFirst();
+                isBetween(newAvailability.getStartDate(), boatAvailability.getStartDate(), boatAvailability.getEndDate()) ||
+                newAvailability.getStartDate().equals(boatAvailability.getEndDate())).findFirst();
 
         BoatAvailability missingPeriod = new BoatAvailability();
         missingPeriod.setStartDate(newAvailability.getStartDate());
@@ -275,10 +276,12 @@ public class BoatServiceImpl implements BoatService {
 
         }
 
-
+//doraditi
         var entirelyInsideNewOne = availabilities.stream().filter(boatAvailability ->
-                isBetween(boatAvailability.getStartDate(), newAvailability.getStartDate(), newAvailability.getEndDate()) &&
-                isBetween(boatAvailability.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate())).collect(Collectors.toSet());
+                (isBetween(boatAvailability.getStartDate(), newAvailability.getStartDate(), newAvailability.getEndDate())  ||
+                 boatAvailability.getStartDate().getTime() == (newAvailability.getStartDate().getTime()))&&
+                        (isBetween(boatAvailability.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate()) ||
+                                boatAvailability.getEndDate().getTime() == (newAvailability.getEndDate().getTime()))).collect(Collectors.toSet());
         if(!entirelyInsideNewOne.isEmpty()){
 
             //KREIRAJ NOVI
@@ -296,25 +299,53 @@ public class BoatServiceImpl implements BoatService {
             return newAvailability;
         }else{
             Optional<BoatAvailability> endPartOfNew = availabilities.stream().filter(boatAvailability ->
-                    isBetween(boatAvailability.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate())).findFirst();
+                    isBetween(boatAvailability.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate()) ||
+                            boatAvailability.getEndDate().equals(newAvailability.getStartDate())).findFirst();
             Optional<BoatAvailability> startPartOfNew = availabilities.stream().filter(boatAvailability ->
-                    isBetween(boatAvailability.getStartDate(), newAvailability.getStartDate(), newAvailability.getEndDate())).findFirst();
+                    isBetween(boatAvailability.getStartDate(), newAvailability.getStartDate(), newAvailability.getEndDate()) ||
+                            boatAvailability.getStartDate().equals(newAvailability.getEndDate())).findFirst();
 
-            if(endPartOfNew.isPresent() || startPartOfNew.isPresent()){
+            if(!(endPartOfNew.isPresent() && startPartOfNew.isPresent())){
                 //1 novi zahvata kraj postojeceg
                 if( endPartOfNew.isPresent() ){
                     missingPeriod.setStartDate(endPartOfNew.get().getStartDate());
                     endPartOfNew.get().setEndDate(newAvailability.getEndDate());
+                    boatRepository.save(boat);
+                    return missingPeriod;
                 }
                 //2 novi zahvata pocetak postojeceg
                 if( startPartOfNew.isPresent() ){
                     missingPeriod.setEndDate(startPartOfNew.get().getEndDate());
                     startPartOfNew.get().setStartDate(newAvailability.getStartDate());
+                    boatRepository.save(boat);
+                    return missingPeriod;
                 }
-                //sacuvati sve ovo
-                boatRepository.save(boat);
-                return missingPeriod;
 
+
+            }else{
+                //ovdje zeleno 5
+                var anyInBetween = availabilities.stream().filter(boatAvailability ->
+                        isBetween(boatAvailability.getStartDate(),endPartOfNew.get().getEndDate(), startPartOfNew.get().getStartDate()) &&
+                        isBetween(boatAvailability.getEndDate(), endPartOfNew.get().getEndDate(), startPartOfNew.get().getStartDate())).collect(Collectors.toSet());
+                BoatAvailability newOne = new BoatAvailability();
+                newOne.setStartDate(newAvailability.getStartDate());
+                newOne.setEndDate(newAvailability.getEndDate());
+                boatAvailabilityService.save(newOne);
+                availabilities.add(newOne);
+
+                availabilities.remove(endPartOfNew.get());
+                availabilities.remove(startPartOfNew.get());
+                boatAvailabilityService.delete(endPartOfNew.get().getId());
+                boatAvailabilityService.delete(startPartOfNew.get().getId());
+
+
+                if(!anyInBetween.isEmpty()){
+                    availabilities.remove(anyInBetween);
+                    boatAvailabilityService.delete(anyInBetween);
+                }
+                boat.setAvailableTimePeriods(availabilities);
+                boatRepository.save(boat);
+                return newAvailability;
             }
         }
 
@@ -368,13 +399,69 @@ public class BoatServiceImpl implements BoatService {
         return availability;
     }
 
-    //TODO:
-    //uklanja available period kada je dodata nova rezervacija
-    //ali sta ako ta rezervacija prodje tj niko je ne iskoristi
-    //da li onda trebam da vratim taj period da je opet available
+
+    @Transactional
     @Override
     public void updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id) {
         //TODO:
+        Boat boat = boatRepository.findById(id).orElseThrow(() -> new ResourceConflictException("Boat not found"));
+        Set<BoatAvailability> availabilities = new HashSet<>(boat.getAvailableTimePeriods());
+
+        var availabilityInBetween = availabilities.stream().filter(boatAvailability ->
+                isBetween(reservationStartDate,boatAvailability.getStartDate(), boatAvailability.getEndDate()) &&
+                isBetween(reservationEndDate, boatAvailability.getStartDate(),boatAvailability.getEndDate())).findFirst();
+        var onStart = availabilities.stream().filter(boatAvailability ->
+                reservationStartDate.getTime() == boatAvailability.getStartDate().getTime() &&
+                isBetween(reservationEndDate, boatAvailability.getStartDate(), boatAvailability.getEndDate())).findFirst();
+        var onEnd = availabilities.stream().filter(boatAvailability ->
+                reservationEndDate.getTime() == boatAvailability.getEndDate().getTime() &&
+                        isBetween(reservationStartDate, boatAvailability.getStartDate(), boatAvailability.getEndDate())).findFirst();
+        var theOne = availabilities.stream().filter( boatAvailability ->
+                boatAvailability.getStartDate().getTime() == reservationStartDate.getTime() && boatAvailability.getEndDate().getTime() == reservationEndDate.getTime()).findFirst();
+
+        if ( theOne.isPresent()){
+            availabilities.remove(theOne.get());
+            boat.setAvailableTimePeriods(availabilities);
+            boatRepository.save(boat);
+            boatAvailabilityService.delete(theOne.get().getId());
+        }else if (onStart.isPresent()){
+            BoatAvailability newOne = new BoatAvailability();
+            newOne.setStartDate(DateUtil.addDays(reservationEndDate,1));
+            newOne.setEndDate(onStart.get().getEndDate());
+            var saved = boatAvailabilityService.save(newOne);
+            availabilities.add(saved);
+            availabilities.remove(onStart.get());
+            boat.setAvailableTimePeriods(availabilities);
+            boatRepository.save(boat);
+            boatAvailabilityService.delete(onStart.get().getId());
+        }else if (onEnd.isPresent()){
+            BoatAvailability newOne = new BoatAvailability();
+            newOne.setStartDate(onEnd.get().getStartDate());
+            newOne.setEndDate(DateUtil.addDays(reservationStartDate, -1));
+            var saved = boatAvailabilityService.save(newOne);
+            availabilities.add(saved);
+            availabilities.remove(onEnd.get());
+            boat.setAvailableTimePeriods(availabilities);
+            boatRepository.save(boat);
+            boatAvailabilityService.delete(onEnd.get().getId());
+
+        }else if (availabilityInBetween.isPresent()){
+            BoatAvailability newOne = new BoatAvailability();
+            newOne.setStartDate(DateUtil.addDays(reservationEndDate,1));
+            newOne.setEndDate(availabilityInBetween.get().getEndDate());
+            var saved = boatAvailabilityService.save(newOne);
+            availabilities.add(saved);
+            BoatAvailability anotherNew = new BoatAvailability();
+            anotherNew.setStartDate(availabilityInBetween.get().getStartDate());
+            anotherNew.setEndDate(DateUtil.addDays(reservationStartDate, -1));
+            var anotherSaved = boatAvailabilityService.save(anotherNew);
+            availabilities.add(anotherSaved);
+
+            availabilities.remove(availabilityInBetween.get());
+            boat.setAvailableTimePeriods(availabilities);
+            boatRepository.save(boat);
+            boatAvailabilityService.delete(availabilityInBetween.get().getId());
+        }
     }
 
     @Override
@@ -384,7 +471,7 @@ public class BoatServiceImpl implements BoatService {
         List<BoatAvailability> availabilityPeriods = new ArrayList<>(boat.getAvailableTimePeriods());
 
         for (BoatAvailability period : availabilityPeriods) {
-            if (from.after(period.getStartDate()) && to.before(period.getEndDate())) {
+            if ((from.after(period.getStartDate()) || from.equals(period.getStartDate())) && (to.before(period.getEndDate()) || to.equals(period.getEndDate()))) {
                 isAvailable = true;
                 break;
             }

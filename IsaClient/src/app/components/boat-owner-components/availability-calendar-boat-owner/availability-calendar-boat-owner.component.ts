@@ -5,10 +5,8 @@ import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { BoatService } from 'src/app/services/boat-service/boat.service';
-import { Boat } from 'src/app/interfaces/boat';
 import { BoatOwnerService } from 'src/app/services/boat-owner-service/boat-owner.service';
 import { Router } from '@angular/router';
-
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -26,8 +24,8 @@ const colors: Record<string, EventColor> = {
 };
 
 @Component({
-  selector: 'app-availability-calendar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-availability-calendar-boat-owner',
+    changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [
     `
       h3 {
@@ -40,16 +38,16 @@ const colors: Record<string, EventColor> = {
       }
     `,
   ],
-  templateUrl: './availability-calendar.component.html',
-  styleUrls: ['./availability-calendar.component.css']
+  templateUrl: './availability-calendar-boat-owner.component.html',
+  styleUrls: ['./availability-calendar-boat-owner.component.css']
 })
-export class AvailabilityCalendarComponent implements OnInit {
+export class AvailabilityCalendarBoatOwnerComponent implements OnInit {
 
   @Input()
   newAv! : any;
 
   @Input()
-  boat! : Boat;
+  boatOwnerEmail! : string;
 
   view: CalendarView = CalendarView.Month;
 
@@ -67,7 +65,6 @@ export class AvailabilityCalendarComponent implements OnInit {
   constructor(private _boatService : BoatService,private _boatOwnerService : BoatOwnerService,
      private _storageService: StorageService, private _router : Router) {
     this.newAv = {};
-    this.boat = {} as Boat;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -80,10 +77,11 @@ export class AvailabilityCalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this._boatService.getById(this._router.url.substring(26)).subscribe(
+      console.log(this.boatOwnerEmail);
+      this._boatOwnerService.getBoatOwner(this._storageService.getEmail()).subscribe(
         (data) => {
-          data.availability.forEach((e : any) => {
-            this.addEvent(e.startDate, e.endDate)}
+          data.availability.forEach((e : any) => 
+            this.addEvent(e.startDate, e.endDate)
           )
         }
       );

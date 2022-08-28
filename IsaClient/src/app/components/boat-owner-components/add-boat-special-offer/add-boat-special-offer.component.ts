@@ -82,13 +82,15 @@ export class AddBoatSpecialOfferComponent implements OnInit {
 
   resDateChosen() {
 
-    let resDate = new Date(this.reservationStartDate.value);
+    let resDate = new Date(this.reservationStartDate.value) ;
     let resStartDate = resDate;
+    resStartDate.setHours(0, 0, 0, 0);
     let resEnd = new Date(this.reservationStartDate.value);
     let num : number = this.numOfDays.value ;
     let resEndDate = new Date(resEnd.getTime());
     console.log( this.numOfDays.value)
-    resEndDate.setDate(resEndDate.getDate() + this.numOfDays.value);
+    resEndDate.setHours(0, 0, 0, 0);
+    resEndDate.setDate(resEndDate.getDate() + (this.numOfDays.value -1));
 
     let offerTo = new Date(this.activeTo.value);
     if (resStartDate < offerTo) {
@@ -108,7 +110,7 @@ export class AddBoatSpecialOfferComponent implements OnInit {
           if (!res) {
             this.reservationStartDate.reset();
             this.numOfDays.reset();
-            this._snackBar.open('Given date is not available! Please check boat calendar.', '',
+            this._snackBar.open('BOAT NOT AVAILABLE! Given date is not available! Please check boat calendar.', '',
               { duration: 3000, panelClass: ['snack-bar'] }
             );
           }
@@ -125,7 +127,7 @@ export class AddBoatSpecialOfferComponent implements OnInit {
           if (!res) {
             this.reservationStartDate.reset();
             this.numOfDays.reset();
-            this._snackBar.open('Given date is not available! Please check your calendar.', '',
+            this._snackBar.open('YOU ARE NOT AVAILABLE! Given date is not available! Please check your calendar.', '',
               { duration: 3000, panelClass: ['snack-bar'] }
             );
           }
@@ -171,15 +173,17 @@ export class AddBoatSpecialOfferComponent implements OnInit {
   }
 
   createOfferObj(): SpecialOffer {
-    let resEnd = new Date(this.reservationStartDate.value);
-    let resEndDate = new Date(resEnd.getTime() +  24 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000);
-    resEndDate.setDate(resEndDate.getDate() + this.numOfDays.value);
+    let resStart = new Date(this.reservationStartDate.value);
+    let resEndDate = new Date(resStart.getTime() +  24 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000);
+    resEndDate.setDate(resEndDate.getDate() + (this.numOfDays.value -1));
+    resStart.setHours(0, 0, 0, 0);
+    resEndDate.setHours(0, 0, 0, 0);
     let offer = {} as SpecialOffer;
     offer.discount = this.discount;
     offer.price = this.price.value;
     offer.activeFrom = this._datePipe.transform(new Date(this.activeFrom.value), 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
     offer.activeTo = this._datePipe.transform(new Date(this.activeTo.value), 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
-    offer.reservationStartDate = this._datePipe.transform(new Date(this.reservationStartDate.value), 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
+    offer.reservationStartDate = this._datePipe.transform(resStart, 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
     offer.reservationEndDate = this._datePipe.transform(resEndDate, 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
     // offer.guests = this.numOfDays.value;
     offer.type = ReservationType.BOAT;

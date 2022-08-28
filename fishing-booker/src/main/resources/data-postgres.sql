@@ -212,11 +212,16 @@ insert into rule(id, name)
 --Boat owner availability
 insert into boat_owner_availability_periods(
 	id, end_date, start_date)
-	values (200,  '2022-08-30', '2022-08-01'); --available
+	values (200,  '2022-08-30', '2022-08-01'),
+	 (201,  '2022-09-04', '2022-09-01'),
+	 (202,  '2022-09-08', '2022-09-07'),
+	 (203,  '2022-09-13', '2022-09-10'),
+	 (204,  '2022-09-23', '2022-09-18'); --available
+
 
 insert into boat_owner_availability(
 	boat_owner_id, availability_id)
-	values (109, 200);
+	values (109, 200), (109,201), (109, 202), (109, 203), (109, 204);
 
 ---- Reservations
 insert into reservation(

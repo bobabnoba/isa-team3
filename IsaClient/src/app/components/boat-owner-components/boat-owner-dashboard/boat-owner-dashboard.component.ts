@@ -9,8 +9,10 @@ import { StorageService } from 'src/app/services/storage-service/storage.service
 })
 export class BoatOwnerDashboardComponent implements OnInit {
 
-  email : string = this._storageService.getEmail();
-  constructor(private _boatOwnerService : BoatOwnerService, private _storageService: StorageService) { }
+  email : string = '';
+  constructor(private _boatOwnerService : BoatOwnerService, private _storageService: StorageService) {
+    this.email = this._storageService.getEmail();
+   }
 
   ngOnInit(): void {
   

@@ -77,7 +77,7 @@ import { BoatReservationsComponent } from './components/client-components/boat-r
 import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AddSpecialOfferComponent } from './components/instructor-components/add-special-offer/add-special-offer.component';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AdventureSpecialOfferComponent } from './components/adventure-components/adventure-special-offer/adventure-special-offer.component';
 import { AdventureSearchPipe } from './pipes/adventure-search/adventure-search.pipe';
 import { ClientSearchCardReservationComponent } from './components/client-components/client-search-card-reservation/client-search-card-reservation.component';
@@ -122,6 +122,7 @@ import { ImageListItemComponent } from './components/common/image-list-item/imag
 import { AddBoatSpecialOfferComponent } from './components/boat-owner-components/add-boat-special-offer/add-boat-special-offer.component';
 import { BoatSpecialOfferComponent } from './components/boat-components/boat-special-offer/boat-special-offer.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AvailabilityCalendarBoatOwnerComponent } from './components/boat-owner-components/availability-calendar-boat-owner/availability-calendar-boat-owner.component';
 
 @NgModule({
   declarations: [
@@ -218,6 +219,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     ImageListItemComponent,
     AddBoatSpecialOfferComponent,
     BoatSpecialOfferComponent,
+    AvailabilityCalendarBoatOwnerComponent,
   ],
   imports: [
     BrowserModule,
