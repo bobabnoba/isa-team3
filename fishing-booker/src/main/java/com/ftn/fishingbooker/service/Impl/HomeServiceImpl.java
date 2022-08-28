@@ -5,10 +5,7 @@ import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.VacationHome;
 import com.ftn.fishingbooker.model.VacationHomeAvailability;
 import com.ftn.fishingbooker.repository.HomeRepository;
-import com.ftn.fishingbooker.service.DateService;
-import com.ftn.fishingbooker.service.HomeOwnerService;
-import com.ftn.fishingbooker.service.HomeService;
-import com.ftn.fishingbooker.service.ReservationService;
+import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +20,8 @@ public class HomeServiceImpl implements HomeService {
     private final ReservationService reservationService;
     private final DateService dateService;
     private final HomeOwnerService homeOwnerService;
+    private final EarningsService earningsService;
+
 
     @Override
     public Collection<VacationHome> getAll() {
@@ -73,6 +72,8 @@ public class HomeServiceImpl implements HomeService {
         home.getReservations().add(reservation);
         vacationHomeRepository.save(home);
         homeOwnerService.updatePoints(home.getHomeOwner(), reservation.getPrice());
+        earningsService.saveApplicationEarnings(reservation, home.getHomeOwner().getEmail(), home.getHomeOwner().getRank());
+
     }
 
 

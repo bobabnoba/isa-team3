@@ -148,7 +148,7 @@ public class AdventureController {
         adventureService.makeReservation(adventureId, reservation);
         clientService.updatePoints(client, reservation.getPrice());
         instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
-        earningsService.saveEarnings(reservation, adventure.getInstructor().getEmail());
+        earningsService.saveApplicationEarnings(reservation, adventure.getInstructor().getEmail(), adventure.getInstructor().getRank());
         //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }

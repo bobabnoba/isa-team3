@@ -5,10 +5,7 @@ import com.ftn.fishingbooker.enumeration.*;
 import com.ftn.fishingbooker.exception.*;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.*;
-import com.ftn.fishingbooker.service.BoatOwnerService;
-import com.ftn.fishingbooker.service.BoatService;
-import com.ftn.fishingbooker.service.DateService;
-import com.ftn.fishingbooker.service.ReservationService;
+import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +23,7 @@ public class BoatServiceImpl implements BoatService {
     private final ReservationService reservationService;
     private final BoatOwnerService boatOwnerService;
     private final BoatOwnerRepository boatOwnerRepository;
+    private final EarningsService earningsService;
 
     @Override
     public Collection<Boat> getAll() {
@@ -61,9 +59,8 @@ public class BoatServiceImpl implements BoatService {
         boat.getReservations().add(reservation);
         boatRepository.save(boat);
         boatOwnerService.updatePoints(boat.getBoatOwner(), reservation.getPrice());
+        earningsService.saveApplicationEarnings(reservation, boat.getBoatOwner().getEmail(), boat.getBoatOwner().getRank());
     }
-
-
 
     private boolean dateOverlapsWithReservation(Collection<Reservation> reservations, Date startDate, Date endDate) {
         if (reservations == null) {

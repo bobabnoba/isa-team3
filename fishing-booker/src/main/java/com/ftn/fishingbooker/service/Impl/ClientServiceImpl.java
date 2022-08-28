@@ -33,6 +33,8 @@ public class ClientServiceImpl implements ClientService {
     private DateService dateService;
     @Autowired
     private UserRankService userRankService;
+    @Autowired
+    private EarningsService earningsService;
 
     @Override
     public void registerClient(Client client) throws MessagingException {
@@ -104,6 +106,7 @@ public class ClientServiceImpl implements ClientService {
             if (reservation.getId() == reservationId) {
                 if (canBeCanceled(reservation)) {
                     reservation.setIsCancelled(true);
+                    earningsService.deleteApplicationEarnings(reservation.getId());
                     return true;
                 }
             }

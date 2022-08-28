@@ -25,4 +25,9 @@ public interface EarningsRepository extends JpaRepository<Earnings, Long> {
     Collection<Earnings> getAdvertisersInDateRange(@Param("from") Date from,
                                                    @Param("to") Date to,
                                                    @Param("email") String email);
+
+    @Query(value = "select e " +
+            "       from Earnings e " +
+            "       where e.reservation.id = :id ")
+    Earnings getByReservationId(@Param("id") Long reservationId);
 }
