@@ -42,7 +42,4 @@ export class UserService {
     return this._http.put<any>(`${this.baseURL}/users/change-password/${email}`, request);
   }
 
-  saveLoyaltyProgram(retVal: UserRank[]) : Observable<any> {
-    return this._http.post(`${this.baseURL}/user-rank`, retVal);
-  }
 }

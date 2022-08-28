@@ -5,7 +5,6 @@ import { SpecialOffer } from 'src/app/interfaces/special-offer';
 import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
 import { SpecialOfferService } from 'src/app/services/special-offer-service/special-offer.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
-import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { InstructorCreateReservationComponent } from '../../instructor-components/instructor-create-reservation/instructor-create-reservation.component';
 
 @Component({

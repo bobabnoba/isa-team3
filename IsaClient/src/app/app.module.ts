@@ -157,7 +157,6 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     BrowseCardComponent,
     SearchCardComponent,
     ClientReservationsComponent,
-    ClientReservationsHistoryComponent,
     ClientBrowseComponent,
     ClientHomesComponent,
     ClientInstructorsComponent,
