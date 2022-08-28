@@ -14,14 +14,14 @@ public interface EarningsRepository extends JpaRepository<Earnings, Long> {
 
     @Query(value = "select e " +
             "       from Earnings e " +
-            "       where e.transactionDate >= :from and e.transactionDate <= :to ")
+            "       where e.transactionDate >= :from and e.transactionDate <= :to and e.goesToApp = true ")
     Collection<Earnings> getAllInDateRange(@Param("from") Date from,
                                                    @Param("to") Date to);
 
     @Query(value = "select e " +
             "       from Earnings e " +
             "       where e.advertiserEmail = :email and " +
-            "       e.transactionDate >= :from and e.transactionDate <= :to ")
+            "       e.transactionDate >= :from and e.transactionDate <= :to and e.goesToApp = false ")
     Collection<Earnings> getAdvertisersInDateRange(@Param("from") Date from,
                                                    @Param("to") Date to,
                                                    @Param("email") String email);
