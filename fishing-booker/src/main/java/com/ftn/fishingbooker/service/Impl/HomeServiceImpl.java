@@ -75,6 +75,10 @@ public class HomeServiceImpl implements HomeService {
         homeOwnerService.updatePoints(home.getHomeOwner(), reservation.getPrice());
     }
 
+    @Override
+    public VacationHome getVacationHomeForReservation(Long reservationId) {
+        return vacationHomeRepository.getVacationHomeForReservation(reservationId);
+    }
 
 
 }

@@ -43,6 +43,7 @@
                 <div *ngFor="let item of filteredItems">
                     
                     <app-browse-card-reservation
+                    [imageUrl]="item.images[0]"
                     [startDate]="startDate"
                     [endDate]="endDate"
                     [guests] = "requestFilter.people"
@@ -54,8 +55,11 @@
                     [price]="item.pricePerDay" 
                     [rating]="item.rating" 
                     [id]="item.id"
+                    [duration]="item.duration"
                     [type]="item.rentalType" 
-                    [ownerName]="item.owner.firstName" style="max-height:10%"></app-browse-card-reservation>
+                    [ownerName]="item.owner.firstName"
+                    [ownerId]="item.owner.id"
+                    style="max-height:10%"></app-browse-card-reservation>
                 </div>
             </div>
         </div>

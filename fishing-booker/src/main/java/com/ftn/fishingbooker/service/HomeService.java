@@ -14,4 +14,6 @@ public interface HomeService {
     Collection<VacationHome> filterAll(FilterDto filter);
 
     void makeReservation(Long homeId, Reservation reservation);
+
+    VacationHome getVacationHomeForReservation(Long reservationId);
 }

@@ -56,7 +56,6 @@ import { BrowseCardComponent } from './components/browse-card/browse-card.compon
 import { TruncatePipe } from './pipes/truncate-pipe';
 import { SearchCardComponent } from './components/search-card/search-card.component';
 import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
-import { ClientReservationsHistoryComponent } from './components/client-components/client-reservations-history/client-reservations-history.component';
 import { ClientBrowseComponent } from './components/client-components/client-browse/client-browse.component';
 import { ClientHomesComponent } from './components/client-components/client-homes/client-homes.component';
 import { ClientInstructorsComponent } from './components/client-components/client-instructors/client-instructors.component';
@@ -114,6 +113,9 @@ import { InstructorPageComponent } from './components/rentals/instructor-page/in
 import { UnauthBoatPageComponent } from './components/unauthenticated/unauth-boat-page/unauth-boat-page.component';
 import { UnauthHomePageComponent } from './components/unauthenticated/unauth-home-page/unauth-home-page.component';
 import { UnauthInstructorPageComponent } from './components/unauthenticated/unauth-instructor-page/unauth-instructor-page.component';
+import { ReservationHistoryBoatsComponent } from './components/client-components/reservation-history-boats/reservation-history-boats.component';
+import { ReservationHistoryHomesComponent } from './components/client-components/reservation-history-homes/reservation-history-homes.component';
+import { ReservationHistoryAdventuresComponent } from './components/client-components/reservation-history-adventures/reservation-history-adventures.component';
 
 
 
@@ -153,7 +155,6 @@ import { UnauthInstructorPageComponent } from './components/unauthenticated/unau
     BrowseCardComponent,
     SearchCardComponent,
     ClientReservationsComponent,
-    ClientReservationsHistoryComponent,
     ClientBrowseComponent,
     ClientHomesComponent,
     ClientInstructorsComponent,
@@ -204,7 +205,10 @@ import { UnauthInstructorPageComponent } from './components/unauthenticated/unau
     InstructorPageComponent,
     UnauthBoatPageComponent,
     UnauthHomePageComponent,
-    UnauthInstructorPageComponent
+    UnauthInstructorPageComponent,
+    ReservationHistoryBoatsComponent,
+    ReservationHistoryHomesComponent,
+    ReservationHistoryAdventuresComponent
 
   ],
   imports: [

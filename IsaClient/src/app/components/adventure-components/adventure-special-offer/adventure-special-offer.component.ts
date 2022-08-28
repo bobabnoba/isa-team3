@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Utility } from 'src/app/interfaces/adventure';
@@ -15,9 +16,11 @@ import { StorageService } from 'src/app/services/storage-service/storage.service
 export class AdventureSpecialOfferComponent implements OnInit {
 
   @Input()
+  adventureId!: number;
+  @Input()
   offer: SpecialOffer = {} as SpecialOffer;
   @Input()
-  adventureDuration : number = 0;
+  adventureDuration: number = 0;
   endsIn!: string;
   isClient: boolean = false;
   newReservation: IReservation = {} as IReservation;
@@ -27,7 +30,7 @@ export class AdventureSpecialOfferComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private _storageService: StorageService,
     private _datePipe: DatePipe
-    ) {
+  ) {
     this.offer.utilities = [] as Utility[];
     this.newReservation.utilities = [];
   }
@@ -62,8 +65,36 @@ export class AdventureSpecialOfferComponent implements OnInit {
     this.newReservation.utilities = this.offer.utilities;
 
     console.log(this.newReservation);
-    
-    
+
+    const reservation = {
+      next: (res: any) => {
+
+        this._snackBar.open('Reservation made successfully!', '',
+          {
+            duration: 3000,
+            panelClass: ['snack-bar']
+          });
+        window.location.href = '/client/reservations'
+      },
+      error: (err: HttpErrorResponse) => {
+        let message = 'Sorry :( it seems like we have a problem. Try again in few minutes!'
+
+        if (err.status == 403) {
+          message = 'You have been prevented from making reservations because you have more than 3 penalties. \n ' +
+            ' Penalties are deleted at the start of each month. '
+        } else if (err.status == 409) {
+          message = 'You already have a reservation for this time period! \n '
+
+        }
+
+        this._snackBar.open(message, 'Close',
+          {
+            duration: 10000,
+            panelClass: ['snack-bar']
+          });
+      }
+    }
+    this._rentalService.rentAdventureSpecialOffer(this.newReservation, this.adventureId, this.offer.id, this._storageService.getEmail()).subscribe(reservation);
   }
 
 }

@@ -137,5 +137,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findById(id).orElseThrow(() -> new ResourceConflictException("User not found"));
     }
 
+    @Override
+    public void resetAllPenalties() {
+        userRepository.resetAllPenalties();
+    }
+
 
 }

@@ -1,12 +1,15 @@
 package com.ftn.fishingbooker.service.Impl;
 
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.UtilityDto;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
-import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.dao.ReservationInfo;
+import com.ftn.fishingbooker.model.Client;
+import com.ftn.fishingbooker.model.ClientReview;
+import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.model.Utility;
 import com.ftn.fishingbooker.repository.ReservationRepository;
 import com.ftn.fishingbooker.service.DateService;
 import com.ftn.fishingbooker.service.ReservationService;
@@ -15,10 +18,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -61,17 +65,24 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation getReservationById(Long id) {
-        return reservationRepository.findById(id).orElseThrow( () -> new ResourceConflictException("Reservation not found"));
+        return reservationRepository.findById(id).orElseThrow(() -> new ResourceConflictException("Reservation not found"));
     }
 
     @Override
-    public void save(Reservation reservation) {
-        reservationRepository.save(reservation);
+    public Reservation save(Reservation reservation) {
+        return reservationRepository.save(reservation);
     }
 
     @Override
     public Reservation getOngoingReservationForInstructor(Long id) {
         return reservationRepository.getOngoingReservationForInstructor(id);
+    }
+
+    @Override
+    public Reservation leaveReview(Long reservationId, ClientReview clientReview) {
+        Reservation reservation = getReservationById(reservationId);
+        reservation.setClientReview(clientReview);
+        return save(reservation);
     }
 
     @Override
@@ -94,14 +105,32 @@ public class ReservationServiceImpl implements ReservationService {
         newReservation.setUtilities(utilitySet);
         return reservationRepository.save(newReservation);
     }
+
+    @Override
+    public Reservation makeSpecialOfferReservation(Client client, ReservationDto reservationDto) {
+        Reservation newReservation = ReservationMapper.map(reservationDto);
+        newReservation.setClient(client);
+        newReservation.setPrice(reservationDto.getPrice());
+
+        Set<Utility> utilitySet = new HashSet<>();
+        for (UtilityDto utilityDto : reservationDto.getUtilities()
+        ) {
+            Utility utility = utilityService.getByName(utilityDto.getName());
+            utilitySet.add(utility);
+        }
+        newReservation.setUtilities(utilitySet);
+        return reservationRepository.save(newReservation);
+    }
+
     @Override
     public Reservation makeReservation(Client client, ReservationDto reservationDto, double durationInHours) {
         Date newEndDate = dateService.addHoursToJavaUtilDate(reservationDto.getStartDate(), durationInHours);
         reservationDto.setEndDate(newEndDate);
-        Reservation newReservation = ReservationMapper.map(reservationDto);
 
+        Reservation newReservation = ReservationMapper.map(reservationDto);
         newReservation.setClient(client);
         newReservation.setPrice(calculatePrice(reservationDto));
+
         Set<Utility> utilitySet = new HashSet<>();
         for (UtilityDto utilityDto : reservationDto.getUtilities()
         ) {
@@ -147,4 +176,6 @@ public class ReservationServiceImpl implements ReservationService {
 
         return 0;
     }
+
+
 }

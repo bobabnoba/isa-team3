@@ -35,4 +35,6 @@ public interface UserService {
     Collection<User> saveAll(Collection<User> users);
 
     User getUserById(Long id);
+
+    void resetAllPenalties();
 }

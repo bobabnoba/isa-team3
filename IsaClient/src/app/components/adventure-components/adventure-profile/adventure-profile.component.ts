@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Adventure, Utility } from 'src/app/interfaces/adventure';
 import { SpecialOffer } from 'src/app/interfaces/special-offer';
 import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
+import { SpecialOfferService } from 'src/app/services/special-offer-service/special-offer.service';
+import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { InstructorCreateReservationComponent } from '../../instructor-components/instructor-create-reservation/instructor-create-reservation.component';
 
 @Component({
@@ -13,11 +14,20 @@ import { InstructorCreateReservationComponent } from '../../instructor-component
 })
 export class AdventureProfileComponent implements OnInit {
 
-  @Input() adventureId! : string
-  adventure! : Adventure;
-  
-  constructor(private _adventureService : AdventureService, private _matDialog : MatDialog,
-    private _snackBar : MatSnackBar) { 
+  @Input() adventureId!: string
+  adventure!: Adventure;
+  instructor: boolean = false
+  clientSpecialOffers: SpecialOffer[] = [];
+
+  constructor(
+    private _adventureService: AdventureService,
+    private _matDialog: MatDialog,
+    private _service: StorageService,
+    private _specialOfferService: SpecialOfferService) {
+
+    if (_service.getRole() == 'ROLE_INSTRUCTOR') {
+      this.instructor = true;
+    }
     this.adventure = {} as Adventure;
     this.adventure.utilities = [] as Utility[];
     this.adventure.specialOffers = [] as SpecialOffer[];
@@ -29,16 +39,25 @@ export class AdventureProfileComponent implements OnInit {
         this.adventure = res;
       }
     )
+    if (this._service.getRole() == 'ROLE_CLIENT') {
+
+      this._specialOfferService.getForAdventure(this.adventureId).subscribe(
+        res => {
+          this.clientSpecialOffers = res;
+        }
+      )
+
+    }
   }
 
-  bookForClient(){
+  bookForClient() {
 
     let myData = {
-      adventureId : this.adventureId,
-      utilities : this.adventure.utilities,
-      price : this.adventure.pricePerDay,
-      guests : this.adventure.maxNumberOfParticipants,
-      duration : this.adventure.durationInHours 
+      adventureId: this.adventureId,
+      utilities: this.adventure.utilities,
+      price: this.adventure.pricePerDay,
+      guests: this.adventure.maxNumberOfParticipants,
+      duration: this.adventure.durationInHours
     }
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;

@@ -57,17 +57,25 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" [routerLink]="['/client/homes/reservation']">Vacation Homes</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item"  [routerLink]="['/client/boats/reservation']">Boats</a>
+            <a class="dropdown-item" [routerLink]="['/client/boats/reservation']">Boats</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" [routerLink]="['/client/adventures/reservation']">Adventures</a>
         </div>
     </li>
     <hr class="sidebar-divider">
-    <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/client/reservations/history']">
-            <i class="fa-solid  fa-history"></i>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ticket" aria-hidden="true"></i>
             <span>Reservation History</span>
         </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" [routerLink]="['/client/homes/history']">Vacation Homes</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" [routerLink]="['/client/boats/history']">Boats</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" [routerLink]="['/client/adventures/history']">Adventures History</a>
+        </div>
     </li>
     <hr class="sidebar-divider">
 

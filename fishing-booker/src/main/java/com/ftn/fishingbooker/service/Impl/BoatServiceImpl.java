@@ -180,6 +180,11 @@ public class BoatServiceImpl implements BoatService {
     }
 
     @Override
+    public Boat getBoatForReservation(Long reservationId) {
+        return boatRepository.getBoatForReservation(reservationId);
+    }
+
+    @Override
     @Transactional
     public Boat updateBoatAddress(Long id, Address updated) {
         Boat found = boatRepository.findById(id)

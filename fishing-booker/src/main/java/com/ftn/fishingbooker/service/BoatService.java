@@ -32,4 +32,5 @@ public interface BoatService {
 
     Boat updateBoatRules(Long id, Collection<Rule> updated);
 
+    Boat getBoatForReservation(Long reservationId);
 }

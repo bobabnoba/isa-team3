@@ -6,11 +6,10 @@ import com.ftn.fishingbooker.model.SpecialOffer;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 public class SpecialOfferMapper {
 
-    public static SpecialOffer toNewEntity(NewSpecialOfferDto dto){
+    public static SpecialOffer toNewEntity(NewSpecialOfferDto dto) {
         SpecialOffer entity = new SpecialOffer();
         entity.setDiscount(dto.getDiscount());
         entity.setPrice(dto.getPrice());
@@ -24,7 +23,7 @@ public class SpecialOfferMapper {
         return entity;
     }
 
-    public static Collection<SpecialOfferDto> toDtoSet(Set<SpecialOffer> specialOffers){
+    public static Collection<SpecialOfferDto> toDtoSet(Collection<SpecialOffer> specialOffers) {
         Collection<SpecialOfferDto> dtos = new ArrayList<>();
         if (specialOffers != null) {
             specialOffers.forEach(specialOffer -> {
@@ -46,4 +45,6 @@ public class SpecialOfferMapper {
 
         return dtos;
     }
+
+
 }

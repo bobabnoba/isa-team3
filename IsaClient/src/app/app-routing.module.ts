@@ -20,7 +20,6 @@ import { ClientBrowseComponent } from './components/client-components/client-bro
 import { ClientHomesComponent } from './components/client-components/client-homes/client-homes.component';
 import { ClientInstructorsComponent } from './components/client-components/client-instructors/client-instructors.component';
 import { ClientProfileComponent } from './components/client-components/client-profile/client-profile.component';
-import { ClientReservationsHistoryComponent } from './components/client-components/client-reservations-history/client-reservations-history.component';
 import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
 import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
 import { HomeOwnerDashboardComponent } from './components/home-owner-components/home-owner-dashboard/home-owner-dashboard.component';
@@ -42,6 +41,9 @@ import { InstructorPageComponent } from './components/rentals/instructor-page/in
 import { UnauthBoatPageComponent } from './components/unauthenticated/unauth-boat-page/unauth-boat-page.component';
 import { UnauthHomePageComponent } from './components/unauthenticated/unauth-home-page/unauth-home-page.component';
 import { UnauthInstructorPageComponent } from './components/unauthenticated/unauth-instructor-page/unauth-instructor-page.component';
+import { ReservationHistoryHomesComponent } from './components/client-components/reservation-history-homes/reservation-history-homes.component';
+import { ReservationHistoryAdventuresComponent } from './components/client-components/reservation-history-adventures/reservation-history-adventures.component';
+import { ReservationHistoryBoatsComponent } from './components/client-components/reservation-history-boats/reservation-history-boats.component';
 
 
 const routes: Routes = [
@@ -86,8 +88,16 @@ const routes: Routes = [
     component: ClientReservationsComponent
   },
   {
-    path: 'client/reservations/history',
-    component: ClientReservationsHistoryComponent
+    path: 'client/homes/history',
+    component: ReservationHistoryHomesComponent
+  },
+  {
+    path: 'client/adventures/history',
+    component: ReservationHistoryAdventuresComponent
+  },
+  {
+    path: 'client/boats/history',
+    component: ReservationHistoryBoatsComponent
   },
   {
     path: 'home/page/:id',

@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { IReservation } from 'src/app/interfaces/new-reservation';
 import { ReservationService } from 'src/app/services/reservation-service/reservation.service';
+import { StorageService } from 'src/app/services/storage-service/storage.service';
 
 @Component({
   selector: 'app-client-reservations',
@@ -15,11 +16,16 @@ export class ClientReservationsComponent implements AfterViewInit {
   displayedColumns: string[] = ['position', 'type', 'startDate', 'endDate', 'people', 'price', 'info', 'cancel'];
   allItems!: IReservation[];
   dataSource = new MatTableDataSource<IReservation>();
+  userEmail: string = ''
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private _service: ReservationService,
-    private _snackBar: MatSnackBar) {
+  constructor(
+    private _service: ReservationService,
+    private _snackBar: MatSnackBar,
+    private _storageService: StorageService) {
+    this.userEmail = _storageService.getEmail();
+
     const getUpcomingReservations = {
       next: (res: any) => {
         console.log(res);
@@ -31,7 +37,7 @@ export class ClientReservationsComponent implements AfterViewInit {
       }
     }
 
-    this._service.getUpcomingReservations().subscribe(getUpcomingReservations);
+    this._service.getUpcomingReservations(this.userEmail).subscribe(getUpcomingReservations);
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -45,7 +51,7 @@ export class ClientReservationsComponent implements AfterViewInit {
       },
       error: (err: HttpErrorResponse) => {
 
-        this._snackBar.open('Reservation can be canceled at least 3 days before Start date. ','',
+        this._snackBar.open('Reservation can be canceled at least 3 days before the start date. ', '',
           {
             duration: 3000,
             panelClass: ['snack-bar']
@@ -54,19 +60,54 @@ export class ClientReservationsComponent implements AfterViewInit {
       }
     }
 
-    this._service.cancelUpcomingReservation(id).subscribe(cancelReservation);
+    this._service.cancelUpcomingReservation(id, this.userEmail).subscribe(cancelReservation);
 
   }
 
   MoreInfo(type: string, id: number) {
+
     if (type == 'VACATION_HOME') {
-      window.location.href = '/home/' + id;
+      this.redirectVacationHome(id);
     } else if (type == 'BOAT') {
-      window.location.href = '/boat/' + id;
+      this.redirectBoat(id);
+
     } else if (type == 'ADVENTURE') {
-      window.location.href = '/adventure/' + id;
+      this.redirectAdventure(id);
     }
 
   }
+  redirectAdventure(id: number) {
+    const adventure = {
+      next: (res: any) => {
+        window.location.href = '/instructor/adventure/' + res.id;
+      },
+      error: (err: HttpErrorResponse) => {
+      }
+    }
+    this._service.getAdventure(id).subscribe(adventure);
+  }
+  redirectBoat(id: number) {
+    const Boat = {
+      next: (res: any) => {
+        window.location.href = '/boat/page/' + res.id;
+      },
+      error: (err: HttpErrorResponse) => {
+      }
+    }
+    this._service.getBoat(id).subscribe(Boat);
+  }
+  redirectVacationHome(id: number) {
+    const vacationHome = {
+      next: (res: any) => {
+        window.location.href = '/home/page/' + res.id;
+      },
+      error: (err: HttpErrorResponse) => {
+      }
+    }
+
+    this._service.getVacationHome(id).subscribe(vacationHome);
+  }
 }
+
+
 

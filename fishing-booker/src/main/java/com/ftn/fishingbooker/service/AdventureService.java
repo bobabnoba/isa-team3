@@ -43,4 +43,7 @@ public interface AdventureService {
     Collection<Adventure> findAllWithInstructor();
 
     Collection<Adventure> findAllByInstructorId(Long id);
+
+    Adventure getAdventureForReservation(Long reservationId);
+
 }

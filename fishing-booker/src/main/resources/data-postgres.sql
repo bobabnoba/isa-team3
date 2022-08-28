@@ -36,7 +36,7 @@ insert into user_rank(id, name, min_points, reservation_percentage, percentage)
 
 --Client
 insert into client(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id,  no_of_penalties) values
-(10,'Whatever Bio',  'majablgic505@gmail.com', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 5000, 2, 4),
+(10,'Whatever Bio',  'majablgic505@gmail.com', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 2, 0),
 (12,'Whatever Bio',  'ClientEmail2', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 7990, 2, 0);
 
 ----Admin
@@ -85,7 +85,6 @@ insert into adventure(
 	values
 	(111, 2.00, 20, 'Snorkeling with eels', 3, 45, 4, 'Eeel pradise', 'false', 40, 110),
 	(112, 5.00, 20, 'We fish Sharks', 3, 45, 4, 'Shark soup', 'false', 40, 110);
-
 
 --Rooms
 insert into room(
@@ -147,7 +146,10 @@ insert into reservation(
 	values
 	(101, '2022-08-24', 'false', 3, 200, '2022-08-20', 'VACATION_HOME', 10),
 	(104, '2022-08-30', 'false', 3, 200, '2022-08-29', 'ADVENTURE', 10),
-	(105, '2022-08-24 07:00:00', 'false', 3, 200, '2022-08-24 02:00:00', 'ADVENTURE', 10);
+	(105, '2022-08-24 09:00:00', 'false', 3, 500, '2022-08-24 05:00:00', 'ADVENTURE', 10),
+	(106, '2022-08-24 15:00:00', 'false', 3, 400, '2022-08-24 09:00:00', 'ADVENTURE', 10),
+	(107, '2022-08-24 20:00:00', 'false', 3, 90, '2022-08-24 11:00:00', 'ADVENTURE', 10),
+	(108, '2022-08-24 12:00:00', 'false', 3, 354, '2022-08-24 10:00:00', 'ADVENTURE', 10);
 
 --	(102, '2022-08-30', 'false', 5, 200, '2022-08-25', 'VACATION_HOME', 12);
 
@@ -217,4 +219,20 @@ insert into rule(id, name)
             values (111, 100);
 
 insert into adventure_reservations(adventure_id, reservations_id)
-values (112, 105);
+values (112, 105),
+    (112, 106),
+    (112, 107),
+    (111,104),
+    (112, 108);
+
+
+insert into special_offer(id, active_from, active_to, discount, guests, is_used, price, reservation_end_date, reservation_start_date, type)
+	values (100, '2022-08-25 19:50:00', '2022-09-02 19:50:00', 5, 3, 'false', 202, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE'),
+	 (101, '2022-09-02 19:50:00', '2022-09-03 19:50:00', 5, 3, 'false', 303, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE'),
+	 (102, '2022-09-03 19:50:00', '2022-09-14 19:50:00', 5, 3, 'false', 404, '2022-09-24 00:50:00', '2022-09-25 19:50:00', 'ADVENTURE');
+
+insert into adventure_special_offers(
+	adventure_id, special_offers_id)
+	values (112, 100),
+	 (112, 101),
+	 (112, 102);

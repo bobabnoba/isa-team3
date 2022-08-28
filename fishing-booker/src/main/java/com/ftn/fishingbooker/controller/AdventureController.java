@@ -10,11 +10,9 @@ import com.ftn.fishingbooker.model.Adventure;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.Rule;
-import com.ftn.fishingbooker.service.AdventureService;
-import com.ftn.fishingbooker.service.ClientService;
-import com.ftn.fishingbooker.service.InstructorService;
-import com.ftn.fishingbooker.service.ReservationService;
+import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.FIleUploadUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -23,25 +21,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/adventures")
+@RequiredArgsConstructor
 public class AdventureController {
 
     private final AdventureService adventureService;
     private final ClientService clientService;
     private final ReservationService reservationService;
     private final InstructorService instructorService;
+    private final DateService dateService;
+    private final SpecialOfferService specialOfferService;
 
-    public AdventureController(AdventureService adventureService, ClientService clientService, ReservationService reservationService, InstructorService instructorService) {
-        this.adventureService = adventureService;
-        this.clientService = clientService;
-        this.reservationService = reservationService;
-        this.instructorService = instructorService;
-    }
 
     @GetMapping
     public ResponseEntity<Collection<AdventureDto>> getAllAdventures() {
@@ -143,10 +139,37 @@ public class AdventureController {
         return new ResponseEntity<>(rentals, HttpStatus.OK);
     }
 
+    @PostMapping("/rent/special/offer/{adventureId}/{offerId}/{userEmail}")
+    public ResponseEntity<ReservationDto> makeSpecialOfferReservation(@PathVariable String userEmail, @PathVariable Long offerId,  @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
+        Client client = clientService.getClientByEmail(userEmail);
+
+        if (client.getNoOfPenalties() >= 3) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Adventure adventure = adventureService.getById(adventureId);
+        Date newEndDate = dateService.addHoursToJavaUtilDate(reservationDto.getStartDate(), adventure.getDurationInHours());
+        reservationDto.setEndDate(newEndDate);
+        reservationDto.setType(ReservationType.ADVENTURE);
+
+        if (clientService.hasOverlappingReservation(userEmail, reservationDto.getStartDate(), reservationDto.getEndDate())) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
+
+
+        Reservation reservation = reservationService.makeSpecialOfferReservation(client, reservationDto);
+        adventureService.makeReservation(adventureId, reservation);
+        specialOfferService.reserveSpecialOffer(offerId);
+        clientService.updatePoints(client, reservation.getPrice());
+        instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
+        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+    }
+
     @PostMapping("/rent/{adventureId}/{userEmail}")
     public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
-        if (client.getNoOfPenalties() >= 3){
+        if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         Adventure adventure = adventureService.getById(adventureId);

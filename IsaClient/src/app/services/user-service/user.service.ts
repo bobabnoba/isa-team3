@@ -10,37 +10,31 @@ import { StorageService } from '../storage-service/storage.service';
   providedIn: 'root'
 })
 export class UserService {
+  baseURL = environment.apiURL;
   userEmail: string = ""
   constructor(
     private _http: HttpClient,
     private _storageService: StorageService) {
     this.userEmail = this._storageService.getEmail();
   }
-  
-  saveLoyaltyProgram(retVal: UserRank[]) : Observable<any> {
+
+  saveLoyaltyProgram(retVal: UserRank[]): Observable<any> {
     return this._http.post(`${this.baseURL}/user-rank`, retVal);
   }
 
-  baseURL = environment.apiURL;
-
- 
-
-  
-
-
-  getUserInfo(email : string) : Observable<any>{
-    return this._http.get(`${this.baseURL}/users/${email}`); 
+  getUserInfo(email: string): Observable<any> {
+    return this._http.get(`${this.baseURL}/users/${email}`);
   }
 
-  getUserById(id : number) : Observable<LoggedUser> {
+  getUserById(id: number): Observable<LoggedUser> {
     return this._http.get<LoggedUser>(`${this.baseURL}/users/by-id/${id}`);
   }
 
-  updateUser(user : LoggedUser) : Observable<LoggedUser>{
+  updateUser(user: LoggedUser): Observable<LoggedUser> {
     return this._http.put<LoggedUser>(`${this.baseURL}/users/update`, user);
   }
 
-  getLoyaltyProgram() : Observable<UserRank[]> {
+  getLoyaltyProgram(): Observable<UserRank[]> {
     return this._http.get<UserRank[]>(`${this.baseURL}/user-rank`);
   }
 }
