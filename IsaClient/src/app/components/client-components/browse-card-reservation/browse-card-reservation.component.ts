@@ -88,7 +88,6 @@ export class BrowseCardReservationComponent implements OnInit {
     const makeReservation = {
       next: (res: any) => {
 
-        //redirect to rental page
         this._snackBar.open('Reservation made successfully!', '',
           {
             duration: 3000,

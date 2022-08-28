@@ -181,4 +181,9 @@ public class AdventureController {
         //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
+
+    @GetMapping("{id}/has-incoming-reservations")
+    public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){
+        return ResponseEntity.ok(adventureService.getNoOfIncomingReservations(id) > 0);
+    }
 }

@@ -23,7 +23,22 @@ public class SpecialOfferMapper {
         return entity;
     }
 
-    public static Collection<SpecialOfferDto> toDtoSet(Collection<SpecialOffer> specialOffers) {
+    public static SpecialOfferDto toDto(SpecialOffer offer){
+        SpecialOfferDto dto = new SpecialOfferDto();
+        dto.setId(offer.getId());
+        dto.setDiscount(offer.getDiscount());
+        dto.setPrice(offer.getPrice());
+        dto.setActiveFrom(offer.getActiveFrom());
+        dto.setActiveTo(offer.getActiveTo());
+        dto.setType(offer.getType());
+        dto.setReservationEndDate(offer.getReservationEndDate());
+        dto.setReservationStartDate(offer.getReservationStartDate());
+        dto.setGuests(offer.getGuests());
+        dto.setUtilities(UtilityMapper.map(offer.getUtilities()));
+        return dto;
+    }
+
+    public static Collection<SpecialOfferDto> toDtoSet(Set<SpecialOffer> specialOffers){
         Collection<SpecialOfferDto> dtos = new ArrayList<>();
         if (specialOffers != null) {
             specialOffers.forEach(specialOffer -> {

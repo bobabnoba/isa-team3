@@ -116,6 +116,8 @@ import { UnauthInstructorPageComponent } from './components/unauthenticated/unau
 import { ReservationHistoryBoatsComponent } from './components/client-components/reservation-history-boats/reservation-history-boats.component';
 import { ReservationHistoryHomesComponent } from './components/client-components/reservation-history-homes/reservation-history-homes.component';
 import { ReservationHistoryAdventuresComponent } from './components/client-components/reservation-history-adventures/reservation-history-adventures.component';
+import { AddAdminComponent } from './components/admin-components/add-admin/add-admin.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 
 
@@ -155,6 +157,7 @@ import { ReservationHistoryAdventuresComponent } from './components/client-compo
     BrowseCardComponent,
     SearchCardComponent,
     ClientReservationsComponent,
+    ClientReservationsHistoryComponent,
     ClientBrowseComponent,
     ClientHomesComponent,
     ClientInstructorsComponent,
@@ -208,7 +211,9 @@ import { ReservationHistoryAdventuresComponent } from './components/client-compo
     UnauthInstructorPageComponent,
     ReservationHistoryBoatsComponent,
     ReservationHistoryHomesComponent,
-    ReservationHistoryAdventuresComponent
+    ReservationHistoryAdventuresComponent,
+    AddAdminComponent,
+    ChangePasswordComponent
 
   ],
   imports: [

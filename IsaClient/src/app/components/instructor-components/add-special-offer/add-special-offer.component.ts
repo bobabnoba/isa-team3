@@ -53,7 +53,7 @@ export class AddSpecialOfferComponent implements OnInit {
   }
 
   updatePrice(){
-    this.price.setValue(this.selectedAdventure.pricePerDay);
+    this.price.setValue(this.selectedAdventure.pricePerDay * this.guests.value);
     let utilitiesSum = 0;
     this.services.forEach(s => { utilitiesSum += s.price });
     this.price.setValue(this.price.value + utilitiesSum);
@@ -61,7 +61,8 @@ export class AddSpecialOfferComponent implements OnInit {
   }
 
   advChosen() {
-    this.price.setValue(this.selectedAdventure.pricePerDay);
+    this.guests.setValue(this.selectedAdventure.maxNumberOfParticipants)
+    this.price.setValue(this.selectedAdventure.pricePerDay * this.selectedAdventure.maxNumberOfParticipants);
   }
 
   offerDateChosen(){
@@ -80,7 +81,7 @@ export class AddSpecialOfferComponent implements OnInit {
 
     let resDate = new Date(this.reservationDate.value);
     let resStartDate = resDate;
-    let resEndDate = addHours(resDate, 2);
+    let resEndDate = addHours(resDate, this.selectedAdventure.durationInHours);
 
     let offerTo = new Date(this.activeTo.value);
   if(resStartDate < offerTo) {
@@ -123,9 +124,9 @@ export class AddSpecialOfferComponent implements OnInit {
   showDiscount(){
     let utilitiesSum = 0;
     this.services.forEach(s => { utilitiesSum += s.price });
-    let totalPrice = this.selectedAdventure.pricePerDay + utilitiesSum;
+    let totalPrice = this.selectedAdventure.pricePerDay * this.guests.value + utilitiesSum;
     this.discount = Math.round((totalPrice - this.price.value) * 100 / totalPrice);
-    if(this.discount != 0){
+    if(this.discount > 0){
       this.displayDiscount = true;
     }else {
       this.displayDiscount = false;

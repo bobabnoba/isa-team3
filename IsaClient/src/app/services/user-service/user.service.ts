@@ -37,4 +37,12 @@ export class UserService {
   getLoyaltyProgram(): Observable<UserRank[]> {
     return this._http.get<UserRank[]>(`${this.baseURL}/user-rank`);
   }
+
+  changePassword( request : any, email : string) : Observable<any> {
+    return this._http.put<any>(`${this.baseURL}/users/change-password/${email}`, request);
+  }
+
+  saveLoyaltyProgram(retVal: UserRank[]) : Observable<any> {
+    return this._http.post(`${this.baseURL}/user-rank`, retVal);
+  }
 }

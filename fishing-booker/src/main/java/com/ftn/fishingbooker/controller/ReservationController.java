@@ -11,9 +11,9 @@ import com.ftn.fishingbooker.model.ClientReview;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.Collection;
 import java.util.List;
@@ -31,6 +31,13 @@ public class ReservationController {
     private final BoatService boatService;
 
 
+    @GetMapping("{id}")
+    public ResponseEntity<ReservationWithClientDto> getReservation(@PathVariable Long id) {
+        Reservation reservation = reservationService.getReservationById(id);
+        return ResponseEntity.ok(ReservationMapper.toDtoWClient(reservation));
+    }
+
+    
     @GetMapping("{id}")
     public ResponseEntity<Reservation> GetReservation(@PathVariable Long id) {
         Reservation reservation = reservationService.getReservationById(id);

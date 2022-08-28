@@ -49,4 +49,9 @@ public class UserRankServiceImpl implements UserRankService {
         return userRankRepository.saveAll(ranks);
     }
 
+    @Override
+    public UserRank findByName(String name) {
+        return userRankRepository.findByName(name);
+    }
+
 }

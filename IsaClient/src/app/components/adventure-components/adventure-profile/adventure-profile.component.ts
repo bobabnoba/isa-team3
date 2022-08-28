@@ -5,6 +5,7 @@ import { SpecialOffer } from 'src/app/interfaces/special-offer';
 import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
 import { SpecialOfferService } from 'src/app/services/special-offer-service/special-offer.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
+import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { InstructorCreateReservationComponent } from '../../instructor-components/instructor-create-reservation/instructor-create-reservation.component';
 
 @Component({
@@ -18,6 +19,7 @@ export class AdventureProfileComponent implements OnInit {
   adventure!: Adventure;
   instructor: boolean = false
   clientSpecialOffers: SpecialOffer[] = [];
+  filteredOffers! : SpecialOffer[];
 
   constructor(
     private _adventureService: AdventureService,
@@ -30,13 +32,14 @@ export class AdventureProfileComponent implements OnInit {
     }
     this.adventure = {} as Adventure;
     this.adventure.utilities = [] as Utility[];
-    this.adventure.specialOffers = [] as SpecialOffer[];
+    this.filteredOffers = [] as SpecialOffer[];
   }
 
   ngOnInit(): void {
     this._adventureService.getById(this.adventureId).subscribe(
       res => {
         this.adventure = res;
+        this.filteredOffers = this.adventure.specialOffers.filter(offer => new Date(offer.activeTo) >= new Date());
       }
     )
     if (this._service.getRole() == 'ROLE_CLIENT') {

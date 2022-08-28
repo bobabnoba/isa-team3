@@ -7,7 +7,9 @@ import com.ftn.fishingbooker.model.InstructorAvailability;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.dao.ReservationInfo;
+import com.ftn.fishingbooker.service.ClientService;
 import com.ftn.fishingbooker.service.InstructorService;
+import com.ftn.fishingbooker.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,7 @@ import static org.springframework.http.ResponseEntity.ok;
 public class InstructorController {
 
     private final InstructorService instructorService;
+    private final UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody OwnerRegisterDto registerDto) throws MessagingException {
@@ -60,7 +63,7 @@ public class InstructorController {
         return InstructorMapper.mapInstructors(instructors);
     }
 
-    @GetMapping("/check-for-overlapping-reservations")
+    @GetMapping("/check-if-available")
     ResponseEntity<Boolean> checkAvailability(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
                                               @RequestParam String instructorEmail) {
@@ -93,7 +96,7 @@ public class InstructorController {
     public ResponseEntity<UserDto> getOngoingReservationClient(@PathVariable String email) {
         Reservation reservation = instructorService.getOngoingReservationForInstructor(email);
         if (reservation != null) {
-            return ResponseEntity.ok(UserMapper.mapToDto(reservation.getClient()));
+            return ResponseEntity.ok(UserMapper.mapToDto(userService.getUserById(reservation.getClient().getId())));
         } else {
             return ResponseEntity.notFound().build();
         }

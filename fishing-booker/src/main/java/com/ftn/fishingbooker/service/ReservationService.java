@@ -39,6 +39,8 @@ public interface ReservationService {
 
     Reservation getOngoingReservationForInstructor(Long id);
 
+    int getNoOfIncomingReservationsForAdventure(Long id);
+
     Reservation leaveReview(Long reservationId, ClientReview clientReview);
 
 }

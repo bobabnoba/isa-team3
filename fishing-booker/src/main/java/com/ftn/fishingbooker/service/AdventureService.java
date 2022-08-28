@@ -44,6 +44,8 @@ public interface AdventureService {
 
     Collection<Adventure> findAllByInstructorId(Long id);
 
+    int getNoOfIncomingReservations(Long id);
+
     Adventure getAdventureForReservation(Long reservationId);
 
 }

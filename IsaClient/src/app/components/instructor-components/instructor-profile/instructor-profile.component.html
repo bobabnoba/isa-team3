@@ -30,7 +30,7 @@
                               </div>
                                 <div class="d-flex justify-content-center body-improv" style="flex-direction: column;">
                                     <button mat-button class="btn"(click)="deleteAccount()">Delete my account</button>
-                                    <button mat-button class="btn">Change password</button>
+                                    <button mat-button class="btn" (click)="changePassword()">Change password</button>
 
                                 </div>
                             
@@ -95,12 +95,20 @@
                                       </div>
                                     </div>
                                     <div class="col-md-5 pr-1">
-                                        <div class="form-group">
-                                          <label>System role</label>
-                                          <input type="text" class="form-control" disabled value="Administrator">
+                                      <div class="row">
+                                        <div class="col-md-8 form-group">
+                                          <label>Rank</label>
+                                        <input *ngIf="rank" disabled type="text" class="form-control" placeholder="Rank" name="rank"
+                                          [(ngModel)]="rank">
+                                        </div>
+                                        <div class="col-md-4 form-group d-flex">
+                                          <button class="btn btn-primary form-control"  style="height: 38px; align-self: flex-end;" (click)="info()">
+                                        <i class="fas fa-info-circle"></i></button>
                                         </div>
                                       </div>
+                                    </div>
                                   </div>
+                                  <hr>
                                   <div class="row">
                                     <div class="col-md-12 pl-1">
                                       <div class="form-group">

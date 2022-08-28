@@ -1,7 +1,9 @@
 package com.ftn.fishingbooker.service.Impl;
 
+import com.ftn.fishingbooker.dto.PasswordChangeDto;
 import com.ftn.fishingbooker.dto.RegisterDto;
 import com.ftn.fishingbooker.enumeration.RegistrationType;
+import com.ftn.fishingbooker.exception.InvalidPasswordException;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.RegistrationMapper;
 import com.ftn.fishingbooker.model.Admin;
@@ -10,12 +12,15 @@ import com.ftn.fishingbooker.model.Registration;
 import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.repository.UserRepository;
+import com.ftn.fishingbooker.service.AdminService;
 import com.ftn.fishingbooker.service.ClientService;
 import com.ftn.fishingbooker.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -24,14 +29,14 @@ import java.util.Collection;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private ClientService clientService;
-    @Autowired
-    RegistrationRepository registrationRepository;
+    private final UserRepository userRepository;
+    private final ClientService clientService;
+    private final RegistrationRepository registrationRepository;
+    private final PasswordEncoder encoder;
+    private final AdminService adminService;
 
     private static String url = "<a href=\"http://localhost:4200/login\"> Login </a>";
 
@@ -138,9 +143,22 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public void changePassword(String email, PasswordChangeDto request)  {
+        User user = userRepository.findByEmail(email);
+
+        if(encoder.matches(request.getOldPassword(), user.getPassword())){
+            user.setPassword(encoder.encode(request.getNewPassword()));
+            if(user.getRole().getName().equals("ROLE_ADMIN")){
+                Admin admin = (Admin) user;
+                adminService.updateFirstLogin(admin);
+            }
+            userRepository.save(user);
+        } else {
+            throw new InvalidPasswordException("Invalid password!");
+        }
+    }
+    @Override
     public void resetAllPenalties() {
         userRepository.resetAllPenalties();
     }
-
-
 }

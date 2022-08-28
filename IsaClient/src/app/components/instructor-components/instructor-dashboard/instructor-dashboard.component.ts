@@ -28,8 +28,6 @@ export class InstructorDashboardComponent implements OnInit {
   }
 
   addNew(){
-    console.log(this.aFormGroup.value.startDate);
-    console.log(this.aFormGroup.value.endDate);
 
     this._instructorService.addAvailability( {
       startDate : this.aFormGroup.value.startDate,
