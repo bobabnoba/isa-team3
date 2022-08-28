@@ -76,6 +76,10 @@ public class HomeServiceImpl implements HomeService {
 
     }
 
+    @Override
+    public VacationHome getVacationHomeForReservation(Long reservationId) {
+        return vacationHomeRepository.getVacationHomeForReservation(reservationId);
+    }
 
 
 }

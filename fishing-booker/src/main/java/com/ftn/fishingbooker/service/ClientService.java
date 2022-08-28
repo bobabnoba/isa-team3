@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.service;
 
+import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.Reservation;
 
@@ -22,4 +23,7 @@ public interface ClientService {
     List<Reservation> getUpcomingReservations(String email);
 
     boolean cancelUpcomingReservation(Long reservationId, String userEmail);
+
+    List<Reservation> getPastReservations(String userEmail, ReservationType vacationHome);
+
 }

@@ -1,4 +1,4 @@
-<div class = "container slider">
+<div *ngIf="adventure.images" class = "container slider">
   <h2 *ngIf="adventure.images.length === 0" class="py-2">No photos from previous adventures provided.</h2>
   <div *ngIf="adventure.images.length > 0">
     <h2 class="py-2">Photos from previous adventures</h2>

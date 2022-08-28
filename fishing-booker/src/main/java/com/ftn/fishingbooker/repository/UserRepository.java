@@ -27,4 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Collection<Instructor> getAllActiveInstructors();
 
     Collection<User> findAllByDeleted(boolean deleted);
+
+    @Query(value = "update public.client set no_of_penalties=0;", nativeQuery = true)
+    void resetAllPenalties();
 }

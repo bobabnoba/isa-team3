@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -34,7 +35,10 @@ public class AdventureController {
     private final ClientService clientService;
     private final ReservationService reservationService;
     private final InstructorService instructorService;
-    private final EarningsService earningsService;
+    private final DateService dateService;
+    private final SpecialOfferService specialOfferService;
+     private final EarningsService earningsService;
+
 
     @GetMapping
     public ResponseEntity<Collection<AdventureDto>> getAllAdventures() {
@@ -136,10 +140,37 @@ public class AdventureController {
         return new ResponseEntity<>(rentals, HttpStatus.OK);
     }
 
+    @PostMapping("/rent/special/offer/{adventureId}/{offerId}/{userEmail}")
+    public ResponseEntity<ReservationDto> makeSpecialOfferReservation(@PathVariable String userEmail, @PathVariable Long offerId,  @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
+        Client client = clientService.getClientByEmail(userEmail);
+
+        if (client.getNoOfPenalties() >= 3) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Adventure adventure = adventureService.getById(adventureId);
+        Date newEndDate = dateService.addHoursToJavaUtilDate(reservationDto.getStartDate(), adventure.getDurationInHours());
+        reservationDto.setEndDate(newEndDate);
+        reservationDto.setType(ReservationType.ADVENTURE);
+
+        if (clientService.hasOverlappingReservation(userEmail, reservationDto.getStartDate(), reservationDto.getEndDate())) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
+
+
+        Reservation reservation = reservationService.makeSpecialOfferReservation(client, reservationDto);
+        adventureService.makeReservation(adventureId, reservation);
+        specialOfferService.reserveSpecialOffer(offerId);
+        clientService.updatePoints(client, reservation.getPrice());
+        instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
+        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+    }
+
     @PostMapping("/rent/{adventureId}/{userEmail}")
     public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
-        if (client.getNoOfPenalties() >= 3){
+        if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         Adventure adventure = adventureService.getById(adventureId);

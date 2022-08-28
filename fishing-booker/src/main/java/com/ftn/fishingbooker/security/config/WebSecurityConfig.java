@@ -69,10 +69,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    private static final String[] AUTH_WHITELIST = {
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**"
+    };
+
     //Za koje rute i fajlove Spring Security ignorise bilo kakve promjene
     @Override
     public void configure(WebSecurity web) throws Exception {
-
+        web.ignoring().antMatchers(AUTH_WHITELIST);
         web.ignoring().antMatchers(HttpMethod.POST, "/auth/**");//login
         web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "swagger-ui/**", "/swagger-ui.html", "/webjars/**");
         web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico", "/**/*.html",

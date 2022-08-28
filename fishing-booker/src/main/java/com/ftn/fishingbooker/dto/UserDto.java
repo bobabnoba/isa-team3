@@ -18,4 +18,5 @@ public class UserDto {
     public String biography;
     public UserRankDto rank;
     public double points;
+
 }

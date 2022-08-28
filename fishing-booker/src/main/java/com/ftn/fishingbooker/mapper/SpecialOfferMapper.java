@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class SpecialOfferMapper {
 
-    public static SpecialOffer toNewEntity(NewSpecialOfferDto dto){
+    public static SpecialOffer toNewEntity(NewSpecialOfferDto dto) {
         SpecialOffer entity = new SpecialOffer();
         entity.setDiscount(dto.getDiscount());
         entity.setPrice(dto.getPrice());
@@ -25,7 +25,7 @@ public class SpecialOfferMapper {
         return entity;
     }
 
-    public static SpecialOfferDto toDto(SpecialOffer offer){
+    public static SpecialOfferDto toDto(SpecialOffer offer) {
         SpecialOfferDto dto = new SpecialOfferDto();
         dto.setId(offer.getId());
         dto.setDiscount(offer.getDiscount());
@@ -41,7 +41,30 @@ public class SpecialOfferMapper {
         return dto;
     }
 
-    public static Collection<SpecialOfferDto> toDtoSet(Set<SpecialOffer> specialOffers){
+    public static Collection<SpecialOfferDto> toDtoSet(Set<SpecialOffer> specialOffers) {
+        Collection<SpecialOfferDto> dtos = new ArrayList<>();
+        if (specialOffers != null) {
+            specialOffers.forEach(specialOffer -> {
+
+                SpecialOfferDto dto = new SpecialOfferDto();
+                dto.setId(specialOffer.getId());
+                dto.setDiscount(specialOffer.getDiscount());
+                dto.setPrice(specialOffer.getPrice());
+                dto.setActiveFrom(specialOffer.getActiveFrom());
+                dto.setActiveTo(specialOffer.getActiveTo());
+                dto.setType(specialOffer.getType());
+                dto.setReservationStartDate(specialOffer.getReservationStartDate());
+                dto.setReservationEndDate(specialOffer.getReservationEndDate());
+                dto.setGuests(specialOffer.getGuests());
+                dto.setUtilities(UtilityMapper.map(specialOffer.getUtilities()));
+                dtos.add(dto);
+            });
+        }
+
+        return dtos;
+    }
+
+    public static Collection<SpecialOfferDto> toDto(Collection<SpecialOffer> specialOffers) {
         Collection<SpecialOfferDto> dtos = new ArrayList<>();
         if (specialOffers != null) {
             specialOffers.forEach(specialOffer -> {
@@ -65,3 +88,7 @@ public class SpecialOfferMapper {
         return dtos;
     }
 }
+
+
+
+

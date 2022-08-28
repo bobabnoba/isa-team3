@@ -67,6 +67,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User createAdmin(RegisterDto registerDto) {
+        if (isEmailRegistered(registerDto.getEmail())) {
+            throw new ResourceConflictException("Email already exists");
+        }
+        Admin user = RegistrationMapper.mapToAdmin(registerDto);
+        //TODO:
+        return user;
+    }
+
+    @Override
     public String enableUser(String email) {
         User u = userRepository.findByEmail(email);
         u.setActivated(true);
@@ -146,5 +156,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         } else {
             throw new InvalidPasswordException("Invalid password!");
         }
+    }
+    @Override
+    public void resetAllPenalties() {
+        userRepository.resetAllPenalties();
     }
 }

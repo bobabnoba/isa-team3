@@ -1,8 +1,8 @@
 package com.ftn.fishingbooker.service;
 
-import com.ftn.fishingbooker.dto.*;
+import com.ftn.fishingbooker.dto.PasswordChangeDto;
+import com.ftn.fishingbooker.dto.RegisterDto;
 import com.ftn.fishingbooker.enumeration.RegistrationType;
-import com.ftn.fishingbooker.exception.InvalidPasswordException;
 import com.ftn.fishingbooker.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -35,5 +35,9 @@ public interface UserService {
 
     User getUserById(Long id);
 
+    void resetAllPenalties();
+
     void changePassword(String email, PasswordChangeDto request);
+
+    User createAdmin(RegisterDto registerDto);
 }

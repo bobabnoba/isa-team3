@@ -24,6 +24,11 @@ export class RentalService {
     return this._http.post('http://localhost:8090/adventures/rent/' + adventureId + "/" + email,
       newReservation);
   }
+  rentAdventureSpecialOffer(newReservation: IReservation, adventureId: number, offerId: number, email: string) {
+    return this._http.post('http://localhost:8090/adventures/rent/special/offer/' + adventureId + "/" + offerId
+      + '/' + email,
+      newReservation);
+  }
 
   getAllRentals() {
     return this._http.get<any>(

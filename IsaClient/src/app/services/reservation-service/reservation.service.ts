@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Reservation } from 'src/app/interfaces/reservation';
 import { environment } from 'src/environments/environment';
-import { StorageService } from '../storage-service/storage.service';
 
 
 
@@ -13,25 +12,60 @@ import { StorageService } from '../storage-service/storage.service';
 export class ReservationService {
 
   baseURL = environment.apiURL;
-  userEmail: string = ""
   constructor(
-    private _http: HttpClient,
-    private _storageService: StorageService) {
-    this.userEmail = this._storageService.getEmail();
+    private _http: HttpClient) {
   }
-  getReservation(id : number ) : Observable<Reservation> {
+
+  getReservation(id: number): Observable<Reservation> {
     return this._http.get<Reservation>(`${this.baseURL}/reservations/${id}`);
   }
 
-  getUpcomingReservations() {
+  getUpcomingReservations(userEmail: string) {
     return this._http.get<any>(
-      'http://localhost:8090/users/reservations/upcoming/' + this.userEmail
+      `${this.baseURL}/reservations/upcoming/` + userEmail
     );
   }
-  cancelUpcomingReservation(id: any): Observable<any> {
+
+  cancelUpcomingReservation(id: any, userEmail: string): Observable<any> {
     return this._http.post<any>(
-      'http://localhost:8090/users/cancel/reservation/' + this.userEmail,
+      `${this.baseURL}/reservations/cancel/` + userEmail,
       id
+    );
+  }
+
+  getPastVacationHomeReservations(userEmail: string): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseURL}/reservations/past/home/` + userEmail
+    );
+  }
+
+  getPastAdventureReservations(userEmail: string): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseURL}/reservations/past/adventure/` + userEmail
+    );
+  }
+
+  getPastBoatReservations(userEmail: string): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseURL}/reservations/past/boat/` + userEmail
+    );
+  }
+
+  getAdventure(id: number): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseURL}/reservations/adventure/` + id
+    );
+  }
+
+  getBoat(id: number): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseURL}/reservations/boat/` + id
+    );
+  }
+
+  getVacationHome(id: number): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseURL}/reservations/vacation/home/` + id
     );
   }
 

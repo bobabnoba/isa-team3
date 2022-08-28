@@ -29,7 +29,7 @@ public class UserController {
     private final ReservationService reservationService;
 
     @GetMapping
-    public ResponseEntity<Collection<User>> getAllUsers(){
+    public ResponseEntity<Collection<User>> getAllUsers() {
         Collection<User> found = userService.getAll();
         return ResponseEntity.ok(found);
     }
@@ -61,7 +61,7 @@ public class UserController {
 
     @PostMapping("/cancel/reservation/{userEmail}")
     public ResponseEntity<Collection<ReservationDto>> CancelUpcomingReservation(@PathVariable String userEmail, @RequestBody Long reservationId) {
-        ResponseEntity response;
+       
         boolean isCanceled = clientService.cancelUpcomingReservation(reservationId, userEmail);
         List<Reservation> reservationList = clientService.getUpcomingReservations(userEmail);
         if (isCanceled == true) {

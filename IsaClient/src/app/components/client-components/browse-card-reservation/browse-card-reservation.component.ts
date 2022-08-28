@@ -53,34 +53,9 @@ export class BrowseCardReservationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.utilities);
-
-    if (this.imageUrls.length != 0) {
-      this.image = this.imageUrls[0];
-    } else {
-      this.image = '../../../assets/images/beach-houses.jpg';
-    }
+    
   }
-  createImageFromBlob(image: Blob) {
-    let reader = new FileReader();
-    reader.addEventListener(
-      'load',
-      () => {
-        this.image = reader.result;
-      },
-      false
-    );
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
-  }
-
-  getImageFromService(id: number) {
-    // this.imageService.getImage(id).subscribe((data) => {
-    //   this.createImageFromBlob(data);
-    // });
-  }
+  
   onChangeDemo(ob: any) {
 
     var checked = ob.checked;
@@ -116,7 +91,6 @@ export class BrowseCardReservationComponent implements OnInit {
     const makeReservation = {
       next: (res: any) => {
 
-        //redirect to rental page
         this._snackBar.open('Reservation made successfully!', '',
           {
             duration: 3000,
