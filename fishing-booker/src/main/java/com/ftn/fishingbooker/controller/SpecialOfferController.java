@@ -34,6 +34,6 @@ public class SpecialOfferController {
     @GetMapping("/adventure/{adventureId}")
     public ResponseEntity<Collection<SpecialOfferDto>> getAvailableOffersForAdventure(@PathVariable Long adventureId) {
         Collection<SpecialOffer> found = specialOfferService.getAvailableOffersForAdventure(adventureId);
-        return ResponseEntity.ok(SpecialOfferMapper.toDtoSet(found));
+        return ResponseEntity.ok(SpecialOfferMapper.toDto(found));
     }
 }

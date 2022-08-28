@@ -37,8 +37,7 @@ public class ReservationController {
         return ResponseEntity.ok(ReservationMapper.toDtoWClient(reservation));
     }
 
-    
-    @GetMapping("{id}")
+    @GetMapping("/client/{id}")
     public ResponseEntity<Reservation> GetReservation(@PathVariable Long id) {
         Reservation reservation = reservationService.getReservationById(id);
         return ResponseEntity.ok(reservation);
