@@ -33,7 +33,7 @@ public class EarningsServiceImpl implements EarningsService {
 
     @Override
     public void saveApplicationEarnings(Reservation reservation, String email, UserRank advertiserRank) {
-        double amount = reservation.getPrice() * advertiserRank.getReservationPercentage()/100;
+        double amount = reservation.getPrice() - (reservation.getPrice() * advertiserRank.getReservationPercentage()/100);
         Earnings earnings = new Earnings(reservation, amount, email);
         earningsRepository.save(earnings);
     }

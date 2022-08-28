@@ -31,10 +31,10 @@ public class Earnings {
     @Column(nullable = false)
     private Date transactionDate;
 
-    public Earnings(Reservation reservation, double price, String email) {
+    public Earnings(Reservation reservation, double amount, String email) {
         this.reservation = reservation;
         this.advertiserEmail = email;
-        this.amount = reservation.getPrice();
+        this.amount = amount;
         this.transactionDate = new Date();
     }
 }
