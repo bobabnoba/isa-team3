@@ -28,7 +28,8 @@ public class ReservationMapper {
         reservationDto.setPrice(reservation.getPrice());
         reservationDto.setEndDate(reservation.getEndDate());
         reservationDto.setStartDate(reservation.getStartDate());
-        if (reservation.getReport() != null) {
+        reservationDto.setCancelingPercentage(reservation.getCancelingPercentage());
+        if (reservation.getReport() != null){
             reservationDto.setReport(ReportMapper.toDto(reservation.getReport()));
         }
         if (reservation.getClientReview() != null) {
@@ -46,6 +47,7 @@ public class ReservationMapper {
         reservation.setPrice(reservationDto.getPrice());
         reservation.setEndDate(reservationDto.getEndDate());
         reservation.setStartDate(reservationDto.getStartDate());
+        reservation.setCancelingPercentage(reservationDto.getCancelingPercentage());
         return reservation;
     }
 
@@ -59,6 +61,7 @@ public class ReservationMapper {
         reservationDto.setPrice(reservation.getPrice());
         reservationDto.setEndDate(reservation.getEndDate());
         reservationDto.setStartDate(reservation.getStartDate());
+        reservationDto.setCancelingPercentage(reservation.getCancelingPercentage());
         if (reservation.getReport() != null){
             reservationDto.setReport(ReportMapper.toDto(reservation.getReport()));
         }

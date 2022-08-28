@@ -33,4 +33,6 @@ public class ReservationDto {
 
     private ClientReviewDto clientReview;
 
+
+    private double cancelingPercentage;
 }

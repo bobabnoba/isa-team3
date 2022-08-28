@@ -48,4 +48,6 @@ public class Reservation {
     @OneToOne(targetEntity = ClientReview.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private ClientReview clientReview;
 
+    private double cancelingPercentage;
+
 }

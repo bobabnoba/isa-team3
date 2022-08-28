@@ -8,4 +8,5 @@ export interface IReservation {
     price:number,
     utilities: IUtility[],
     duration: number,
+    cancelingPercentage : number
 }

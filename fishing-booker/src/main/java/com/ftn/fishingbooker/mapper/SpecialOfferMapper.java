@@ -21,6 +21,7 @@ public class SpecialOfferMapper {
         entity.setReservationEndDate(dto.getReservationEndDate());
         entity.setGuests(dto.getGuests());
         entity.setUtilities(UtilityMapper.toEntitySet(dto.getUtilities()));
+        entity.setCancelingPercentage(dto.getCancelingPercentage());
         return entity;
     }
 
@@ -36,6 +37,7 @@ public class SpecialOfferMapper {
         dto.setReservationStartDate(offer.getReservationStartDate());
         dto.setGuests(offer.getGuests());
         dto.setUtilities(UtilityMapper.map(offer.getUtilities()));
+        dto.setCancelingPercentage(offer.getCancelingPercentage());
         return dto;
     }
 
@@ -78,6 +80,7 @@ public class SpecialOfferMapper {
                 dto.setReservationEndDate(specialOffer.getReservationEndDate());
                 dto.setGuests(specialOffer.getGuests());
                 dto.setUtilities(UtilityMapper.map(specialOffer.getUtilities()));
+                dto.setCancelingPercentage(specialOffer.getCancelingPercentage());
                 dtos.add(dto);
             });
         }

@@ -79,6 +79,7 @@ public class RentalMapper {
         rentalDto.setUtilities(UtilityMapper.map(boat.getUtilities()));
         rentalDto.setOwner(OwnerMapper.map(boat.getBoatOwner()));
         rentalDto.setImages( boat.getImagePaths());
+        rentalDto.setCancelingPercentage(boat.getCancelingPercentage());
 
         return rentalDto;
     }
@@ -97,6 +98,7 @@ public class RentalMapper {
         rentalDto.setOwner(OwnerMapper.map(adventure.getInstructor()));
         rentalDto.setDuration(adventure.getDurationInHours());
         rentalDto.setImages( adventure.getImagePaths());
+        rentalDto.setCancelingPercentage(adventure.getCancelingPercentage());
 
         return rentalDto;
     }
@@ -114,6 +116,7 @@ public class RentalMapper {
         rentalDto.setUtilities(UtilityMapper.map(home.getUtilities()));
         rentalDto.setOwner(OwnerMapper.map(home.getHomeOwner()));
         rentalDto.setImages( home.getImagePaths());
+        rentalDto.setCancelingPercentage(home.getCancelingPercentage());
 
         return rentalDto;
     }
@@ -127,7 +130,6 @@ public class RentalMapper {
         rentalDto.setName(instructor.getFirstName() + " " + instructor.getLastName());
         rentalDto.setRating(instructor.getRating());
         rentalDto.setRentalType(RentalType.instructor);
-
         return rentalDto;
     }
 

@@ -37,6 +37,7 @@ public class AdventureController {
     private final InstructorService instructorService;
     private final DateService dateService;
     private final SpecialOfferService specialOfferService;
+     private final EarningsService earningsService;
 
 
     @GetMapping
@@ -178,6 +179,7 @@ public class AdventureController {
         adventureService.makeReservation(adventureId, reservation);
         clientService.updatePoints(client, reservation.getPrice());
         instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
+        earningsService.saveEarnings(reservation, adventure.getInstructor().getEmail(), adventure.getInstructor().getRank());
         //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }

@@ -118,6 +118,8 @@ import { ReservationHistoryHomesComponent } from './components/client-components
 import { ReservationHistoryAdventuresComponent } from './components/client-components/reservation-history-adventures/reservation-history-adventures.component';
 import { AddAdminComponent } from './components/admin-components/add-admin/add-admin.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { AdminEarningsComponent } from './components/admin-components/admin-earnings/admin-earnings.component';
+import { AdvertiserEarningsComponent } from './components/advertiser-earnings/advertiser-earnings.component';
 
 
 
@@ -212,7 +214,9 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     ReservationHistoryHomesComponent,
     ReservationHistoryAdventuresComponent,
     AddAdminComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    AdminEarningsComponent,
+    AdvertiserEarningsComponent
 
   ],
   imports: [

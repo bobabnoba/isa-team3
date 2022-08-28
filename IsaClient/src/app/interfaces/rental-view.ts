@@ -13,6 +13,7 @@ export interface IProfileView {
     pricePerDay: number,
     rating: number,
     rentalType: string,
-    owner: IOwnerInfo
+    owner: IOwnerInfo,
+    cancelingPercentage : number,
 }
 

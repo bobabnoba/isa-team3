@@ -39,6 +39,7 @@ export class BrowseCardReservationComponent implements OnInit {
   @Input() type: string = 'entity';
   @Input() startDate: Date = new Date();
   @Input() endDate: Date = new Date();
+  @Input() cancelingPercentage : number = 0;
   newReservation: IReservation = {} as IReservation;
   baseUrl = environment.apiURL
 
@@ -83,6 +84,8 @@ export class BrowseCardReservationComponent implements OnInit {
     this.newReservation.startDate = this._datePipe.transform(new Date(this.startDate), 'yyyy-MM-ddTHH:mm')!;
     this.newReservation.guests = this.guests;
     this.newReservation.price = this.price;
+    this.newReservation.cancelingPercentage = this.cancelingPercentage;
+
 
     console.log(this.newReservation);
     const makeReservation = {
