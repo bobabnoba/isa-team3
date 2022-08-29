@@ -7,7 +7,9 @@ import com.ftn.fishingbooker.model.InstructorAvailability;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.dao.ReservationInfo;
+import com.ftn.fishingbooker.service.ClientService;
 import com.ftn.fishingbooker.service.InstructorService;
+import com.ftn.fishingbooker.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,7 @@ import static org.springframework.http.ResponseEntity.ok;
 public class InstructorController {
 
     private final InstructorService instructorService;
+    private final UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody OwnerRegisterDto registerDto) throws MessagingException {
@@ -40,6 +43,11 @@ public class InstructorController {
     public ResponseEntity<InstructorDto> getInstructorWithAvailability(String email) {
         Instructor found = instructorService.getWithAvailability(email);
         return ok(InstructorMapper.toDto(found));
+    }
+    @GetMapping("/info")
+    public ResponseEntity<InstructorInfoDto> getInstructorWithAvailability(Long id) {
+        Instructor found = instructorService.getWithAvailabilityById(id);
+        return ok(InstructorMapper.mapToInstructorInfo(found));
     }
 
     @PostMapping("/add-availability")
@@ -76,4 +84,22 @@ public class InstructorController {
                 .collect(Collectors.toList());
         return ok(dtos);
     }
+
+    @GetMapping("/has-overlapping-reservation")
+    public ResponseEntity<Boolean> checkIfAvailable(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
+                                                    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
+                                                    @RequestParam String email) {
+        return ResponseEntity.ok(instructorService.hasOverlappingReservation(email, from, to));
+    }
+
+    @GetMapping("ongoing-reservation-client/{email}")
+    public ResponseEntity<UserDto> getOngoingReservationClient(@PathVariable String email) {
+        Reservation reservation = instructorService.getOngoingReservationForInstructor(email);
+        if (reservation != null) {
+            return ResponseEntity.ok(UserMapper.mapToDto(userService.getUserById(reservation.getClient().getId())));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

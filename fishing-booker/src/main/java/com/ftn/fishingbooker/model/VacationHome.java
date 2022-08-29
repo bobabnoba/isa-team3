@@ -1,12 +1,13 @@
 package com.ftn.fishingbooker.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -56,7 +57,20 @@ public class VacationHome {
     @JoinColumn(name = "home_owner_id")
     private HomeOwner homeOwner;
 
-    @OneToMany(targetEntity = VacationHomeAvailability.class,mappedBy = "vacationHome",fetch = FetchType.EAGER)
-    private Set<VacationHomeAvailability> availableTimePeriods;
+    @OneToMany(targetEntity = VacationHomeAvailability.class, fetch = FetchType.EAGER)
+    private Set<VacationHomeAvailability> availability;
+
+    private double cancelingPercentage;
+
+    @Transient
+    public List<String> getImagePaths() {
+        List<String> retVal = new ArrayList<>();
+        if (this.getImages() != null) {
+            this.getImages().forEach(
+                    image ->
+                            retVal.add("/images/adventures/" + this.getId() + "/" + image.getUrl()));
+        }
+        return retVal;
+    }
 
 }

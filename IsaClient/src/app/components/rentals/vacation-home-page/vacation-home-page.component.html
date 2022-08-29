@@ -1,0 +1,65 @@
+<div id="wrapper" class="container">
+    <app-client-sidebar></app-client-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div *ngIf="item" class="containersss">
+            <div class="about">
+                <mat-card class="example-card">
+                    <mat-card-title-group>
+                        <mat-card-title>{{item.name}}</mat-card-title>
+                        <mat-card-subtitle>{{item.address.country}},
+                            {{item.address.city}},
+                            {{item.address.street}},
+                            {{item.address.zipCode}} </mat-card-subtitle>
+
+                        <div class="image-display">
+                            <img class="img1" src="../../../assets/images/beach-houses.jpg">
+                        </div>
+                    </mat-card-title-group>
+                    <label style="margin-bottom:5px;">Average rating : </label>
+                    <ngb-rating [max]="5" [(rate)]="item.rating" [readonly]="true" style="margin-left: 5px;">
+                    </ngb-rating>
+
+                    <mat-card-content>
+                        {{item.description}}
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="moreInfo">
+
+                <mat-card class="wrapper">
+                    <div class="box">
+                        <mat-card-title>Number of rooms : {{roomsNumber}}</mat-card-title>
+                        <mat-card-subtitle>Beds : {{bedsNumber}}</mat-card-subtitle>
+                    </div>
+                </mat-card>
+
+
+                <mat-card class="wrapper">
+                    <mat-card-title>House rules</mat-card-title>
+                    <div class="box">
+                        <span *ngFor="let item of item.codeOfConduct; index as i;" class="listing">
+                            <label style="font-weight: bold;">{{item}}</label>
+                        </span>
+                    </div>
+                </mat-card>
+
+                <mat-card class="wrapper">
+                    <mat-card-title>Services/Utilities</mat-card-title>
+                    <div class="box">
+                        <span *ngFor="let item of item.utilities;" class="listing">
+                            <label style="font-weight: bold;">{{item.name}}</label>
+                            <h6>- ${{ item.price }}/day</h6>
+                        </span>
+                    </div>
+                </mat-card>
+
+            </div>
+            <hr>
+            <h2 style="margin-left: 15px; color: blue;">Special Offers</h2>
+            <div *ngFor="let item of item.availableReservations;">
+                <app-reservation-view [action]="item"></app-reservation-view>
+            </div>
+
+        </div>
+    </div>
+</div>

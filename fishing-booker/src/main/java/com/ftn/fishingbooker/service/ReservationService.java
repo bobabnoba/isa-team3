@@ -1,9 +1,10 @@
 package com.ftn.fishingbooker.service;
 
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.model.Client;
+import com.ftn.fishingbooker.model.ClientReview;
 import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.dao.ReservationInfo;
 
 import java.util.Collection;
 import java.util.Date;
@@ -24,6 +25,8 @@ public interface ReservationService {
 
     Reservation makeReservation(Client client, ReservationDto reservationDto, double durationInHours);
 
+    Reservation makeSpecialOfferReservation(Client client, ReservationDto reservationDto);
+
     Collection<Reservation> getReservationsForAdventures(Collection<Long> id);
 
     Collection<ReservationInfo> getUpcomingReservationsForInstructor(Long id);
@@ -32,5 +35,12 @@ public interface ReservationService {
 
     Reservation getReservationById(Long id);
 
-    void save(Reservation reservation);
+    Reservation save(Reservation reservation);
+
+    Reservation getOngoingReservationForInstructor(Long id);
+
+    int getNoOfIncomingReservationsForAdventure(Long id);
+
+    Reservation leaveReview(Long reservationId, ClientReview clientReview);
+
 }

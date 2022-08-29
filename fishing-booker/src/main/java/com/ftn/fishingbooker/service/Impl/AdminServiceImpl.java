@@ -1,27 +1,28 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.model.Admin;
+import com.ftn.fishingbooker.model.Registration;
+import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.*;
-import org.springframework.beans.factory.annotation.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
+import javax.transaction.Transactional;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
     private final RegistrationRepository registrationRepository;
     private final UserRepository userRepository;
     private final EmailService emailService;
-
-    @Autowired
-    public AdminServiceImpl(RegistrationRepository registrationRepository, UserRepository userRepository,
-                            EmailService emailService) {
-        this.registrationRepository = registrationRepository;
-        this.userRepository = userRepository;
-        this.emailService = emailService;
-    }
+    private final RoleService roleService;
+    private final PasswordEncoder encoder;
+    private final AdminRepository adminRepository;
 
     @Override
     public void respondToRegistrationRequest(Registration registration) throws MessagingException {
@@ -38,9 +39,26 @@ public class AdminServiceImpl implements AdminService {
             registration.setApproved(false);
             registration.setAdminResponse(registration.getAdminResponse());
             registrationRepository.save(registration);
-            //TODO: createAdminResponseEmail srediti da ima 2 template-a
             String html = emailService.createAdminResponseEmail( registration.getAdminResponse(), false);
             emailService.sendEmail(user.getEmail(),"Account not  activated!", html);
         }
+    }
+
+    @Override
+    public Admin addNewAdmin(Admin admin) {
+        admin.setPassword(encoder.encode(admin.getPassword()));
+        admin.setRole(roleService.findByName("ROLE_ADMIN"));
+        return adminRepository.save(admin);
+    }
+
+    @Override
+    public void updateFirstLogin(Admin admin) {
+        admin.setFirstLogin(false);
+        adminRepository.save(admin);
+    }
+
+    @Override
+    public boolean isFirstLogin(String email) {
+        return adminRepository.findByEmail(email).isFirstLogin();
     }
 }

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IAddress } from 'src/app/interfaces/address';
 import { IUtility } from 'src/app/interfaces/vacation-house-profile';
+import { StorageService } from 'src/app/services/storage-service/storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-browse-card',
@@ -22,42 +24,28 @@ export class BrowseCardComponent implements OnInit {
   @Input() ownerName: string = '';
   @Input() utilities: IUtility[] = [];
   @Input() imageUrls: string[] = [];
+  @Input() imageUrl: string = '';
   image: any;
   @Input() id: number = 0;
   @Input() type: string = 'entity';
+  role: string = ''
+  baseUrl = environment.apiURL
 
-  constructor() { }
 
-  ngOnInit(): void {
-    if (this.imageUrls.length != 0) {
-      this.image = this.imageUrls[0];
-    } else {
-      this.image = '../../../assets/images/beach-houses.jpg';
+  constructor(_service: StorageService) {
+    this.role = _service.getRole();
+  }
+
+  ngOnInit(): void { }
+
+  preview() {
+    if (this.role != 'ROLE_CLIENT') {
+      window.location.href = '/unauth/' + this.type + '/page/' + this.id;
     }
-  }
-  createImageFromBlob(image: Blob) {
-    let reader = new FileReader();
-    reader.addEventListener(
-      'load',
-      () => {
-        this.image = reader.result;
-      },
-      false
-    );
+    else {
+      window.location.href = this.type + '/page/' + this.id;
 
-    if (image) {
-      reader.readAsDataURL(image);
     }
-  }
-
-  getImageFromService(id: number) {
-    // this.imageService.getImage(id).subscribe((data) => {
-    //   this.createImageFromBlob(data);
-    // });
-  }
-
-  preview() {  
-    window.location.href = '/' + this.type + '/' + this.id;
   }
 
 

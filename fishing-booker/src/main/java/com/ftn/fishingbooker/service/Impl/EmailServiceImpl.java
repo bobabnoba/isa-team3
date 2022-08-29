@@ -1,8 +1,8 @@
 package com.ftn.fishingbooker.service.Impl;
 
 
-import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.model.Client;
+import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -123,12 +123,12 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public String createAdminResponseEmail( String message, boolean isApproved) {
+    public String createAdminResponseEmail(String message, boolean isApproved) {
 
         String temp = isApproved ? "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Welcome to our site!</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for registering. Your account is now activated. Click <a href = \"localhost:4200/login\" > here </a> to login. </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>See you soon</p>" :
                 "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Sadly, your registration request has been denied. </p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for your application. Here are our reasons: \n" + message + " \n </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>We wish you the best!</p>";
 
-        String retVal =  "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
+        String retVal = "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
                 "\n" +
@@ -184,7 +184,7 @@ public class EmailServiceImpl implements EmailService {
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
 
-                    temp +
+                temp +
 
                 "        \n" +
                 "      </td>\n" +
@@ -201,13 +201,13 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public String createDeleteAccountResponseEmail( String message, boolean isApproved) {
+    public String createDeleteAccountResponseEmail(String message, boolean isApproved) {
 
-        String response = isApproved ? "Your account deletion request has been approved."  : "Your account deletion request has been denied.";
+        String response = isApproved ? "Your account deletion request has been approved." : "Your account deletion request has been denied.";
 
         String temp = "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" + response + " </p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  Here are our reasons: \n" + message + " \n </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>Kind regards, Easy&Peasy Booker team.</p>";
 
-        String retVal =  "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
+        String retVal = "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
                 "\n" +
@@ -281,8 +281,13 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendReservationEmail(ReservationDto map, Client client) {
-
-        String retVal =  "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
+        String temp =  "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Thank you for making a reservation!</p>" +
+                "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> " +
+                "Thank you for registering. Your account is now activated. " +
+                "</p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\">" +
+                "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>See you soon</p>" +
+                " <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Sadly, your registration request has been denied. </p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" ;
+        String retVal = "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
                 "\n" +
@@ -337,7 +342,7 @@ public class EmailServiceImpl implements EmailService {
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
-
+                temp +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
@@ -348,7 +353,7 @@ public class EmailServiceImpl implements EmailService {
                 "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" +
                 "\n" +
                 "</div></div>";
-        sendEmail(client.getEmail(),"Reservation successfully made",retVal);
+        sendEmail(client.getEmail(), "Reservation successfully made", retVal);
 
     }
 

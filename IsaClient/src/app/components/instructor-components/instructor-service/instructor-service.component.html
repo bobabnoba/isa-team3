@@ -1,10 +1,11 @@
 <div id="wrapper">
-    <app-instructor-sidebar></app-instructor-sidebar>
+    <app-instructor-sidebar *ngIf="instructor"></app-instructor-sidebar>
+    <app-client-sidebar *ngIf="!instructor"></app-client-sidebar>
     <div id="content-wrapper" class="d-flex flex-column">
-        <app-instructor-topbar></app-instructor-topbar>
-        <div class="container-fluid p-0" >
-            <app-adventure-profile [adventureId]="adventureId" ></app-adventure-profile>
+        <app-instructor-topbar *ngIf="instructor"></app-instructor-topbar>
+        <div class="container-fluid p-0">
+            <app-adventure-profile [adventureId]="adventureId"></app-adventure-profile>
         </div>
-    </div>
- </div>
 
+    </div>
+</div>

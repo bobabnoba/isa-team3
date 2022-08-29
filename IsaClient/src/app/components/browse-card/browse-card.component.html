@@ -2,7 +2,7 @@
     <article class="media shadow p-4">
       <figure class="media-left">
         <p class="image">
-          <img class="image center-cropped" [src]="image" />
+          <img  style="min-height: 100%; min-width:100%" src="{{baseUrl}}{{imageUrl}}" onerror="this.onerror;this.src='../../../../assets/images/no-img.png'" alt="Image not available">  
         </p>
       </figure>
       <div class="media-content">
@@ -10,9 +10,9 @@
           <div>
             <p>
               <strong
-                ><a href="{{ type }}/{{ id }}">{{ name }}</a></strong
+                ><a href="{{ type }}/page/{{ id }}">{{ name }}</a></strong
               >
-              <small>, @{{ ownerName }} </small>
+              <small *ngIf="ownerName">, @{{ ownerName }} </small>
               <br />
               {{ description | truncate: [200] }}
             </p>

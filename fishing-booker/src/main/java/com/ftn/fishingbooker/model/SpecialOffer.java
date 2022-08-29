@@ -43,6 +43,8 @@ public class SpecialOffer {
 
     private boolean isUsed = false;
 
+    private double cancelingPercentage;
+
     private boolean isCaptain = false;
 
 }

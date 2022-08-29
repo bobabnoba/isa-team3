@@ -29,6 +29,9 @@ export class AdventureService {
   getAllByInstructor(email : string) : Observable<any[]>{
     return this._http.get<any[]>(`${this.baseURL}/adventures/by-instructor/${email}`);
   } 
+  getAllByInstructorId(id : string) : Observable<any[]>{
+    return this._http.get<any[]>(`${this.baseURL}/adventures/by-instructor-id/${id}`);
+  } 
 
   addAdventure(adventure : Adventure) : Observable<Adventure>{
     return this._http.post<any>(`${this.baseURL}/adventures`, adventure);
@@ -61,4 +64,8 @@ export class AdventureService {
   updateAddress(id : string, updated : any) : Observable<Adventure>{
     return this._http.post<Adventure>(`${this.baseURL}/adventures/address-update/${id}` , updated);
   }
-}
+
+  incomingReservationExists(id : number ) : Observable<boolean>{
+    return this._http.get<boolean>(`${this.baseURL}/adventures/${id}/has-incoming-reservations`);
+  }
+ }

@@ -26,6 +26,7 @@ public class BoatServiceImpl implements BoatService {
     private final ReservationService reservationService;
     private final BoatOwnerService boatOwnerService;
     private final BoatOwnerRepository boatOwnerRepository;
+    private final EarningsService earningsService;
     private final BoatAvailabilityService boatAvailabilityService;
 
     @Override
@@ -62,9 +63,8 @@ public class BoatServiceImpl implements BoatService {
         boat.getReservations().add(reservation);
         boatRepository.save(boat);
         boatOwnerService.updatePoints(boat.getBoatOwner(), reservation.getPrice());
+        earningsService.saveEarnings(reservation, boat.getBoatOwner().getEmail(), boat.getBoatOwner().getRank());
     }
-
-
 
     private boolean dateOverlapsWithReservation(Collection<Reservation> reservations, Date startDate, Date endDate) {
         if (reservations == null) {
@@ -183,6 +183,11 @@ public class BoatServiceImpl implements BoatService {
         //ako ima ne moze se editovati ako nema edituj ga
         found.setCodeOfConduct(new HashSet<>(updated));
         return boatRepository.save(found);
+    }
+
+    @Override
+    public Boat getBoatForReservation(Long reservationId) {
+        return boatRepository.getBoatForReservation(reservationId);
     }
 
     @Override

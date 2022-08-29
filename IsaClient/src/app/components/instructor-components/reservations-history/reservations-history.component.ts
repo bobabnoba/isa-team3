@@ -82,8 +82,8 @@ export class ReservationsHistoryComponent implements OnInit {
         } as Report;
         this._reportService.sendReport(reservation.id, report).subscribe(
           () => {
-            this.updateTable(reservation);
             reservation.report = report;
+            this.dataSource._updateChangeSubscription();
             this._snackBar.open('Reservation report successfully submitted.', '',
             {duration : 3000, panelClass: ['snack-bar']}
         );

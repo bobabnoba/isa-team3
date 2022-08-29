@@ -17,6 +17,8 @@ public class RentalDto {
 
     private Collection<UtilityDto> utilities;
 
+    public Collection<String> images;
+
     private double pricePerDay;
 
     private String description;
@@ -28,4 +30,6 @@ public class RentalDto {
     private RentalType rentalType;
 
     private OwnerDto owner;
+
+    private double cancelingPercentage;
 }

@@ -1,10 +1,12 @@
 package com.ftn.fishingbooker.mapper;
 
+
 import com.ftn.fishingbooker.dto.OwnerRegisterDto;
 import com.ftn.fishingbooker.dto.RegisterDto;
 import com.ftn.fishingbooker.dto.RegistrationResponseDto;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.RoleService;
+import com.ftn.fishingbooker.service.UserRankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -14,11 +16,13 @@ public class RegistrationMapper {
 
     private static PasswordEncoder passwordEncoder;
     private static RoleService roleService;
+    private static UserRankService rankService;
 
     @Autowired
-    public RegistrationMapper(PasswordEncoder passwordEncoder, RoleService roleService) {
+    public RegistrationMapper(PasswordEncoder passwordEncoder, RoleService roleService, UserRankService rankService) {
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
+        this.rankService = rankService;
     }
 
     public static Client mapToClient(RegisterDto registerDto) {
@@ -52,6 +56,7 @@ public class RegistrationMapper {
 
         UserRole role = roleService.findByName("ROLE_HOME_OWNER");
         homeOwner.setRole(role);
+        homeOwner.setRank(rankService.findByName("REGULAR_ADVERTISER"));
 
         return homeOwner;
     }
@@ -69,6 +74,7 @@ public class RegistrationMapper {
         boatOwner.setBlocked(false);
 
         boatOwner.setRole(roleService.findByName("ROLE_BOAT_OWNER"));
+        boatOwner.setRank(rankService.findByName("REGULAR_ADVERTISER"));
 
         return boatOwner;
     }
@@ -100,7 +106,7 @@ public class RegistrationMapper {
         instructor.setActivated(false);
         instructor.setBlocked(false);
         instructor.setRole(roleService.findByName("ROLE_INSTRUCTOR"));
-
+        instructor.setRank(rankService.findByName("REGULAR_ADVERTISER"));
         return instructor;
     }
 

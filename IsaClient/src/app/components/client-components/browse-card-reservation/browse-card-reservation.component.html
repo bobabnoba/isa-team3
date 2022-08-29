@@ -1,10 +1,25 @@
-<div class="my-5  stretch-width">
-    <article class="media shadow p-4">
-        <figure class="media-left">
-            <p class="image">
-                <img class="image center-cropped" [src]="image" />
-            </p>
+<div class="my-5  stretch-width ">
+    <article class="media shadow p-4 container" style="display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    max-width: 100%;
+    
+    ">
+
+        <figure class="media-left" style="
+            max-width: 30%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+           ">
+
+            <!-- <img style="min-height: 100%; min-width:100%" [src]="image" /> -->
+            <img  style="min-height: 100%; min-width:100%" src="{{baseUrl}}{{imageUrl}}" onerror="this.onerror;this.src='../../../../assets/images/no-img.png'" alt="Image not available">  
+
         </figure>
+
         <div class="media-content">
             <div class="content">
                 <div>
@@ -47,7 +62,7 @@
         <!-- Card Header - Accordion -->
         <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button"
             aria-expanded="true" aria-controls="collapseCardExample">
-            <h6 class="m-0 font-weight-bold text-primary">Utilites list</h6>
+            <h6 class="m-0 font-weight-bold">Utilites list</h6>
         </a>
         <!-- Card Content - Collapse -->
         <div class="collapse show" id="collapseCardExample" style="margin: 10px; margin-right: 50px;">

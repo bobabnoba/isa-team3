@@ -1,2 +1,83 @@
-<app-client-sidebar></app-client-sidebar>
-<p>client-reservations works!</p>
+<div id="wrapper" class="container">
+    <app-client-sidebar></app-client-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column" style="width: 100%; margin-top: 50px; ">
+        <div class="card shadow mb-4" style="width: 100%;">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">My Upcoming reservations</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <div class="mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource">
+
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="position">
+                                <th mat-header-cell *matHeaderCellDef> No. </th>
+                                <td mat-cell *matCellDef="let element;let indexOfelement=index;"> {{indexOfelement+1}} </td>
+                            </ng-container>
+                            <!-- Type Column -->
+                            <ng-container matColumnDef="type">
+                                <th mat-header-cell *matHeaderCellDef> Type </th>
+                                <td mat-cell *matCellDef="let element;"> {{element.type}} </td>
+                            </ng-container>
+                            <!-- Start Date Column -->
+                            <ng-container matColumnDef="startDate">
+                                <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                                <td mat-cell *matCellDef="let element"> {{element.startDate | date:'short' }} </td>
+                            </ng-container>
+
+                            <!-- End Date Column -->
+                            <ng-container matColumnDef="endDate">
+                                <th mat-header-cell *matHeaderCellDef> End Date </th>
+                                <td mat-cell *matCellDef="let element"> {{element.endDate | date:'short' }} </td>
+                            </ng-container>
+                            <!-- Price Column -->
+                            <ng-container matColumnDef="price">
+                                <th mat-header-cell *matHeaderCellDef> Price </th>
+                                <td mat-cell *matCellDef="let element"> {{element.price}} $</td>
+                            </ng-container>
+                            <!-- People Column -->
+                            <ng-container matColumnDef="people">
+                                <th mat-header-cell *matHeaderCellDef> No. of people </th>
+                                <td mat-cell *matCellDef="let element"> {{element.guests}} </td>
+                            </ng-container>
+
+                            <!-- Cancel Column -->
+                            <ng-container matColumnDef="cancel">
+                                <th mat-header-cell *matHeaderCellDef> Cancel Reservation </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button class="btn btn-danger btn-icon-split" (click)="CancelReservation(element.id)">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-trash"></i>
+                                        </span>
+
+                                    </button>
+                                </td>
+                            </ng-container>
+                            <!-- Info Column -->
+                            <ng-container matColumnDef="info">
+                                <th mat-header-cell *matHeaderCellDef> More Info </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button class="btn btn-info btn-icon-split" (click)="MoreInfo(element.type,element.id)">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-info-circle"></i>
+                                        </span>
+
+                                    </button>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+
+                        <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons
+                            aria-label="Select page of periodic elements">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

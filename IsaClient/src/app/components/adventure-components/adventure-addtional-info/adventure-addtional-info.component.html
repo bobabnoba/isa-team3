@@ -5,8 +5,8 @@
   <br>
     <div class = "row ">
         <div class="col-md">
-          <div class="row px-2" style="border-right: 1px solid #333;">
-          <p  *ngIf="adventure.fishingEquipment.length === 0" class="mx-auto">No fishing equipment provided.</p>
+          <div *ngIf="adventure.fishingEquipment" class="row px-2" style="border-right: 1px solid #333;">
+          <p *ngIf="adventure.fishingEquipment.length === 0" class="mx-auto">No fishing equipment provided.</p>
            <div *ngIf="adventure.fishingEquipment.length > 0">
             <p  class="mx-auto">Fishing equipment:</p>
             <ul class="lists">
@@ -16,7 +16,7 @@
         </div>
       </div>
         <div class="col-md">
-          <div class="row px-2">
+          <div *ngIf= "adventure.codeOfConduct" class="row px-2">
             <p *ngIf= "adventure.codeOfConduct.length === 0" class="mx-auto ">No rules of conduct specified.</p>
            <div *ngIf= "adventure.codeOfConduct.length > 0">
             <p class="mx-auto ">Code of conduct:</p>

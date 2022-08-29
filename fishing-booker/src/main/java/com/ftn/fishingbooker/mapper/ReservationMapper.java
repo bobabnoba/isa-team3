@@ -1,8 +1,8 @@
 package com.ftn.fishingbooker.mapper;
 
 import com.ftn.fishingbooker.dto.ReservationDto;
+import com.ftn.fishingbooker.dto.ReservationWithClientDto;
 import com.ftn.fishingbooker.model.Reservation;
-
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,6 +14,7 @@ public class ReservationMapper {
         for (Reservation res : reservations
         ) {
             ReservationDto reservationDto = map(res);
+            reservationsDto.add(reservationDto);
         }
         return reservationsDto;
     }
@@ -27,11 +28,16 @@ public class ReservationMapper {
         reservationDto.setPrice(reservation.getPrice());
         reservationDto.setEndDate(reservation.getEndDate());
         reservationDto.setStartDate(reservation.getStartDate());
+        reservationDto.setCancelingPercentage(reservation.getCancelingPercentage());
         if (reservation.getReport() != null){
             reservationDto.setReport(ReportMapper.toDto(reservation.getReport()));
         }
+        if (reservation.getClientReview() != null) {
+            reservationDto.setClientReview(ReviewMapper.map(reservation.getClientReview()));
+        }
         return reservationDto;
     }
+
     public static Reservation map(ReservationDto reservationDto) {
         Reservation reservation = new Reservation();
         reservation.setGuests(reservationDto.getGuests());
@@ -41,7 +47,26 @@ public class ReservationMapper {
         reservation.setPrice(reservationDto.getPrice());
         reservation.setEndDate(reservationDto.getEndDate());
         reservation.setStartDate(reservationDto.getStartDate());
+        reservation.setCancelingPercentage(reservationDto.getCancelingPercentage());
         return reservation;
     }
 
+
+    public static ReservationWithClientDto toDtoWClient(Reservation reservation) {
+        ReservationWithClientDto reservationDto = new ReservationWithClientDto();
+        reservationDto.setGuests(reservation.getGuests());
+        reservationDto.setId(reservation.getId());
+        reservationDto.setIsCancelled(reservation.getIsCancelled());
+        reservationDto.setType(reservation.getType());
+        reservationDto.setPrice(reservation.getPrice());
+        reservationDto.setEndDate(reservation.getEndDate());
+        reservationDto.setStartDate(reservation.getStartDate());
+        reservationDto.setCancelingPercentage(reservation.getCancelingPercentage());
+        if (reservation.getReport() != null){
+            reservationDto.setReport(ReportMapper.toDto(reservation.getReport()));
+        }
+        reservationDto.setClient(UserMapper.mapToDto(reservation.getClient()));
+        reservationDto.setUtilities(UtilityMapper.map(reservation.getUtilities()));
+        return reservationDto;
+    }
 }

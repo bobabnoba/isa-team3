@@ -118,6 +118,26 @@ public class AdventureServiceImpl implements AdventureService {
     }
 
     @Override
+    public Collection<Adventure> findAllByInstructorId(Long id) {
+        return adventureRepository.findAllByInstructorId(id);
+    }
+
+    @Override
+    public Adventure getAdventureForReservation(Long reservationId) {
+        return adventureRepository.getAdventureForReservation(reservationId);
+    }
+
+    @Override
+    public int getNoOfIncomingReservations(Long id) {
+        return reservationService.getNoOfIncomingReservationsForAdventure(id);
+    }
+
+    @Override
+    public Collection<Adventure> findAllWithInstructor() {
+        return adventureRepository.findAllWithInstructor();
+    }
+
+    @Override
     @Transactional
     public void deleteById(Long id) {
         Adventure found = adventureRepository.findById(id)

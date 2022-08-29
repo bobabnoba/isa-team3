@@ -19,9 +19,10 @@ public class ReservationDto {
     private ReservationType type;
 
     private int guests;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Europe/Belgrade")
     private Date startDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Europe/Belgrade")
     private Date endDate;
 
     private double price;
@@ -29,4 +30,9 @@ public class ReservationDto {
     private Set<UtilityDto> utilities;
 
     private ReportDto report;
+
+    private ClientReviewDto clientReview;
+
+
+    private double cancelingPercentage;
 }

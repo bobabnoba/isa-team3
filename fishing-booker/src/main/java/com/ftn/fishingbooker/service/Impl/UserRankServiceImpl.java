@@ -2,7 +2,6 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.model.UserRank;
-import com.ftn.fishingbooker.model.UserRole;
 import com.ftn.fishingbooker.repository.UserRankRepository;
 import com.ftn.fishingbooker.service.UserRankService;
 import com.ftn.fishingbooker.service.UserService;
@@ -48,6 +47,11 @@ public class UserRankServiceImpl implements UserRankService {
         userService.saveAll(users);
 
         return userRankRepository.saveAll(ranks);
+    }
+
+    @Override
+    public UserRank findByName(String name) {
+        return userRankRepository.findByName(name);
     }
 
 }

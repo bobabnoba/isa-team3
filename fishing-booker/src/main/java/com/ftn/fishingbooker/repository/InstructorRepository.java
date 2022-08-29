@@ -12,9 +12,12 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
 
     Instructor findByEmail(String email);
 
-    @Query(value = "select * from instructor u where u.is_deleted = false and u.is_blocked = false and u.is_activated = true ", nativeQuery = true)
+    @Query(value = "select * from instructor u where u.deleted = false and u.is_blocked = false and u.is_activated = true and u.id =?1 ", nativeQuery = true)
+    Instructor getActiveById(Long id);
+
+    @Query(value = "select * from instructor u where u.deleted = false and u.is_blocked = false and u.is_activated = true ", nativeQuery = true)
     Collection<Instructor> getAll();
 
-    @Query(value = "select * from instructor u where u.is_deleted = false and u.is_blocked = false and u.is_activated = true ", nativeQuery = true)
+    @Query(value = "select * from instructor u where u.deleted = false and u.is_blocked = false and u.is_activated = true ", nativeQuery = true)
     Collection<Reservation> getReservationsForInstructor(Long id);
 }

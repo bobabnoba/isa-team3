@@ -3,7 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { Adventure } from 'src/app/interfaces/adventure';
-import { INewReservation } from 'src/app/interfaces/new-reservation';
+import { IReservation } from 'src/app/interfaces/new-reservation';
 import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { AddAdventureComponent } from '../../adventure-components/add-adventure/add-adventure.component';
@@ -18,10 +18,10 @@ export class InstructorServiceListComponent implements OnInit {
 
   adventures : Adventure[] = []
   searchText : string = "";
-  reservations : INewReservation[] = []
+  reservations : IReservation[] = []
 
   constructor(private _adventureService: AdventureService, private _storageService : StorageService,
-              private _matDialog : MatDialog, private _snackBar : MatSnackBar) { }
+              private _matDialog : MatDialog) { }
 
   ngOnInit(): void {
     this._adventureService.getAllByInstructor(this._storageService.getEmail()).subscribe(

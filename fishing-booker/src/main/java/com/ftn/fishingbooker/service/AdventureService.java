@@ -1,6 +1,5 @@
 package com.ftn.fishingbooker.service;
 
-import com.ftn.fishingbooker.dto.AddressDto;
 import com.ftn.fishingbooker.dto.AdventureAdditionalInfo;
 import com.ftn.fishingbooker.dto.AdventureInfo;
 import com.ftn.fishingbooker.dto.FilterDto;
@@ -40,4 +39,13 @@ public interface AdventureService {
     void makeReservation(Long adventureId, Reservation reservation);
 
     Collection<Long> getAllIdsByInstructorId(Long instructorId);
+
+    Collection<Adventure> findAllWithInstructor();
+
+    Collection<Adventure> findAllByInstructorId(Long id);
+
+    int getNoOfIncomingReservations(Long id);
+
+    Adventure getAdventureForReservation(Long reservationId);
+
 }

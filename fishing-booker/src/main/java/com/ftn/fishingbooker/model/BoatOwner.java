@@ -1,12 +1,9 @@
 package com.ftn.fishingbooker.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ftn.fishingbooker.enumeration.BoatOwnerType;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)

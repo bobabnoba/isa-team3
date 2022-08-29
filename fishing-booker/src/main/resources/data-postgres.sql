@@ -1,6 +1,5 @@
 delete from vacation_home_reservations;
 delete from reservation;
-delete from vacation_home_code_of_conduct;
 delete from boat;
 delete from room;
 delete from vacation_home;
@@ -27,8 +26,8 @@ id, city, country, street, zip_code) values
 (43, 'Ljubljana', 'Slovenia', 'Jana Kustosa', 1000);
 
 -- rank
-INSERT INTO user_rank(id, name, min_points, reservation_percentage, percentage)
-    VALUES (1, 'REGULAR_CLIENT', 0, 80, 0),
+insert into user_rank(id, name, min_points, reservation_percentage, percentage)
+    values (1, 'REGULAR_CLIENT', 0, 80, 0),
             (2, 'SILVER_CLIENT', 4000, 80, 4),
             (3, 'GOLD_CLIENT', 8000, 80, 7),
             (4, 'REGULAR_ADVERTISER', 0, 90, 92),
@@ -36,13 +35,13 @@ INSERT INTO user_rank(id, name, min_points, reservation_percentage, percentage)
             (6, 'GOLD_ADVERTISER', 8000, 90, 96);
 
 --Client
-insert into client(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id, no_of_penalties) values
-(10,'Whatever Bio',  'majablgic505@gmail.com', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 1, 0),
-(12,'Whatever Bio',  'bobabla7@gmail.com', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 7990, 2, 2);
+insert into client(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id,  no_of_penalties) values
+(10,'Whatever Bio',  'majablgic505@gmail.com', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 2, 0),
+(12,'Whatever Bio',  'ClientEmail2', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 7990, 2, 0);
 
 ----Admin
-insert into admin(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id)
-values (11,'Whatever Bio',  'AdminEmail', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 1, 0, 4 );
+insert into admin(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id, first_login)
+values (11,'No bio',  'AdminEmail', 'Adminko', 'true' , 'false', 'false', 'kovic',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 1, 0, 4, false);
 
 ----Home Owner
 insert into home_owner(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password,
@@ -66,12 +65,12 @@ insert into instructor(	id, biography, email, first_name, is_activated, is_block
 
 
 --Vacation Home
-insert into vacation_home(id, deleted, description, guest_limit, name, price_per_day, rating, address_id, home_owner_id)
+insert into vacation_home(id, deleted, description, guest_limit, name, price_per_day, rating, address_id, home_owner_id, canceling_percentage)
 values
-(100, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' 55 Horseshoe Bend, Antelope Canyon, and Lake Powell', 50, 4.5, 40 , 111),
-(101, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 3, ' Whatever you say',44, 3, 41 , 111),
-(102, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' Yo soy tu madre', 60, 1.5, 42 , 111),
-(103, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' Home 103 ', 60, 1.5, 42 , 111);
+(100, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' 55 Horseshoe Bend, Antelope Canyon, and Lake Powell', 50, 4.5, 40 , 111, 0),
+(101, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 3, ' Whatever you say',44, 3, 41 , 111, 0),
+(102, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' Yo soy tu madre', 60, 1.5, 42 , 111, 0),
+(103, 'false','Located in the heart of Page, walking distance from restaurants, shops, a grocery store, the movie theater, hiking trails, Main Street, and Page City Park, and only a few miles from scenic highlights like Horseshoe Bend, Antelope Canyon, and Lake Powell', 5, ' Home 103 ', 60, 1.5, 42 , 111, 0);
 
 
 --Boat
@@ -86,7 +85,6 @@ insert into adventure(
 	values
 	(111, 2.00, 20, 'Snorkeling with eels', 3, 45, 4, 'Eeel pradise', 'false', 40, 110),
 	(112, 5.00, 20, 'We fish Sharks', 3, 45, 4, 'Shark soup', 'false', 40, 110);
-
 
 --Rooms
 insert into room(
@@ -105,8 +103,10 @@ insert into utility(
     (106, 'Catch cleaning & filleting', 20),
 	(107, 'Snorkeling Equipment', 5),
 	(108, 'Fighting Chair', 10),
-	(109, 'Drinks', 10);
-	
+	(109, 'Bla', 10),
+	(110, 'Raw Fish', 20),
+	(111, 'Treasure Hunting', 5),
+	(112, 'Gospodje Pufna Fish', 10);
 insert into vacation_home_utilities(
 	vacation_home_id, utilities_id)
 	values (100, 100),
@@ -119,7 +119,10 @@ insert into vacation_home_utilities(
 	(100, 108),
 	(100, 109),
 	(102, 102),
-	(103, 103);
+	(103, 103),
+	(100, 110),
+	(100, 111),
+	(100, 112);
 
 insert into boat_utilities(
 	boat_id, utilities_id)
@@ -139,29 +142,44 @@ insert into adventure_utilities(
 
 ---- Reservations
 insert into reservation(
-	id, end_date, is_cancelled, guests, price, start_date, type, client_id)
+	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage)
 	values
-	(101, '2022-08-24', 'false', 3, 200, '2022-08-20', 'VACATION_HOME', 10),
-	(104, '2022-08-30', 'false', 3, 200, '2022-08-29', 'ADVENTURE', 10);
+	(101, '2022-08-24', 'false', 3, 200, '2022-08-20', 'VACATION_HOME', 10, 0),
+	(104, '2022-08-30', 'false', 3, 200, '2022-08-29', 'ADVENTURE', 10, 0),
+	(105, '2022-08-24 09:00:00', 'false', 3, 500, '2022-08-24 05:00:00', 'ADVENTURE', 10,0),
+	(106, '2022-08-24 15:00:00', 'false', 3, 400, '2022-08-24 09:00:00', 'ADVENTURE', 10,0),
+	(107, '2022-08-24 20:00:00', 'false', 3, 90, '2022-08-24 11:00:00', 'ADVENTURE', 10,0),
+	(108, '2022-08-24 12:00:00', 'false', 3, 354, '2022-08-24 10:00:00', 'ADVENTURE', 10, 0);
+
 --	(102, '2022-08-30', 'false', 5, 200, '2022-08-25', 'VACATION_HOME', 12);
 
 
 -- Vacation Home Availability
-insert into vacation_home_availability(id, end_date, start_date, home_id)
+insert into vacation_home_availability_periods(id, end_date, start_date)
 values
-(100,  '2022-08-30', '2022-08-01', 100), --available
-(101,  '2022-08-30', '2022-08-01', 101), --available
-(102,  '2022-08-30', '2022-08-01', 102), --available
-(103,  '2022-09-14', '2022-08-26', 103); --available
+(100,  '2022-08-30', '2022-08-01'), --available
+(101,  '2022-08-30', '2022-08-01'), --available
+(102,  '2022-08-30', '2022-08-01'), --available
+(103,  '2022-09-14', '2022-08-26'); --available
 
+insert into vacation_home_availability(
+	vacation_home_id, availability_id)
+	values (100, 100),
+	(101,101),
+	(102,102),
+	(103,103);
 --Instructor Availability
-insert into instructor_availability_periods(
-	id, end_date, start_date)
-	values (100,  '2022-08-30', '2022-08-01'); --available
-
-insert into instructor_availability(
-	instructor_id, availability_id)
-	values (110, 100);
+--insert into instructor_availability_periods(
+--	id, end_date, start_date)
+--	values (100,  '2022-08-30', '2022-08-01'), --available
+--	(101,  '2022-09-30', '2022-09-01'), --available
+--	(102,  '2022-10-30', '2022-10-01'); --available
+--
+--insert into instructor_availability(
+--	instructor_id, availability_id)
+--	values (110, 100),
+--	(110, 101),
+--	(110, 102);
 
 ----Boats Availability
 --insert into boat_availability_periods(id, end_date, start_date)
@@ -203,10 +221,24 @@ insert into rule(id, name)
            insert into adventure_code_of_conduct(adventure_id, code_of_conduct_id)
             values (111, 100);
 
---insert into adventure_reservations(
---    adventure_id, reservations_id)
---    values
---    (111, 104);
+insert into adventure_reservations(adventure_id, reservations_id)
+values (112, 105),
+    (112, 106),
+    (112, 107),
+    (111,104),
+    (112, 108);
+
+
+insert into special_offer(id, active_from, active_to, discount, guests, is_used, price, reservation_end_date, reservation_start_date, type, canceling_percentage, is_captain)
+	values (100, '2022-08-25 19:50:00', '2022-09-02 19:50:00', 5, 3, 'false', 202, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE',0, false),
+	 (101, '2022-09-02 19:50:00', '2022-09-03 19:50:00', 5, 3, 'false', 303, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE',0, false),
+	 (102, '2022-09-03 19:50:00', '2022-09-14 19:50:00', 5, 3, 'false', 404, '2022-09-24 00:50:00', '2022-09-25 19:50:00', 'ADVENTURE',10, false);
+
+insert into adventure_special_offers(
+	adventure_id, special_offers_id)
+	values (112, 100),
+	 (112, 101),
+	 (112, 102);
 
 
 --Boat owner availability
@@ -225,10 +257,10 @@ insert into boat_owner_availability(
 
 ---- Reservations
 insert into reservation(
-	id, end_date, is_cancelled, guests, price, start_date, type, client_id)
+	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage)
 	values
-	(201, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10),
-	(202, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10);
+	(201, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5),
+	(202, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5);
 
 --Boat reservations
 

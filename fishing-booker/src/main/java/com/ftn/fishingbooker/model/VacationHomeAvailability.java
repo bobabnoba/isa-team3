@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "VacationHomeAvailability")
+@Table(name = "vacation_home_availability_periods")
 public class VacationHomeAvailability {
 
     @Id
@@ -20,8 +20,5 @@ public class VacationHomeAvailability {
     @Column(name = "endDate", nullable = false)
     private Date endDate;
 
-    @ManyToOne
-    @JoinColumn(name = "home_id", nullable = false)
-    private VacationHome vacationHome;
 }
 

@@ -6,7 +6,7 @@
         <div [formGroup]="createForm" class="content">
             <div>
                 <div class="w-100 d-flex py-3 px-1">
-                    <mat-checkbox class ="mr-4"  formControlName="penalty"></mat-checkbox>
+                    <mat-checkbox [disabled]="!shownUp" class ="mr-4"  formControlName="penalty"></mat-checkbox>
                     <mat-label class="moveME">add penalty</mat-label>
                 </div>
                 <mat-form-field appearance="fill" style="width: 100%">

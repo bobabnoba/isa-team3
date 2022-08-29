@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -28,7 +29,8 @@ export class BoatReservationsComponent implements OnInit {
   constructor(private _service: RentalService,
     private _searchService: SearchService,
     private _snackBar: MatSnackBar,
-    private _storageService: StorageService,) {
+    private _storageService: StorageService,
+    private _datePipe: DatePipe) {
     this.today.setMilliseconds(0);
   }
 
@@ -38,67 +40,50 @@ export class BoatReservationsComponent implements OnInit {
 
   search(filter: SearchFilter) {
 
+    console.log(filter.startDate);
+    console.log(filter.endDate);
+    let offerFrom = new Date(filter.startDate);
+    let offerTo = new Date(filter.endDate);
+
+    if (offerTo.getTime() < offerFrom.getTime()) {
+      this._snackBar.open('End date cannot be before start date!', '',
+        { duration: 2000, panelClass: ['snack-bar'] }
+      );
+    }
+
+    if (offerTo.getTime() == offerFrom.getTime()) {
+      this._snackBar.open('End date cannot be same as  start date!', '',
+        { duration: 2000, panelClass: ['snack-bar'] }
+      );
+    }
+
+
     this.people = filter.people;
     this.startDate = filter.startDate;
     this.endDate = filter.endDate;
-    this.startDate.setMilliseconds(0);
-    this.endDate.setMilliseconds(0);
-
-    if (this.startDate.getTime() == this.today.getTime() && this.endDate.getTime() == this.today.getTime()) {
-      this._snackBar.open('Please enter date for your reservation !', '',
-        {
-          duration: 3000,
-          panelClass: ['snack-bar']
-        });
-
-      return;
-    }
     this.requestFilter.email = this._storageService.getEmail();
-    this.requestFilter.endDate = this.endDate;
-    this.requestFilter.startDate = this.startDate;
+    this.requestFilter.endDate = this._datePipe.transform(new Date(this.endDate), 'yyyy-MM-ddTHH:mm')!;
+    this.requestFilter.startDate = this._datePipe.transform(new Date(this.startDate), 'yyyy-MM-ddTHH:mm')!;
     this.requestFilter.people = this.people;
-    console.log(filter.startDate);
-    console.log(filter.endDate);
 
+    const filterItems = {
+      next: (res: any) => {
+        console.log(res);
+        this.didSearch = true;
+        this.allItems = res;
+        this.filteredItems = this._searchService.filterProfiles(this.allItems, filter)!;
+        this.datesOverlap = false;
 
-
-    if (
-      new Date(filter.startDate) <= this.today ||
-      new Date(filter.endDate) <= this.today ||
-      this.startDate > this.endDate
-    ) {
-      this._snackBar.open('Invalid date input!', '',
-        {
-          duration: 3000,
-          panelClass: ['snack-bar']
-        });
-    } else if (filter.startDate.getDay() == filter.endDate.getDay()) {
-      this._snackBar.open('Must choose two different days! ', '',
-        {
-          duration: 3000,
-          panelClass: ['snack-bar']
-        });
-    }
-    else {
-      const filterItems = {
-        next: (res: any) => {
-          console.log(res);
-          this.didSearch = true;
-          this.allItems = res;
-          this.filteredItems = this._searchService.filterProfiles(this.allItems, filter)!;
-          this.datesOverlap = false;
-
-        },
-        error: (err: HttpErrorResponse) => {
-          this.didSearch = true;
-          this.datesOverlap = true;
-          this.allItems = [];
-          this.filteredItems = [];
-        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this.didSearch = true;
+        this.datesOverlap = true;
+        this.allItems = [];
+        this.filteredItems = [];
       }
-
-      this._service.filterBoats(this.requestFilter).subscribe(filterItems);
     }
+
+    this._service.filterBoats(this.requestFilter).subscribe(filterItems);
   }
 
 

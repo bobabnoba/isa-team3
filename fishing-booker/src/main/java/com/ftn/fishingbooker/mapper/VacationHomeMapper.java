@@ -1,7 +1,6 @@
 package com.ftn.fishingbooker.mapper;
 
 import com.ftn.fishingbooker.dto.*;
-import com.ftn.fishingbooker.model.HomeOwner;
 import com.ftn.fishingbooker.model.Room;
 import com.ftn.fishingbooker.model.VacationHome;
 import org.springframework.stereotype.Component;
@@ -51,7 +50,6 @@ public class VacationHomeMapper {
     }
 
 
-
     private static Collection<RoomDto> mapRooms(Collection<Room> rooms) {
         Collection<RoomDto> roomsDto = new ArrayList<>();
         for (Room room :
@@ -63,4 +61,5 @@ public class VacationHomeMapper {
         }
         return roomsDto;
     }
+
 }

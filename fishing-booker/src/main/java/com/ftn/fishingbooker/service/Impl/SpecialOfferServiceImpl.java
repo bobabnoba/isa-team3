@@ -2,11 +2,13 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.repository.SpecialOfferRepository;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 
 @Service
 public class SpecialOfferServiceImpl implements SpecialOfferService {
@@ -29,7 +31,7 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
     @Transactional
     public SpecialOffer createSpecialOffer(SpecialOffer specialOffer, Long serviceId) {
         SpecialOffer saved = specialOfferRepository.save(specialOffer);
-        if(specialOffer.getType().equals(ReservationType.ADVENTURE)){
+        if (specialOffer.getType().equals(ReservationType.ADVENTURE)) {
             Adventure adventure = adventureService.getById(serviceId);
             adventure.getSpecialOffers().add(saved);
             adventureService.save(adventure);
@@ -49,5 +51,17 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
             }
         }
         return saved;
+    }
+
+    @Override
+    public Collection<SpecialOffer> getAvailableOffersForAdventure(Long adventureId) {
+        return specialOfferRepository.getAvailableOffersForAdventure(adventureId);
+    }
+
+    @Override
+    public void reserveSpecialOffer(Long offerId) {
+        SpecialOffer specialOffer = specialOfferRepository.findById(offerId).orElseThrow(() -> new ResourceConflictException("Offer not found"));
+        specialOffer.setUsed(true);
+        specialOfferRepository.save(specialOffer);
     }
 }

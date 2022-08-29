@@ -6,14 +6,14 @@ import com.ftn.fishingbooker.model.User;
 public class OwnerMapper {
 
     public static OwnerDto map(User owner) {
-        OwnerDto homeOwnerDto = new OwnerDto();
-
-        homeOwnerDto.setEmail(owner.getEmail());
-        homeOwnerDto.setFirstName(owner.getFirstName());
-        homeOwnerDto.setPhone(owner.getPhone());
-        homeOwnerDto.setAddress(owner.getAddress());
-        homeOwnerDto.setLastName(owner.getLastName());
-        return homeOwnerDto;
+        OwnerDto ownerDto = new OwnerDto();
+        ownerDto.setId(owner.getId());
+        ownerDto.setEmail(owner.getEmail());
+        ownerDto.setFirstName(owner.getFirstName());
+        ownerDto.setPhone(owner.getPhone());
+        ownerDto.setAddress(owner.getAddress());
+        ownerDto.setLastName(owner.getLastName());
+        return ownerDto;
     }
 
 }

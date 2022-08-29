@@ -30,4 +30,10 @@ public class ResourceConflictHandler {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(exception.getMessage());
     }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    protected ResponseEntity<Object> handleInvalidPassword(IOException exception, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(exception.getMessage());
+    }
 }

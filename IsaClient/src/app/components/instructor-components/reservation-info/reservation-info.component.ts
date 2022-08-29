@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Utility } from 'src/app/interfaces/adventure';
 import { LoggedUser } from 'src/app/interfaces/logged-user';
 import { Reservation } from 'src/app/interfaces/reservation';
 import { ReservationService } from 'src/app/services/reservation-service/reservation.service';
@@ -12,6 +13,8 @@ import { ReservationService } from 'src/app/services/reservation-service/reserva
 export class ReservationInfoComponent implements OnInit {
 
   reservation : Reservation = {} as Reservation;
+  client : LoggedUser = {} as LoggedUser;
+  utilities : Utility[] = [];
   resId : number;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private _reservationService : ReservationService) {  
@@ -21,6 +24,8 @@ export class ReservationInfoComponent implements OnInit {
   ngOnInit(): void {
       this._reservationService.getReservation(this.resId).subscribe(res => {
         this.reservation = res;
+        this.client = res.client;
+        this.utilities = res.utilities;
       })
   }
 

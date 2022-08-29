@@ -1,6 +1,9 @@
 package com.ftn.fishingbooker.service;
 
-import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.model.Instructor;
+import com.ftn.fishingbooker.model.InstructorAvailability;
+import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.dao.ReservationInfo;
 
 import javax.mail.MessagingException;
@@ -32,4 +35,10 @@ public interface InstructorService {
     Instructor findByEmail(String email);
 
     Instructor findById(Long instructorId);
+
+    boolean hasOverlappingReservation(String email, Date from, Date to);
+
+    Reservation getOngoingReservationForInstructor(String email);
+
+    Instructor getWithAvailabilityById(Long id);
 }

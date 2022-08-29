@@ -64,15 +64,15 @@ public class HomeController {
     @PostMapping("/rent/{homeId}/{userEmail}")
     public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long homeId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
-
+        if (client.getNoOfPenalties() >= 3){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
         reservationDto.setType(ReservationType.VACATION_HOME);
         Reservation reservation = reservationService.makeReservation(client, reservationDto);
         vacationHomeService.makeReservation(homeId, reservation);
         clientService.updatePoints(client, reservation.getPrice());
-        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
-
-
 }
 

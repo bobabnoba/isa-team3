@@ -23,7 +23,6 @@ import { ClientBrowseComponent } from './components/client-components/client-bro
 import { ClientHomesComponent } from './components/client-components/client-homes/client-homes.component';
 import { ClientInstructorsComponent } from './components/client-components/client-instructors/client-instructors.component';
 import { ClientProfileComponent } from './components/client-components/client-profile/client-profile.component';
-import { ClientReservationsHistoryComponent } from './components/client-components/client-reservations-history/client-reservations-history.component';
 import { ClientReservationsComponent } from './components/client-components/client-reservations/client-reservations.component';
 import { HomeReservationsComponent } from './components/client-components/home-reservations/home-reservations.component';
 import { HomeOwnerDashboardComponent } from './components/home-owner-components/home-owner-dashboard/home-owner-dashboard.component';
@@ -37,13 +36,22 @@ import { ReservationsUpcomingComponent } from './components/instructor-component
 import { LoginComponent } from './components/login/login.component';
 import { OwnerRegisterComponent } from './components/register-components/owner-register/owner-register.component';
 import { RegisterComponent } from './components/register-components/register/register.component';
+import { BoatPageComponent } from './components/rentals/boat-page/boat-page.component';
 import { UnauthenticatedPageComponent } from './components/unauthenticated-page/unauthenticated-page.component';
-import { VacationHomePageComponent } from './components/vacation-home-components/vacation-home-page/vacation-home-page.component';
+import { VacationHomePageComponent } from './components/rentals/vacation-home-page/vacation-home-page.component';
 import { MaterialModule } from './material/material.module';
+import { InstructorPageComponent } from './components/rentals/instructor-page/instructor-page.component';
+import { UnauthBoatPageComponent } from './components/unauthenticated/unauth-boat-page/unauth-boat-page.component';
+import { UnauthHomePageComponent } from './components/unauthenticated/unauth-home-page/unauth-home-page.component';
+import { UnauthInstructorPageComponent } from './components/unauthenticated/unauth-instructor-page/unauth-instructor-page.component';
+import { ReservationHistoryHomesComponent } from './components/client-components/reservation-history-homes/reservation-history-homes.component';
+import { ReservationHistoryAdventuresComponent } from './components/client-components/reservation-history-adventures/reservation-history-adventures.component';
+import { ReservationHistoryBoatsComponent } from './components/client-components/reservation-history-boats/reservation-history-boats.component';
+
 
 const routes: Routes = [
   {
-    path: '',
+    path: '', 
     component: UnauthenticatedPageComponent
   },
   {
@@ -83,12 +91,28 @@ const routes: Routes = [
     component: ClientReservationsComponent
   },
   {
-    path: 'client/reservations/history',
-    component: ClientReservationsHistoryComponent
+    path: 'client/homes/history',
+    component: ReservationHistoryHomesComponent
   },
   {
-    path: 'home/:id',
+    path: 'client/adventures/history',
+    component: ReservationHistoryAdventuresComponent
+  },
+  {
+    path: 'client/boats/history',
+    component: ReservationHistoryBoatsComponent
+  },
+  {
+    path: 'home/page/:id',
     component: VacationHomePageComponent
+  },
+  {
+    path: 'boat/page/:id',
+    component: BoatPageComponent
+  },
+  {
+    path: 'instructor/page/:id',
+    component: InstructorPageComponent
   },
   {
     path: 'login',
@@ -120,7 +144,7 @@ const routes: Routes = [
     component: AdminDeleteRequestsComponent
   },
   {
-    path : 'admin/users',
+    path: 'admin/users',
     component: AdminUsersComponent
   },
   {
@@ -133,7 +157,7 @@ const routes: Routes = [
   },
   {
     path: 'add-adventure',
-    component : AddAdventureComponent
+    component: AddAdventureComponent
   },
   {
     path: 'instructor/dashboard',
@@ -144,12 +168,12 @@ const routes: Routes = [
     component: InstructorProfileComponent
   },
   {
-    path : 'instructor/services',
+    path: 'instructor/services',
     component: InstructorServiceListComponent
   },
   {
-    path : 'instructor/adventure/:id',
-    component : InstructorServiceComponent
+    path: 'instructor/adventure/:id',
+    component: InstructorServiceComponent
   },
   {
     path: 'home-owner/dashboard',
@@ -172,13 +196,26 @@ const routes: Routes = [
     component: BoatOwnerBoatsComponent
   },
   {
-    path : 'instructor/reservations/upcoming',
-    component : ReservationsUpcomingComponent
+    path: 'instructor/reservations/upcoming',
+    component: ReservationsUpcomingComponent
   },
   {
-    path : 'instructor/reservations/history',
-    component : ReservationsHistoryComponent
+    path: 'instructor/reservations/history',
+    component: ReservationsHistoryComponent
   },
+  {
+    path: 'unauth/boat/page/:id',
+    component: UnauthBoatPageComponent
+  },
+  {
+    path: 'unauth/home/page/:id',
+    component: UnauthHomePageComponent
+  },
+  {
+    path: 'unauth/instructor/page/:id',
+    component: UnauthInstructorPageComponent
+  },
+
   {
     path: 'boat-owner/boat/:id',
     component: BoatOwnerBoatProfileComponent

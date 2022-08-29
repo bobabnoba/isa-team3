@@ -5,18 +5,12 @@ import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.VacationHome;
 import com.ftn.fishingbooker.model.VacationHomeAvailability;
 import com.ftn.fishingbooker.repository.HomeRepository;
-import com.ftn.fishingbooker.service.DateService;
-import com.ftn.fishingbooker.service.HomeOwnerService;
-import com.ftn.fishingbooker.service.HomeService;
-import com.ftn.fishingbooker.service.ReservationService;
+import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -26,6 +20,8 @@ public class HomeServiceImpl implements HomeService {
     private final ReservationService reservationService;
     private final DateService dateService;
     private final HomeOwnerService homeOwnerService;
+    private final EarningsService earningsService;
+
 
     @Override
     public Collection<VacationHome> getAll() {
@@ -47,7 +43,7 @@ public class HomeServiceImpl implements HomeService {
 
             if (home.getGuestLimit() >= filter.getPeople()) {
                 // Date should overlap with vacation home availability
-                if (doPeriodsOverlap(filter.getStartDate(), filter.getEndDate(), home.getAvailableTimePeriods())) {
+                if (doPeriodsOverlap(filter.getStartDate(), filter.getEndDate(), home.getAvailability())) {
 
                     Collection<Reservation> reservations = reservationService.getReservationForVacationHome(home.getId());
                     boolean overlaps = reservationService.dateOverlapsWithReservation(reservations, filter.getStartDate(), filter.getEndDate());
@@ -76,8 +72,14 @@ public class HomeServiceImpl implements HomeService {
         home.getReservations().add(reservation);
         vacationHomeRepository.save(home);
         homeOwnerService.updatePoints(home.getHomeOwner(), reservation.getPrice());
+        earningsService.saveEarnings(reservation, home.getHomeOwner().getEmail(), home.getHomeOwner().getRank());
+
     }
 
+    @Override
+    public VacationHome getVacationHomeForReservation(Long reservationId) {
+        return vacationHomeRepository.getVacationHomeForReservation(reservationId);
+    }
 
 
 }

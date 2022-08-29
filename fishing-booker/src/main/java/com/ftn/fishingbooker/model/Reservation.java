@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -38,10 +39,15 @@ public class Reservation {
     private Set<Utility> utilities;
 
     @ManyToOne(targetEntity = Client.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
     @OneToOne(targetEntity = Report.class, cascade = CascadeType.ALL)
     private Report report;
+
+    @OneToOne(targetEntity = ClientReview.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private ClientReview clientReview;
+
+    private double cancelingPercentage;
 
 }

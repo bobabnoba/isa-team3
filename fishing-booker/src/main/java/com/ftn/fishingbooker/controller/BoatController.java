@@ -2,19 +2,22 @@ package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.enumeration.ReservationType;
-import com.ftn.fishingbooker.mapper.*;
+import com.ftn.fishingbooker.mapper.AddressMapper;
+import com.ftn.fishingbooker.mapper.BoatMapper;
+import com.ftn.fishingbooker.mapper.RentalMapper;
+import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.BoatService;
 import com.ftn.fishingbooker.service.ClientService;
 import com.ftn.fishingbooker.service.ReservationService;
-import com.ftn.fishingbooker.util.*;
+import com.ftn.fishingbooker.util.FIleUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.*;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.*;
@@ -52,12 +55,16 @@ public class BoatController {
     @PostMapping("/rent/{boatId}/{userEmail}")
     public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long boatId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
+        if (client.getNoOfPenalties() >= 3) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
 
         reservationDto.setType(ReservationType.BOAT);
         Reservation reservation = reservationService.makeReservation(client, reservationDto);
         boatService.makeReservation(boatId, reservation);
         clientService.updatePoints(client, reservation.getPrice());
 
+        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 
@@ -73,21 +80,21 @@ public class BoatController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BoatDto> getBoatById(@PathVariable Long id){
+    public ResponseEntity<BoatDto> getBoatById(@PathVariable Long id) {
         Boat found = boatService.getById(id);
         BoatDto dto = BoatMapper.mapToDtoWithAvailability(found);
         return ok(dto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteABoat(@PathVariable Long id){
+    public ResponseEntity<Void> deleteABoat(@PathVariable Long id) {
         boatService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping
     public ResponseEntity<BoatDto> addNewBoat(@RequestBody NewBoatDto dto) {
-        Boat boat =  BoatMapper.toEntity(dto);
+        Boat boat = BoatMapper.toEntity(dto);
         Boat saved = boatService.addBoat(boat, dto.getOwnerEmail());
         return ok(BoatMapper.mapToDto(saved));
     }
