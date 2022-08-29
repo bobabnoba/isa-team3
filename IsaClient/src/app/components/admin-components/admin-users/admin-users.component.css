@@ -11,3 +11,25 @@
 #wrapper #content-wrapper #content {
     flex: 1 0 auto;
 }
+
+table {
+    width: 100%;
+}
+
+td,
+th {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.mat-sort-header-container {
+    justify-content: center !important;
+}
+
+.mright {
+    margin-right: 10px;
+}
+
+.icons {
+    padding-right: 4px;
+}

@@ -7,6 +7,7 @@ import com.ftn.fishingbooker.model.Admin;
 import com.ftn.fishingbooker.model.Registration;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.service.*;
+import io.swagger.models.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,5 +52,11 @@ public class AdminController {
     public ResponseEntity<Object> handleRegistrationRequest(@RequestBody RegistrationResponseDto registrationResponseDto) throws MessagingException {
         adminService.respondToRegistrationRequest(RegistrationMapper.mapToRegistration(registrationResponseDto));
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/head")
+    public ResponseEntity<AdminDto> getHeadAdmin(){
+        Admin admin = adminService.getHeadAdmin();
+        return ResponseEntity.ok(AdminMapper.toDto(admin));
     }
 }

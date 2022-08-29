@@ -3,7 +3,7 @@ package com.ftn.fishingbooker.controller;
 import com.ftn.fishingbooker.dto.PasswordChangeDto;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.UserDto;
-import com.ftn.fishingbooker.exception.InvalidPasswordException;
+import com.ftn.fishingbooker.dto.UserInfoDto;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.mapper.UserMapper;
 import com.ftn.fishingbooker.model.Reservation;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -32,6 +33,15 @@ public class UserController {
     public ResponseEntity<Collection<User>> getAllUsers() {
         Collection<User> found = userService.getAll();
         return ResponseEntity.ok(found);
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<Collection<UserInfoDto>> getAllUserInfo() {
+        Collection<User> found = userService.findAllByDeleted(false);
+        Collection<UserInfoDto> dtos = found.stream()
+                .map(UserMapper::mapToInfoDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("{email}")
@@ -74,6 +84,17 @@ public class UserController {
     public ResponseEntity<HttpStatus> changePassword(@RequestBody PasswordChangeDto request, @PathVariable String email)
     {
         userService.changePassword(email, request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("{id}/has-incoming-reservations")
+    public ResponseEntity<Boolean> userHasIncomingReservations(@PathVariable Long id, @RequestParam String role){
+        return ResponseEntity.ok(reservationService.getNoOfIncomingReservationsForUser(id, role) > 0);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }

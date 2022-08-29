@@ -91,6 +91,29 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public int getNoOfIncomingReservationsForBoat(Long id) {
+        return reservationRepository.noOfIncomingReservationsForBoat(id);
+    }
+
+    @Override
+    public int getNoOfIncomingReservationsForVacationHome(Long id) {
+        return reservationRepository.noOfIncomingReservationsForHome(id);
+    }
+
+    @Override
+    public int getNoOfIncomingReservationsForUser(Long id, String role) {
+        if(role.equalsIgnoreCase("ROLE_INSTRUCTOR")){
+            return reservationRepository.noOfIncomingReservationsForInstructor(id);
+        } else if(role.equalsIgnoreCase("ROLE_BOAT_OWNER")){
+            return reservationRepository.noOfIncomingReservationsForBoatOwner(id);
+        } else if(role.equalsIgnoreCase("ROLE_HOME_OWNER")){
+            return reservationRepository.noOfIncomingReservationsForHomeOwner(id);
+        } else if (role.equalsIgnoreCase("ROLE_CLIENT")){
+            return reservationRepository.noOfIncomingReservationsForClient(id);
+        } else return 0;
+    }
+
+    @Override
     public Collection<Reservation> getReservationsForClient(Long clientId) {
         return reservationRepository.findAllForClient(clientId);
     }

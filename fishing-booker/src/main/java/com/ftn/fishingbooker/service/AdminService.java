@@ -14,4 +14,6 @@ public interface AdminService {
     void updateFirstLogin(Admin admin);
 
     boolean isFirstLogin(String email);
+
+    Admin getHeadAdmin();
 }

@@ -61,4 +61,9 @@ public class AdminServiceImpl implements AdminService {
     public boolean isFirstLogin(String email) {
         return adminRepository.findByEmail(email).isFirstLogin();
     }
+
+    @Override
+    public Admin getHeadAdmin() {
+        return adminRepository.findByHeadAdmin(true);
+    }
 }
