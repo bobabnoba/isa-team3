@@ -13,9 +13,9 @@
                         <div class="col-md-8 d-flex" (click)="openDetailed()">
                             <h2 class="title"> {{ adventure.title }}</h2>
                         </div>
-                        <div *ngIf=instructor class="col-md-4 d-flex justify-content-end pt-2">
-                            <i class="fa-solid fa-pencil fa-lg icons" (click)="edit()"></i>
-                            <i class="fa-solid fa-trash fa-lg icons" (click)="delete()"></i>
+                        <div  class="col-md-4 d-flex justify-content-end pt-2">
+                            <i *ngIf="instructor" class="fa-solid fa-pencil fa-lg icons" (click)="edit()"></i>
+                            <i *ngIf="instructor || admin" class="fa-solid fa-trash fa-lg icons" (click)="delete()"></i>
                         </div>
                     </div>
                   

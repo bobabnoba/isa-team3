@@ -47,6 +47,7 @@ import { UnauthInstructorPageComponent } from './components/unauthenticated/unau
 import { ReservationHistoryHomesComponent } from './components/client-components/reservation-history-homes/reservation-history-homes.component';
 import { ReservationHistoryAdventuresComponent } from './components/client-components/reservation-history-adventures/reservation-history-adventures.component';
 import { ReservationHistoryBoatsComponent } from './components/client-components/reservation-history-boats/reservation-history-boats.component';
+import { AdminAdventuresComponent } from './components/admin-components/admin-adventures/admin-adventures.component';
 
 
 const routes: Routes = [
@@ -150,6 +151,10 @@ const routes: Routes = [
   {
     path: 'admin/reservation-reports',
     component: ReservationReportsComponent
+  },
+  {
+    path: 'admin/adventures',
+    component: AdminAdventuresComponent
   },
   {
     path: 'adventure',
