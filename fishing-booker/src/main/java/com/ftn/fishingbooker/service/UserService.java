@@ -31,6 +31,8 @@ public interface UserService {
 
     Collection<User> getAll();
 
+    Collection<User> findAllByDeleted(boolean deleted);
+
     Collection<User> saveAll(Collection<User> users);
 
     User getUserById(Long id);
@@ -40,4 +42,6 @@ public interface UserService {
     void changePassword(String email, PasswordChangeDto request);
 
     User createAdmin(RegisterDto registerDto);
+
+    void deleteById(Long id);
 }

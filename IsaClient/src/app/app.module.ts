@@ -137,6 +137,9 @@ import { BoatSpecialOfferComponent } from './components/boat-components/boat-spe
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AvailabilityCalendarBoatOwnerComponent } from './components/boat-owner-components/availability-calendar-boat-owner/availability-calendar-boat-owner.component';
 import { VacationHomePageComponent } from './components/rentals/vacation-home-page/vacation-home-page.component';
+import { AdminAdventuresComponent } from './components/admin-components/admin-adventures/admin-adventures.component';
+import { AdminBoatsComponent } from './components/admin-components/admin-boats/admin-boats.component';
+import { AdminHomesComponent } from './components/admin-components/admin-homes/admin-homes.component';
 
 @NgModule({
   declarations: [
@@ -247,6 +250,9 @@ import { VacationHomePageComponent } from './components/rentals/vacation-home-pa
     AddBoatSpecialOfferComponent,
     BoatSpecialOfferComponent,
     AvailabilityCalendarBoatOwnerComponent,
+    AdminAdventuresComponent,
+    AdminBoatsComponent,
+    AdminHomesComponent,
   ],
   imports: [
     BrowserModule,

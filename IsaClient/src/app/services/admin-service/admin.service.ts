@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoggedUser } from 'src/app/interfaces/logged-user';
 import { RegistrationRequest } from 'src/app/interfaces/registration-request';
+import { UserInfo } from 'src/app/interfaces/user-info';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -20,8 +21,8 @@ export class AdminService {
     );
   }
 
-  addNewAdmin(admin : LoggedUser) : Observable<LoggedUser> {
-    return this._http.post<LoggedUser>(
+  addNewAdmin(admin : LoggedUser) : Observable<UserInfo> {
+    return this._http.post<UserInfo>(
       `${this.baseURL}/admin`, admin
     );
   }

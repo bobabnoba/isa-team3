@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Boat } from 'src/app/interfaces/boat';
 import { BoatService } from 'src/app/services/boat-service/boat.service';
+import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { environment } from 'src/environments/environment';
 import { AddBoatComponent } from '../add-boat/add-boat.component';
 
@@ -23,7 +24,7 @@ export class BoatPreviewComponent implements OnInit {
   baseUrl = environment.apiURL
 
   constructor(private _router : Router, private _matDialog : MatDialog,
-              private _boatService : BoatService) { }
+              private _boatService : BoatService, public storage : StorageService) { }
 
   ngOnInit(): void {
   }

@@ -6,17 +6,13 @@ import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.InvalidPasswordException;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.RegistrationMapper;
-import com.ftn.fishingbooker.model.Admin;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.Registration;
-import com.ftn.fishingbooker.model.User;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.AdminService;
 import com.ftn.fishingbooker.service.ClientService;
 import com.ftn.fishingbooker.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -77,6 +73,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
+    public void deleteById(Long id) {
+        User found = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
+        found.setDeleted(true);
+        userRepository.save(found);
+    }
+
+    @Override
     public String enableUser(String email) {
         User u = userRepository.findByEmail(email);
         u.setActivated(true);
@@ -129,6 +134,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public Collection<User> getAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public Collection<User> findAllByDeleted(boolean deleted) {
+        return userRepository.findAllByDeleted(deleted);
     }
 
     @Override

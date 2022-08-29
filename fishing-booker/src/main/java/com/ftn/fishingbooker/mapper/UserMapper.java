@@ -1,6 +1,7 @@
 package com.ftn.fishingbooker.mapper;
 
 import com.ftn.fishingbooker.dto.UserDto;
+import com.ftn.fishingbooker.dto.UserInfoDto;
 import com.ftn.fishingbooker.model.User;
 import org.springframework.stereotype.Component;
 
@@ -40,5 +41,19 @@ public class UserMapper {
         user.setBlocked(dto.isBlocked());
         user.setBiography(dto.getBiography());
         return user;
+    }
+
+    public static UserInfoDto mapToInfoDto(User user){
+        UserInfoDto dto = new UserInfoDto();
+        dto.setId(user.getId());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setEmail(user.getEmail());
+        dto.setRole(user.getRole().getName());
+        if(user.getRank() != null) {
+            dto.setRank(UserRankMapper.toDto(user.getRank()));
+        }
+        dto.setPoints(user.getPoints());
+        return dto;
     }
 }
