@@ -22,8 +22,8 @@ export class UserService {
     return this._http.post(`${this.baseURL}/user-rank`, retVal);
   }
 
-  getUserInfo(email: string): Observable<any> {
-    return this._http.get(`${this.baseURL}/users/${email}`);
+  getUserInfo(email: string): Observable<LoggedUser> {
+    return this._http.get<LoggedUser>(`${this.baseURL}/users/${email}`);
   }
 
   getUserById(id: number): Observable<LoggedUser> {

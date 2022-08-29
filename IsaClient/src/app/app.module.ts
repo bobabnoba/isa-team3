@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { VacationHomePageComponent } from './components/rentals/vacation-home-page/vacation-home-page.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
@@ -76,7 +75,7 @@ import { BoatReservationsComponent } from './components/client-components/boat-r
 import { AdventureReservationsComponent } from './components/client-components/adventure-reservations/adventure-reservations.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AddSpecialOfferComponent } from './components/instructor-components/add-special-offer/add-special-offer.component';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AdventureSpecialOfferComponent } from './components/adventure-components/adventure-special-offer/adventure-special-offer.component';
 import { AdventureSearchPipe } from './pipes/adventure-search/adventure-search.pipe';
 import { ClientSearchCardReservationComponent } from './components/client-components/client-search-card-reservation/client-search-card-reservation.component';
@@ -97,6 +96,13 @@ import { BoatPreviewComponent } from './components/boat-components/boat-preview/
 import { BoatOwnerTopbarComponent } from './components/boat-owner-components/boat-owner-topbar/boat-owner-topbar.component';
 import { AddBoatComponent } from './components/boat-components/add-boat/add-boat.component';
 import { BoatSearchPipe } from './pipes/boat-search/boat-search.pipe';
+import { BoatProfileComponent } from './components/boat-components/boat-profile/boat-profile.component';
+import { BoatOwnerBoatProfileComponent } from './components/boat-owner-components/boat-owner-boat-profile/boat-owner-boat-profile.component';
+import { BoatInfoComponent } from './components/boat-components/boat-info/boat-info.component';
+import { BoatAdditionalInfoComponent } from './components/boat-components/boat-additional-info/boat-additional-info.component';
+import { BoatLocationComponent } from './components/boat-components/boat-location/boat-location.component';
+import { BoatServicesComponent } from './components/boat-components/boat-services/boat-services.component';
+import { BoatOwnerInfoComponent } from './components/boat-components/boat-owner-info/boat-owner-info.component';
 import { StarRatingComponent } from './components/star-rating/star-rating.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ReservationPreviewComponent } from './components/instructor-components/reservation-preview/reservation-preview.component';
@@ -122,6 +128,15 @@ import { AdminEarningsComponent } from './components/admin-components/admin-earn
 import { AdvertiserEarningsComponent } from './components/advertiser-earnings/advertiser-earnings.component';
 
 
+import { BoatAvailabilityComponent } from './components/boat-components/boat-availability/boat-availability.component';
+import { AvailabilityCalendarComponent } from './components/boat-components/availability-calendar/availability-calendar.component';
+import { ImageListComponent } from './components/common/image-list/image-list.component';
+import { ImageListItemComponent } from './components/common/image-list-item/image-list-item.component';
+import { AddBoatSpecialOfferComponent } from './components/boat-owner-components/add-boat-special-offer/add-boat-special-offer.component';
+import { BoatSpecialOfferComponent } from './components/boat-components/boat-special-offer/boat-special-offer.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { AvailabilityCalendarBoatOwnerComponent } from './components/boat-owner-components/availability-calendar-boat-owner/availability-calendar-boat-owner.component';
+import { VacationHomePageComponent } from './components/rentals/vacation-home-page/vacation-home-page.component';
 
 @NgModule({
   declarations: [
@@ -195,6 +210,13 @@ import { AdvertiserEarningsComponent } from './components/advertiser-earnings/ad
     BoatOwnerTopbarComponent,
     AddBoatComponent,
     BoatSearchPipe,
+    BoatProfileComponent,
+    BoatOwnerBoatProfileComponent,
+    BoatInfoComponent,
+    BoatAdditionalInfoComponent,
+    BoatLocationComponent,
+    BoatServicesComponent,
+    BoatOwnerInfoComponent,
     StarRatingComponent,
     ReservationPreviewComponent,
     ReservationsUpcomingComponent,
@@ -216,8 +238,15 @@ import { AdvertiserEarningsComponent } from './components/advertiser-earnings/ad
     AddAdminComponent,
     ChangePasswordComponent,
     AdminEarningsComponent,
-    AdvertiserEarningsComponent
+    AdvertiserEarningsComponent,
 
+    BoatAvailabilityComponent,
+    AvailabilityCalendarComponent,
+    ImageListComponent,
+    ImageListItemComponent,
+    AddBoatSpecialOfferComponent,
+    BoatSpecialOfferComponent,
+    AvailabilityCalendarBoatOwnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -251,7 +280,8 @@ import { AdvertiserEarningsComponent } from './components/advertiser-earnings/ad
     }),
     MatStepperModule,
     MatFileUploadModule,
-    MatIconModule
+    MatIconModule,
+    MatFormFieldModule,
   ],
   exports: [
     BrowserModule,
@@ -273,6 +303,7 @@ import { AdvertiserEarningsComponent } from './components/advertiser-earnings/ad
     MatButtonModule,
     MatDialogModule,
     CalendarModule,
+    MatFormFieldModule,
   ],
   providers: [HttpClientModule, DatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -1,0 +1,54 @@
+<div id="wrapper">
+  <app-boat-owner-sidebar></app-boat-owner-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <app-boat-owner-topbar ></app-boat-owner-topbar>
+        <div class="container-fluid">
+          <h1>{{boat.name}}</h1>
+
+            <div class="row">
+
+                <div  class="col-xl-8 col-lg-7">
+                  <app-availability-calendar [boat]="boat" [newAv] = "newAv"></app-availability-calendar>
+
+                </div>
+
+                <div  style="padding-top: 72px;" class="col-xl-4 col-lg-5">
+                    <h5>Add new available period</h5>
+                    
+                    <div class="picker">
+                      <form [formGroup]="aFormGroup">
+                        <mat-form-field appearance="fill">
+                          <mat-label>Enter a date range</mat-label>
+                          <mat-date-range-input [rangePicker]="picker">
+                            <input matStartDate formControlName="startDate" placeholder="Start date">
+                            <input matEndDate formControlName="endDate" placeholder="End date">
+                          </mat-date-range-input>
+                          <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-date-range-picker #picker></mat-date-range-picker>
+                        </mat-form-field>
+                      </form>
+                      
+                    </div>
+                    <button type="button"
+                       class="btn btn--outline-primary submit-btn" (click)="addNew()">Submit</button>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-6 mb-4">
+
+                  <p>  </p>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+
+                  <p>   </p>
+                </div>
+            </div>
+
+    </div>
+    </div>
+ </div>
+

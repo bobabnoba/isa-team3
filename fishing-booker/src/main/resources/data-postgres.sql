@@ -181,10 +181,13 @@ insert into vacation_home_availability(
 --	(110, 101),
 --	(110, 102);
 
---Boats Availability
-insert into boat_availability(id, end_date, start_date, boat_id)
-values
-(100,  '2022-08-30', '2022-08-01', 100); --available
+----Boats Availability
+--insert into boat_availability_periods(id, end_date, start_date)
+--values
+--(100,  '2022-08-30', '2022-08-01'); --available
+--insert into boat_available_time_periods (boat_id, available_time_periods_id)
+--values
+--(100, 100);
 
 -- Vacation Home Reservations
 insert into vacation_home_reservations(vacation_home_id, reservations_id)
@@ -226,13 +229,40 @@ values (112, 105),
     (112, 108);
 
 
-insert into special_offer(id, active_from, active_to, discount, guests, is_used, price, reservation_end_date, reservation_start_date, type, canceling_percentage)
-	values (100, '2022-08-25 19:50:00', '2022-09-02 19:50:00', 5, 3, 'false', 202, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE',0),
-	 (101, '2022-09-02 19:50:00', '2022-09-03 19:50:00', 5, 3, 'false', 303, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE',0),
-	 (102, '2022-09-03 19:50:00', '2022-09-14 19:50:00', 5, 3, 'false', 404, '2022-09-24 00:50:00', '2022-09-25 19:50:00', 'ADVENTURE',10);
+insert into special_offer(id, active_from, active_to, discount, guests, is_used, price, reservation_end_date, reservation_start_date, type, canceling_percentage, is_captain)
+	values (100, '2022-08-25 19:50:00', '2022-09-02 19:50:00', 5, 3, 'false', 202, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE',0, false),
+	 (101, '2022-09-02 19:50:00', '2022-09-03 19:50:00', 5, 3, 'false', 303, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE',0, false),
+	 (102, '2022-09-03 19:50:00', '2022-09-14 19:50:00', 5, 3, 'false', 404, '2022-09-24 00:50:00', '2022-09-25 19:50:00', 'ADVENTURE',10, false);
 
 insert into adventure_special_offers(
 	adventure_id, special_offers_id)
 	values (112, 100),
 	 (112, 101),
 	 (112, 102);
+
+
+--Boat owner availability
+insert into boat_owner_availability_periods(
+	id, end_date, start_date)
+	values (200,  '2022-08-30', '2022-08-01'),
+	 (201,  '2022-09-04', '2022-09-01'),
+	 (202,  '2022-09-08', '2022-09-07'),
+	 (203,  '2022-09-13', '2022-09-10'),
+	 (204,  '2022-09-23', '2022-09-18'); --available
+
+
+insert into boat_owner_availability(
+	boat_owner_id, availability_id)
+	values (109, 200), (109,201), (109, 202), (109, 203), (109, 204);
+
+---- Reservations
+insert into reservation(
+	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage)
+	values
+	(201, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5),
+	(202, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5);
+
+--Boat reservations
+
+insert into boat_reservations(boat_id, reservations_id) values
+    (100, 201),(100, 202);

@@ -22,6 +22,7 @@ public class SpecialOfferMapper {
         entity.setGuests(dto.getGuests());
         entity.setUtilities(UtilityMapper.toEntitySet(dto.getUtilities()));
         entity.setCancelingPercentage(dto.getCancelingPercentage());
+        entity.setCaptain(dto.isCaptain());
         return entity;
     }
 
@@ -81,6 +82,7 @@ public class SpecialOfferMapper {
                 dto.setGuests(specialOffer.getGuests());
                 dto.setUtilities(UtilityMapper.map(specialOffer.getUtilities()));
                 dto.setCancelingPercentage(specialOffer.getCancelingPercentage());
+                dto.setCaptain(specialOffer.isCaptain());
                 dtos.add(dto);
             });
         }

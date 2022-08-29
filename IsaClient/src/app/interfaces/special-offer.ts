@@ -18,4 +18,5 @@ export interface SpecialOffer {
     type : ReservationType;
     cancelingPercentage : number;
     utilities : Utility[];
+    isCaptain : boolean;
 }

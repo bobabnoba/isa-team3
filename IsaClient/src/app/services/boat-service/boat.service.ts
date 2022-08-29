@@ -23,23 +23,19 @@ export class BoatService {
   getCodeOfConduct() : Observable<Rule[]>{
     return this._http.get<Rule[]>(`${this.baseURL}/code-of-conduct`);
   }
-  //TODO: DODATI TIP UPDATE-A
   updateInfo(id : string, updated : any) : Observable<Boat>{
     return this._http.post<Boat>(`${this.baseURL}/boats/info-update/${id}` , updated);
   }
-  //TODO: DODATI TIP UPDATE-A
   updateAdditionalInfo(id : string, updated : any) : Observable<Boat>{
     return this._http.post<Boat>(`${this.baseURL}/boats/additional-update/${id}` , updated);
   }
-  //TODO: DODATI TIP UPDATE-A
   updateCodeOfConduct(id : string, updated : any) : Observable<Boat>{
     return this._http.post<Boat>(`${this.baseURL}/boats/code-of-conduct-update/${id}` , updated);
   }
-  //TODO: DODATI TIP UPDATE-A
   updateAddress(id : string, updated : any) : Observable<Boat>{
     return this._http.post<Boat>(`${this.baseURL}/boats/address-update/${id}` , updated);
   }
-  getAllByBoatOwner(email: string) {
+  getAllByBoatOwner(email: string) : Observable<Boat[]> {
     return this._http.get<Boat[]>(`${this.baseURL}/boats/by-owner/${email}`);
   }
   
@@ -57,6 +53,15 @@ export class BoatService {
   getById(id : string) : Observable<Boat>{
     return this._http.get<Boat>(`${this.baseURL}/boats/${id}`);
   }
+  addAvailability(body : any ) : Observable<any> {
+    return this._http.post(`${this.baseURL}/boats/add-availability`, body);
+  }
 
+  checkBoatAvailability(from : string, to : string, boatId : number) {
+    return this._http.get(`${this.baseURL}/boats/check-if-available?from=${from}&to=${to}&boatId=${boatId}`);
+  }
+  private handlePlusInEmail(email : string) {
+    return encodeURIComponent(email);
+  }
   
 }

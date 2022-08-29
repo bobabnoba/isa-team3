@@ -21,6 +21,7 @@ public class BoatOwner extends User {
     @ToString.Exclude
     private Set<Boat> boats;
 
-
+    @OneToMany(targetEntity = BoatOwnerAvailability.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set<BoatOwnerAvailability> availability;
 
 }

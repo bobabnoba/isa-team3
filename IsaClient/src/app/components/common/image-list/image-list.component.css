@@ -1,0 +1,10 @@
+.image-list {
+    flex-wrap: wrap;
+  }
+  
+  .image-list__item {
+    display: block;
+    /* // TODO automatically get the height */
+    height: 100px;
+    width: 100px;
+  }

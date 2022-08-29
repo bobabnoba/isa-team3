@@ -45,4 +45,6 @@ public class SpecialOffer {
 
     private double cancelingPercentage;
 
+    private boolean isCaptain = false;
+
 }

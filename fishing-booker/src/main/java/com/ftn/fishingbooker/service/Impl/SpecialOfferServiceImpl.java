@@ -1,14 +1,10 @@
 package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.enumeration.ReservationType;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
-import com.ftn.fishingbooker.model.Adventure;
-import com.ftn.fishingbooker.model.InstructorAvailability;
-import com.ftn.fishingbooker.model.SpecialOffer;
 import com.ftn.fishingbooker.repository.SpecialOfferRepository;
-import com.ftn.fishingbooker.service.AdventureService;
-import com.ftn.fishingbooker.service.InstructorService;
-import com.ftn.fishingbooker.service.SpecialOfferService;
+import com.ftn.fishingbooker.service.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,11 +16,15 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
     private final AdventureService adventureService;
     private final SpecialOfferRepository specialOfferRepository;
     private final InstructorService instructorService;
-
-    public SpecialOfferServiceImpl(AdventureService adventureService, SpecialOfferRepository specialOfferRepository, InstructorService instructorService) {
+    private final BoatService boatService;
+    private final BoatOwnerService boatOwnerService;
+    public SpecialOfferServiceImpl(AdventureService adventureService, SpecialOfferRepository specialOfferRepository,
+                                   InstructorService instructorService, BoatService boatService, BoatOwnerService boatOwnerService) {
         this.adventureService = adventureService;
         this.specialOfferRepository = specialOfferRepository;
         this.instructorService = instructorService;
+        this.boatService = boatService;
+        this.boatOwnerService = boatOwnerService;
     }
 
     @Override
@@ -38,6 +38,17 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
 
             String instructorMail = adventure.getInstructor().getEmail();
             instructorService.updateAvailability(new InstructorAvailability(saved.getReservationStartDate(), saved.getReservationEndDate()), instructorMail);
+        }else if( specialOffer.getType().equals(ReservationType.BOAT)){
+            Boat boat = boatService.getById(serviceId);
+            boat.getSpecialOffers().add(saved);
+            boatService.save(boat);
+
+            String ownerEmail = boat.getBoatOwner().getEmail();
+            boatService.updateAvailability(saved.getReservationStartDate(), saved.getReservationEndDate(), boat.getId());
+
+             if(specialOffer.isCaptain()){
+                boatOwnerService.updateAvailability(saved.getReservationStartDate(),saved.getReservationEndDate(), ownerEmail);
+            }
         }
         return saved;
     }

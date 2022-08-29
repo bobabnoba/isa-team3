@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BoatOwnerService } from 'src/app/services/boat-owner-service/boat-owner.service';
+import { StorageService } from 'src/app/services/storage-service/storage.service';
 
 @Component({
   selector: 'app-boat-owner-dashboard',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoatOwnerDashboardComponent implements OnInit {
 
-  constructor() { }
+  email : string = '';
+  constructor(private _boatOwnerService : BoatOwnerService, private _storageService: StorageService) {
+    this.email = this._storageService.getEmail();
+   }
 
   ngOnInit(): void {
+  
   }
 
 }

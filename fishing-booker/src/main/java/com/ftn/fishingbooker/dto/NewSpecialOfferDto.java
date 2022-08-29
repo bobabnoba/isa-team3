@@ -36,4 +36,6 @@ public class NewSpecialOfferDto {
     public Collection<UtilityDto> utilities;
 
     public double cancelingPercentage;
+
+    public boolean isCaptain ;
 }

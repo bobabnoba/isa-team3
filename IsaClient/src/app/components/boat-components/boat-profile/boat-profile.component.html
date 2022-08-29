@@ -1,0 +1,46 @@
+
+<div class="container-fluid h-100 d-flex justify-content-center p-0 pic">
+    <div class="jumbotron mx-auto tabs">
+        <mat-tab-group mat-align-tabs="center">
+             <mat-tab label="About"> 
+                <app-boat-info [boat]="boat"></app-boat-info>
+            </mat-tab>
+            
+            <mat-tab label="Additional info"> 
+                <app-boat-additional-info [boat]="boat" ></app-boat-additional-info>
+            </mat-tab>
+            <mat-tab label="Location"> 
+                <app-boat-location [boat]="boat"></app-boat-location>
+            </mat-tab>
+            <mat-tab label="Additional Services"> 
+                <app-boat-services [boat]="boat"></app-boat-services>
+            </mat-tab>
+            <mat-tab label="Owner"> 
+                <app-boat-owner-info [boat]="boat"></app-boat-owner-info>
+            </mat-tab>
+
+            
+          </mat-tab-group>
+    </div>
+    <div style="padding: 6rem;">
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="3000">
+          <div class="carousel-inner">
+              <div [class]="im.act" *ngFor="let im of images" >
+                  <img class="d-block w-100" src="{{im.src}}" alt="First slide">
+              </div>
+          </div>
+        </div>
+      </div>
+   <div class="justify-content-center d-flex flex-dir pt-5">
+    <h2 *ngIf="boat.specialOffers.length === 0" class="pb-1 align-text">No special offers available.</h2>
+    <div  *ngIf="boat.specialOffers.length > 0">
+        <h2 class="pb-1 align-text">Special offers</h2>
+    <div *ngFor="let offer of boat.specialOffers">
+        <app-boat-special-offer [offer]="offer" class="p-3"></app-boat-special-offer>
+    </div>
+    </div>
+   </div>
+    <br><br><br>
+
+    
+</div>

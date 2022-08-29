@@ -1,0 +1,60 @@
+
+<form>
+    <div class="cont">
+      <main class="justify-content-center"><h3>Create new special offer</h3></main>
+      <aside *ngIf="displayDiscount"><i class="fa-solid fa-tags"></i>&nbsp;{{ discount }}% OFF! </aside>
+    </div>
+    
+    <mat-form-field appearance="standard">
+      <mat-label>Boat</mat-label>
+      <mat-select [formControl]="boat" (selectionChange)="boatChosen()" [(ngModel)]="selectedBoat" >
+        <mat-option *ngFor="let b of boats" [value]="b">{{b.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-label>Offer will be valid</mat-label>
+    <div class="d-flex">
+      
+      <mat-form-field appearance="standard"> 
+        <mat-label>from:</mat-label>
+        <input matInput type="datetime-local" [min]="today" [formControl]="activeFrom" >
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>to:</mat-label>
+        <input matInput type="datetime-local" [min]="today" [formControl]="activeTo" (change)="offerDateChosen()">
+      </mat-form-field>
+    </div>
+    <mat-label>Reservation date</mat-label>
+    <mat-form-field>
+      <mat-label>start:</mat-label>
+      <input matInput type="date" [min]="activeTo.value" [formControl]="reservationStartDate" (change)="resDateChosen()" >
+    </mat-form-field>
+      <p>
+        <mat-checkbox  [formControl]="isCaptain" (change)="resDateChosen()" ></mat-checkbox>
+        The owner provides the services of a captain
+      </p>
+    <mat-form-field appearance="standard">
+        <mat-label>Number of days:</mat-label>
+        <input matInput type="number" min="1"  [formControl]="numOfDays" (change)="resDateChosen();updatePrice() " >
+      </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Additional services</mat-label>
+      <mat-select [formControl]="servi" (selectionChange)="updatePrice()" [(ngModel)]="services" multiple>
+        <mat-select-trigger>
+          {{services?.[0]?.name || ''}}
+          <span *ngIf="(services?.length || 0) > 1"  class="example-additional-selection">
+            (+{{(services?.length || 0) - 1}} {{services?.length === 2 ? 'other' : 'others'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let e of selectedBoat.utilities"  [value]="e">{{e.name}}, {{ e.price}}e </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Price:</mat-label>
+      <input matInput type="number" min="1"  [formControl]="price" (change)="showDiscount()" >
+    </mat-form-field>
+    <br>
+    <div class="justify-content-center d-flex">
+      <button class="btn btn-primary" (click)="createOffer()">Confirm</button>
+    </div>
+  </form>

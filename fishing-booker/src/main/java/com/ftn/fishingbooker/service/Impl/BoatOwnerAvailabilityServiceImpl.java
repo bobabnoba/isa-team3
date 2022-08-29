@@ -1,0 +1,27 @@
+package com.ftn.fishingbooker.service.Impl;
+
+import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.repository.*;
+import com.ftn.fishingbooker.service.*;
+import org.springframework.stereotype.*;
+
+@Service
+public class BoatOwnerAvailabilityServiceImpl implements BoatOwnerAvailabilityService {
+
+    private final BoatOwnerAvailabilityRepository boatOwnerAvailabilityRepository;
+    public BoatOwnerAvailabilityServiceImpl(BoatOwnerAvailabilityRepository boatOwnerAvailabilityRepository) {
+        this.boatOwnerAvailabilityRepository = boatOwnerAvailabilityRepository;
+    }
+
+    @Override
+    public BoatOwnerAvailability save(BoatOwnerAvailability boatOwnerAvailability) {
+        return boatOwnerAvailabilityRepository.save(boatOwnerAvailability);
+    }
+
+    @Override
+    public void delete(Long id) {
+        BoatOwnerAvailability found = boatOwnerAvailabilityRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("BoatOwnerAvailability not found"));
+        boatOwnerAvailabilityRepository.delete(found);
+    }
+}

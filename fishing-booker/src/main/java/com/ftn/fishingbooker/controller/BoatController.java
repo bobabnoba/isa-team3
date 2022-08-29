@@ -6,24 +6,22 @@ import com.ftn.fishingbooker.mapper.AddressMapper;
 import com.ftn.fishingbooker.mapper.BoatMapper;
 import com.ftn.fishingbooker.mapper.RentalMapper;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
-import com.ftn.fishingbooker.model.Boat;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.model.Rule;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.BoatService;
 import com.ftn.fishingbooker.service.ClientService;
 import com.ftn.fishingbooker.service.ReservationService;
 import com.ftn.fishingbooker.util.FIleUploadUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.stream.Collectors;
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -75,7 +73,7 @@ public class BoatController {
         Collection<Boat> found = boatService.getAllByOwner(email);
 
         Collection<BoatDto> dtos = found.stream()
-                .map(BoatMapper::mapToDto)
+                .map(BoatMapper::mapToDtoWithAvailability)
                 .collect(Collectors.toList());
 
         return ok(dtos);
@@ -84,7 +82,7 @@ public class BoatController {
     @GetMapping("/{id}")
     public ResponseEntity<BoatDto> getBoatById(@PathVariable Long id) {
         Boat found = boatService.getById(id);
-        BoatDto dto = BoatMapper.mapToDto(found);
+        BoatDto dto = BoatMapper.mapToDtoWithAvailability(found);
         return ok(dto);
     }
 
@@ -136,5 +134,23 @@ public class BoatController {
 
         return ResponseEntity.ok().build();
     }
+
+
+    @PostMapping("/add-availability")
+    public ResponseEntity<?> addAvailabilityPeriod(@RequestBody BoatAvailabilityRequestDto availability) {
+        BoatAvailability saved = boatService.addAvailabilityPeriod(BoatMapper.mapToBoatAvailabilityEntity(availability), availability.boatId);
+        if (saved != null){
+            return ok(BoatMapper.mapToAvailabilityDto(saved));
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/check-if-available")
+    ResponseEntity<Boolean> checkAvailability(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
+                                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
+                                              @RequestParam Long boatId) {
+        return ok(boatService.checkAvailability(from, to, boatId));
+    }
+
 
 }

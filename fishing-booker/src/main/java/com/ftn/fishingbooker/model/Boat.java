@@ -48,8 +48,7 @@ public class Boat {
     private String information;
 
     @Column
-//    @Enumerated(EnumType.STRING)
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<NavigationType> navigationType;
 
     @OneToOne(targetEntity = Address.class, cascade = CascadeType.ALL)
@@ -58,7 +57,9 @@ public class Boat {
     @OneToMany(targetEntity = Image.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<Image> images;
 
-    @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @ToString.Exclude
     private Set<Reservation> reservations;
 
     @ManyToMany(targetEntity = Utility.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
@@ -70,8 +71,7 @@ public class Boat {
     @ManyToMany(targetEntity = FishingEquipment.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<FishingEquipment> fishingEquipment;
 
-//    @Enumerated(EnumType.STRING)
-//    private CancelingCondition reservationCanceling;
+
     private double cancelingPercentage;
 
     @ManyToOne
@@ -80,7 +80,7 @@ public class Boat {
     @JsonManagedReference
     private BoatOwner boatOwner;
 
-    @OneToMany(targetEntity = BoatAvailability.class, mappedBy = "boat", fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = BoatAvailability.class, fetch = FetchType.EAGER)
     private Set<BoatAvailability> availableTimePeriods;
 
     @Transient
@@ -93,4 +93,7 @@ public class Boat {
         }
         return retVal;
     }
+
+    @OneToMany(targetEntity = SpecialOffer.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    private Set<SpecialOffer> specialOffers;
 }

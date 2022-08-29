@@ -1,0 +1,16 @@
+.wrapper {
+    padding: 15px;
+    min-height: 160px;
+}
+
+.name {
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.description {
+    margin: 7px 0 10px 0;
+    font-size: 17px;
+    line-height: 22px;
+}

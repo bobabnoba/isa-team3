@@ -1,0 +1,5 @@
+<div class="image-list" fxLayout="row">
+	<ng-container *ngFor="let image of images">
+		<app-image-list-item class="image-list__item" [image]="image" [style.margin]="layoutGap + 'px'" ></app-image-list-item>
+	</ng-container>
+</div>
