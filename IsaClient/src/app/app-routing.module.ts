@@ -48,6 +48,8 @@ import { ReservationHistoryHomesComponent } from './components/client-components
 import { ReservationHistoryAdventuresComponent } from './components/client-components/reservation-history-adventures/reservation-history-adventures.component';
 import { ReservationHistoryBoatsComponent } from './components/client-components/reservation-history-boats/reservation-history-boats.component';
 import { AdminAdventuresComponent } from './components/admin-components/admin-adventures/admin-adventures.component';
+import { AdminBoatsComponent } from './components/admin-components/admin-boats/admin-boats.component';
+import { AdminHomesComponent } from './components/admin-components/admin-homes/admin-homes.component';
 
 
 const routes: Routes = [
@@ -155,6 +157,14 @@ const routes: Routes = [
   {
     path: 'admin/adventures',
     component: AdminAdventuresComponent
+  },
+  { 
+    path: 'admin/boats',
+    component: AdminBoatsComponent
+  },
+  {
+    path: 'admin/vacation-homes',
+    component: AdminHomesComponent
   },
   {
     path: 'adventure',
