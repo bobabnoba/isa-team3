@@ -1,9 +1,7 @@
 package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.enumeration.ReservationType;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.model.User;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.ClientRepository;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.*;
@@ -114,6 +112,47 @@ public class ClientServiceImpl implements ClientService {
             }
         }
         return reservationList;
+    }
+
+    @Override
+    public Collection<Boat> getBoatSubscription(String clientEmail) {
+        Client client = getClientByEmail(clientEmail);
+        return client.getBoatSubscription();
+    }
+
+    @Override
+    public Collection<VacationHome> getVacationHomeSubscription(String clientEmail) {
+        Client client = getClientByEmail(clientEmail);
+        return client.getVacationHomeSubscription();
+    }
+
+    @Override
+    public Collection<Instructor> getInstructorSubscription(String clientEmail) {
+        Client client = getClientByEmail(clientEmail);
+        return client.getInstructorSubscription();
+    }
+
+    @Override
+    public void save(Client client) {
+        clientRepository.save(client);
+    }
+
+    @Override
+    public boolean isClientSubscribed(String clientEmail, String entityType, Long entityId) {
+        Client client = clientRepository.findByEmail(clientEmail);
+        switch (entityType) {
+            case "home": {
+                return clientRepository.vacationHomeSubscriptionExists(client.getId(), entityId);
+            }
+            case "instructor": {
+                return clientRepository.instructorHomeSubscriptionExists(client.getId(), entityId);
+            }
+            case "boat": {
+                return clientRepository.boatSubscriptionExists(client.getId(), entityId);
+            }
+
+        }
+        return false;
     }
 
     @Override

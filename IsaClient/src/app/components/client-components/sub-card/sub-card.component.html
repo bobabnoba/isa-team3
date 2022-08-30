@@ -1,0 +1,36 @@
+<div class="my-5  stretch-width ">
+    <article class="media shadow p-4 container" style="display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    max-width: 70%;
+    justify-self: flex-start;
+    margin-left: 10px ">
+        <div class="media-content">
+            <div class="content">
+                <div>
+                    <p>
+                        <strong>
+                            {{ name }}
+                        </strong>
+                        <small>, @email : {{ ownerName }} </small>
+                        <br />
+                    </p>
+                    <div >
+                        <strong *ngIf="address"><i class="fa fa-map-marker"></i> {{ address.street }}, {{ address.city }},
+                          {{ address.country }}, {{ address.zipCode }}</strong>
+                        <h4 *ngIf="price">${{ price }}/day</h4>
+                      </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button mat-raised-button color="primary" (click)="preview()" style="margin-left: 10px;
+            justify-self: flex-end; align-self: center;">See
+                More</button>
+            <button mat-raised-button color="warn" (click)="unsubscribe()" style="margin-left: 10px;
+            justify-self: flex-end; align-self: center;">
+                Unsubscribe</button>
+        </div>
+    </article>
+</div>
