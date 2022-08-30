@@ -3,8 +3,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Utility } from 'src/app/interfaces/adventure';
+import { LoggedClient } from 'src/app/interfaces/logged-client';
 import { IReservation } from 'src/app/interfaces/new-reservation';
 import { SpecialOffer } from 'src/app/interfaces/special-offer';
+import { ClientService } from 'src/app/services/client-service/client.service';
 import { RentalService } from 'src/app/services/rental-service/rental.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 
@@ -24,12 +26,17 @@ export class AdventureSpecialOfferComponent implements OnInit {
   endsIn!: string;
   isClient: boolean = false;
   newReservation: IReservation = {} as IReservation;
-
+  client: LoggedClient = {} as LoggedClient;
+  displayDiscount = false;
+  calculatedPrice: number = 0;
+  showTotalPrice: boolean = false;
+  
   constructor(
     private _rentalService: RentalService,
     private _snackBar: MatSnackBar,
     private _storageService: StorageService,
-    private _datePipe: DatePipe
+    private _datePipe: DatePipe,
+    private _clientService: ClientService
   ) {
     this.offer.utilities = [] as Utility[];
     this.newReservation.utilities = [];
@@ -39,6 +46,18 @@ export class AdventureSpecialOfferComponent implements OnInit {
 
     if (this._storageService.getRole() == "ROLE_CLIENT") {
       this.isClient = true;
+      this._clientService.getClientInfo(this._storageService.getEmail()).subscribe(
+        (data) => {
+          this.client = data;
+          if (this.client.rank.percentage == 0) {
+            this.displayDiscount = false;
+  
+          }
+          this.displayDiscount = true;
+          this.calculatePrice();
+  
+        }
+      );
     }
 
     let today = new Date();
@@ -50,6 +69,15 @@ export class AdventureSpecialOfferComponent implements OnInit {
     let minutes = (time % (1000 * 3600)) / (1000 * 60);
 
     this.endsIn = Math.floor(days) + " days, " + Math.floor(hours) + " hours, " + Math.floor(minutes) + " minutes";
+  }
+  calculatePrice() {
+    let discount = 0;
+    let originalPrice = this.offer.price
+    if(this.displayDiscount){
+      discount = originalPrice * this.client.rank.percentage /100
+    }
+    this.calculatedPrice = originalPrice - discount
+    this.showTotalPrice = true;
   }
 
   compareObjects(o1: any, o2: any) {

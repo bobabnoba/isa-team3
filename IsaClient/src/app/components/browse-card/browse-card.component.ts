@@ -30,8 +30,6 @@ export class BrowseCardComponent implements OnInit {
   @Input() type: string = 'entity';
   role: string = ''
   baseUrl = environment.apiURL
-
-
   constructor(_service: StorageService) {
     this.role = _service.getRole();
   }

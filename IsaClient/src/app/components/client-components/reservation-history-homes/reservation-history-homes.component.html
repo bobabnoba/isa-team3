@@ -65,9 +65,13 @@
                                 </td>
                             </ng-container>
 
+                            <!-- Leave a review -->
+
                             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                                [class.demo-row-is-clicked]="clickedRow == row" (click)="clickRow(row)"></tr>
                         </table>
+
 
                         <mat-paginator [pageSizeOptions]="[10]" showFirstLastButtons
                             aria-label="Select page of periodic elements">
@@ -75,6 +79,9 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div>
+            <button mat-raised-button color="primary" style="width: fit-content; margin:10px" (click)="leaveReview()">Leave a Rview</button>
         </div>
     </div>
 

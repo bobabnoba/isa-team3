@@ -26,8 +26,7 @@ export class ReservationHistoryAdventuresComponent implements AfterViewInit {
   userEmail: string = ""
   searchFilter: SearchFilter = new SearchFilter();
   clickedRow: IReservation = {} as IReservation;
-  error: boolean = false;
-  hasRview: boolean = false;
+  
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

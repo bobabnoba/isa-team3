@@ -48,7 +48,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ClientReview makeVacationHomeReview(ClientReview clientReview) {
-        VacationHome vacationHome = homeService.getVacationHomeForReservation(clientReview.getRentalId());
+        VacationHome vacationHome = homeService.getVacationHomeForReservation(clientReview.getReservationId());
         clientReview.setRentalId(vacationHome.getId());
         String ownerEmail = userService.getUserById(vacationHome.getHomeOwner().getId()).getEmail();
         clientReview.setOwnerEmail(ownerEmail);

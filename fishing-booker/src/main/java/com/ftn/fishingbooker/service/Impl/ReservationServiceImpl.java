@@ -3,11 +3,9 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.dao.*;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.UtilityDto;
-import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.ClientReview;
 import com.ftn.fishingbooker.model.Reservation;
 import com.ftn.fishingbooker.model.Utility;
 import com.ftn.fishingbooker.repository.ReservationRepository;
@@ -95,13 +93,13 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public int getNoOfIncomingReservationsForUser(Long id, String role) {
-        if(role.equalsIgnoreCase("ROLE_INSTRUCTOR")){
+        if (role.equalsIgnoreCase("ROLE_INSTRUCTOR")) {
             return reservationRepository.noOfIncomingReservationsForInstructor(id);
-        } else if(role.equalsIgnoreCase("ROLE_BOAT_OWNER")){
+        } else if (role.equalsIgnoreCase("ROLE_BOAT_OWNER")) {
             return reservationRepository.noOfIncomingReservationsForBoatOwner(id);
-        } else if(role.equalsIgnoreCase("ROLE_HOME_OWNER")){
+        } else if (role.equalsIgnoreCase("ROLE_HOME_OWNER")) {
             return reservationRepository.noOfIncomingReservationsForHomeOwner(id);
-        } else if (role.equalsIgnoreCase("ROLE_CLIENT")){
+        } else if (role.equalsIgnoreCase("ROLE_CLIENT")) {
             return reservationRepository.noOfIncomingReservationsForClient(id);
         } else return 0;
     }
@@ -116,7 +114,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         Reservation newReservation = ReservationMapper.map(reservationDto);
         newReservation.setClient(client);
-        newReservation.setPrice(calculatePrice(reservationDto));
+        newReservation.setPrice(calculatePrice(reservationDto, client.getRank().getPercentage()));
         Set<Utility> utilitySet = new HashSet<>();
         for (UtilityDto utilityDto : reservationDto.getUtilities()
         ) {
@@ -131,7 +129,8 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation makeSpecialOfferReservation(Client client, ReservationDto reservationDto) {
         Reservation newReservation = ReservationMapper.map(reservationDto);
         newReservation.setClient(client);
-        newReservation.setPrice(reservationDto.getPrice());
+        var discount = reservationDto.getPrice() * client.getRank().getPercentage() / 100;
+        newReservation.setPrice(reservationDto.getPrice() - discount);
 
         Set<Utility> utilitySet = new HashSet<>();
         for (UtilityDto utilityDto : reservationDto.getUtilities()
@@ -143,6 +142,7 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.save(newReservation);
     }
 
+
     @Override
     public Reservation makeReservation(Client client, ReservationDto reservationDto, double durationInHours) {
         Date newEndDate = dateService.addHoursToJavaUtilDate(reservationDto.getStartDate(), durationInHours);
@@ -150,7 +150,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         Reservation newReservation = ReservationMapper.map(reservationDto);
         newReservation.setClient(client);
-        newReservation.setPrice(calculatePrice(reservationDto));
+        newReservation.setPrice(calculatePrice(reservationDto, client.getRank().getPercentage()));
 
         Set<Utility> utilitySet = new HashSet<>();
         for (UtilityDto utilityDto : reservationDto.getUtilities()
@@ -177,20 +177,25 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
 
-    private double calculatePrice(ReservationDto reservationDto) {
+    private double calculatePrice(ReservationDto reservationDto, Double percentage) {
 
         try {
-            var diff = 1.0;
-            if (reservationDto.getType() != ReservationType.ADVENTURE) {
-                diff = dateService.DifferenceBetweenDates(reservationDto.getStartDate(), reservationDto.getEndDate());
+            var diff = dateService.DifferenceBetweenDates(reservationDto.getStartDate(), reservationDto.getEndDate());
+            if (diff == 0) {
+                diff = 1;
             }
             double utilities = 0.0;
             for (UtilityDto utility : reservationDto.getUtilities()
             ) {
                 utilities += utility.getPrice();
             }
-            return reservationDto.getPrice() * diff + utilities;
-
+            var total = (reservationDto.getPrice() * diff + utilities);
+            if (percentage != 0) {
+                var discount = total * percentage / 100;
+                return total - discount;
+            } else {
+                return total;
+            }
         } catch (ParseException exception) {
             System.out.println(exception);
         }
