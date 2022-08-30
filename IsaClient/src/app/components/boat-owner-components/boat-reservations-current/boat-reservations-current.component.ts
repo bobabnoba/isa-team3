@@ -4,11 +4,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { BoatReservation } from 'src/app/interfaces/boat-reservation';
-import { Report } from 'src/app/interfaces/report';
 import { BoatOwnerService } from 'src/app/services/boat-owner-service/boat-owner.service';
 import { ReportService } from 'src/app/services/report-service/report.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
-import { InstructorReportComponent } from '../../instructor-components/instructor-report/instructor-report.component';
 import { BoatOwnerCreateReservationComponent } from '../boat-owner-create-reservation/boat-owner-create-reservation.component';
 import { BoatReservationInfoComponent } from '../boat-reservation-info/boat-reservation-info.component';
 

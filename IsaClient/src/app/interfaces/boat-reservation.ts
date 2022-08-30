@@ -9,5 +9,5 @@ export interface BoatReservation {
     guests : number;
     report : Report;
     cancelingPercentage : number;
-    boatName: string;
+    boatName: string; 
 }

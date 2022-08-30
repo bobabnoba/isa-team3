@@ -28,8 +28,6 @@ export class BoatOwnerCreateReservationComponent implements OnInit {
   form = new FormControl();
   
   chosenClient : LoggedUser = {} as LoggedUser
-  // existingServices : Utility[] = [];
-  // services : Utility[] = []
   data! : any 
   noAvalilableClient : boolean = true;
   boats: Boat[] = [];
@@ -37,13 +35,6 @@ export class BoatOwnerCreateReservationComponent implements OnInit {
   selectedBoat: Boat = {} as Boat;
   services: Utility[] = []
 
-  //resFrom = new FormControl([Validators.required]);
-  // client = new FormControl([Validators.required]);
-  // guests =new FormControl([Validators.required]);
-  // price = new FormControl([Validators.required]);
-  // priceWDiscount = 0;
-  // servi = new FormControl();
-  // today = this._datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm')
   reservationStartDate = new FormControl([Validators.required]);
   numOfDays = new FormControl([Validators.required]);
   boat = new FormControl([Validators.required]);
@@ -100,19 +91,6 @@ export class BoatOwnerCreateReservationComponent implements OnInit {
   boatChosen() {
     this.price.setValue(this.selectedBoat.pricePerDay);
   }
-
-  // offerDateChosen() {
-  //   let offerFrom = new Date(this.activeFrom.value);
-  //   let offerTo = new Date(this.activeTo.value);
-
-  //   if (offerTo < offerFrom) {
-  //     this.activeTo.reset();
-  //     this._snackBar.open('End date cannot be before start date!', '',
-  //       { duration: 2000, panelClass: ['snack-bar'] }
-  //     );
-  //   }
-  // }
-
   resDateChosen() {
 
     let resDate = new Date(this.reservationStartDate.value) ;
@@ -121,20 +99,9 @@ export class BoatOwnerCreateReservationComponent implements OnInit {
     let resEnd = new Date(this.reservationStartDate.value);
     let num : number = this.numOfDays.value ;
     let resEndDate = new Date(resEnd.getTime());
-    console.log( this.numOfDays.value)
     resEndDate.setHours(0, 0, 0, 0);
-    console.log(this.numOfDays.value)
     resEndDate.setDate(resEndDate.getDate() + (this.numOfDays.value -1));
 
-    // let offerTo = new Date(this.activeTo.value);
-    // if (resStartDate < offerTo) {
-    //   this.reservationStartDate.reset();
-    //   this._snackBar.open('Reservation cannot be made in time when offer is still active!', '',
-    //     { duration: 2000, panelClass: ['snack-bar'] }
-    //   );
-    // }
-    console.log(resStartDate)
-    console.log(resEndDate)
 
     this._boatService.checkBoatAvailability(
       this._datePipe.transform(resStartDate, 'yyyy-MM-dd HH:mm:ss')!,
@@ -191,7 +158,6 @@ export class BoatOwnerCreateReservationComponent implements OnInit {
     this.services.forEach(s => { utilitiesSum += s.price });
     let totalPrice = this.selectedBoat.pricePerDay * this.numOfDays.value + utilitiesSum;
     this.discount = Math.round((totalPrice - this.price.value) * 100 / totalPrice);
-    console.log(this.discount)
     if (this.discount != 0) {
       this.displayDiscount = true;
     } else {
@@ -204,74 +170,6 @@ export class BoatOwnerCreateReservationComponent implements OnInit {
     return diffDays;
   }
 
-
-//   calcDiscount(){
-//     let utilitiesSum = 0;
-//     this.services.forEach(s => { utilitiesSum += s.price });
-//     let totalPrice = this.data.price * this.guests.value + utilitiesSum;
-//     this.priceWDiscount = Math.round(totalPrice - (totalPrice * this.chosenClient.rank.percentage / 100));
-//     return this.priceWDiscount;
-//   }
-
-//   updatePrice(){
-//     this.price.setValue(this.data.price * this.guests.value);
-//     let utilitiesSum = 0;
-//     this.services.forEach(s => { utilitiesSum += s.price });
-//     this.price.setValue(this.price.value + utilitiesSum);
-//     this.calcDiscount();
-//   }
-
-//   clientChosen(){}
-
-//   resDateChosen(){
-
-//     let resDate = new Date(this.resFrom.value);
-//     let resStartDate = resDate;
-//     let resEndDate = addHours(resDate, this.data.duration );
-
-//     this._clientService.checkForOverlappingReservation(
-//       this._datePipe.transform(resStartDate, 'yyyy-MM-dd HH:mm:ss')!,
-//       this._datePipe.transform(resEndDate, 'yyyy-MM-dd HH:mm:ss')!,
-//       this.chosenClient.email
-//     ).subscribe(
-//       res => {
-//         if(!res){
-//           this.resFrom.reset();
-//         this._snackBar.open('Client is not available on given time period!', '',
-//             { duration: 3000, panelClass: ['snack-bar'] }
-//         );
-//         }
-//       }
-//     )
-
-//     this._insService.checkForOverlappingReservation(
-//       this._datePipe.transform(resStartDate, 'yyyy-MM-dd HH:mm:ss')!,
-//       this._datePipe.transform(resEndDate, 'yyyy-MM-dd HH:mm:ss')!, 
-//       this._storageService.getEmail()).subscribe(
-//     res => {
-//       if (!res) {
-//         this.resFrom.reset();
-//         this._snackBar.open('You are not available on given time period! Please check your calendar.', '',
-//             { duration: 3000, panelClass: ['snack-bar'] }
-//         );
-//       }
-//     }
-//   )
-
-//   this._insService.checkAvailability(
-//     this._datePipe.transform(resStartDate, 'yyyy-MM-dd HH:mm:ss')!,
-//     this._datePipe.transform(resEndDate, 'yyyy-MM-dd HH:mm:ss')!, 
-//     this._storageService.getEmail()).subscribe(
-//   res => {
-//     if (!res) {
-//       this.resFrom.reset();
-//       this._snackBar.open('You are not available on given time period! Please check your calendar.', '',
-//           { duration: 3000, panelClass: ['snack-bar'] }
-//       );
-//     }
-//   }
-// )
-//   }
 
   create(){
     if( this.boat.valid && this.reservationStartDate.valid
