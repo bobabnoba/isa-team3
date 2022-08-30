@@ -2,9 +2,7 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.dao.AdminReportResponse;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
-import com.ftn.fishingbooker.model.AdventureReservationReport;
-import com.ftn.fishingbooker.model.Report;
-import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.dao.DatabaseReport;
 import com.ftn.fishingbooker.repository.ReportRepository;
 import com.ftn.fishingbooker.service.EmailService;
@@ -54,5 +52,15 @@ public class ReportServiceImpl implements ReportService {
         String html = emailService.createAdminReportResponseEmail(response.getResponse(), response.addPenalty());
         emailService.sendEmail(response.getOwnerEmail(), "Your reservation report has been reviewed!", html);
         emailService.sendEmail(response.getClientEmail(), "Report from your reservation has been reviewed!", html);
+    }
+
+    @Override
+    public Report create(BoatReservationReport report, Long reservationId) {
+        Reservation reservation = reservationService.getReservationById(reservationId);
+        report.setClientEmail(reservation.getClient().getEmail());
+        Report saved = reportRepository.save(report);
+        reservation.setReport(saved);
+        reservationService.save(reservation);
+        return saved;
     }
 }

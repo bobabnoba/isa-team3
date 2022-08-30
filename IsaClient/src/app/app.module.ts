@@ -146,6 +146,7 @@ import { BoatReservationsHistoryComponent } from './components/boat-owner-compon
 import { BoatReservationsFutureComponent } from './components/boat-owner-components/boat-reservations-future/boat-reservations-future.component';
 import { BoatReservationsCurrentComponent } from './components/boat-owner-components/boat-reservations-current/boat-reservations-current.component';
 import { BoatOwnerCreateReservationComponent } from './components/boat-owner-components/boat-owner-create-reservation/boat-owner-create-reservation.component';
+import { BoatOwnerReportComponent } from './components/boat-owner-components/boat-owner-report/boat-owner-report.component';
 
 @NgModule({
   declarations: [
@@ -265,6 +266,7 @@ import { BoatOwnerCreateReservationComponent } from './components/boat-owner-com
     BoatReservationsFutureComponent,
     BoatReservationsCurrentComponent,
     BoatOwnerCreateReservationComponent,
+    BoatOwnerReportComponent,
   ],
   imports: [
     BrowserModule,

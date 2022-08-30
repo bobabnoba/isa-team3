@@ -9,6 +9,7 @@ import { BoatOwnerService } from 'src/app/services/boat-owner-service/boat-owner
 import { ReportService } from 'src/app/services/report-service/report.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { InstructorReportComponent } from '../../instructor-components/instructor-report/instructor-report.component';
+import { BoatOwnerReportComponent } from '../boat-owner-report/boat-owner-report.component';
 import { BoatReservationInfoComponent } from '../boat-reservation-info/boat-reservation-info.component';
 
 @Component({
@@ -69,7 +70,7 @@ export class BoatReservationsHistoryComponent implements OnInit {
      dialogConfig.disableClose = false;
      dialogConfig.id = 'modal-component';
      dialogConfig.data = myData;
-     const dialogRef = this._matDialog.open(InstructorReportComponent, dialogConfig);
+     const dialogRef = this._matDialog.open(BoatOwnerReportComponent, dialogConfig);
      dialogRef.afterClosed().subscribe({
       next: (res) => {
         let report : Report = {
