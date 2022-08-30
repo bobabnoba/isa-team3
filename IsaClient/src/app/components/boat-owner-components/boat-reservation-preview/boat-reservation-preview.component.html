@@ -1,0 +1,28 @@
+<mat-card style="width: 100%; margin-bottom: 10px; padding: 10px;"  >
+    <div class = "row p-2" >
+        <div class="col-md-10 d-flex flex-dir" >
+            <h3> {{ reservation.startDate | date : 'short'}}  - 
+                {{ reservation.endDate | date : 'short'}}  </h3>
+            <p class="pt-2"> <i class="fa-solid fa-user"></i> {{ reservation.guests }} guests </p>
+            <p> <i class="fa-solid fa-dollar-sign fa-md"></i>{{ reservation.price }} </p>
+            <div class="d-flex">
+            <mat-label class="mright">{{ reservation.utilities == null ? 'No utilities providing.' : 'Utilities: ' }} </mat-label>
+            <div *ngIf="reservation.utilities?.length === 0">
+                <mat-select multiple [(ngModel)]="reservation.utilities" [compareWith]="compareObjects">
+                    <mat-select-trigger>
+                      {{reservation.utilities?.[0]?.name || ''}}
+                      <span *ngIf="(reservation.utilities?.length || 0) > 1"  class="example-additional-selection">
+                        (+{{(reservation.utilities?.length || 0) - 1}} {{reservation.utilities?.length === 2 ? 'other' : 'others'}})
+                      </span>
+                    </mat-select-trigger>
+                    <mat-option disabled *ngFor="let e of reservation.utilities" [value]="e">{{e.name}}</mat-option>
+                </mat-select>
+            </div>
+            </div>
+        </div>
+        <div class="col-md-2 d-flex flex-dir" >
+            <button class="btn btn-outline-info wid" (click)="showClientInfo()">Client info</button>
+            <button class="book-btn btn btn-primary">Write a report </button>
+        </div>
+    </div>
+</mat-card>

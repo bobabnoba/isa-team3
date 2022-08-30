@@ -111,4 +111,21 @@ public class BoatMapper {
         entity.setEndDate(availability.endDate);
         return entity;
     }
+
+    public static BoatInfo mapToDtoInfo(Boat boat) {
+        BoatInfo dto = new BoatInfo();
+
+        dto.setName(boat.getName());
+        dto.setType(boat.getType().toString());
+        dto.setLength(boat.getLength());
+        dto.setEngineCount(boat.getEngineCount());
+        dto.setEnginePower(boat.getEnginePower());
+        dto.setMaxSpeed(boat.getMaxSpeed());
+        dto.setInformation(boat.getInformation());
+        dto.setDescription(boat.getDescription());
+        dto.setPricePerDay(boat.getPricePerDay());
+        dto.setCancelingPercentage(boat.getCancelingPercentage());
+        dto.setGuestLimit(boat.getGuestLimit());
+        return dto;
+    }
 }

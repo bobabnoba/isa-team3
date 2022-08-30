@@ -1,3 +1,4 @@
+import { ReservationType } from "./special-offer";
 import { IUtility } from "./vacation-house-profile"
 
 export interface IReservation {
@@ -8,5 +9,7 @@ export interface IReservation {
     price:number,
     utilities: IUtility[],
     duration: number,
-    cancelingPercentage : number
+    cancelingPercentage : number,
+    ownerCaptain: boolean,
+    type : ReservationType;
 }

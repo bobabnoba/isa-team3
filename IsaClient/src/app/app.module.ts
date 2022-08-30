@@ -141,6 +141,13 @@ import { ReviewComponent } from './components/client-components/review/review.co
 import { AdminAdventuresComponent } from './components/admin-components/admin-adventures/admin-adventures.component';
 import { AdminBoatsComponent } from './components/admin-components/admin-boats/admin-boats.component';
 import { AdminHomesComponent } from './components/admin-components/admin-homes/admin-homes.component';
+import { BoatReservationInfoComponent } from './components/boat-owner-components/boat-reservation-info/boat-reservation-info.component';
+import { BoatReservationPreviewComponent } from './components/boat-owner-components/boat-reservation-preview/boat-reservation-preview.component';
+import { BoatReservationsHistoryComponent } from './components/boat-owner-components/boat-reservations-history/boat-reservations-history.component';
+import { BoatReservationsFutureComponent } from './components/boat-owner-components/boat-reservations-future/boat-reservations-future.component';
+import { BoatReservationsCurrentComponent } from './components/boat-owner-components/boat-reservations-current/boat-reservations-current.component';
+import { BoatOwnerCreateReservationComponent } from './components/boat-owner-components/boat-owner-create-reservation/boat-owner-create-reservation.component';
+import { BoatOwnerReportComponent } from './components/boat-owner-components/boat-owner-report/boat-owner-report.component';
 
 @NgModule({
   declarations: [
@@ -255,6 +262,13 @@ import { AdminHomesComponent } from './components/admin-components/admin-homes/a
     AdminAdventuresComponent,
     AdminBoatsComponent,
     AdminHomesComponent,
+    BoatReservationInfoComponent,
+    BoatReservationPreviewComponent,
+    BoatReservationsHistoryComponent,
+    BoatReservationsFutureComponent,
+    BoatReservationsCurrentComponent,
+    BoatOwnerCreateReservationComponent,
+    BoatOwnerReportComponent,
   ],
   imports: [
     BrowserModule,

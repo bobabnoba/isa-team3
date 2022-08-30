@@ -46,4 +46,6 @@ public class Reservation {
 
     private double cancelingPercentage;
 
+    private boolean ownerCaptain = false;
+
 }

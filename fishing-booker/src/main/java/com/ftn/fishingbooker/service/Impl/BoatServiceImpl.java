@@ -64,6 +64,10 @@ public class BoatServiceImpl implements BoatService {
         boatRepository.save(boat);
         boatOwnerService.updatePoints(boat.getBoatOwner(), reservation.getPrice());
         earningsService.saveEarnings(reservation, boat.getBoatOwner().getEmail(), boat.getBoatOwner().getRank());
+        updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boatId);
+        if(reservation.isOwnerCaptain()){
+            boatOwnerService.updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boat.getBoatOwner().getEmail());
+        }
     }
 
     private boolean dateOverlapsWithReservation(Collection<Reservation> reservations, Date startDate, Date endDate) {

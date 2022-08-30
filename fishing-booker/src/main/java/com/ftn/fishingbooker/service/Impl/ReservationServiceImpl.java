@@ -1,6 +1,6 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.dao.ReservationInfo;
+import com.ftn.fishingbooker.dao.*;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.UtilityDto;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
@@ -201,6 +201,39 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         return 0;
+    }
+
+    @Override
+    public Collection<BoatReservationInfo> getUpcomingReservationsForBoatOwner(Long id) {
+        return reservationRepository.getUpcomingReservationsForBoatOwner(id);
+    }
+
+    @Override
+    public Collection<Reservation> getPastReservationsForBoatOwner(Long id) {
+        return reservationRepository.getPastReservationsForBoatOwner(id);
+    }
+
+    @Override
+    public Collection<BoatReservationInfo> getCurrentReservationsForBoatOwner(Long id) {
+        return reservationRepository.getCurrentReservationsForBoatOwner(id);
+    }
+
+    @Override
+    public Reservation ownerMakeReservation(Client client, ReservationDto reservationDto) {
+        //metoda bez racunanja cene opet
+        //meni ovdje nikakvo racunjanje ne treba, stize izracunata cena s fronta, moze samo neka provjera mzd
+
+        Reservation newReservation = ReservationMapper.map(reservationDto);
+        newReservation.setClient(client);
+        newReservation.setPrice(reservationDto.getPrice());
+        Set<Utility> utilitySet = new HashSet<>();
+        for (UtilityDto utilityDto : reservationDto.getUtilities()
+        ) {
+            Utility utility = utilityService.getByName(utilityDto.getName());
+            utilitySet.add(utility);
+        }
+        newReservation.setUtilities(utilitySet);
+        return reservationRepository.save(newReservation);
     }
 
 

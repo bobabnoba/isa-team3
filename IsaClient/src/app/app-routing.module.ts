@@ -50,6 +50,9 @@ import { ReservationHistoryBoatsComponent } from './components/client-components
 import { AdminAdventuresComponent } from './components/admin-components/admin-adventures/admin-adventures.component';
 import { AdminBoatsComponent } from './components/admin-components/admin-boats/admin-boats.component';
 import { AdminHomesComponent } from './components/admin-components/admin-homes/admin-homes.component';
+import { BoatReservationsFutureComponent } from './components/boat-owner-components/boat-reservations-future/boat-reservations-future.component';
+import { BoatReservationsCurrentComponent } from './components/boat-owner-components/boat-reservations-current/boat-reservations-current.component';
+import { BoatReservationsHistoryComponent } from './components/boat-owner-components/boat-reservations-history/boat-reservations-history.component';
 
 
 const routes: Routes = [
@@ -238,6 +241,19 @@ const routes: Routes = [
   {
     path: 'boat-owner/boat/calendar/:id',
     component: BoatAvailabilityComponent
+  },
+  {
+    path: 'boat-owner/reservations/past',
+    component: BoatReservationsHistoryComponent
+  },
+
+  {
+    path: 'boat-owner/reservations/future',
+    component: BoatReservationsFutureComponent
+  },
+  {
+    path: 'boat-owner/reservations/current',
+    component: BoatReservationsCurrentComponent
   },
 
 ];

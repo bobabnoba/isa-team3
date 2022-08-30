@@ -45,6 +45,7 @@ public class ReservationMapper {
         reservation.setEndDate(reservationDto.getEndDate());
         reservation.setStartDate(reservationDto.getStartDate());
         reservation.setCancelingPercentage(reservationDto.getCancelingPercentage());
+        reservation.setOwnerCaptain(reservationDto.isOwnerCaptain());
         return reservation;
     }
 

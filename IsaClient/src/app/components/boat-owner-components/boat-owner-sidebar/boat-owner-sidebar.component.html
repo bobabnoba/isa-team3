@@ -1,5 +1,6 @@
-<ul  [ngClass] = "{'toggled' : toggle}" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-  
+<ul [ngClass]="{'toggled' : toggle}" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+    id="accordionSidebar">
+
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fa fa-fish"></i>
@@ -17,13 +18,36 @@
     <hr class="sidebar-divider">
 
     <div class="sidebar-heading">
-          Services
+        Services
     </div>
 
     <li class="nav-item">
-        <a class="nav-link" href="/boat-owner/boats" >
+        <a class="nav-link" href="/boat-owner/boats">
             <i class="fa fa-fw fa-ship"></i>
             <span>My boats</span>
+        </a>
+    </li>
+
+    <div class="sidebar-heading">
+        Reservations
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="/boat-owner/reservations/past">
+            <i class="fa-solid fa-calendar-check"></i>
+            <span>Past</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/boat-owner/reservations/current">
+            <i class="fa-solid fa-clock"></i>
+            <span>Current</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/boat-owner/reservations/future">
+            <i class="fa-solid fa-calendar"></i>
+            <span>Future</span>
         </a>
     </li>
 

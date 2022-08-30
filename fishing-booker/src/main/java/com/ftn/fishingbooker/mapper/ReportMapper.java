@@ -4,9 +4,7 @@ import com.ftn.fishingbooker.dao.AdminReportResponse;
 import com.ftn.fishingbooker.dto.AdminReportResponseDto;
 import com.ftn.fishingbooker.dto.NewReportDto;
 import com.ftn.fishingbooker.dto.ReportDto;
-import com.ftn.fishingbooker.model.AdventureReservationReport;
-import com.ftn.fishingbooker.model.Instructor;
-import com.ftn.fishingbooker.model.Report;
+import com.ftn.fishingbooker.model.*;
 
 import java.util.Set;
 
@@ -41,5 +39,16 @@ public class ReportMapper {
         dto.setClientEmail(report.getClientEmail());
         dto.setPenaltySuggested(report.isPenaltySuggested());
         return dto;
+    }
+
+    public static BoatReservationReport toBoatEntity(NewReportDto report, BoatOwner owner) {
+        BoatReservationReport newReport = new BoatReservationReport();
+        newReport.setComment(report.getComment());
+        newReport.setClientShowedUp(report.isClientShowedUp());
+        newReport.setAdminReviewed(false);
+        newReport.setBoatOwner(owner);
+        newReport.setClientEmail(report.getClientEmail());
+        newReport.setPenaltySuggested(report.isPenaltySuggested());
+        return newReport;
     }
 }
