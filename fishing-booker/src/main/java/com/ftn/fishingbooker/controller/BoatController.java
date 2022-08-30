@@ -152,5 +152,10 @@ public class BoatController {
         return ok(boatService.checkAvailability(from, to, boatId));
     }
 
+    @GetMapping("for-reservation/{reservationId}")
+    public ResponseEntity<BoatInfo> getBoatForReservation(@PathVariable Long reservationId){
+        Boat boat = boatService.getBoatForReservation(reservationId);
+        return new ResponseEntity<>(BoatMapper.mapToDtoInfo(boat),HttpStatus.OK);
+    }
 
 }

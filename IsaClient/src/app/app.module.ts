@@ -137,6 +137,12 @@ import { BoatSpecialOfferComponent } from './components/boat-components/boat-spe
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AvailabilityCalendarBoatOwnerComponent } from './components/boat-owner-components/availability-calendar-boat-owner/availability-calendar-boat-owner.component';
 import { VacationHomePageComponent } from './components/rentals/vacation-home-page/vacation-home-page.component';
+import { BoatReservationInfoComponent } from './components/boat-owner-components/boat-reservation-info/boat-reservation-info.component';
+import { BoatReservationPreviewComponent } from './components/boat-owner-components/boat-reservation-preview/boat-reservation-preview.component';
+import { BoatReservationsHistoryComponent } from './components/boat-owner-components/boat-reservations-history/boat-reservations-history.component';
+import { BoatReservationsFutureComponent } from './components/boat-owner-components/boat-reservations-future/boat-reservations-future.component';
+import { BoatReservationsCurrentComponent } from './components/boat-owner-components/boat-reservations-current/boat-reservations-current.component';
+import { BoatOwnerCreateReservationComponent } from './components/boat-owner-components/boat-owner-create-reservation/boat-owner-create-reservation.component';
 
 @NgModule({
   declarations: [
@@ -247,6 +253,12 @@ import { VacationHomePageComponent } from './components/rentals/vacation-home-pa
     AddBoatSpecialOfferComponent,
     BoatSpecialOfferComponent,
     AvailabilityCalendarBoatOwnerComponent,
+    BoatReservationInfoComponent,
+    BoatReservationPreviewComponent,
+    BoatReservationsHistoryComponent,
+    BoatReservationsFutureComponent,
+    BoatReservationsCurrentComponent,
+    BoatOwnerCreateReservationComponent,
   ],
   imports: [
     BrowserModule,

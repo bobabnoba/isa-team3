@@ -76,7 +76,8 @@ values
 --Boat
 insert into boat(
 	id, guest_limit, deleted, description, engine_count, engine_power, information, length, max_speed, name, price_per_day,  rating, type, address_id, boat_owner_id, canceling_percentage)
-	values (100, 4, 'false' ,'DESCRIIIIIIIIIIIIPTION', 2, 30, 'iNFORMATION', 20, 40, 'Titanic',35, 3, 'SMOL' , 43, 109, 5);
+	values (100, 4, 'false' ,'DESCRIIIIIIIIIIIIPTION', 2, 30, 'iNFORMATION', 20, 40, 'Titanic',35, 3, 'SMOL' , 43, 109, 5),
+	(101, 4, 'false' ,'noviiii descriptiooonnn', 2, 30, 'iNFORMATION', 20, 40, 'bela ladja',35, 3, 'SMOL' , 43, 109, 5);
 
 
 -- Adventure
@@ -130,7 +131,10 @@ insert into boat_utilities(
 	(100, 101),
 	(100, 102),
 	(100, 103),
-	(100, 104);
+	(100, 104),
+    (101, 102),
+    (101, 103),
+	(101, 101);
 
 insert into adventure_utilities(
 	adventure_id, utilities_id)
@@ -260,9 +264,17 @@ insert into reservation(
 	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage)
 	values
 	(201, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5),
-	(202, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5);
+	(202, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5),
+	(203, '2022-08-31', 'false', 3, 200, '2022-08-28', 'BOAT', 10, 5),
+	(204, '2022-09-13', 'false', 3, 200, '2022-09-11', 'BOAT', 10, 5),
+	(205, '2022-09-17', 'false', 3, 200, '2022-09-15', 'BOAT', 10, 5),
+		(206, '2022-08-31', 'false', 3, 200, '2022-08-28', 'BOAT', 10, 5),
+    	(207, '2022-09-13', 'false', 3, 200, '2022-09-11', 'BOAT', 10, 5),
+    	(208, '2022-09-17', 'false', 3, 200, '2022-09-15', 'BOAT', 10, 5),
+    	(209, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5),
+        	(210, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5);
 
 --Boat reservations
 
 insert into boat_reservations(boat_id, reservations_id) values
-    (100, 201),(100, 202);
+    (100, 201),(100, 202),(100, 203), (100, 204), (100, 205), (101, 206), (101, 207), (101, 208), (101, 209), (101, 210);

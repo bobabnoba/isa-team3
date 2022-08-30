@@ -1,6 +1,6 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.dao.ReservationInfo;
+import com.ftn.fishingbooker.dao.*;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.UtilityDto;
 import com.ftn.fishingbooker.enumeration.ReservationType;
@@ -180,6 +180,21 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         return 0;
+    }
+
+    @Override
+    public Collection<BoatReservationInfo> getUpcomingReservationsForBoatOwner(Long id) {
+        return reservationRepository.getUpcomingReservationsForBoatOwner(id);
+    }
+
+    @Override
+    public Collection<Reservation> getPastReservationsForBoatOwner(Long id) {
+        return reservationRepository.getPastReservationsForBoatOwner(id);
+    }
+
+    @Override
+    public Collection<BoatReservationInfo> getCurrentReservationsForBoatOwner(Long id) {
+        return reservationRepository.getCurrentReservationsForBoatOwner(id);
     }
 
 
