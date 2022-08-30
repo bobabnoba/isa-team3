@@ -1,6 +1,6 @@
 <div class="my-5 is-clickable hvr-underline-from-center stretch-width" (click)="preview()">
     <article class="media shadow p-4">
-      <figure class="media-left">
+      <figure class="media-left" style="display: flex; justify-content: space-between;">
         <p class="image">
           <img  style="min-height: 100%; min-width:100%" src="{{baseUrl}}{{imageUrl}}" onerror="this.onerror;this.src='../../../../assets/images/no-img.png'" alt="Image not available">  
         </p>
@@ -12,7 +12,7 @@
               <strong
                 ><a href="{{ type }}/page/{{ id }}">{{ name }}</a></strong
               >
-              <small *ngIf="ownerName">, @{{ ownerName }} </small>
+              <small *ngIf="ownerName">, @email : {{ ownerName }} </small>
               <br />
               {{ description | truncate: [200] }}
             </p>

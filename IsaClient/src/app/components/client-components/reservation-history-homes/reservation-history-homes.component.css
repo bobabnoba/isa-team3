@@ -16,3 +16,10 @@ table {
 button {
     width: 70px;
 }
+.mat-row:hover .mat-cell {
+    border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
+}

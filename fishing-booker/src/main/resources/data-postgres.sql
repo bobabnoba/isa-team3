@@ -28,16 +28,16 @@ id, city, country, street, zip_code) values
 -- rank
 insert into user_rank(id, name, min_points, reservation_percentage, percentage)
     values (1, 'REGULAR_CLIENT', 0, 80, 0),
-            (2, 'SILVER_CLIENT', 4000, 80, 4),
-            (3, 'GOLD_CLIENT', 8000, 80, 7),
+            (2, 'SILVER_CLIENT', 4000, 80, 14),
+            (3, 'GOLD_CLIENT', 8000, 80, 20),
             (4, 'REGULAR_ADVERTISER', 0, 90, 92),
             (5, 'SILVER_ADVERTISER', 4500, 90, 94),
             (6, 'GOLD_ADVERTISER', 8000, 90, 96);
 
 --Client
 insert into client(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id,  no_of_penalties) values
-(10,'Whatever Bio',  'majablgic505@gmail.com', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 1, 0),
-(12,'Whatever Bio',  'ClientEmail2', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 7990, 2, 0);
+(10,'Whatever Bio',  'majablgic505@gmail.com', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 4002, 2, 0),
+(12,'Whatever Bio',  'ClientEmail2', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 1, 0);
 
 ----Admin
 insert into admin(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id, first_login, head_admin)
@@ -230,9 +230,9 @@ values (112, 105),
 
 
 insert into special_offer(id, active_from, active_to, discount, guests, is_used, price, reservation_end_date, reservation_start_date, type, canceling_percentage, is_captain)
-	values (100, '2022-08-25 19:50:00', '2022-09-02 19:50:00', 5, 3, 'false', 202, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE',0, false),
-	 (101, '2022-09-02 19:50:00', '2022-09-03 19:50:00', 5, 3, 'false', 303, '2022-09-04 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE',0, false),
-	 (102, '2022-09-03 19:50:00', '2022-09-14 19:50:00', 5, 3, 'false', 404, '2022-09-24 00:50:00', '2022-09-25 19:50:00', 'ADVENTURE',10, false);
+	values (100, '2022-08-25 19:50:00', '2022-09-02 19:50:00', 5, 3, 'false', 202, '2022-09-05 00:50:00', '2022-09-04 19:50:00', 'ADVENTURE',0, 'false'),
+	 (101, '2022-09-02 19:50:00', '2022-09-03 19:50:00', 5, 3, 'false', 303, '2022-09-06 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE',0, 'false'),
+	 (102, '2022-09-03 19:50:00', '2022-09-14 19:50:00', 5, 3, 'false', 404, '2022-09-28 00:50:00', '2022-09-25 19:50:00', 'ADVENTURE',10, 'false');
 
 insert into adventure_special_offers(
 	adventure_id, special_offers_id)

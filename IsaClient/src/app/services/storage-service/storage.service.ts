@@ -6,7 +6,8 @@ import jwt_decode from "jwt-decode";
 })
 export class StorageService {
 
-  constructor() { }
+  constructor() {
+   }
 
   storeTokenData(token: string) {
     localStorage.setItem('token', token);
