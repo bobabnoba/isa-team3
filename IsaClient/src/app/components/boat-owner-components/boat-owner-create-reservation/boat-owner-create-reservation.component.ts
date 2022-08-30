@@ -212,7 +212,7 @@ export class BoatOwnerCreateReservationComponent implements OnInit {
     res.utilities = this.services;
     res.type = ReservationType.BOAT;
     res.utilities = this.services;
-    res.isCaptain = this.isCaptain.value;
+    res.ownerCaptain = this.isCaptain.value;
       
       
     return res;

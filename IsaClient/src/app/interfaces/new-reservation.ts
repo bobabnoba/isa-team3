@@ -10,6 +10,6 @@ export interface IReservation {
     utilities: IUtility[],
     duration: number,
     cancelingPercentage : number,
-    isCaptain: boolean,
+    ownerCaptain: boolean,
     type : ReservationType;
 }

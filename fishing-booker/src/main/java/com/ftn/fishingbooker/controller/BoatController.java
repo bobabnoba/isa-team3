@@ -75,7 +75,7 @@ public class BoatController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        reservationDto.setType(ReservationType.BOAT);
+        //reservationDto.setType(ReservationType.BOAT);
         Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto);
         boatService.makeReservation(boatId, reservation);
         clientService.updatePoints(client, reservation.getPrice());

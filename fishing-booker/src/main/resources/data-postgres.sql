@@ -146,14 +146,14 @@ insert into adventure_utilities(
 
 ---- Reservations
 insert into reservation(
-	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage)
+	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage, owner_captain)
 	values
-	(101, '2022-08-24', 'false', 3, 200, '2022-08-20', 'VACATION_HOME', 10, 0),
-	(104, '2022-08-30', 'false', 3, 200, '2022-08-29', 'ADVENTURE', 10, 0),
-	(105, '2022-08-24 09:00:00', 'false', 3, 500, '2022-08-24 05:00:00', 'ADVENTURE', 10,0),
-	(106, '2022-08-24 15:00:00', 'false', 3, 400, '2022-08-24 09:00:00', 'ADVENTURE', 10,0),
-	(107, '2022-08-24 20:00:00', 'false', 3, 90, '2022-08-24 11:00:00', 'ADVENTURE', 10,0),
-	(108, '2022-08-24 12:00:00', 'false', 3, 354, '2022-08-24 10:00:00', 'ADVENTURE', 10, 0);
+	(101, '2022-08-24', 'false', 3, 200, '2022-08-20', 'VACATION_HOME', 10, 0, false),
+	(104, '2022-08-30', 'false', 3, 200, '2022-08-29', 'ADVENTURE', 10, 0, false),
+	(105, '2022-08-24 09:00:00', 'false', 3, 500, '2022-08-24 05:00:00', 'ADVENTURE', 10,0, false),
+	(106, '2022-08-24 15:00:00', 'false', 3, 400, '2022-08-24 09:00:00', 'ADVENTURE', 10,0, false),
+	(107, '2022-08-24 20:00:00', 'false', 3, 90, '2022-08-24 11:00:00', 'ADVENTURE', 10,0, false),
+	(108, '2022-08-24 12:00:00', 'false', 3, 354, '2022-08-24 10:00:00', 'ADVENTURE', 10, 0, false);
 
 --	(102, '2022-08-30', 'false', 5, 200, '2022-08-25', 'VACATION_HOME', 12);
 
@@ -261,18 +261,18 @@ insert into boat_owner_availability(
 
 ---- Reservations
 insert into reservation(
-	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage)
+	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage, owner_captain)
 	values
-	(201, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5),
-	(202, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5),
-	(203, '2022-08-31', 'false', 3, 200, '2022-08-28', 'BOAT', 10, 5),
-	(204, '2022-09-13', 'false', 3, 200, '2022-09-11', 'BOAT', 10, 5),
-	(205, '2022-09-17', 'false', 3, 200, '2022-09-15', 'BOAT', 10, 5),
-		(206, '2022-08-31', 'false', 3, 200, '2022-08-28', 'BOAT', 10, 5),
-    	(207, '2022-09-13', 'false', 3, 200, '2022-09-11', 'BOAT', 10, 5),
-    	(208, '2022-09-17', 'false', 3, 200, '2022-09-15', 'BOAT', 10, 5),
-    	(209, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5),
-        	(210, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5);
+	(201, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5, false),
+	(202, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5, false),
+	(203, '2022-08-31', 'false', 3, 200, '2022-08-28', 'BOAT', 10, 5, false),
+	(204, '2022-09-13', 'false', 3, 200, '2022-09-11', 'BOAT', 10, 5, false),
+	(205, '2022-09-17', 'false', 3, 200, '2022-09-15', 'BOAT', 10, 5, false),
+		(206, '2022-08-31', 'false', 3, 200, '2022-08-28', 'BOAT', 10, 5, false),
+    	(207, '2022-09-13', 'false', 3, 200, '2022-09-11', 'BOAT', 10, 5, false),
+    	(208, '2022-09-17', 'false', 3, 200, '2022-09-15', 'BOAT', 10, 5, false),
+    	(209, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5, false),
+        	(210, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5, false);
 
 --Boat reservations
 
