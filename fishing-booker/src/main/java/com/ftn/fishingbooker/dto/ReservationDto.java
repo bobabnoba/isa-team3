@@ -35,4 +35,6 @@ public class ReservationDto {
 
 
     private double cancelingPercentage;
+
+    private boolean ownerCaptain;
 }

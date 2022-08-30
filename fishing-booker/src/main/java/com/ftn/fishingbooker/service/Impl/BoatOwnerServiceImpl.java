@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.service.Impl;
 
+import com.ftn.fishingbooker.dao.*;
 import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
@@ -22,13 +23,15 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
     private final BoatOwnerAvailabilityService boatOwnerAvailabilityService;
 
     public BoatOwnerServiceImpl(UserService userService, UserRepository userRepository, RegistrationRepository registrationRepository,
-                                UserRankService userRankService, BoatOwnerRepository boatOwnerRepository, BoatOwnerAvailabilityService boatOwnerAvailabilityService) {
+                                UserRankService userRankService, BoatOwnerRepository boatOwnerRepository,
+                                BoatOwnerAvailabilityService boatOwnerAvailabilityService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.registrationRepository = registrationRepository;
         this.userRankService = userRankService;
         this.boatOwnerRepository = boatOwnerRepository;
         this.boatOwnerAvailabilityService = boatOwnerAvailabilityService;
+
     }
 
     @Override
@@ -141,5 +144,29 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
             boatOwnerRepository.save(boatOwner);
             boatOwnerAvailabilityService.delete(availabilityInBetween.get().getId());
         }
+    }
+
+//    @Override
+//    public Collection<ReservationInfo> getUpcomingReservationsForBoatOwner(String email) {
+//        BoatOwner owner = boatOwnerRepository.findByEmail(email);
+//        return reservationService.getUpcomingReservationsForBoatOwner(owner.getId());
+//    }
+//
+//    @Override
+//    public Collection<Reservation> getPastReservationsForBoatOwner(String email) {
+//        BoatOwner owner = boatOwnerRepository.findByEmail(email);
+//        return reservationService.getPastReservationsForBoatOwner(owner.getId());
+//    }
+//
+//    @Override
+//    public Collection<Reservation> getCurrentReservationsForBoatOwner(String email) {
+//        BoatOwner owner = boatOwnerRepository.findByEmail(email);
+//        return reservationService.getCurrentReservationsForBoatOwner(owner.getId());
+//    }
+
+    @Override
+    public BoatOwner getByEmail(String boatOwnerEmail) {
+        BoatOwner owner = boatOwnerRepository.findByEmail(boatOwnerEmail);
+        return owner;
     }
 }
