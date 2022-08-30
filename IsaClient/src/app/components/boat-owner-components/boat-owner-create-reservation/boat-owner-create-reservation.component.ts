@@ -45,6 +45,7 @@ export class BoatOwnerCreateReservationComponent implements OnInit {
   today = this._datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm')
   discount: number = 0;
   displayDiscount = false;
+  priceWDiscount = 0;
 
   constructor(@Inject(MAT_DIALOG_DATA) public passedData: any, private _clientService : ClientService,
      private _storageService : StorageService, private _insService : InstructorService,
@@ -79,13 +80,20 @@ export class BoatOwnerCreateReservationComponent implements OnInit {
     )
     
   }
-
+  calcDiscount(){
+    let utilitiesSum = 0;
+    this.services.forEach(s => { utilitiesSum += s.price });
+    let totalPrice = this.selectedBoat.pricePerDay * this.numOfDays.value + utilitiesSum;
+    this.priceWDiscount = Math.round(totalPrice - (totalPrice * this.chosenClient.rank.percentage / 100));
+    return this.priceWDiscount;
+  }
   updatePrice() {
     this.price.setValue(this.selectedBoat.pricePerDay * this.numOfDays.value);
     let utilitiesSum = 0;
     this.services.forEach(s => { utilitiesSum += s.price });
     this.price.setValue(this.price.value + utilitiesSum);
-    this.showDiscount();
+    //this.showDiscount();
+    this.calcDiscount();
   }
 
   boatChosen() {
@@ -175,7 +183,7 @@ export class BoatOwnerCreateReservationComponent implements OnInit {
     if( this.boat.valid && this.reservationStartDate.valid
       && this.guests.valid && this.price.valid && this.numOfDays.valid){ 
 
-      this._rentService.rentBoat(this.createReservationObject(), this.selectedBoat.id, this.chosenClient.email).subscribe(
+      this._rentService.ownerRentBoat(this.createReservationObject(), this.selectedBoat.id, this.chosenClient.email).subscribe(
         res => {
           this._snackBar.open('Boat successfully booked!', '',
             { duration: 3000, panelClass: ['snack-bar'] }
@@ -200,7 +208,7 @@ export class BoatOwnerCreateReservationComponent implements OnInit {
     let res = {} as IReservation;
     res.startDate = this._datePipe.transform(resStart, 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
     res.endDate = this._datePipe.transform(resEndDate, 'yyyy-MM-ddTHH:mm:ss.SSSZ')!;
-    res.price = this.price.value;
+    res.price = this.priceWDiscount === 0 ? this.price.value : this.priceWDiscount;
     res.utilities = this.services;
     res.type = ReservationType.BOAT;
     res.utilities = this.services;

@@ -17,7 +17,7 @@
         <mat-label>Reservation date</mat-label>
         <mat-form-field>
           <mat-label>start:</mat-label>
-          <input matInput type="date" [formControl]="reservationStartDate" (change)="resDateChosen()" >
+          <input matInput type="date" [formControl]="reservationStartDate" (change)="resDateChosen();;updatePrice()" >
         </mat-form-field>
           <p>
             <mat-checkbox  [formControl]="isCaptain" (change)="resDateChosen()" ></mat-checkbox>
@@ -39,12 +39,20 @@
             <mat-option *ngFor="let e of selectedBoat.utilities"  [value]="e">{{e.name}}, {{ e.price}}e </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="standard">
+        <!-- <mat-form-field appearance="standard">
           <mat-label>Price:</mat-label>
           <input matInput type="number" min="1"  [formControl]="price" (change)="showDiscount()" >
+        </mat-form-field> -->
+        <mat-form-field appearance="standard">
+          <mat-label>Price:</mat-label>
+          <input  matInput  [formControl]="price" required readonly>
+        </mat-form-field>
+          <mat-form-field *ngIf="priceWDiscount != 0" appearance="standard">
+            <mat-label>Price with clients rank discount:</mat-label>
+          <input matInput [(ngModel)]="priceWDiscount" name="priceWDiscount" required readonly>
         </mat-form-field>
         <br>
         <div class="justify-content-center d-flex">
-          <button class="btn btn-primary" (click)="create()">Confirm</button>
+          <button class="btn btn-primary" (click)="create()">Book now</button>
         </div>
       </form>

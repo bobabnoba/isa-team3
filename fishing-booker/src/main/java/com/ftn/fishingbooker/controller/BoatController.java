@@ -68,6 +68,23 @@ public class BoatController {
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 
+    @PostMapping("/owner-rent/{boatId}/{userEmail}")
+    public ResponseEntity<ReservationDto> ownerMakeReservation(@PathVariable String userEmail, @PathVariable Long boatId, @RequestBody ReservationDto reservationDto) {
+        Client client = clientService.getClientByEmail(userEmail);
+        if (client.getNoOfPenalties() >= 3) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        reservationDto.setType(ReservationType.BOAT);
+        Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto);
+        boatService.makeReservation(boatId, reservation);
+        clientService.updatePoints(client, reservation.getPrice());
+
+        //TODO: send mail
+        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+    }
+
     @GetMapping("/by-owner/{email}")
     public ResponseEntity<Collection<BoatDto>> getAllBoatsByOwner(@PathVariable String email) {
         Collection<Boat> found = boatService.getAllByOwner(email);
