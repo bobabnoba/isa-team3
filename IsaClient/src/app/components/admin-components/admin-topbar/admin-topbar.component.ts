@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-admin-topbar',
@@ -7,11 +7,15 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AdminTopbarComponent implements OnInit {
 
+  @Output() searchInput : EventEmitter<string> = new EventEmitter();
   @Input() admin : string = ""
-  
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  emitMe( searchText : any){
+    this.searchInput.emit(searchText.target.value);
   }
 
 }

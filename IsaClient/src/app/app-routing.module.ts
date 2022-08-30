@@ -47,6 +47,9 @@ import { UnauthInstructorPageComponent } from './components/unauthenticated/unau
 import { ReservationHistoryHomesComponent } from './components/client-components/reservation-history-homes/reservation-history-homes.component';
 import { ReservationHistoryAdventuresComponent } from './components/client-components/reservation-history-adventures/reservation-history-adventures.component';
 import { ReservationHistoryBoatsComponent } from './components/client-components/reservation-history-boats/reservation-history-boats.component';
+import { AdminAdventuresComponent } from './components/admin-components/admin-adventures/admin-adventures.component';
+import { AdminBoatsComponent } from './components/admin-components/admin-boats/admin-boats.component';
+import { AdminHomesComponent } from './components/admin-components/admin-homes/admin-homes.component';
 import { BoatReservationsFutureComponent } from './components/boat-owner-components/boat-reservations-future/boat-reservations-future.component';
 import { BoatReservationsCurrentComponent } from './components/boat-owner-components/boat-reservations-current/boat-reservations-current.component';
 import { BoatReservationsHistoryComponent } from './components/boat-owner-components/boat-reservations-history/boat-reservations-history.component';
@@ -153,6 +156,18 @@ const routes: Routes = [
   {
     path: 'admin/reservation-reports',
     component: ReservationReportsComponent
+  },
+  {
+    path: 'admin/adventures',
+    component: AdminAdventuresComponent
+  },
+  { 
+    path: 'admin/boats',
+    component: AdminBoatsComponent
+  },
+  {
+    path: 'admin/vacation-homes',
+    component: AdminHomesComponent
   },
   {
     path: 'adventure',

@@ -137,6 +137,9 @@ import { BoatSpecialOfferComponent } from './components/boat-components/boat-spe
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AvailabilityCalendarBoatOwnerComponent } from './components/boat-owner-components/availability-calendar-boat-owner/availability-calendar-boat-owner.component';
 import { VacationHomePageComponent } from './components/rentals/vacation-home-page/vacation-home-page.component';
+import { AdminAdventuresComponent } from './components/admin-components/admin-adventures/admin-adventures.component';
+import { AdminBoatsComponent } from './components/admin-components/admin-boats/admin-boats.component';
+import { AdminHomesComponent } from './components/admin-components/admin-homes/admin-homes.component';
 import { BoatReservationInfoComponent } from './components/boat-owner-components/boat-reservation-info/boat-reservation-info.component';
 import { BoatReservationPreviewComponent } from './components/boat-owner-components/boat-reservation-preview/boat-reservation-preview.component';
 import { BoatReservationsHistoryComponent } from './components/boat-owner-components/boat-reservations-history/boat-reservations-history.component';
@@ -253,6 +256,9 @@ import { BoatOwnerCreateReservationComponent } from './components/boat-owner-com
     AddBoatSpecialOfferComponent,
     BoatSpecialOfferComponent,
     AvailabilityCalendarBoatOwnerComponent,
+    AdminAdventuresComponent,
+    AdminBoatsComponent,
+    AdminHomesComponent,
     BoatReservationInfoComponent,
     BoatReservationPreviewComponent,
     BoatReservationsHistoryComponent,

@@ -30,9 +30,8 @@ export class AdvertiserEarningsComponent implements OnInit {
   }
 
   dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
-    console.log(dateRangeStart.value);
-    console.log(dateRangeEnd.value);
-
+    
+    if(dateRangeStart.value != '' && dateRangeEnd.value != ''){
     this._earningsService.getEarningsForDateRangeForAdvertiser(
       this._pipe.transform(dateRangeStart.value, 'yyyy-MM-dd')!, 
       this._pipe.transform(dateRangeEnd.value, 'yyyy-MM-dd')!,
@@ -41,6 +40,7 @@ export class AdvertiserEarningsComponent implements OnInit {
           this.dataSource = new MatTableDataSource<Earnings>(res);
           this.dataSource._updateChangeSubscription();
         })
+    }
   }
 
   ngAfterViewInit() {

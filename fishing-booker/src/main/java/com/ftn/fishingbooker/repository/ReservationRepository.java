@@ -62,6 +62,42 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "    where a.id = :id and r.isCancelled = false and r.startDate >= current_date")
     int noOfIncomingReservationsForAdventure(Long id);
 
+    @Query(value = "select count(r.id) " +
+            "    from Adventure a " +
+            "    join a.reservations r " +
+            "    where a.instructor.id = :id and r.isCancelled = false and r.startDate >= current_date")
+    int noOfIncomingReservationsForInstructor(Long id);
+
+    @Query(value = "select count(r.id) " +
+            "    from Boat b " +
+            "    join b.reservations r " +
+            "    where b.id = :id and r.isCancelled = false and r.startDate >= current_date")
+    int noOfIncomingReservationsForBoat(Long id);
+
+    @Query(value = "select count(r.id) " +
+            "    from Boat b " +
+            "    join b.reservations r " +
+            "    where b.boatOwner.id = :id and r.isCancelled = false and r.startDate >= current_date")
+    int noOfIncomingReservationsForBoatOwner(Long id);
+
+    @Query(value = "select count(r.id) " +
+            "    from VacationHome h " +
+            "    join h.reservations r " +
+            "    where h.id = :id and r.isCancelled = false and r.startDate >= current_date")
+    int noOfIncomingReservationsForHome(Long id);
+
+    @Query(value = "select count(r.id) " +
+            "    from VacationHome h " +
+            "    join h.reservations r " +
+            "    where h.homeOwner.id = :id and r.isCancelled = false and r.startDate >= current_date")
+    int noOfIncomingReservationsForHomeOwner(Long id);
+
+
+    @Query(value = "select count(r.id) " +
+            "    from Reservation r " +
+            "    where r.client.id = :id and r.isCancelled = false and r.startDate >= current_date")
+    int noOfIncomingReservationsForClient(Long id);
+
     @Query(value = "select r.id as id, r.startDate as startDate, r.endDate as endDate, r.price as price, a.name as boatName" +
             "    from Boat a " +
             "    join a.reservations r " +

@@ -34,12 +34,14 @@ export class AddAdminComponent implements OnInit {
   confirm(){
     if(this.newAdminForm.valid){
       this._adminService.addNewAdmin(this.createObject()).subscribe(
-        ()=> {
+        (res)=> {
           this._snackBar.open("New admin successfully added.", "", 
           {duration: 2000,
             panelClass:['snack-bar']
           });
-          this._dialogRef.close();
+          this._dialogRef.close({data: {
+            admin : res
+          }});
         }
       );
     }

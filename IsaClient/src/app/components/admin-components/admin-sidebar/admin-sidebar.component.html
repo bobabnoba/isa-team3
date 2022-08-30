@@ -14,17 +14,45 @@
             <i class="fa fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
+   
     <hr class="sidebar-divider">
 
+    <div class="sidebar-heading">
+          Reservations
+    </div>
     <li class="nav-item">
-        <a class="nav-link" href="/admin/profile" >
-            <i class="fa-solid fa-user"></i>
-            <span>My profile</span>
+        <a class="nav-link" href="/admin/reservation-reports">
+            <i class="fa-solid fa-address-card"></i>
+            <span>Reservation Reports</span>
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/reviews">
+            <i class="fa-solid fa-address-card"></i>
+            <span>Reviews</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/complaints">
+            <i class="fa-solid fa-address-card"></i>
+            <span>Complaints</span>
+        </a>
+    </li>
+   
     <hr class="sidebar-divider">
 
+    <div class="sidebar-heading">
+          Users
+    </div>
+
+
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/users">
+            <i class="fa-solid fa-users"></i>
+            <span>System users</span>
+        </a>
+    </li>
     <li class="nav-item">
         <a class="nav-link" href="/admin/registration-requests">
             <i class="fa-solid fa-address-card"></i>
@@ -39,30 +67,38 @@
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="/admin/reservation-reports">
-            <i class="fa-solid fa-address-card"></i>
-            <span>Reservation Reports</span>
-        </a>
-    </li>
-
     <hr class="sidebar-divider">
 
-    <li class="nav-item">
-        <a class="nav-link" href="/admin/users">
-            <i class="fa-solid fa-users"></i>
-            <span>System entities</span></a>
+    <div class="sidebar-heading">
+          Services
+    </div>
+
+      <li class="nav-item">
+          <a class="nav-link" href="/admin/homes">
+            <i class="fa-solid fa-sack-dollar"></i>
+              <span>Vacation homes</span></a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/boats">
+          <i class="fa-solid fa-sack-dollar"></i>
+            <span>Boats</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/adventures">
+          <i class="fa-solid fa-sack-dollar"></i>
+            <span>Adventures</span></a>
+    </li>
 
       <hr class="sidebar-divider">
 
       <li class="nav-item">
-          <a class="nav-link" href="/admin/incomes">
-            <i class="fa-solid fa-sack-dollar"></i>
-              <span>Incomes</span></a>
+          <a class="nav-link" href="/admin/profile" >
+              <i class="fa-solid fa-user"></i>
+              <span>My profile</span>
+          </a>
       </li>
-
       <hr class="sidebar-divider">
+
 
       <li class="nav-item">
         <a class="nav-link" (click)="logout()" style="cursor:pointer">
