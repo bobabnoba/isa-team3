@@ -32,9 +32,6 @@ public class ReservationMapper {
         if (reservation.getReport() != null){
             reservationDto.setReport(ReportMapper.toDto(reservation.getReport()));
         }
-        if (reservation.getClientReview() != null) {
-            reservationDto.setClientReview(ReviewMapper.map(reservation.getClientReview()));
-        }
         return reservationDto;
     }
 

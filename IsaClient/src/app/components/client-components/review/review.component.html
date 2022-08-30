@@ -1,0 +1,35 @@
+<mat-card class="container">
+    <div class="text-center">
+        <h3> Reservation Report </h3>
+    </div>
+    <div class="col-12">
+        <div [formGroup]="createForm" class="content">
+            <div>
+                <!--Comment-->
+                <mat-form-field appearance="fill" style="width: 100%">
+                    <mat-label>Comment</mat-label>
+                    <textarea id="text" matInput required formControlName="response"></textarea>
+                </mat-form-field>
+
+                <!--Instructor/Owner rating-->
+                <mat-label> Instructor/Owner rating</mat-label>
+                <app-star-rating  [rating]="0"
+                    (ratingUpdated)="getInstructorRating($event)"></app-star-rating>
+                <hr>
+                <!-- Rental rating -->
+                <mat-label> Rental rating</mat-label>
+                <app-star-rating [rating]="0" (ratingUpdated)="getRentalRating($event)">
+                </app-star-rating>
+                <hr>
+
+            </div>
+
+            <div class="buttons">
+                <button (click)="submit()" class="btn btn-primary text-center">
+                    Submit
+                </button>
+            </div>
+        </div>
+        <br>
+    </div>
+</mat-card>
