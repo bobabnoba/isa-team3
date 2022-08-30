@@ -79,13 +79,6 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation leaveReview(Long reservationId, ClientReview clientReview) {
-        Reservation reservation = getReservationById(reservationId);
-        reservation.setClientReview(clientReview);
-        return save(reservation);
-    }
-
-    @Override
     public int getNoOfIncomingReservationsForAdventure(Long id) {
         return reservationRepository.noOfIncomingReservationsForAdventure(id);
     }

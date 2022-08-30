@@ -3,7 +3,6 @@ package com.ftn.fishingbooker.service;
 import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.ClientReview;
 import com.ftn.fishingbooker.model.Reservation;
 
 import java.util.Collection;
@@ -40,7 +39,4 @@ public interface ReservationService {
     Reservation getOngoingReservationForInstructor(Long id);
 
     int getNoOfIncomingReservationsForAdventure(Long id);
-
-    Reservation leaveReview(Long reservationId, ClientReview clientReview);
-
 }

@@ -8,10 +8,8 @@ public class ReviewMapper {
 
         ClientReviewDto clientReviewDto = new ClientReviewDto();
         clientReviewDto.setReview(clientReview.getReview());
-        clientReviewDto.setId(clientReview.getId());
-        clientReviewDto.setRating(clientReview.getRating());
-        clientReviewDto.setDatePosted(clientReview.getDatePosted());
-        clientReviewDto.setStatus(clientReview.getStatus());
+        clientReviewDto.setOwnerRating(clientReview.getOwnerRating());
+        clientReviewDto.setRentalRating(clientReview.getRentalRating());
 
         return clientReviewDto;
     }
@@ -20,10 +18,9 @@ public class ReviewMapper {
 
         ClientReview clientReview = new ClientReview();
         clientReview.setReview(clientReviewDto.getReview());
-        clientReview.setId(clientReviewDto.getId());
-        clientReview.setRating(clientReviewDto.getRating());
-        clientReview.setDatePosted(clientReviewDto.getDatePosted());
-        clientReview.setStatus(clientReviewDto.getStatus());
+        clientReview.setOwnerRating(clientReviewDto.getOwnerRating());
+        clientReview.setRentalRating(clientReviewDto.getRentalRating());
+        clientReview.setReservationId(clientReviewDto.getReservationId());
         return clientReview;
     }
 }

@@ -25,7 +25,6 @@ public class ReservationController {
 
     private final ReservationService reservationService;
     private final ClientService clientService;
-    private final ClientReviewService clientReviewService;
     private final AdventureService adventureService;
     private final HomeService homeService;
     private final BoatService boatService;
@@ -90,17 +89,6 @@ public class ReservationController {
     @GetMapping("/boat/{ReservationId}")
     public BoatDto GetBoatForReservation(@PathVariable Long ReservationId) {
         return BoatMapper.mapToDto(boatService.getBoatForReservation(ReservationId));
-    }
-
-    @PostMapping("/leave/review/{userEmail}")
-    public ResponseEntity<Collection<ReservationDto>> LeaveReview(@PathVariable String userEmail, @RequestBody ClientReviewDto clientReviewDto) {
-        Client client = clientService.getClientByEmail(userEmail);
-        ClientReview clientReview = clientReviewService.newClientReview(client, clientReviewDto);
-
-        reservationService.leaveReview(clientReviewDto.getReservationId(), clientReview);
-
-        List<Reservation> reservationList = clientService.getPastReservations(userEmail, ReservationType.VACATION_HOME);
-        return new ResponseEntity<>(ReservationMapper.map(reservationList), HttpStatus.CREATED);
     }
 
 }
