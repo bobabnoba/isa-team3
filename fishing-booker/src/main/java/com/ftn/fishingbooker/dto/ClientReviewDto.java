@@ -1,26 +1,19 @@
 package com.ftn.fishingbooker.dto;
 
-import com.ftn.fishingbooker.enumeration.ReviewStatus;
+import com.ftn.fishingbooker.enumeration.ReservationType;
 import lombok.Data;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import java.util.Date;
 
 @Data
 public class ClientReviewDto {
 
-    private Long id;
+    private Long reservationId;
 
     private String review;
 
-    private Double rating;
+    private Double ownerRating;
 
-    private Date datePosted;
+    private Double rentalRating;
 
-    @Enumerated(EnumType.STRING)
-    private ReviewStatus status;
-
-    private Long reservationId;
+    private ReservationType reservationType;
 
 }

@@ -1,6 +1,5 @@
 package com.ftn.fishingbooker.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -44,9 +43,6 @@ public class Reservation {
 
     @OneToOne(targetEntity = Report.class, cascade = CascadeType.ALL)
     private Report report;
-
-    @OneToOne(targetEntity = ClientReview.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private ClientReview clientReview;
 
     private double cancelingPercentage;
 
