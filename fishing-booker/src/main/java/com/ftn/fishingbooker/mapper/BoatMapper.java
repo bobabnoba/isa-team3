@@ -1,13 +1,26 @@
 package com.ftn.fishingbooker.mapper;
 
 import com.ftn.fishingbooker.dto.*;
-import com.ftn.fishingbooker.enumeration.*;
-import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.enumeration.BoatType;
+import com.ftn.fishingbooker.enumeration.NavigationType;
+import com.ftn.fishingbooker.model.Boat;
+import com.ftn.fishingbooker.model.BoatAvailability;
 
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
 public class BoatMapper {
+
+    public static Collection<BoatDto> mapToDtoCollection(Collection<Boat> boats) {
+        Collection<BoatDto> boatDtoList = new ArrayList<>();
+        for (Boat boat : boats
+        ) {
+            BoatDto boatDto = mapToDto(boat);
+            boatDtoList.add(boatDto);
+        }
+        return boatDtoList;
+    }
+
     public static BoatDto mapToDto(Boat boat) {
         BoatDto dto = new BoatDto();
         dto.setId(boat.getId());
@@ -34,6 +47,7 @@ public class BoatMapper {
         dto.setNavigationTypes(boat.getNavigationType().stream().map(Enum::toString).collect(Collectors.toList()));
         return dto;
     }
+
     public static BoatDto mapToDtoWithAvailability(Boat boat) {
         BoatDto dto = new BoatDto();
         dto.setId(boat.getId());
@@ -85,27 +99,33 @@ public class BoatMapper {
         return boat;
     }
 
-    public static NavigationType mapNavigation(String s ){
-            if(Objects.equals(s, "GPS")){ return NavigationType.GPS;}
-            else if(Objects.equals(s, "RADAR")){ return NavigationType.RADAR;}
-            else if(Objects.equals(s, "VHF_RADIO")){ return NavigationType.VHF_RADIO;}
-            else if(Objects.equals(s, "FISHFINDER")){ return NavigationType.FISHFINDER;}
+    public static NavigationType mapNavigation(String s) {
+        if (Objects.equals(s, "GPS")) {
+            return NavigationType.GPS;
+        } else if (Objects.equals(s, "RADAR")) {
             return NavigationType.RADAR;
+        } else if (Objects.equals(s, "VHF_RADIO")) {
+            return NavigationType.VHF_RADIO;
+        } else if (Objects.equals(s, "FISHFINDER")) {
+            return NavigationType.FISHFINDER;
+        }
+        return NavigationType.RADAR;
 
     }
 
-    public static BoatAvailabilityDto mapToAvailabilityDto( BoatAvailability availability){
-        BoatAvailabilityDto dto  = new BoatAvailabilityDto();
+    public static BoatAvailabilityDto mapToAvailabilityDto(BoatAvailability availability) {
+        BoatAvailabilityDto dto = new BoatAvailabilityDto();
         dto.setId(availability.getId());
         dto.setStartDate(availability.getStartDate());
         dto.setEndDate(availability.getEndDate());
         return dto;
     }
-    public static List<BoatAvailabilityDto> mapToListOfAvailabilityDtos( Set<BoatAvailability> availabilities){
+
+    public static List<BoatAvailabilityDto> mapToListOfAvailabilityDtos(Set<BoatAvailability> availabilities) {
         return availabilities.stream().map(BoatMapper::mapToAvailabilityDto).collect(Collectors.toList());
     }
 
-    public static BoatAvailability mapToBoatAvailabilityEntity(BoatAvailabilityRequestDto availability){
+    public static BoatAvailability mapToBoatAvailabilityEntity(BoatAvailabilityRequestDto availability) {
         BoatAvailability entity = new BoatAvailability();
         entity.setStartDate(availability.startDate);
         entity.setEndDate(availability.endDate);

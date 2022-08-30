@@ -1,10 +1,10 @@
 package com.ftn.fishingbooker.service;
 
 import com.ftn.fishingbooker.enumeration.ReservationType;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.model.*;
 
 import javax.mail.MessagingException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -26,4 +26,13 @@ public interface ClientService {
 
     List<Reservation> getPastReservations(String userEmail, ReservationType vacationHome);
 
+    Collection<Boat> getBoatSubscription(String clientEmail);
+
+    Collection<VacationHome> getVacationHomeSubscription(String clientEmail);
+
+    Collection<Instructor> getInstructorSubscription(String clientEmail);
+
+    void save(Client client);
+
+    boolean isClientSubscribed(String clientEmail, String entityType, Long entityId);
 }

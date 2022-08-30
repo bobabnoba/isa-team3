@@ -148,6 +148,10 @@ import { BoatReservationsFutureComponent } from './components/boat-owner-compone
 import { BoatReservationsCurrentComponent } from './components/boat-owner-components/boat-reservations-current/boat-reservations-current.component';
 import { BoatOwnerCreateReservationComponent } from './components/boat-owner-components/boat-owner-create-reservation/boat-owner-create-reservation.component';
 import { BoatOwnerReportComponent } from './components/boat-owner-components/boat-owner-report/boat-owner-report.component';
+import { HomeSubsComponent } from './components/client-components/home-subs/home-subs.component';
+import { InstructorSubsComponent } from './components/client-components/instructor-subs/instructor-subs.component';
+import { BoatSubsComponent } from './components/client-components/boat-subs/boat-subs.component';
+import { SubCardComponent } from './components/client-components/sub-card/sub-card.component';
 
 @NgModule({
   declarations: [
@@ -269,6 +273,10 @@ import { BoatOwnerReportComponent } from './components/boat-owner-components/boa
     BoatReservationsCurrentComponent,
     BoatOwnerCreateReservationComponent,
     BoatOwnerReportComponent,
+    HomeSubsComponent,
+    InstructorSubsComponent,
+    BoatSubsComponent,
+    SubCardComponent,
   ],
   imports: [
     BrowserModule,

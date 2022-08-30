@@ -32,7 +32,7 @@ export class ClientBrowseComponent implements OnInit {
   search(filter: SearchFilter) {
   
     console.log(filter);  
-    this.filteredItems = this.searchService.filterProfiles(this.currentItems, filter)!;
+    this.filteredItems = this.searchService.filterUnauthProfiles(this.currentItems, filter)!;
     console.log(this.filteredItems);
   }
 }

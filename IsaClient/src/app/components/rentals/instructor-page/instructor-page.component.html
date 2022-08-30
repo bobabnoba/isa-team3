@@ -12,6 +12,9 @@
                             {{item.instructor.address.zipCode}} </mat-card-subtitle>
                         <mat-card-subtitle>
                             {{item.instructor.email}}
+                            <button mat-raised-button color="primary"
+                            style="max-width: fit-content; height: 25px; margin-top:10px" (click)="subscribe()"
+                            [disabled]="isSubscribed">Subscribe</button>
 
                         </mat-card-subtitle>
                         <div class="image-display">
