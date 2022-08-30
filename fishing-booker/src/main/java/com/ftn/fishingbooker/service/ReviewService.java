@@ -8,6 +8,7 @@ public interface ReviewService {
 
     ClientReview makeBoatReview(ClientReview clientReview);
 
-
     ClientReview makeVacationHomeReview(ClientReview clientReview);
+
+    Boolean checkForReview(Long reservationId);
 }

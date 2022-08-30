@@ -5,7 +5,7 @@ import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.enumeration.ReviewStatus;
 import com.ftn.fishingbooker.mapper.ReviewMapper;
 import com.ftn.fishingbooker.model.ClientReview;
-import com.ftn.fishingbooker.service.*;
+import com.ftn.fishingbooker.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReviewController {
 
-    private final UserService userService;
-    private final HomeService homeService;
-    private final BoatService boatService;
-    private final AdventureService adventureService;
     private final ReviewService reviewService;
 
+    @GetMapping("/reservation/{reservationId}")
+    public Boolean checkForReview(@PathVariable Long reservationId){
+
+        return reviewService.checkForReview(reservationId);
+    }
 
     @PostMapping("/{clientEmail}")
     public ResponseEntity CreateReview(@PathVariable String clientEmail, @RequestBody ClientReviewDto clientReviewDto) {

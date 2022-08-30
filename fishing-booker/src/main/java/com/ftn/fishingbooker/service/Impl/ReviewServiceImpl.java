@@ -55,5 +55,14 @@ public class ReviewServiceImpl implements ReviewService {
 
         return reviewRepository.save(clientReview);
     }
+
+    @Override
+    public Boolean checkForReview(Long reservationId) {
+        ClientReview review = reviewRepository.findByReservationId(reservationId);
+        if (review != null) {
+            return true;
+        }
+        return false;
+    }
 }
 

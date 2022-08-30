@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { IReview } from 'src/app/interfaces/review';
 import { ReviewService } from 'src/app/services/review-service/review.service';
 import { InstructorReportComponent } from '../../instructor-components/instructor-report/instructor-report.component';
 
@@ -15,7 +16,8 @@ export class ReviewComponent implements OnInit {
   createForm!: FormGroup;
   resId!: number;
   rentalRating: number = 0;
-  instructorRating: number = 0;
+  ownerRating: number = 0;
+  resData: IReview = {} as IReview;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     private _formBuilder: FormBuilder,
@@ -31,23 +33,22 @@ export class ReviewComponent implements OnInit {
   }
 
   submit() {
-    if (!this.createForm.valid || this.instructorRating == 0 ||
+    if (!this.createForm.valid || this.ownerRating == 0 ||
       this.rentalRating == 0) {
-        this._snackBar.open('You must fill in all the fields!', '', {
-          duration: 3000
-        });
+      this._snackBar.open('You must fill in all the fields!', '', {
+        duration: 3000
+      });
       return;
     }
-    console.log(this.resId);
-    console.log(this.rentalRating);
-    console.log(this.instructorRating);
-    console.log(this.createForm.value.response);
-    this.dialogRef.close({ event: "Responded", data: {
-      comment: this.createForm.value.response,
-      rentalRating: this.rentalRating,
-      instructorRating: this.instructorRating,
-      reservationId: this.resId
-    }});
+
+    this.resData.review = this.createForm.value.response
+    this.resData.rentalRating = this.rentalRating
+    this.resData.ownerRating = this.ownerRating
+    this.resData.reservationId = this.resId
+
+    this.dialogRef.close({
+      event: "Responded", data: this.resData
+    });
 
 
   }
@@ -55,7 +56,7 @@ export class ReviewComponent implements OnInit {
     this.rentalRating = rating;
   }
   getInstructorRating(rating: number) {
-    this.instructorRating = rating
+    this.ownerRating = rating
   }
 
 }

@@ -46,6 +46,4 @@ public interface ReservationService {
 
     int getNoOfIncomingReservationsForUser(Long id, String role);
 
-    Reservation leaveReview(Long reservationId, ClientReview clientReview);
-
 }

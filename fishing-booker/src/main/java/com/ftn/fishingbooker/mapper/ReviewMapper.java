@@ -21,6 +21,7 @@ public class ReviewMapper {
         clientReview.setOwnerRating(clientReviewDto.getOwnerRating());
         clientReview.setRentalRating(clientReviewDto.getRentalRating());
         clientReview.setReservationId(clientReviewDto.getReservationId());
+        clientReview.setReservationType(clientReviewDto.getReservationType());
         return clientReview;
     }
 }
