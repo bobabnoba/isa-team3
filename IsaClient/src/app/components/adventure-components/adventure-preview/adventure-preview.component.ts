@@ -24,12 +24,16 @@ export class AdventurePreviewComponent implements OnInit {
 
   baseUrl = environment.apiURL
   instructor: boolean = false;
+  admin : boolean = false;
 
   constructor(private _router: Router, private _matDialog: MatDialog,
     private _adventureService: AdventureService, private _service: StorageService, private _snackBar : MatSnackBar) {
     if(_service.getRole() == 'ROLE_INSTRUCTOR'){
       this.instructor = true;
     } 
+    if(_service.getRole() == 'ROLE_ADMIN'){
+      this.admin = true;
+    }
   }
 
   ngOnInit(): void {

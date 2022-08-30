@@ -21,4 +21,8 @@ public class AdminDto {
 
     public boolean firstLogin;
 
+    public boolean headAdmin;
+
+    public String role;
+
 }

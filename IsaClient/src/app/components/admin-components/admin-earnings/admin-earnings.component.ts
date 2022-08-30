@@ -30,9 +30,9 @@ export class AdminEarningsComponent implements OnInit {
   }
 
   dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
-    console.log(dateRangeStart.value);
-    console.log(dateRangeEnd.value);
 
+
+    if(dateRangeStart.value != '' && dateRangeEnd.value != '') {
     this._earningsService.getEarningsForDateRange(
       this._pipe.transform(dateRangeStart.value, 'yyyy-MM-dd')!, 
       this._pipe.transform(dateRangeEnd.value, 'yyyy-MM-dd')!,).subscribe(
@@ -40,8 +40,8 @@ export class AdminEarningsComponent implements OnInit {
           this.dataSource = new MatTableDataSource<Earnings>(res);
           this.dataSource._updateChangeSubscription();
         })
+    }
   }
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }

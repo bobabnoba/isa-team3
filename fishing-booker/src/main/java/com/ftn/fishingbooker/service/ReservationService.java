@@ -39,4 +39,13 @@ public interface ReservationService {
     Reservation getOngoingReservationForInstructor(Long id);
 
     int getNoOfIncomingReservationsForAdventure(Long id);
+
+    int getNoOfIncomingReservationsForBoat(Long id);
+
+    int getNoOfIncomingReservationsForVacationHome(Long id);
+
+    int getNoOfIncomingReservationsForUser(Long id, String role);
+
+    Reservation leaveReview(Long reservationId, ClientReview clientReview);
+
 }

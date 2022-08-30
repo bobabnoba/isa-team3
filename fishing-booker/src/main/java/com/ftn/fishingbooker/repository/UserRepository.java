@@ -21,7 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @param email
      * @return
      */
-    public User findByEmail(String email);
+     User findByEmail(String email);
 
     @Query(value = "select * from users u where u.deleted = false and u.role_id = 5", nativeQuery = true)
     Collection<Instructor> getAllActiveInstructors();
@@ -30,4 +30,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "update public.client set no_of_penalties=0;", nativeQuery = true)
     void resetAllPenalties();
+
 }
