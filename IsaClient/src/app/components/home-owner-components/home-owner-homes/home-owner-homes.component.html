@@ -1,0 +1,27 @@
+<div id="wrapper">
+    <app-home-owner-sidebar></app-home-owner-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <app-home-owner-topbar  (searchInput)="handleMe($event)" ></app-home-owner-topbar>
+        <div class="container-fluid">
+
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 *ngIf="homes.length === 0" class="h3 mb-0 text-gray-800">You dont have any homes yet.</h1>
+                <h1 *ngIf="homes.length !== 0" class="h3 mb-0 text-gray-800">My homes</h1>
+               <div class="d-flex align-items-end">
+                <button (click)="addNew()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm mright"><i
+                    class="fa-solid fa-plus"></i> Add new home</button>
+            
+            <button (click)="addOffer()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                <i class="fa-solid fa-tags"></i> Create a special offer</button>
+               </div>
+            </div>
+
+            <div class="row">
+                <div *ngFor="let home of homes | homeSearch : searchText" >
+                    <app-home-preview [home]="home" (homeEdited)="homeEdited($event)" 
+                    (homeDeleted)="homeDeleted($event)"></app-home-preview>
+                </div>
+            </div>  
+        </div>
+    </div>
+ </div>

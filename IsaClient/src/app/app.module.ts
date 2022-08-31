@@ -148,6 +148,17 @@ import { BoatReservationsFutureComponent } from './components/boat-owner-compone
 import { BoatReservationsCurrentComponent } from './components/boat-owner-components/boat-reservations-current/boat-reservations-current.component';
 import { BoatOwnerCreateReservationComponent } from './components/boat-owner-components/boat-owner-create-reservation/boat-owner-create-reservation.component';
 import { BoatOwnerReportComponent } from './components/boat-owner-components/boat-owner-report/boat-owner-report.component';
+import { HomeOwnerHomesComponent } from './components/home-owner-components/home-owner-homes/home-owner-homes.component';
+import { HomeSearchPipe } from './pipes/home-search/home-search.pipe';
+import { HomeOwnerTopbarComponent } from './components/home-owner-components/home-owner-topbar/home-owner-topbar.component';
+import { HomePreviewComponent } from './components/home-components/home-preview/home-preview.component';
+import { HomeProfileComponent } from './components/home-components/home-profile/home-profile.component';
+import { HomeInfoComponent } from './components/home-components/home-info/home-info.component';
+import { HomeAdditionalInfoComponent } from './components/home-components/home-additional-info/home-additional-info.component';
+import { HomeLocationComponent } from './components/home-components/home-location/home-location.component';
+import { HomeOwnerInfoComponent } from './components/home-components/home-owner-info/home-owner-info.component';
+import { HomeServicesComponent } from './components/home-components/home-services/home-services.component';
+import { HomeOwnerHomeProfileComponent } from './components/home-owner-components/home-owner-home-profile/home-owner-home-profile.component';
 
 @NgModule({
   declarations: [
@@ -269,6 +280,17 @@ import { BoatOwnerReportComponent } from './components/boat-owner-components/boa
     BoatReservationsCurrentComponent,
     BoatOwnerCreateReservationComponent,
     BoatOwnerReportComponent,
+    HomeOwnerHomesComponent,
+    HomeSearchPipe,
+    HomeOwnerTopbarComponent,
+    HomePreviewComponent,
+    HomeProfileComponent,
+    HomeInfoComponent,
+    HomeAdditionalInfoComponent,
+    HomeLocationComponent,
+    HomeOwnerInfoComponent,
+    HomeServicesComponent,
+    HomeOwnerHomeProfileComponent,
   ],
   imports: [
     BrowserModule,

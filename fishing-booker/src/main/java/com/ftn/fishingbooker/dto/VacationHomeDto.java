@@ -34,4 +34,8 @@ public class VacationHomeDto {
     private Collection<UtilityDto> utilities;
 
     private OwnerDto vacationHomeOwner;
+
+    public double cancelingPercentage;
+
+    public String information;
 }

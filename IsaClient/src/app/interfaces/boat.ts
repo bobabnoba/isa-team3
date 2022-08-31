@@ -1,6 +1,6 @@
 import { IAddress } from "./address";
 import { FishingEquipment, Utility } from "./adventure";
-import { BoatAvailability } from "./boat-availability";
+import { BoatAndHomeAvailability } from "./boat-availability";
 import { Rule } from "./rule";
 import { SpecialOffer } from "./special-offer";
 
@@ -28,6 +28,6 @@ export interface Boat {
     ownerEmail : string;
     ownerFirstName: string;
     ownerLastName: string;
-    availability: BoatAvailability[];
+    availability: BoatAndHomeAvailability[];
     specialOffers : SpecialOffer[];
 }

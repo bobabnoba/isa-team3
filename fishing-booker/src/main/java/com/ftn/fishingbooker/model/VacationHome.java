@@ -30,6 +30,8 @@ public class VacationHome {
 
     private String description;
 
+    private String information;
+
     private double pricePerDay = 0.0;
 
     private double rating = 0.0;

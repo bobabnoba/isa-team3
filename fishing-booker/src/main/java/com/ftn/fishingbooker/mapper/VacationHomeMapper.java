@@ -1,12 +1,12 @@
 package com.ftn.fishingbooker.mapper;
 
 import com.ftn.fishingbooker.dto.*;
-import com.ftn.fishingbooker.model.Room;
-import com.ftn.fishingbooker.model.VacationHome;
+import com.ftn.fishingbooker.enumeration.*;
+import com.ftn.fishingbooker.model.*;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
+import java.util.stream.*;
 
 @Component
 public class VacationHomeMapper {
@@ -46,6 +46,8 @@ public class VacationHomeMapper {
         OwnerDto homeOwnerDto = OwnerMapper.map(home.getHomeOwner());
         vacationHomeDto.setVacationHomeOwner(homeOwnerDto);
 
+        vacationHomeDto.setCancelingPercentage(home.getCancelingPercentage());
+        vacationHomeDto.setInformation(home.getInformation());
         return vacationHomeDto;
     }
 
@@ -62,4 +64,24 @@ public class VacationHomeMapper {
         return roomsDto;
     }
 
+    public static VacationHome toEntity(NewHomeDto dto) {
+        VacationHome home = new VacationHome();
+        home.setName(dto.getName());
+        home.setCodeOfConduct(new HashSet<>(dto.getCodeOfConduct()));
+        home.setGuestLimit(dto.getGuestLimit());
+        home.setDescription(dto.getDescription());
+        home.setPricePerDay(dto.getPricePerDay());
+        home.setCancelingPercentage(dto.getCancelingPercentage());
+        home.setUtilities(UtilityMapper.toEntitySet(dto.getUtilities()));
+        home.setAddress(AddressMapper.toEntity(dto.getAddress()));
+        home.setInformation(dto.getInformation());
+        home.setRooms(dto.getRooms().stream().map(VacationHomeMapper::mapToRoom).collect(Collectors.toSet()));
+        return home;
+    }
+
+    public static Room mapToRoom(RoomDto dto){
+        Room room = new Room();
+        room.setBedNumber(dto.getNumberOfBeds());
+        return room;
+    }
 }

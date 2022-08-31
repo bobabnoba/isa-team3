@@ -1,6 +1,6 @@
 package com.ftn.fishingbooker.repository;
 
-import com.ftn.fishingbooker.model.VacationHome;
+import com.ftn.fishingbooker.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -17,4 +17,6 @@ public interface HomeRepository extends JpaRepository<VacationHome, Long> {
             "where ar.reservations_id = ?1  ", nativeQuery = true)
     VacationHome getVacationHomeForReservation(Long reservationId);
 
+    @Query("SELECT a FROM VacationHome a WHERE a.homeOwner.id = ?1 and a.deleted = false")
+    Collection<VacationHome> findAllByOwnerId(Long id);
 }
