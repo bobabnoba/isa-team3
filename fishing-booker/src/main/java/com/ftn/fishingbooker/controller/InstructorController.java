@@ -51,9 +51,12 @@ public class InstructorController {
     }
 
     @PostMapping("/add-availability")
-    public ResponseEntity<InstructorAvailabilityResponseDto> addAvailabilityPeriod(@RequestBody InstructorAvailabilityRequestDto availability) {
-        InstructorAvailability saved = instructorService.addAvailabilityPeriod(InstructorAvailabilityMapper.mapToEntity(availability), availability.getInstructorEmail());
-        return ok(InstructorAvailabilityMapper.mapToResponse(saved));
+    public ResponseEntity<Collection<InstructorAvailabilityResponseDto>> addAvailabilityPeriod(@RequestBody InstructorAvailabilityRequestDto availability) {
+        Collection<InstructorAvailability> saved = instructorService.addAvailabilityPeriod(InstructorAvailabilityMapper.mapToEntity(availability), availability.getInstructorEmail());
+        Collection<InstructorAvailabilityResponseDto> dtos = saved.stream()
+                .map(InstructorAvailabilityMapper::mapToResponse)
+                .collect(Collectors.toList());
+        return ok(dtos);
     }
 
     @GetMapping("/available")

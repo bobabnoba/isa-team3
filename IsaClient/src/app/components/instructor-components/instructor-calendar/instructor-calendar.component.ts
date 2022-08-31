@@ -63,7 +63,10 @@ export class InstructorCalendarComponent implements OnInit, OnChanges {
     // now aw is changed 
     console.log(changes);
     if( changes.newAv.currentValue){
-      this.addEvent(changes.newAv.currentValue.startDate, changes.newAv.currentValue.endDate);
+      this.events = [];
+      changes.newAv.currentValue.forEach((e : any) => {
+        this.addEvent(e.startDate, e.endDate)
+      })
     }
   }
 

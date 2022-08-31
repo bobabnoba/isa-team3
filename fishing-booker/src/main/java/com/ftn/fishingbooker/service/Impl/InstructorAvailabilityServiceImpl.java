@@ -25,4 +25,9 @@ public class InstructorAvailabilityServiceImpl implements InstructorAvailability
                 () -> new IllegalArgumentException("InstructorAvailability not found"));
         instructorAvailabilityRepository.delete(found);
     }
+
+    @Override
+    public void deleteAll() {
+        instructorAvailabilityRepository.deleteAll();
+    }
 }

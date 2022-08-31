@@ -8,4 +8,5 @@ public interface InstructorAvailabilityService {
 
     void delete(Long id);
 
+    void deleteAll();
 }

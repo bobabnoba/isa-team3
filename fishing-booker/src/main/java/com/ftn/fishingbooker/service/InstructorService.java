@@ -14,7 +14,7 @@ public interface InstructorService {
 
     User register(Instructor instructor, String motivation) throws MessagingException;
 
-    InstructorAvailability addAvailabilityPeriod(InstructorAvailability availability, String email);
+    Collection<InstructorAvailability> addAvailabilityPeriod(InstructorAvailability availability, String email);
 
     Instructor getWithAvailability(String email);
 

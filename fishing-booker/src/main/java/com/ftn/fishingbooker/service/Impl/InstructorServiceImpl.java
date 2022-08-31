@@ -42,7 +42,7 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Transactional
     @Override
-    public InstructorAvailability addAvailabilityPeriod(InstructorAvailability availability, String email) {
+    public Collection<InstructorAvailability> addAvailabilityPeriod(InstructorAvailability availability, String email) {
 
         Instructor instructor = instructorRepository.findByEmail(email);
         List<InstructorAvailability> availabilities = new ArrayList<>(instructor.getAvailability());
@@ -51,11 +51,8 @@ public class InstructorServiceImpl implements InstructorService {
 
         instructor.setAvailability(new HashSet<>(checkForOverlapping(added, availabilities)));
 
-        instructorRepository.save(instructor);
-
-        //TODO: delete all availabilities that overlapped and got replaced // availabilityService
-
-        return added;
+        Instructor saved = instructorRepository.save(instructor);
+        return saved.getAvailability();
     }
 
     @Override
@@ -66,13 +63,16 @@ public class InstructorServiceImpl implements InstructorService {
         for (var a : new ArrayList<>(instructor.getAvailability())) {
             if (periodToDelete.getStartDate().after(a.getStartDate())
                     && periodToDelete.getEndDate().before(a.getEndDate())) {
-                InstructorAvailability parted = new InstructorAvailability(periodToDelete.getEndDate(), a.getEndDate());
-                a.setEndDate(periodToDelete.getStartDate());
-                availabilities.add(availabilityService.save(parted));
-            }
-            availabilities.add(a);
+                InstructorAvailability partOne = new InstructorAvailability(a.getStartDate(), periodToDelete.getStartDate());
+                InstructorAvailability partTwo = new InstructorAvailability(periodToDelete.getEndDate(), a.getEndDate());
+                availabilityService.delete(a.getId());
+                availabilities.add(availabilityService.save(partOne));
+                availabilities.add(availabilityService.save(partTwo));
+            } else
+                availabilities.add(a);
         }
         instructor.setAvailability(new HashSet<>(availabilities));
+
         instructorRepository.save(instructor);
     }
 
@@ -98,7 +98,6 @@ public class InstructorServiceImpl implements InstructorService {
     @Transactional
     public Collection<ReservationInfo> getUpcomingReservationsForInstructor(String email) {
         Instructor instructor = instructorRepository.findByEmail(email);
-        //Collection<Long> adventureIds = adventureService.getAllIdsByInstructorId(instructor.getId());
         return reservationService.getUpcomingReservationsForInstructor(instructor.getId());
     }
 
