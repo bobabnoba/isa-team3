@@ -140,6 +140,7 @@ import { VacationHomePageComponent } from './components/rentals/vacation-home-pa
 import { AdminAdventuresComponent } from './components/admin-components/admin-adventures/admin-adventures.component';
 import { AdminBoatsComponent } from './components/admin-components/admin-boats/admin-boats.component';
 import { AdminHomesComponent } from './components/admin-components/admin-homes/admin-homes.component';
+import { InstructorAvailabilityComponent } from './components/instructor-components/instructor-availability/instructor-availability.component';
 
 @NgModule({
   declarations: [
@@ -253,6 +254,7 @@ import { AdminHomesComponent } from './components/admin-components/admin-homes/a
     AdminAdventuresComponent,
     AdminBoatsComponent,
     AdminHomesComponent,
+    InstructorAvailabilityComponent,
   ],
   imports: [
     BrowserModule,

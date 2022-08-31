@@ -50,6 +50,7 @@ import { ReservationHistoryBoatsComponent } from './components/client-components
 import { AdminAdventuresComponent } from './components/admin-components/admin-adventures/admin-adventures.component';
 import { AdminBoatsComponent } from './components/admin-components/admin-boats/admin-boats.component';
 import { AdminHomesComponent } from './components/admin-components/admin-homes/admin-homes.component';
+import { InstructorAvailabilityComponent } from './components/instructor-components/instructor-availability/instructor-availability.component';
 
 
 const routes: Routes = [
@@ -189,6 +190,10 @@ const routes: Routes = [
   {
     path: 'instructor/adventure/:id',
     component: InstructorServiceComponent
+  },
+  {
+    path: 'instructor/availability',
+    component: InstructorAvailabilityComponent
   },
   {
     path: 'home-owner/dashboard',
