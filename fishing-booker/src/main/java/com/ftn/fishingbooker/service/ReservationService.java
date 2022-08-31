@@ -55,4 +55,7 @@ public interface ReservationService {
 
     Reservation ownerMakeReservation(Client client, ReservationDto reservation);
 
+    Reservation instructorMakeReservation(Client client, ReservationDto reservationDto, double durationInHours);
+
+
 }

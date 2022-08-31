@@ -60,7 +60,6 @@ export class InstructorCalendarComponent implements OnInit, OnChanges {
   constructor(private _instructorService : InstructorService, private _storageService: StorageService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    // now aw is changed 
     console.log(changes);
     if( changes.newAv.currentValue){
       this.events = [];
