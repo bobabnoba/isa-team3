@@ -18,6 +18,7 @@ export interface VacationHome {
     description : string;
     information : string;
     images : string[];
+    imageUrls : string[];
     codeOfConduct : Rule[];
     utilities : Utility[];
     cancelingPercentage : number;

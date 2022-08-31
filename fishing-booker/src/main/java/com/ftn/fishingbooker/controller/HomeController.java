@@ -79,7 +79,7 @@ public class HomeController {
     public ResponseEntity<Collection<VacationHomeDto>> getAllHomesByOwner(@PathVariable String email) {
         Collection<VacationHome> found = vacationHomeService.getAllByOwner(email);
         Collection<VacationHomeDto> dtos = found.stream()
-                .map(VacationHomeMapper::map)
+                .map(VacationHomeMapper::mapToHomeOwnerDto)
                 .collect(Collectors.toList());
 
         return ok(dtos);

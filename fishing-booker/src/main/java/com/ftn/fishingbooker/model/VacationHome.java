@@ -70,7 +70,7 @@ public class VacationHome {
         if (this.getImages() != null) {
             this.getImages().forEach(
                     image ->
-                            retVal.add("/images/adventures/" + this.getId() + "/" + image.getUrl()));
+                            retVal.add("/images/homes/" + this.getId() + "/" + image.getUrl()));
         }
         return retVal;
     }

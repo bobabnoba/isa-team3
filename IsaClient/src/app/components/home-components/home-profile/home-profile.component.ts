@@ -32,7 +32,7 @@ export class HomeProfileComponent implements OnInit {
     this._homeService.getById(this.homeId).subscribe(
       res => {
         this.home = res;
-        this.home.images.map( (image,index) => {
+        this.home.imageUrls.map( (image,index) => {
           if(index == 0) {
             this.images.push({src:this.baseUrl  + image, caption:image, act:'carousel-item active '});
           } else {
