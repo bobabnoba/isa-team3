@@ -1,9 +1,8 @@
 package com.ftn.fishingbooker.service;
 
-import com.ftn.fishingbooker.dao.ReservationInfo;
+import com.ftn.fishingbooker.dao.*;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.ClientReview;
 import com.ftn.fishingbooker.model.Reservation;
 
 import java.util.Collection;
@@ -47,6 +46,13 @@ public interface ReservationService {
 
     int getNoOfIncomingReservationsForUser(Long id, String role);
 
-    Reservation leaveReview(Long reservationId, ClientReview clientReview);
+
+    Collection<BoatReservationInfo> getUpcomingReservationsForBoatOwner(Long id);
+
+    Collection<Reservation> getPastReservationsForBoatOwner(Long id);
+
+    Collection<BoatReservationInfo> getCurrentReservationsForBoatOwner(Long id);
+
+    Reservation ownerMakeReservation(Client client, ReservationDto reservation);
 
 }

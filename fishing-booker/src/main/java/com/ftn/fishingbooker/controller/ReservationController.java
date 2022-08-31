@@ -2,10 +2,7 @@ package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.enumeration.ReservationType;
-import com.ftn.fishingbooker.mapper.AdventureMapper;
-import com.ftn.fishingbooker.mapper.BoatMapper;
-import com.ftn.fishingbooker.mapper.ReservationMapper;
-import com.ftn.fishingbooker.mapper.VacationHomeMapper;
+import com.ftn.fishingbooker.mapper.*;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.ClientReview;
 import com.ftn.fishingbooker.model.Reservation;
@@ -15,8 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/reservations")
@@ -25,7 +21,6 @@ public class ReservationController {
 
     private final ReservationService reservationService;
     private final ClientService clientService;
-    private final ClientReviewService clientReviewService;
     private final AdventureService adventureService;
     private final HomeService homeService;
     private final BoatService boatService;
@@ -92,15 +87,15 @@ public class ReservationController {
         return BoatMapper.mapToDto(boatService.getBoatForReservation(ReservationId));
     }
 
-    @PostMapping("/leave/review/{userEmail}")
-    public ResponseEntity<Collection<ReservationDto>> LeaveReview(@PathVariable String userEmail, @RequestBody ClientReviewDto clientReviewDto) {
-        Client client = clientService.getClientByEmail(userEmail);
-        ClientReview clientReview = clientReviewService.newClientReview(client, clientReviewDto);
 
-        reservationService.leaveReview(clientReviewDto.getReservationId(), clientReview);
 
-        List<Reservation> reservationList = clientService.getPastReservations(userEmail, ReservationType.VACATION_HOME);
-        return new ResponseEntity<>(ReservationMapper.map(reservationList), HttpStatus.CREATED);
+    @GetMapping("check-if-ongoing/{id}")
+    public ResponseEntity<ClientDto> checkIfReservationIsOngoing(@PathVariable Long id){
+        Reservation reservation = reservationService.getReservationById(id);
+        if(reservation.getStartDate().before(new Date()) && reservation.getEndDate().after(new Date())){
+            return new ResponseEntity<>(ClientMapper.map(reservation.getClient()), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

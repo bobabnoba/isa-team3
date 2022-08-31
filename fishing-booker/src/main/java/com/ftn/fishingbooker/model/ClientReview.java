@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.model;
 
+import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.enumeration.ReviewStatus;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +8,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -19,21 +19,32 @@ public class ClientReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    private Long reservationId;
+
     private String review;
 
-    private Double rating;
+    private Double ownerRating;
 
-    private Date datePosted;
+    private Double rentalRating;
+
+    @Enumerated(EnumType.STRING)
+    private ReservationType reservationType;
+
+    // More that needs
+
+    private String ownerEmail;
+
+    private Long rentalId;
+
+    private String clientEmail;
 
     @Enumerated(EnumType.STRING)
     private ReviewStatus status = ReviewStatus.PENDING;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    Client client;
 
-    @OneToOne
-    @JoinColumn(name = "reservation_id")
-    Reservation reservation;
+
+
+
 
 }

@@ -32,4 +32,9 @@ public class ClientController {
         return ResponseEntity.ok(ClientMapper.map(clientInfo));
     }
 
+    @GetMapping("/{clientEmail}/subscribed/{entityType}/{entityId}")
+    public boolean isClientSubscribed(@PathVariable String clientEmail, @PathVariable String entityType, @PathVariable Long entityId) {
+        return clientService.isClientSubscribed(clientEmail, entityType, entityId);
+    }
+
 }

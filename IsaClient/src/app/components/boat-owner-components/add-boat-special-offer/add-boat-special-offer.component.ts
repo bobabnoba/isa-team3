@@ -53,7 +53,6 @@ export class AddBoatSpecialOfferComponent implements OnInit {
         this.boats = res;
       }
     )
-    console.log(this.today)
   }
 
   updatePrice() {
@@ -88,7 +87,6 @@ export class AddBoatSpecialOfferComponent implements OnInit {
     let resEnd = new Date(this.reservationStartDate.value);
     let num : number = this.numOfDays.value ;
     let resEndDate = new Date(resEnd.getTime());
-    console.log( this.numOfDays.value)
     resEndDate.setHours(0, 0, 0, 0);
     resEndDate.setDate(resEndDate.getDate() + (this.numOfDays.value -1));
 
@@ -99,8 +97,6 @@ export class AddBoatSpecialOfferComponent implements OnInit {
         { duration: 2000, panelClass: ['snack-bar'] }
       );
     }
-    console.log(resStartDate)
-    console.log(resEndDate)
 
     this._boatService.checkBoatAvailability(
       this._datePipe.transform(resStartDate, 'yyyy-MM-dd HH:mm:ss')!,
@@ -158,7 +154,6 @@ export class AddBoatSpecialOfferComponent implements OnInit {
     this.services.forEach(s => { utilitiesSum += s.price });
     let totalPrice = this.selectedBoat.pricePerDay * this.numOfDays.value + utilitiesSum;
     this.discount = Math.round((totalPrice - this.price.value) * 100 / totalPrice);
-    console.log(this.discount)
     if (this.discount != 0) {
       this.displayDiscount = true;
     } else {

@@ -74,7 +74,7 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" [routerLink]="['/client/boats/history']">Boats</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" [routerLink]="['/client/adventures/history']">Adventures History</a>
+            <a class="dropdown-item" [routerLink]="['/client/adventures/history']">Adventures </a>
         </div>
     </li>
     <hr class="sidebar-divider">
@@ -84,6 +84,21 @@
             <i class="fa-solid fa-calendar"></i>
             <span>Upcoming Reservations</span>
         </a>
+    </li>
+    <hr class="sidebar-divider">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ticket" aria-hidden="true"></i>
+            <span>My Subscription </span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" [routerLink]="['/client/subscribed/homes']">Vacation Homes</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" [routerLink]="['/client/subscribed/boats']">Boats</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" [routerLink]="['/client/subscribed/instructors']">Instructors</a>
+        </div>
     </li>
 
     <hr class="sidebar-divider">

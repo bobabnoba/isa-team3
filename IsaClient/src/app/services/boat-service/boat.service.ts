@@ -63,5 +63,9 @@ export class BoatService {
   private handlePlusInEmail(email : string) {
     return encodeURIComponent(email);
   }
+
+  getBoatForReservation(id : number) : Observable<Boat>{
+    return this._http.get<Boat>(`${this.baseURL}/boats/for-reservation/${id}`);
+  }
   
 }

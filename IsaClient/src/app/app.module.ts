@@ -137,10 +137,22 @@ import { BoatSpecialOfferComponent } from './components/boat-components/boat-spe
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AvailabilityCalendarBoatOwnerComponent } from './components/boat-owner-components/availability-calendar-boat-owner/availability-calendar-boat-owner.component';
 import { VacationHomePageComponent } from './components/rentals/vacation-home-page/vacation-home-page.component';
+import { ReviewComponent } from './components/client-components/review/review.component';
 import { AdminAdventuresComponent } from './components/admin-components/admin-adventures/admin-adventures.component';
 import { AdminBoatsComponent } from './components/admin-components/admin-boats/admin-boats.component';
 import { AdminHomesComponent } from './components/admin-components/admin-homes/admin-homes.component';
 import { InstructorAvailabilityComponent } from './components/instructor-components/instructor-availability/instructor-availability.component';
+import { BoatReservationInfoComponent } from './components/boat-owner-components/boat-reservation-info/boat-reservation-info.component';
+import { BoatReservationPreviewComponent } from './components/boat-owner-components/boat-reservation-preview/boat-reservation-preview.component';
+import { BoatReservationsHistoryComponent } from './components/boat-owner-components/boat-reservations-history/boat-reservations-history.component';
+import { BoatReservationsFutureComponent } from './components/boat-owner-components/boat-reservations-future/boat-reservations-future.component';
+import { BoatReservationsCurrentComponent } from './components/boat-owner-components/boat-reservations-current/boat-reservations-current.component';
+import { BoatOwnerCreateReservationComponent } from './components/boat-owner-components/boat-owner-create-reservation/boat-owner-create-reservation.component';
+import { BoatOwnerReportComponent } from './components/boat-owner-components/boat-owner-report/boat-owner-report.component';
+import { HomeSubsComponent } from './components/client-components/home-subs/home-subs.component';
+import { InstructorSubsComponent } from './components/client-components/instructor-subs/instructor-subs.component';
+import { BoatSubsComponent } from './components/client-components/boat-subs/boat-subs.component';
+import { SubCardComponent } from './components/client-components/sub-card/sub-card.component';
 
 @NgModule({
   declarations: [
@@ -251,10 +263,22 @@ import { InstructorAvailabilityComponent } from './components/instructor-compone
     AddBoatSpecialOfferComponent,
     BoatSpecialOfferComponent,
     AvailabilityCalendarBoatOwnerComponent,
+    ReviewComponent,
     AdminAdventuresComponent,
     AdminBoatsComponent,
     AdminHomesComponent,
     InstructorAvailabilityComponent,
+    BoatReservationInfoComponent,
+    BoatReservationPreviewComponent,
+    BoatReservationsHistoryComponent,
+    BoatReservationsFutureComponent,
+    BoatReservationsCurrentComponent,
+    BoatOwnerCreateReservationComponent,
+    BoatOwnerReportComponent,
+    HomeSubsComponent,
+    InstructorSubsComponent,
+    BoatSubsComponent,
+    SubCardComponent,
   ],
   imports: [
     BrowserModule,

@@ -69,4 +69,10 @@ export class ReservationService {
     );
   }
 
+  checkIfOngoingReservation(id: number): Observable<any> {
+    return this._http.get<any>(
+      `${this.baseURL}/reservations/check-if-ongoing/` + id
+    );
+  }
+
 }

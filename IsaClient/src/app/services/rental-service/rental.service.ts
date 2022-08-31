@@ -54,6 +54,10 @@ export class RentalService {
   filterAdventures(requestFilter: IFilter) {
     return this._http.post('http://localhost:8090/adventures/search', requestFilter);
   }
+  ownerRentBoat(newReservation: IReservation, boatId: number, email: string): Observable<any> {
+    return this._http.post('http://localhost:8090/boats/owner-rent/' + boatId + "/" + email,
+      newReservation);
+  }
 
 }
 

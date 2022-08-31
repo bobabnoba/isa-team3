@@ -1,11 +1,12 @@
-import { MESSAGES_CONTAINER_ID } from '@angular/cdk/a11y';
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IAddress } from 'src/app/interfaces/address';
+import { LoggedClient } from 'src/app/interfaces/logged-client';
 import { IReservation } from 'src/app/interfaces/new-reservation';
 import { IUtility } from 'src/app/interfaces/vacation-house-profile';
+import { ClientService } from 'src/app/services/client-service/client.service';
 import { RentalService } from 'src/app/services/rental-service/rental.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { environment } from 'src/environments/environment';
@@ -39,23 +40,43 @@ export class BrowseCardReservationComponent implements OnInit {
   @Input() type: string = 'entity';
   @Input() startDate: Date = new Date();
   @Input() endDate: Date = new Date();
-  @Input() cancelingPercentage : number = 0;
+  @Input() cancelingPercentage: number = 0;
   newReservation: IReservation = {} as IReservation;
   baseUrl = environment.apiURL
+  displayDiscount = false;
+  client: LoggedClient = {} as LoggedClient;
+  calculatedPrice: number = 0;
+  showTotalPrice: boolean = false;
+
 
   constructor(
     private _rentalService: RentalService,
     private _snackBar: MatSnackBar,
     private _storageService: StorageService,
-    private _datePipe: DatePipe) {
+    private _datePipe: DatePipe,
+    private _clientService: ClientService) {
     this.newReservation.utilities = [];
+
+    this._clientService.getClientInfo(this._storageService.getEmail()).subscribe(
+      (data) => {
+        this.client = data;
+        if (this.client.rank.percentage == 0) {
+          this.displayDiscount = false;
+
+        }
+        this.displayDiscount = true;
+        this.calculatePrice();
+
+      }
+    );
+
 
   }
 
   ngOnInit(): void {
-    
+
   }
-  
+
   onChangeDemo(ob: any) {
 
     var checked = ob.checked;
@@ -75,7 +96,29 @@ export class BrowseCardReservationComponent implements OnInit {
 
     }
     console.log(this.newReservation.utilities);
+    this.calculatePrice()
 
+  }
+  calculatePrice() {
+
+    let days = new Date(this.endDate).getTime() - new Date(this.startDate).getTime()
+    let numOfDays = Math.round(days / (24 * 60 * 60 * 1000));
+    if (numOfDays == 0 ) {
+      numOfDays = 1;
+    }
+    let utilitesPrice = 0;
+    for (var ut of this.newReservation.utilities) {
+      utilitesPrice += ut.price
+
+    }
+    let discount = 0
+    let originalPrice = (numOfDays * this.price + utilitesPrice)
+    
+    if (this.displayDiscount) {
+      discount = originalPrice * this.client.rank.percentage / 100;
+    }
+    this.calculatedPrice = originalPrice - discount
+    this.showTotalPrice = true;
   }
 
   reserve() {

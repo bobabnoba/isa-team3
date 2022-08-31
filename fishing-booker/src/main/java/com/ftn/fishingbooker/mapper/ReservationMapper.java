@@ -32,9 +32,6 @@ public class ReservationMapper {
         if (reservation.getReport() != null){
             reservationDto.setReport(ReportMapper.toDto(reservation.getReport()));
         }
-        if (reservation.getClientReview() != null) {
-            reservationDto.setClientReview(ReviewMapper.map(reservation.getClientReview()));
-        }
         return reservationDto;
     }
 
@@ -48,6 +45,7 @@ public class ReservationMapper {
         reservation.setEndDate(reservationDto.getEndDate());
         reservation.setStartDate(reservationDto.getStartDate());
         reservation.setCancelingPercentage(reservationDto.getCancelingPercentage());
+        reservation.setOwnerCaptain(reservationDto.isOwnerCaptain());
         return reservation;
     }
 
