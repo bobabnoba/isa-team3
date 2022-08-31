@@ -256,4 +256,9 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.save(newReservation);
     }
 
+    @Override
+    public Collection<ReservationCalendarInfo> getAllInstructorReservations(Long id) {
+        return reservationRepository.getAllReservationForInstructor(id);
+    }
+
 }

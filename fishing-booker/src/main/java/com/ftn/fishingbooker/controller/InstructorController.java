@@ -1,15 +1,12 @@
 package com.ftn.fishingbooker.controller;
 
+import com.ftn.fishingbooker.dao.ReservationCalendarInfo;
+import com.ftn.fishingbooker.dao.SpecialOfferCalendarInfo;
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.mapper.*;
-import com.ftn.fishingbooker.model.Instructor;
-import com.ftn.fishingbooker.model.InstructorAvailability;
-import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.model.User;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.dao.ReservationInfo;
-import com.ftn.fishingbooker.service.ClientService;
-import com.ftn.fishingbooker.service.InstructorService;
-import com.ftn.fishingbooker.service.UserService;
+import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -30,6 +27,8 @@ public class InstructorController {
 
     private final InstructorService instructorService;
     private final UserService userService;
+    private final ReservationService reservationService;
+    private final SpecialOfferService specialOfferService;
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody OwnerRegisterDto registerDto) throws MessagingException {
@@ -105,4 +104,19 @@ public class InstructorController {
         }
     }
 
+    @GetMapping("/reservations/{email}")
+    ResponseEntity<Collection<ReservationCalendarInfo>> getAllReservations(@PathVariable String email) {
+        Instructor instructor = instructorService.findByEmail(email);
+        Collection<ReservationCalendarInfo> reservations = reservationService.getAllInstructorReservations(instructor.getId());
+        return ok(reservations);
+    }
+
+    @GetMapping("special-offers/{email}")
+    ResponseEntity<Collection<SpecialOfferCalendarInfo>> getInstructorSpecialOffers(@PathVariable String email) {
+        Instructor instructor = instructorService.findByEmail(email);
+        Collection<SpecialOfferCalendarInfo> found = specialOfferService.getAllInstructorsOffers(instructor.getId());
+        return ResponseEntity.ok(found);
+    }
+
 }
+

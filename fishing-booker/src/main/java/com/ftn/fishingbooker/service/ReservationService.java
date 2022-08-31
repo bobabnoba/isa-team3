@@ -57,5 +57,5 @@ public interface ReservationService {
 
     Reservation instructorMakeReservation(Client client, ReservationDto reservationDto, double durationInHours);
 
-
+    Collection<ReservationCalendarInfo> getAllInstructorReservations(Long id);
 }
