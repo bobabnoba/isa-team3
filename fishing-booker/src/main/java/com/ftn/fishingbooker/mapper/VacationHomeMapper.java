@@ -84,4 +84,43 @@ public class VacationHomeMapper {
         room.setBedNumber(dto.getNumberOfBeds());
         return room;
     }
+
+
+
+    public static VacationHomeDto mapToHomeOwnerDto(VacationHome home) {
+        VacationHomeDto vacationHomeDto = new VacationHomeDto();
+        vacationHomeDto.setId(home.getId());
+        vacationHomeDto.setName(home.getName());
+        vacationHomeDto.setAddress(home.getAddress());
+        vacationHomeDto.setDescription(home.getDescription());
+        vacationHomeDto.setRating(home.getRating());
+        vacationHomeDto.setGuestLimit(home.getGuestLimit());
+        vacationHomeDto.setPricePerDay(home.getPricePerDay());
+//        Collection<ImageDto> imagesDto = ImageMapper.map(home.getImages());
+//        vacationHomeDto.setImages(imagesDto);
+        vacationHomeDto.setImageUrls(home.getImagePaths());
+//        Collection<RoomDto> roomsDto = mapRooms(home.getRooms());
+//        vacationHomeDto.setRooms(roomsDto);
+        vacationHomeDto.setRooms(home.getRooms().stream().map(VacationHomeMapper::mapToRoomDto).collect(Collectors.toSet()));
+
+//        Collection<ReservationDto> reservationsDto = ReservationMapper.map(home.getReservations());
+//        vacationHomeDto.setAvailableReservations(reservationsDto);
+        vacationHomeDto.setCodeOfConduct(home.getCodeOfConduct());
+
+        Collection<UtilityDto> utilitiesDto = UtilityMapper.map(home.getUtilities());
+        vacationHomeDto.setUtilities(utilitiesDto);
+
+        OwnerDto homeOwnerDto = OwnerMapper.map(home.getHomeOwner());
+        vacationHomeDto.setVacationHomeOwner(homeOwnerDto);
+
+        vacationHomeDto.setCancelingPercentage(home.getCancelingPercentage());
+        vacationHomeDto.setInformation(home.getInformation());
+        return vacationHomeDto;
+    }
+
+    public static RoomDto mapToRoomDto(Room room){
+        RoomDto dto = new RoomDto();
+        dto.setNumberOfBeds(room.getBedNumber());
+        return dto;
+    }
 }

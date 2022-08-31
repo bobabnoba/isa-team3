@@ -159,6 +159,7 @@ import { HomeLocationComponent } from './components/home-components/home-locatio
 import { HomeOwnerInfoComponent } from './components/home-components/home-owner-info/home-owner-info.component';
 import { HomeServicesComponent } from './components/home-components/home-services/home-services.component';
 import { HomeOwnerHomeProfileComponent } from './components/home-owner-components/home-owner-home-profile/home-owner-home-profile.component';
+import { AddHomeComponent } from './components/home-components/add-home/add-home.component';
 
 @NgModule({
   declarations: [
@@ -291,6 +292,7 @@ import { HomeOwnerHomeProfileComponent } from './components/home-owner-component
     HomeOwnerInfoComponent,
     HomeServicesComponent,
     HomeOwnerHomeProfileComponent,
+    AddHomeComponent,
   ],
   imports: [
     BrowserModule,

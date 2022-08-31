@@ -96,7 +96,7 @@ public class HomeController {
     public ResponseEntity<VacationHomeDto> addNewHome(@RequestBody NewHomeDto dto) {
         VacationHome home = VacationHomeMapper.toEntity(dto);
         VacationHome saved = vacationHomeService.addHome(home, dto.getOwnerEmail());
-        return ok(VacationHomeMapper.map(saved));
+        return ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
     @PostMapping("/info-update/{id}")
     public ResponseEntity<VacationHomeDto> updateHomeInfo(@PathVariable Long id, @RequestBody HomeInfoDto updated) {

@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { VacationHome } from 'src/app/interfaces/vacation-home';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { HomeService } from 'src/app/services/vacation-home-service/home.service';
+import { AddHomeComponent } from '../../home-components/add-home/add-home.component';
 
 @Component({
   selector: 'app-home-owner-homes',
@@ -38,6 +39,7 @@ export class HomeOwnerHomesComponent implements OnInit {
     dialogConfig.height = '650px';
     //this._matDialog.open(AddHomeSpecialOfferComponent, dialogConfig);
   }
+  
 
   addNew(){
     
@@ -48,15 +50,15 @@ export class HomeOwnerHomesComponent implements OnInit {
     dialogConfig.data = {
       editMode : false
     }
-    // const dialogRef = this._matDialog.open(AddHomeComponent, dialogConfig);
+    const dialogRef = this._matDialog.open(AddHomeComponent, dialogConfig);
 
-    // dialogRef.afterClosed().subscribe(res =>
-    //   {
-    //       this.homes = [
-    //         ...this.homes,
-    //         res.data.home,
-    //       ];
-    //   })
+    dialogRef.afterClosed().subscribe(res =>
+      {
+          this.homes = [
+            ...this.homes,
+            res.data.home,
+          ];
+      })
   }
 
   homeEdited(home : VacationHome){

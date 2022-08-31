@@ -22,8 +22,8 @@ public class VacationHomeDto {
     private double pricePerDay;
 
     private Integer guestLimit;
-
     private Collection<ImageDto> images;
+    public Collection<String> imageUrls;
 
     private Collection<RoomDto> rooms;
 

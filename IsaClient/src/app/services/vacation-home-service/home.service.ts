@@ -34,7 +34,7 @@ export class HomeService {
   getCodeOfConduct() : Observable<Rule[]>{
     return this._http.get<Rule[]>(`${this.baseURL}/code-of-conduct`);
   }
-  addBoat(home : VacationHome) : Observable<VacationHome>{
+  addHome(home : VacationHome) : Observable<VacationHome>{
     return this._http.post<any>(`${this.baseURL}/vacation/homes`, home);
   }
   deleteHome(id: number) {
