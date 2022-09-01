@@ -6,10 +6,7 @@ import com.ftn.fishingbooker.mapper.AddressMapper;
 import com.ftn.fishingbooker.mapper.AdventureMapper;
 import com.ftn.fishingbooker.mapper.RentalMapper;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
-import com.ftn.fishingbooker.model.Adventure;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.model.Rule;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.FIleUploadUtil;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +34,8 @@ public class AdventureController {
     private final InstructorService instructorService;
     private final DateService dateService;
     private final SpecialOfferService specialOfferService;
-     private final EarningsService earningsService;
+    private final EarningsService earningsService;
+    private final EmailService emailService;
 
 
     @GetMapping
@@ -157,13 +155,13 @@ public class AdventureController {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
 
-
         Reservation reservation = reservationService.makeSpecialOfferReservation(client, reservationDto);
         adventureService.makeReservation(adventureId, reservation);
+        instructorService.updateAvailability(new InstructorAvailability(reservation.getStartDate(), reservation.getEndDate()), adventure.getInstructor().getEmail());
         specialOfferService.reserveSpecialOffer(offerId);
         clientService.updatePoints(client, reservation.getPrice());
         instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
-        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 
@@ -177,12 +175,32 @@ public class AdventureController {
         reservationDto.setType(ReservationType.ADVENTURE);
         Reservation reservation = reservationService.makeReservation(client, reservationDto, adventure.getDurationInHours());
         adventureService.makeReservation(adventureId, reservation);
+        instructorService.updateAvailability(new InstructorAvailability(reservation.getStartDate(), reservation.getEndDate()), adventure.getInstructor().getEmail());
         clientService.updatePoints(client, reservation.getPrice());
         instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
         earningsService.saveEarnings(reservation, adventure.getInstructor().getEmail(), adventure.getInstructor().getRank());
-        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
+
+    @PostMapping("/instructor-rent/{adventureId}/{userEmail}")
+    public ResponseEntity<ReservationDto> instructorMakeReservation(@PathVariable String userEmail, @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
+        Client client = clientService.getClientByEmail(userEmail);
+        if (client.getNoOfPenalties() >= 3) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+        Adventure adventure = adventureService.getById(adventureId);
+        reservationDto.setType(ReservationType.ADVENTURE);
+        Reservation reservation = reservationService.makeReservation(client, reservationDto, adventure.getDurationInHours());
+        adventureService.makeReservation(adventureId, reservation);
+        instructorService.updateAvailability(new InstructorAvailability(reservation.getStartDate(), reservation.getEndDate()), adventure.getInstructor().getEmail());
+        clientService.updatePoints(client, reservation.getPrice());
+        instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
+        earningsService.saveEarnings(reservation, adventure.getInstructor().getEmail(), adventure.getInstructor().getRank());
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+    }
+
 
     @GetMapping("{id}/has-incoming-reservations")
     public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){

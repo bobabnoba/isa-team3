@@ -55,6 +55,7 @@ import { UnauthBoatPageComponent } from './components/unauthenticated/unauth-boa
 import { UnauthHomePageComponent } from './components/unauthenticated/unauth-home-page/unauth-home-page.component';
 import { UnauthInstructorPageComponent } from './components/unauthenticated/unauth-instructor-page/unauth-instructor-page.component';
 import { MaterialModule } from './material/material.module';
+import { InstructorAvailabilityComponent } from './components/instructor-components/instructor-availability/instructor-availability.component';
 
 
 const routes: Routes = [
@@ -194,6 +195,10 @@ const routes: Routes = [
   {
     path: 'instructor/adventure/:id',
     component: InstructorServiceComponent
+  },
+  {
+    path: 'instructor/availability',
+    component: InstructorAvailabilityComponent
   },
   {
     path: 'home-owner/dashboard',

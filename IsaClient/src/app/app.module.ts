@@ -141,6 +141,7 @@ import { ReviewComponent } from './components/client-components/review/review.co
 import { AdminAdventuresComponent } from './components/admin-components/admin-adventures/admin-adventures.component';
 import { AdminBoatsComponent } from './components/admin-components/admin-boats/admin-boats.component';
 import { AdminHomesComponent } from './components/admin-components/admin-homes/admin-homes.component';
+import { InstructorAvailabilityComponent } from './components/instructor-components/instructor-availability/instructor-availability.component';
 import { BoatReservationInfoComponent } from './components/boat-owner-components/boat-reservation-info/boat-reservation-info.component';
 import { BoatReservationPreviewComponent } from './components/boat-owner-components/boat-reservation-preview/boat-reservation-preview.component';
 import { BoatReservationsHistoryComponent } from './components/boat-owner-components/boat-reservations-history/boat-reservations-history.component';
@@ -266,6 +267,7 @@ import { SubCardComponent } from './components/client-components/sub-card/sub-ca
     AdminAdventuresComponent,
     AdminBoatsComponent,
     AdminHomesComponent,
+    InstructorAvailabilityComponent,
     BoatReservationInfoComponent,
     BoatReservationPreviewComponent,
     BoatReservationsHistoryComponent,

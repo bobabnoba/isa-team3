@@ -11,35 +11,10 @@ import { StorageService } from 'src/app/services/storage-service/storage.service
 })
 export class InstructorDashboardComponent implements OnInit {
 
-  aFormGroup!: FormGroup;
-  newAv! : any;
-  constructor(private _formBuilder: FormBuilder, private _instructorService : InstructorService,
-              private _storageService:  StorageService, private _snackBar : MatSnackBar) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.aFormGroup = this._formBuilder.group({
-      startDate: new FormControl('', [
-        Validators.required,
-      ]),
-      endDate: new FormControl('', [
-        Validators.required,
-      ]),
-    });
+   
   }
 
-  addNew(){
-
-    this._instructorService.addAvailability( {
-      startDate : this.aFormGroup.value.startDate,
-      endDate : this.aFormGroup.value.endDate,
-      instructorEmail : this._storageService.getEmail()
-    }).subscribe( data => {
-      this.newAv = data;
-      this._snackBar.open('New availability period successfully added.', '',
-      { duration: 3000, panelClass: ['snack-bar'] }
-    );
-    this.aFormGroup.reset();
-    })
-  }
- 
 }

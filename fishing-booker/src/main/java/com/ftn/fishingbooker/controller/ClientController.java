@@ -23,7 +23,7 @@ public class ClientController {
     public ResponseEntity<Boolean> checkIfAvailable(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
                                                     @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
                                                     @RequestParam String email) {
-        return ResponseEntity.ok(clientService.hasOverlappingReservation(email, from, to));
+        return ResponseEntity.ok(!clientService.hasOverlappingReservation(email, from, to));
     }
 
     @GetMapping("{email}")

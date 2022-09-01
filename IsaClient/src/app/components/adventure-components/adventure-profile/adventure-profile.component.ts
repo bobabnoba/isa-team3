@@ -59,7 +59,8 @@ export class AdventureProfileComponent implements OnInit {
       utilities: this.adventure.utilities,
       price: this.adventure.pricePerDay,
       guests: this.adventure.maxNumberOfParticipants,
-      duration: this.adventure.durationInHours
+      duration: this.adventure.durationInHours,
+      cancelingPercentage : this.adventure.cancelingPercentage
     }
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;

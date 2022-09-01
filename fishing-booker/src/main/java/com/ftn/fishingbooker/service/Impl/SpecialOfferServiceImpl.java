@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.service.Impl;
 
+import com.ftn.fishingbooker.dao.SpecialOfferCalendarInfo;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
@@ -63,5 +64,10 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
         SpecialOffer specialOffer = specialOfferRepository.findById(offerId).orElseThrow(() -> new ResourceConflictException("Offer not found"));
         specialOffer.setUsed(true);
         specialOfferRepository.save(specialOffer);
+    }
+
+    @Override
+    public Collection<SpecialOfferCalendarInfo> getAllInstructorsOffers(Long id) {
+        return specialOfferRepository.getAllOffersForInstructor(id);
     }
 }
