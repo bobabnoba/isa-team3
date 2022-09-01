@@ -75,4 +75,7 @@ public class VacationHome {
         return retVal;
     }
 
+    @OneToMany(targetEntity = SpecialOffer.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    private Set<SpecialOffer> specialOffers;
+
 }

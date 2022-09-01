@@ -96,25 +96,17 @@ public class VacationHomeMapper {
         vacationHomeDto.setRating(home.getRating());
         vacationHomeDto.setGuestLimit(home.getGuestLimit());
         vacationHomeDto.setPricePerDay(home.getPricePerDay());
-//        Collection<ImageDto> imagesDto = ImageMapper.map(home.getImages());
-//        vacationHomeDto.setImages(imagesDto);
         vacationHomeDto.setImageUrls(home.getImagePaths());
-//        Collection<RoomDto> roomsDto = mapRooms(home.getRooms());
-//        vacationHomeDto.setRooms(roomsDto);
         vacationHomeDto.setRooms(home.getRooms().stream().map(VacationHomeMapper::mapToRoomDto).collect(Collectors.toSet()));
-
-//        Collection<ReservationDto> reservationsDto = ReservationMapper.map(home.getReservations());
-//        vacationHomeDto.setAvailableReservations(reservationsDto);
         vacationHomeDto.setCodeOfConduct(home.getCodeOfConduct());
-
         Collection<UtilityDto> utilitiesDto = UtilityMapper.map(home.getUtilities());
         vacationHomeDto.setUtilities(utilitiesDto);
-
         OwnerDto homeOwnerDto = OwnerMapper.map(home.getHomeOwner());
         vacationHomeDto.setVacationHomeOwner(homeOwnerDto);
-
         vacationHomeDto.setCancelingPercentage(home.getCancelingPercentage());
         vacationHomeDto.setInformation(home.getInformation());
+        var offers = SpecialOfferMapper.toDtoSet(home.getSpecialOffers());
+        vacationHomeDto.setSpecialOffers(offers.stream().filter(specialOffer -> specialOffer.getActiveTo().after(new Date())).collect(Collectors.toSet()));
         return vacationHomeDto;
     }
 
@@ -122,5 +114,33 @@ public class VacationHomeMapper {
         RoomDto dto = new RoomDto();
         dto.setNumberOfBeds(room.getBedNumber());
         return dto;
+    }
+
+    public static VacationHomeAvailability mapToHomeAvailabilityEntity(HomeAvailabilityRequestDto availability){
+        VacationHomeAvailability entity = new VacationHomeAvailability();
+        entity.setStartDate(availability.startDate);
+        entity.setEndDate(availability.endDate);
+        return entity;
+    }
+
+    public static HomeAvailabilityDto mapToAvailabilityDto( VacationHomeAvailability availability){
+        HomeAvailabilityDto dto  = new HomeAvailabilityDto();
+        dto.setId(availability.getId());
+        dto.setStartDate(availability.getStartDate());
+        dto.setEndDate(availability.getEndDate());
+        return dto;
+    }
+
+    public static HomeInfoDto mapToDtoInfo(VacationHome home) {
+        HomeInfoDto vacationHomeDto = new HomeInfoDto();
+        vacationHomeDto.setName(home.getName());
+        vacationHomeDto.setDescription(home.getDescription());
+        vacationHomeDto.setGuestLimit(home.getGuestLimit());
+        vacationHomeDto.setPricePerDay(home.getPricePerDay());
+        Collection<UtilityDto> utilitiesDto = UtilityMapper.map(home.getUtilities());
+        OwnerDto homeOwnerDto = OwnerMapper.map(home.getHomeOwner());
+        vacationHomeDto.setCancelingPercentage(home.getCancelingPercentage());
+        vacationHomeDto.setInformation(home.getInformation());
+        return vacationHomeDto;
     }
 }

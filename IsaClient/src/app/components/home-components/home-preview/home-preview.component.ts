@@ -62,7 +62,7 @@ export class HomePreviewComponent implements OnInit {
   }
 
   openCalendar(){
-    this._router.navigate(['/boat-owner/boat/calendar/' + this.home.id]);
+    this._router.navigate(['/home-owner/home/calendar/' + this.home.id]);
   }
 
 

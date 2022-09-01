@@ -18,13 +18,16 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
     private final InstructorService instructorService;
     private final BoatService boatService;
     private final BoatOwnerService boatOwnerService;
+    private final HomeService homeService;
     public SpecialOfferServiceImpl(AdventureService adventureService, SpecialOfferRepository specialOfferRepository,
-                                   InstructorService instructorService, BoatService boatService, BoatOwnerService boatOwnerService) {
+                                   InstructorService instructorService, BoatService boatService, BoatOwnerService boatOwnerService,
+                                   HomeService homeService) {
         this.adventureService = adventureService;
         this.specialOfferRepository = specialOfferRepository;
         this.instructorService = instructorService;
         this.boatService = boatService;
         this.boatOwnerService = boatOwnerService;
+        this.homeService = homeService;
     }
 
     @Override
@@ -49,6 +52,13 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
              if(specialOffer.isCaptain()){
                 boatOwnerService.updateAvailability(saved.getReservationStartDate(),saved.getReservationEndDate(), ownerEmail);
             }
+        } else if(specialOffer.getType().equals(ReservationType.VACATION_HOME)){
+            VacationHome home = homeService.getById(serviceId);
+            home.getSpecialOffers().add(saved);
+            homeService.save(home);
+
+            homeService.updateAvailability(saved.getReservationStartDate(), saved.getReservationEndDate(), home.getId());
+
         }
         return saved;
     }

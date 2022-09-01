@@ -38,4 +38,6 @@ public class VacationHomeDto {
     public double cancelingPercentage;
 
     public String information;
+
+    public Collection<SpecialOfferDto> specialOffers;
 }

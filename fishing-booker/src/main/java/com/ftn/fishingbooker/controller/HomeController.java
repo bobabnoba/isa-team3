@@ -10,6 +10,7 @@ import com.ftn.fishingbooker.service.HomeService;
 import com.ftn.fishingbooker.service.ReservationService;
 import com.ftn.fishingbooker.util.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.*;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.*;
 
 import java.io.*;
-import java.util.Collection;
+import java.util.*;
 import java.util.stream.*;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -138,6 +139,28 @@ public class HomeController {
         vacationHomeService.addImage(id, fileName);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/add-availability")
+    public ResponseEntity<?> addAvailabilityPeriod(@RequestBody HomeAvailabilityRequestDto availability) {
+        VacationHomeAvailability saved = vacationHomeService.addAvailabilityPeriod(VacationHomeMapper.mapToHomeAvailabilityEntity(availability), availability.getHomeId());
+        if (saved != null){
+            return ok(VacationHomeMapper.mapToAvailabilityDto(saved));
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/check-if-available")
+    ResponseEntity<Boolean> checkAvailability(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
+                                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
+                                              @RequestParam Long homeId) {
+        return ok(vacationHomeService.checkAvailability(from, to, homeId));
+    }
+
+    @GetMapping("for-reservation/{reservationId}")
+    public ResponseEntity<HomeInfoDto> getHomeForReservation(@PathVariable Long reservationId){
+        VacationHome home = vacationHomeService.getHomeForReservation(reservationId);
+        return new ResponseEntity<>(VacationHomeMapper.mapToDtoInfo(home),HttpStatus.OK);
     }
 }
 

@@ -5,6 +5,7 @@ import { VacationHome } from 'src/app/interfaces/vacation-home';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { HomeService } from 'src/app/services/vacation-home-service/home.service';
 import { AddHomeComponent } from '../../home-components/add-home/add-home.component';
+import { AddHomeSpecialOfferComponent } from '../add-home-special-offer/add-home-special-offer.component';
 
 @Component({
   selector: 'app-home-owner-homes',
@@ -37,7 +38,7 @@ export class HomeOwnerHomesComponent implements OnInit {
     dialogConfig.id = 'modal-component';
     dialogConfig.width = '600px';
     dialogConfig.height = '650px';
-    //this._matDialog.open(AddHomeSpecialOfferComponent, dialogConfig);
+    this._matDialog.open(AddHomeSpecialOfferComponent, dialogConfig);
   }
   
 

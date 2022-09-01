@@ -58,13 +58,13 @@ export class HomeService {
   }
 
  
-  // addAvailability(body : any ) : Observable<any> {
-  //   return this._http.post(`${this.baseURL}/boats/add-availability`, body);
-  // }
+  addAvailability(body : any ) : Observable<any> {
+    return this._http.post(`${this.baseURL}/vacation/homes/add-availability`, body);
+  }
 
-  // checkBoatAvailability(from : string, to : string, boatId : number) {
-  //   return this._http.get(`${this.baseURL}/boats/check-if-available?from=${from}&to=${to}&boatId=${boatId}`);
-  // }
+  checkHomeAvailability(from : string, to : string, homeId : number) {
+    return this._http.get(`${this.baseURL}/vacation/homes/check-if-available?from=${from}&to=${to}&homeId=${homeId}`);
+  }
   // private handlePlusInEmail(email : string) {
   //   return encodeURIComponent(email);
   // }

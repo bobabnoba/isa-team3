@@ -11,6 +11,7 @@ import java.util.Date;
 public class VacationHomeAvailability {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 

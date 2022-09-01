@@ -160,6 +160,9 @@ import { HomeOwnerInfoComponent } from './components/home-components/home-owner-
 import { HomeServicesComponent } from './components/home-components/home-services/home-services.component';
 import { HomeOwnerHomeProfileComponent } from './components/home-owner-components/home-owner-home-profile/home-owner-home-profile.component';
 import { AddHomeComponent } from './components/home-components/add-home/add-home.component';
+import { HomeAvailabilityCalendarComponent } from './components/home-components/home-availability-calendar/home-availability-calendar.component';
+import { HomeAvailabilityComponent } from './components/home-components/home-availability/home-availability.component';
+import { AddHomeSpecialOfferComponent } from './components/home-owner-components/add-home-special-offer/add-home-special-offer.component';
 
 @NgModule({
   declarations: [
@@ -293,6 +296,9 @@ import { AddHomeComponent } from './components/home-components/add-home/add-home
     HomeServicesComponent,
     HomeOwnerHomeProfileComponent,
     AddHomeComponent,
+    HomeAvailabilityCalendarComponent,
+    HomeAvailabilityComponent,
+    AddHomeSpecialOfferComponent,
   ],
   imports: [
     BrowserModule,
