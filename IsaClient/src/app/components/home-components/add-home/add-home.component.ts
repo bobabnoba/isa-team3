@@ -256,7 +256,7 @@ export class AddHomeComponent implements OnInit {
   closeDialog(){
     this.dialogRef.close({data: {
       editMode : this.editMode,
-      boat : this.dataHome,
+      home : this.dataHome,
     }});
   }
 

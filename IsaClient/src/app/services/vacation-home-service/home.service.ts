@@ -54,7 +54,7 @@ export class HomeService {
     return this._http.post<VacationHome>(`${this.baseURL}/vacation/homes/address-update/${id}` , updated);
   }
   getById(id : string) : Observable<VacationHome>{
-    return this._http.get<VacationHome>(`${this.baseURL}/vacation/homes/${id}`);
+    return this._http.get<VacationHome>(`${this.baseURL}/vacation/homes/profile/${id}`);
   }
 
  

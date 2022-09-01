@@ -16,10 +16,10 @@ public class Room {
 
     private int bedNumber;
 
-    @ManyToOne
-    @JoinColumn(name = "home_id")
-    @ToString.Exclude
-    @JsonManagedReference
-    private VacationHome vacationHome;
+//    @ManyToOne
+//    @JoinColumn(name = "home_id")
+//    @ToString.Exclude
+//    @JsonManagedReference
+//    private VacationHome vacationHome;
 
 }

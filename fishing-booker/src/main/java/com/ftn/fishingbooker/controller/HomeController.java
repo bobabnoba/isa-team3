@@ -32,7 +32,7 @@ public class HomeController {
     private final EmailService emailService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<VacationHomeDto> getBoatById(@PathVariable Long id) {
+        public ResponseEntity<VacationHomeDto> getHomeById(@PathVariable Long id) {
         VacationHome found = vacationHomeService.getById(id);
         VacationHomeDto dto = VacationHomeMapper.map(found);
         return ok(dto);
@@ -59,6 +59,12 @@ public class HomeController {
     public Collection<ReservationDto> GetVacationHomeReservations(@PathVariable Long homeId) {
 
         return ReservationMapper.map(reservationService.getReservationForVacationHome(homeId));
+    }
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<VacationHomeDto> getHomeProfileById(@PathVariable Long id) {
+        VacationHome found = vacationHomeService.getById(id);
+        VacationHomeDto dto = VacationHomeMapper.mapToHomeOwnerDto(found);
+        return ok(dto);
     }
 
     @PostMapping("/rent/{homeId}/{userEmail}")
@@ -101,25 +107,25 @@ public class HomeController {
     @PostMapping("/info-update/{id}")
     public ResponseEntity<VacationHomeDto> updateHomeInfo(@PathVariable Long id, @RequestBody HomeInfoDto updated) {
         VacationHome saved = vacationHomeService.updateHomeInfo(id, updated);
-        return ResponseEntity.ok(VacationHomeMapper.map(saved));
+        return ResponseEntity.ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
 
     @PostMapping("/additional-update/{id}")
     public ResponseEntity<VacationHomeDto> updateHomeAdditionalInfo(@PathVariable Long id, @RequestBody HomeAdditionalInfo updated) {
         VacationHome saved = vacationHomeService.updateHomeAdditionalInfo(id, updated);
-        return ResponseEntity.ok(VacationHomeMapper.map(saved));
+        return ResponseEntity.ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
 
     @PostMapping("/code-of-conduct-update/{id}")
     public ResponseEntity<VacationHomeDto> updateHomeCodeOfConduct(@PathVariable Long id, @RequestBody Collection<Rule> updated) {
         VacationHome saved = vacationHomeService.updateHomeRules(id, updated);
-        return ResponseEntity.ok(VacationHomeMapper.map(saved));
+        return ResponseEntity.ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
 
     @PostMapping("/address-update/{id}")
     public ResponseEntity<VacationHomeDto> updateHomeAddress(@PathVariable Long id, @RequestBody AddressDto updated) {
         VacationHome saved = vacationHomeService.updateHomeAddress(id, AddressMapper.toEntity(updated));
-        return ResponseEntity.ok(VacationHomeMapper.map(saved));
+        return ResponseEntity.ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
 
     @PostMapping("/image-upload/{id}")

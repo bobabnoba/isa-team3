@@ -52,7 +52,7 @@ public class VacationHome {
     @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private Set<Reservation> reservations;
 
-    @OneToMany(targetEntity = Room.class, mappedBy = "vacationHome", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Room.class,  cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<Room> rooms;
 
     @ManyToOne(targetEntity = HomeOwner.class, cascade = CascadeType.MERGE)

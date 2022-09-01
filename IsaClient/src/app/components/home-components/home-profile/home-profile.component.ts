@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IAddress } from 'src/app/interfaces/address';
 import { Utility } from 'src/app/interfaces/adventure';
 import { ImageListItem } from 'src/app/interfaces/image-list-item';
+import { IOwnerInfo } from 'src/app/interfaces/owner-info';
 import { SpecialOffer } from 'src/app/interfaces/special-offer';
 import { VacationHome } from 'src/app/interfaces/vacation-home';
 import { HomeService } from 'src/app/services/vacation-home-service/home.service';
@@ -25,6 +26,7 @@ export class HomeProfileComponent implements OnInit {
     this.home.utilities = [] as Utility[];
     this.home.specialOffers = [] as SpecialOffer[];
     this.home.address = {} as IAddress;
+    this.home.vacationHomeOwner = {} as IOwnerInfo;
     
   }
 
@@ -42,7 +44,7 @@ export class HomeProfileComponent implements OnInit {
         
       }
     )
-    
+    console.log(this.home);
     console.log(this.images);
   }
 

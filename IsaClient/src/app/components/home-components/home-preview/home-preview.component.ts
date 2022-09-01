@@ -5,6 +5,7 @@ import { VacationHome } from 'src/app/interfaces/vacation-home';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { HomeService } from 'src/app/services/vacation-home-service/home.service';
 import { environment } from 'src/environments/environment';
+import { AddHomeComponent } from '../add-home/add-home.component';
 
 @Component({
   selector: 'app-home-preview',
@@ -43,15 +44,15 @@ export class HomePreviewComponent implements OnInit {
     dialogConfig.id = 'modal-component';
     dialogConfig.width = '1100px';
     dialogConfig.data = myData;
-    // const dialogRef = this._matDialog.open(AddHomeComponent, dialogConfig);
+    const dialogRef = this._matDialog.open(AddHomeComponent, dialogConfig);
 
-    // dialogRef.afterClosed().subscribe(res =>
-    //   {
-    //     if(res.data.editMode){
-    //     this.homeEdited.emit(res.data.home);
-    //     }
+    dialogRef.afterClosed().subscribe(res =>
+      {
+        if(res.data.editMode){
+        this.homeEdited.emit(res.data.home);
+        }
         
-    //   })
+      })
   }
 
   delete(){

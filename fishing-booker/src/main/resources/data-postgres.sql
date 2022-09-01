@@ -88,9 +88,9 @@ insert into adventure(
 	(112, 5.00, 20, 'We fish Sharks', 3, 45, 4, 'Shark soup', 'false', 40, 110);
 
 --Rooms
-insert into room(
-	id, bed_number, home_id)
-	values (100, 4, 100);
+--insert into room(
+--	id, bed_number, home_id)
+--	values (100, 4, 100);
 
 
 --Utilities
