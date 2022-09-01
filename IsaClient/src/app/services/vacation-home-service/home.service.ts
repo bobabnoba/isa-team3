@@ -10,19 +10,25 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class HomeService {
+  
 
   baseURL = environment.apiURL;
 
   constructor(private _http: HttpClient) { }
 
+  getAllHomes() : Observable<any> {
+    return this._http.get<any>(
+      `${this.baseURL}/vacation/homes/all`);
+  }
+
   getVacationHomeDetails(id: string): Observable<any> {
     return this._http.get<any>(
-      'http://localhost:8090/vacation/homes/' + id ,
+      `${this.baseURL}/vacation/homes/` + id ,
     );
   }
   getAll(): Observable<any> {
     return this._http.get<any>(
-      'http://localhost:8090/vacation/homes');
+      `${this.baseURL}/vacation/homes`);
   }
   getAllByHomeOwner(email: string) : Observable<VacationHome[]> {
     return this._http.get<VacationHome[]>(`${this.baseURL}/vacation/homes/by-owner/${email}`);

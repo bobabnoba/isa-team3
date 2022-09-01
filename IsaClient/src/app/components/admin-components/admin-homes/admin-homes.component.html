@@ -9,8 +9,9 @@
                
             </div>
 
-            <div class="row">
-               <!-- app home preview -->
+            <div class="row"  *ngFor="let home of homes | homeSearch : searchText" >
+                <app-home-preview [home]="home" 
+                (homeDeleted)="homeDeleted($event)"></app-home-preview>
             </div> 
         </div>
     </div>
