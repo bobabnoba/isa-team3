@@ -39,4 +39,6 @@ public interface BoatService {
     void updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id);
 
     boolean checkAvailability(Date from, Date to, Long boatId);
+
+    int getNoOfIncomingReservations(Long id);
 }

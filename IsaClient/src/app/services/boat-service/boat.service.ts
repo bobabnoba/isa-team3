@@ -62,10 +62,6 @@ export class BoatService {
   checkBoatAvailability(from : string, to : string, boatId : number) {
     return this._http.get(`${this.baseURL}/boats/check-if-available?from=${from}&to=${to}&boatId=${boatId}`);
   }
-  private handlePlusInEmail(email : string) {
-    return encodeURIComponent(email);
-  }
-
   getBoatForReservation(id : number) : Observable<Boat>{
     return this._http.get<Boat>(`${this.baseURL}/boats/for-reservation/${id}`);
   }
@@ -75,4 +71,7 @@ export class BoatService {
 
   }
   
+  incomingReservationExists(id : number ) : Observable<boolean>{
+    return this._http.get<boolean>(`${this.baseURL}/boats/${id}/has-incoming-reservations`);
+  }
 }

@@ -502,4 +502,9 @@ public class BoatServiceImpl implements BoatService {
         }
         return isAvailable;
     }
+
+    @Override
+    public int getNoOfIncomingReservations(Long id) {
+        return reservationService.getNoOfIncomingReservationsForBoat(id);
+    }
 }

@@ -444,5 +444,10 @@ public class HomeServiceImpl implements HomeService {
         }
     }
 
+    @Override
+    public int getNoOfIncomingReservations(Long id) {
+        return reservationService.getNoOfIncomingReservationsForVacationHome(id);
+    }
+
 
 }

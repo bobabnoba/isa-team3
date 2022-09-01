@@ -7,9 +7,7 @@ import com.ftn.fishingbooker.mapper.BoatMapper;
 import com.ftn.fishingbooker.mapper.RentalMapper;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.service.BoatService;
-import com.ftn.fishingbooker.service.ClientService;
-import com.ftn.fishingbooker.service.ReservationService;
+import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.FIleUploadUtil;
 import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +32,7 @@ public class BoatController {
     private final BoatService boatService;
     private final ClientService clientService;
     private final ReservationService reservationService;
+    private final EmailService emailService;
 
     @GetMapping()
     public Collection<RentalDto> GetAll() {
@@ -81,8 +80,7 @@ public class BoatController {
         boatService.makeReservation(boatId, reservation);
         clientService.updatePoints(client, reservation.getPrice());
 
-        //TODO: send mail
-        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 
@@ -183,6 +181,11 @@ public class BoatController {
                 .map(ReservationMapper::map)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("{id}/has-incoming-reservations")
+    public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){
+        return ResponseEntity.ok(boatService.getNoOfIncomingReservations(id) > 0);
     }
 
 }
