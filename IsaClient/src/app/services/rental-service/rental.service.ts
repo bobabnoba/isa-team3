@@ -58,6 +58,10 @@ export class RentalService {
     return this._http.post('http://localhost:8090/boats/owner-rent/' + boatId + "/" + email,
       newReservation);
   }
+  ownerRentHome(newReservation: IReservation, homeId: number, email: string): Observable<any> {
+    return this._http.post('http://localhost:8090/vacation/homes/owner-rent/' + homeId + "/" + email,
+      newReservation);
+  }
 
 }
 

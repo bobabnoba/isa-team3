@@ -82,6 +82,23 @@ public class HomeController {
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 
+    @PostMapping("/owner-rent/{homeId}/{userEmail}")
+    public ResponseEntity<ReservationDto> ownerMakeReservation(@PathVariable String userEmail, @PathVariable Long homeId, @RequestBody ReservationDto reservationDto) {
+        Client client = clientService.getClientByEmail(userEmail);
+        if (client.getNoOfPenalties() >= 3) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        //reservationDto.setType(ReservationType.VACATION_HOME);
+        Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto);
+        vacationHomeService.makeReservation(homeId, reservation);
+        clientService.updatePoints(client, reservation.getPrice());
+
+        //TODO: send mail
+        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+    }
+
     @GetMapping("/by-owner/{email}")
     public ResponseEntity<Collection<VacationHomeDto>> getAllHomesByOwner(@PathVariable String email) {
         Collection<VacationHome> found = vacationHomeService.getAllByOwner(email);

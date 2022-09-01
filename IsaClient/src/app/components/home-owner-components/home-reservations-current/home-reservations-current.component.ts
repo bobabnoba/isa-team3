@@ -8,6 +8,7 @@ import { ReportService } from 'src/app/services/report-service/report.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { VacationHomeOwnerService } from 'src/app/services/vacation-home-owner-service/vacation-home-owner.service';
 import { BoatReservationInfoComponent } from '../../boat-owner-components/boat-reservation-info/boat-reservation-info.component';
+import { HomeOwnerCreateReservationComponent } from '../home-owner-create-reservation/home-owner-create-reservation.component';
 
 @Component({
   selector: 'app-home-reservations-current',
@@ -67,7 +68,7 @@ export class HomeReservationsCurrentComponent implements OnInit {
      dialogConfig.disableClose = false;
      dialogConfig.id = 'modal-component';
      dialogConfig.data = myData;
-     //const dialogRef = this._matDialog.open(HomeOwnerCreateReservationComponent, dialogConfig);
+     const dialogRef = this._matDialog.open(HomeOwnerCreateReservationComponent, dialogConfig);
      
    }
 

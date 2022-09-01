@@ -167,6 +167,7 @@ import { HomeReservationInfoComponent } from './components/home-owner-components
 import { HomeReservationsCurrentComponent } from './components/home-owner-components/home-reservations-current/home-reservations-current.component';
 import { HomeReservationsFutureComponent } from './components/home-owner-components/home-reservations-future/home-reservations-future.component';
 import { HomeReservationsHistoryComponent } from './components/home-owner-components/home-reservations-history/home-reservations-history.component';
+import { HomeOwnerCreateReservationComponent } from './components/home-owner-components/home-owner-create-reservation/home-owner-create-reservation.component';
 
 @NgModule({
   declarations: [
@@ -307,6 +308,7 @@ import { HomeReservationsHistoryComponent } from './components/home-owner-compon
     HomeReservationsCurrentComponent,
     HomeReservationsFutureComponent,
     HomeReservationsHistoryComponent,
+    HomeOwnerCreateReservationComponent,
   ],
   imports: [
     BrowserModule,
