@@ -63,4 +63,14 @@ public class ReportServiceImpl implements ReportService {
         reservationService.save(reservation);
         return saved;
     }
+
+    @Override
+    public Report create(VacationHomeReservationReport report, Long reservationId) {
+        Reservation reservation = reservationService.getReservationById(reservationId);
+        report.setClientEmail(reservation.getClient().getEmail());
+        Report saved = reportRepository.save(report);
+        reservation.setReport(saved);
+        reservationService.save(reservation);
+        return saved;
+    }
 }

@@ -23,6 +23,7 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
     private final BoatService boatService;
     private final BoatOwnerService boatOwnerService;
     private final ClientService clientService;
+    private final HomeService homeService;
 
     @Override
     @Transactional
@@ -46,6 +47,13 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
              if(specialOffer.isCaptain()){
                 boatOwnerService.updateAvailability(saved.getReservationStartDate(),saved.getReservationEndDate(), ownerEmail);
             }
+        } else if(specialOffer.getType().equals(ReservationType.VACATION_HOME)){
+            VacationHome home = homeService.getById(serviceId);
+            home.getSpecialOffers().add(saved);
+            homeService.save(home);
+
+            homeService.updateAvailability(saved.getReservationStartDate(), saved.getReservationEndDate(), home.getId());
+
         }
         return saved;
     }

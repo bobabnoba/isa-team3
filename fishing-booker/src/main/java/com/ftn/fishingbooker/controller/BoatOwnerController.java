@@ -39,7 +39,7 @@ public class BoatOwnerController {
     }
 
     @GetMapping
-    public ResponseEntity<BoatOwnerDto> getInstructorWithAvailability(String email) {
+    public ResponseEntity<BoatOwnerDto> getOwnerWithAvailability(String email) {
         BoatOwner found = boatOwnerService.getWithAvailability(email);
         return ok(BoatOwnerMapper.toDto(found));
     }

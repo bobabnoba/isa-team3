@@ -21,13 +21,16 @@ public class ReservationReportController {
     private final InstructorService instructorService;
     private final ClientService clientService;
     private final BoatOwnerService boatOwnerService;
+    private final HomeOwnerService homeOwnerService;
 
     public ReservationReportController(ReportService reportService, InstructorService instructorService,
-                                       ClientService clientService, BoatOwnerService boatOwnerService) {
+                                       ClientService clientService, BoatOwnerService boatOwnerService,
+                                       HomeOwnerService homeOwnerService) {
         this.reportService = reportService;
         this.instructorService = instructorService;
         this.clientService = clientService;
         this.boatOwnerService = boatOwnerService;
+        this.homeOwnerService = homeOwnerService;
     }
 
     @GetMapping("/unprocessed")
@@ -45,6 +48,10 @@ public class ReservationReportController {
         }else if(report.getType() == ReservationType.BOAT){
             BoatOwner owner = boatOwnerService.getByEmail(report.getOwnerEmail());
             BoatReservationReport newReport = ReportMapper.toBoatEntity(report, owner);
+            return ResponseEntity.ok(reportService.create(newReport, reservationId));
+        }else if(report.getType() == ReservationType.VACATION_HOME){
+            HomeOwner owner = homeOwnerService.getByEmail(report.getOwnerEmail());
+            VacationHomeReservationReport newReport = ReportMapper.toHomeEntity(report, owner);
             return ResponseEntity.ok(reportService.create(newReport, reservationId));
         }
         return ResponseEntity.badRequest().build();

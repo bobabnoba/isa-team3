@@ -109,7 +109,7 @@ public class BoatController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<BoatDto> addNewBoat(@RequestBody NewBoatDto dto) {
         Boat boat = BoatMapper.toEntity(dto);
         Boat saved = boatService.addBoat(boat, dto.getOwnerEmail());

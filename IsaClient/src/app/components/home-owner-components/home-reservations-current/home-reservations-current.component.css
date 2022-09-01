@@ -1,0 +1,25 @@
+#wrapper {
+    display: flex;
+}
+
+#wrapper #content-wrapper {
+    background-color: #f8f9fc;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+#wrapper #content-wrapper #content {
+    flex: 1 0 auto;
+}
+
+table {
+    width: 100%;
+}
+
+.container-fluid {
+    padding: 0 !important;
+}
+
+tr.mat-row {
+    height: 60px !important;
+}

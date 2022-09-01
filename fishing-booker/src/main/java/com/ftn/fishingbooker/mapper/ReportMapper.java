@@ -51,4 +51,15 @@ public class ReportMapper {
         newReport.setPenaltySuggested(report.isPenaltySuggested());
         return newReport;
     }
+
+    public static VacationHomeReservationReport toHomeEntity(NewReportDto report, HomeOwner owner) {
+        VacationHomeReservationReport newReport = new VacationHomeReservationReport();
+        newReport.setComment(report.getComment());
+        newReport.setClientShowedUp(report.isClientShowedUp());
+        newReport.setAdminReviewed(false);
+        newReport.setHomeOwner(owner);
+        newReport.setClientEmail(report.getClientEmail());
+        newReport.setPenaltySuggested(report.isPenaltySuggested());
+        return newReport;
+    }
 }

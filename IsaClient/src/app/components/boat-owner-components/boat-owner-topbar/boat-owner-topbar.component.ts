@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FishingEquipment, Utility } from 'src/app/interfaces/adventure';
-import { AdventureService } from 'src/app/services/adventure-service/adventure.service';
+import { BoatService } from 'src/app/services/boat-service/boat.service';
 
 @Component({
   selector: 'app-boat-owner-topbar',
@@ -26,20 +26,20 @@ export class BoatOwnerTopbarComponent implements OnInit {
   equi = new FormControl()
   servi = new FormControl()
 
-  constructor(private _router : Router, private _adventureService : AdventureService) { 
+  constructor(private _router : Router, private _boatService : BoatService) { 
     if(this._router.url === "/boat-owner/boats"){
       this.serviceSearch = true;
     }
   }
 
   ngOnInit(): void {
-    this._adventureService.getFishingEquipment().subscribe(
+    this._boatService.getFishingEquipment().subscribe(
       data => {
         this.existingEquipment = data;
       }
     );
     
-    this._adventureService.getUtilities().subscribe(
+    this._boatService.getUtilities().subscribe(
       data => {
         this.existingServices = data;
       }

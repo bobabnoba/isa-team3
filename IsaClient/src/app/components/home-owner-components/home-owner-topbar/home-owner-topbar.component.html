@@ -1,0 +1,71 @@
+<div id="content">
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <button id="sidebarToggleTop" (click)="toggleMe()" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+        </button>
+        <form *ngIf ="serviceSearch"
+            class="d-none d-sm-inline-block form-inline mw-100 navbar-search">
+            <div class="row w-100 b-0 p-0"  >
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            aria-label="Search" aria-describedby="basic-addon2" (input)="emitMe($event)">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fa fa-search fa-sm" (click)="startSearch()"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div  class="col-md-8 d-flex flex-row">
+                    
+                      <mat-form-field appearance="standard" style="width: 30%;">
+                        <mat-label>Utilities</mat-label>
+                        <mat-select [formControl]="servi" [compareWith]="compareObjects" [(ngModel)]="services" multiple>
+                          <mat-select-trigger>
+                            {{services?.[0]?.name || ''}}
+                            <span *ngIf="(services?.length || 0) > 1" class="example-additional-selection">
+                              (+{{(services?.length || 0) - 1}} {{services?.length === 2 ? 'other' : 'others'}})
+                            </span>
+                          </mat-select-trigger>
+                          <mat-option (click) = "servicesPicked()" *ngFor="let e of existingServices" [value]="e">{{e.name}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+            </div>
+        </form>
+        <form *ngIf ="!serviceSearch"
+            class="d-none d-sm-inline-block form-inline mw-100 navbar-search">
+            <div class="row w-100 b-0 p-0"  >
+                <div class="col-md-4">
+                    <div class="input-group p-0">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            aria-label="Search" aria-describedby="basic-addon2" (input)="emitMe($event)">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fa fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item d-sm-none">
+                <a class="nav-link">
+                    <i class="fa fa-search fa-fw"></i>
+                </a>
+            </li>
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <li class="nav-item ">
+                <a class="nav-link">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 medium">{{home}}</span>
+                    <img class="img-profile rounded-circle"
+                        src="../../../../assets/images/juicy-image-of-a-man-in-the-online-window.png">
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

@@ -30,6 +30,8 @@ public class VacationHome {
 
     private String description;
 
+    private String information;
+
     private double pricePerDay = 0.0;
 
     private double rating = 0.0;
@@ -50,7 +52,7 @@ public class VacationHome {
     @OneToMany(targetEntity = Reservation.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private Set<Reservation> reservations;
 
-    @OneToMany(targetEntity = Room.class, mappedBy = "vacationHome", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Room.class,  cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<Room> rooms;
 
     @ManyToOne(targetEntity = HomeOwner.class, cascade = CascadeType.MERGE)
@@ -68,9 +70,12 @@ public class VacationHome {
         if (this.getImages() != null) {
             this.getImages().forEach(
                     image ->
-                            retVal.add("/images/adventures/" + this.getId() + "/" + image.getUrl()));
+                            retVal.add("/images/homes/" + this.getId() + "/" + image.getUrl()));
         }
         return retVal;
     }
+
+    @OneToMany(targetEntity = SpecialOffer.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    private Set<SpecialOffer> specialOffers;
 
 }

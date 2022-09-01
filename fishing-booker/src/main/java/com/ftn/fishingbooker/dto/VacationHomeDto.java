@@ -22,8 +22,8 @@ public class VacationHomeDto {
     private double pricePerDay;
 
     private Integer guestLimit;
-
     private Collection<ImageDto> images;
+    public Collection<String> imageUrls;
 
     private Collection<RoomDto> rooms;
 
@@ -34,4 +34,10 @@ public class VacationHomeDto {
     private Collection<UtilityDto> utilities;
 
     private OwnerDto vacationHomeOwner;
+
+    public double cancelingPercentage;
+
+    public String information;
+
+    public Collection<SpecialOfferDto> specialOffers;
 }

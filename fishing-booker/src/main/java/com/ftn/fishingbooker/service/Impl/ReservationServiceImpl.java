@@ -260,5 +260,20 @@ public class ReservationServiceImpl implements ReservationService {
     public Collection<ReservationCalendarInfo> getAllInstructorReservations(Long id) {
         return reservationRepository.getAllReservationForInstructor(id);
     }
+    @Override
+    public Collection<BoatReservationInfo> getUpcomingReservationsForHomeOwner(Long id) {
+        return reservationRepository.getUpcomingReservationsForHomeOwner(id);
+    }
+
+    @Override
+    public Collection<Reservation> getPastReservationsForHomeOwner(Long id) {
+        return reservationRepository.getPastReservationsForHomeOwner(id);
+    }
+
+    @Override
+    public Collection<BoatReservationInfo> getCurrentReservationsForHomeOwner(Long id) {
+        return reservationRepository.getCurrentReservationsForHomeOwner(id);
+    }
+
 
 }
