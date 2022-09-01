@@ -175,4 +175,9 @@ public class BoatController {
         return new ResponseEntity<>(BoatMapper.mapToDtoInfo(boat),HttpStatus.OK);
     }
 
+    @GetMapping("{id}/has-incoming-reservations")
+    public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){
+        return ResponseEntity.ok(boatService.getNoOfIncomingReservations(id) > 0);
+    }
+
 }

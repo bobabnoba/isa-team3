@@ -179,5 +179,10 @@ public class HomeController {
         VacationHome home = vacationHomeService.getHomeForReservation(reservationId);
         return new ResponseEntity<>(VacationHomeMapper.mapToDtoInfo(home),HttpStatus.OK);
     }
+
+    @GetMapping("{id}/has-incoming-reservations")
+    public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){
+        return ResponseEntity.ok(vacationHomeService.getNoOfIncomingReservations(id) > 0);
+    }
 }
 
