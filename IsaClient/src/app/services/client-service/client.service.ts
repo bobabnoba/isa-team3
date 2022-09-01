@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ClientService {
 
+
   baseURL = environment.apiURL;
 
   constructor(private _http: HttpClient) { }
@@ -19,4 +20,9 @@ export class ClientService {
   getClientInfo(email: string): Observable<any> {
     return this._http.get(`${this.baseURL}/clients/${email}`);
   }
+
+  isSubscribed(id: string, entityType: string, userEmail: string): Observable<any> {
+    return this._http.get(`${this.baseURL}/clients/${userEmail}/subscribed/${entityType}/${id}`);
+  }
+
 }

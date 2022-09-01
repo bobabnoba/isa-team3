@@ -1,4 +1,3 @@
-import { MESSAGES_CONTAINER_ID } from '@angular/cdk/a11y';
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';

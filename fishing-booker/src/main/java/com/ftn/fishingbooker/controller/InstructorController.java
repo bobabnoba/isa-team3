@@ -1,15 +1,12 @@
 package com.ftn.fishingbooker.controller;
 
+import com.ftn.fishingbooker.dao.ReservationCalendarInfo;
+import com.ftn.fishingbooker.dao.SpecialOfferCalendarInfo;
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.mapper.*;
-import com.ftn.fishingbooker.model.Instructor;
-import com.ftn.fishingbooker.model.InstructorAvailability;
-import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.model.User;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.dao.ReservationInfo;
-import com.ftn.fishingbooker.service.ClientService;
-import com.ftn.fishingbooker.service.InstructorService;
-import com.ftn.fishingbooker.service.UserService;
+import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -30,6 +27,8 @@ public class InstructorController {
 
     private final InstructorService instructorService;
     private final UserService userService;
+    private final ReservationService reservationService;
+    private final SpecialOfferService specialOfferService;
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody OwnerRegisterDto registerDto) throws MessagingException {
@@ -51,9 +50,12 @@ public class InstructorController {
     }
 
     @PostMapping("/add-availability")
-    public ResponseEntity<InstructorAvailabilityResponseDto> addAvailabilityPeriod(@RequestBody InstructorAvailabilityRequestDto availability) {
-        InstructorAvailability saved = instructorService.addAvailabilityPeriod(InstructorAvailabilityMapper.mapToEntity(availability), availability.getInstructorEmail());
-        return ok(InstructorAvailabilityMapper.mapToResponse(saved));
+    public ResponseEntity<Collection<InstructorAvailabilityResponseDto>> addAvailabilityPeriod(@RequestBody InstructorAvailabilityRequestDto availability) {
+        Collection<InstructorAvailability> saved = instructorService.addAvailabilityPeriod(InstructorAvailabilityMapper.mapToEntity(availability), availability.getInstructorEmail());
+        Collection<InstructorAvailabilityResponseDto> dtos = saved.stream()
+                .map(InstructorAvailabilityMapper::mapToResponse)
+                .collect(Collectors.toList());
+        return ok(dtos);
     }
 
     @GetMapping("/available")
@@ -102,4 +104,29 @@ public class InstructorController {
         }
     }
 
+    @GetMapping("/reservations/{email}")
+    ResponseEntity<Collection<ReservationCalendarInfo>> getAllReservations(@PathVariable String email) {
+        Instructor instructor = instructorService.findByEmail(email);
+        Collection<ReservationCalendarInfo> reservations = reservationService.getAllInstructorReservations(instructor.getId());
+        return ok(reservations);
+    }
+
+    @GetMapping("special-offers/{email}")
+    ResponseEntity<Collection<SpecialOfferCalendarInfo>> getInstructorSpecialOffers(@PathVariable String email) {
+        Instructor instructor = instructorService.findByEmail(email);
+        Collection<SpecialOfferCalendarInfo> found = specialOfferService.getAllInstructorsOffers(instructor.getId());
+        return ResponseEntity.ok(found);
+    }
+
+    @PostMapping("/delete-availability")
+    public ResponseEntity<Collection<InstructorAvailabilityResponseDto>> deleteAvailabilityPeriod(@RequestBody InstructorAvailabilityRequestDto dto) {
+        Collection<InstructorAvailability> avs = instructorService.deleteAvailability(new InstructorAvailability(dto.getStartDate(),dto.getEndDate()), dto.getInstructorEmail());
+        Collection<InstructorAvailability> availabilities = instructorService.getWithAvailability(dto.getInstructorEmail()).getAvailability();
+                Collection<InstructorAvailabilityResponseDto> dtos = availabilities.stream()
+                .map(InstructorAvailabilityMapper::mapToResponse)
+                .collect(Collectors.toList());
+        return ok(dtos);
+    }
+
 }
+

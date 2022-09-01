@@ -21,6 +21,8 @@ public class RentalDto {
 
     private double pricePerDay;
 
+    private String email;
+
     private String description;
 
     private Double rating = 0.0;

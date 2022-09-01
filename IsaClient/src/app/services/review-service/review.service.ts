@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AdminReview } from 'src/app/interfaces/admin-review';
 import { IReview } from 'src/app/interfaces/review';
 import { environment } from 'src/environments/environment';
 
@@ -25,4 +26,13 @@ export class ReviewService {
       `${this.baseURL}/reviews/reservation/` + reservationId,
     );
   }
+
+  getAllPending() : Observable<AdminReview[]>{
+    return this._http.get<AdminReview[]>(`${this.baseURL}/reviews/pending`);
+  }
+
+  handleReview(id : number, approved : boolean) : Observable<any>{
+    return this._http.post<any>(`${this.baseURL}/reviews/handle-review/${id}`, approved);
+  }
+
 }

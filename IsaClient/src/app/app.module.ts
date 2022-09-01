@@ -141,6 +141,7 @@ import { ReviewComponent } from './components/client-components/review/review.co
 import { AdminAdventuresComponent } from './components/admin-components/admin-adventures/admin-adventures.component';
 import { AdminBoatsComponent } from './components/admin-components/admin-boats/admin-boats.component';
 import { AdminHomesComponent } from './components/admin-components/admin-homes/admin-homes.component';
+import { InstructorAvailabilityComponent } from './components/instructor-components/instructor-availability/instructor-availability.component';
 import { BoatReservationInfoComponent } from './components/boat-owner-components/boat-reservation-info/boat-reservation-info.component';
 import { BoatReservationPreviewComponent } from './components/boat-owner-components/boat-reservation-preview/boat-reservation-preview.component';
 import { BoatReservationsHistoryComponent } from './components/boat-owner-components/boat-reservations-history/boat-reservations-history.component';
@@ -168,6 +169,11 @@ import { HomeReservationsCurrentComponent } from './components/home-owner-compon
 import { HomeReservationsFutureComponent } from './components/home-owner-components/home-reservations-future/home-reservations-future.component';
 import { HomeReservationsHistoryComponent } from './components/home-owner-components/home-reservations-history/home-reservations-history.component';
 import { HomeOwnerCreateReservationComponent } from './components/home-owner-components/home-owner-create-reservation/home-owner-create-reservation.component';
+import { HomeSubsComponent } from './components/client-components/home-subs/home-subs.component';
+import { InstructorSubsComponent } from './components/client-components/instructor-subs/instructor-subs.component';
+import { BoatSubsComponent } from './components/client-components/boat-subs/boat-subs.component';
+import { SubCardComponent } from './components/client-components/sub-card/sub-card.component';
+import { AdminReviewsComponent } from './components/admin-components/admin-reviews/admin-reviews.component';
 
 @NgModule({
   declarations: [
@@ -282,6 +288,7 @@ import { HomeOwnerCreateReservationComponent } from './components/home-owner-com
     AdminAdventuresComponent,
     AdminBoatsComponent,
     AdminHomesComponent,
+    InstructorAvailabilityComponent,
     BoatReservationInfoComponent,
     BoatReservationPreviewComponent,
     BoatReservationsHistoryComponent,
@@ -309,6 +316,11 @@ import { HomeOwnerCreateReservationComponent } from './components/home-owner-com
     HomeReservationsFutureComponent,
     HomeReservationsHistoryComponent,
     HomeOwnerCreateReservationComponent,
+    HomeSubsComponent,
+    InstructorSubsComponent,
+    BoatSubsComponent,
+    SubCardComponent,
+    AdminReviewsComponent,
   ],
   imports: [
     BrowserModule,

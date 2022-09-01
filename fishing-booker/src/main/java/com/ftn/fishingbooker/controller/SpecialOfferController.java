@@ -1,6 +1,7 @@
 package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.NewSpecialOfferDto;
+import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.SpecialOfferDto;
 import com.ftn.fishingbooker.mapper.AdventureMapper;
 import com.ftn.fishingbooker.mapper.SpecialOfferMapper;
@@ -9,8 +10,9 @@ import com.ftn.fishingbooker.service.SpecialOfferService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.Collection;
-
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -25,7 +27,7 @@ public class SpecialOfferController {
 
     @PostMapping("/{serviceId}")
     public ResponseEntity<SpecialOfferDto> createSpecialOffer(@RequestBody NewSpecialOfferDto specialOffer,
-                                                              @PathVariable  Long serviceId) {
+                                                              @PathVariable  Long serviceId)  throws MessagingException {
         SpecialOffer offer = SpecialOfferMapper.toNewEntity(specialOffer);
         SpecialOffer created = specialOfferService.createSpecialOffer(offer, serviceId);
         return ResponseEntity.ok(SpecialOfferMapper.toDto(created));
@@ -36,4 +38,5 @@ public class SpecialOfferController {
         Collection<SpecialOffer> found = specialOfferService.getAvailableOffersForAdventure(adventureId);
         return ResponseEntity.ok(SpecialOfferMapper.toDto(found));
     }
+
 }

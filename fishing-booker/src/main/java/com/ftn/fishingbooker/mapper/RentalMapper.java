@@ -1,6 +1,7 @@
 package com.ftn.fishingbooker.mapper;
 
 
+import com.ftn.fishingbooker.dto.OwnerDto;
 import com.ftn.fishingbooker.dto.RentalDto;
 import com.ftn.fishingbooker.enumeration.RentalType;
 import com.ftn.fishingbooker.model.Adventure;
@@ -123,7 +124,10 @@ public class RentalMapper {
 
     public static RentalDto mapToRental(Instructor instructor) {
         //TODO:Images
+        OwnerDto ownerDto = new OwnerDto();
+        ownerDto.setEmail(instructor.getEmail());
         RentalDto rentalDto = new RentalDto();
+        rentalDto.setOwner(ownerDto);
         rentalDto.setId(instructor.getId());
         rentalDto.setAddress(instructor.getAddress());
         rentalDto.setDescription(instructor.getBiography());

@@ -1,9 +1,7 @@
 package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.enumeration.ReservationType;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.model.User;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.ClientRepository;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.*;
@@ -35,6 +33,9 @@ public class ClientServiceImpl implements ClientService {
     private UserRankService userRankService;
     @Autowired
     private EarningsService earningsService;
+    @Autowired
+    private EmailService emailService;
+
 
     @Override
     public void registerClient(Client client) throws MessagingException {
@@ -114,6 +115,67 @@ public class ClientServiceImpl implements ClientService {
             }
         }
         return reservationList;
+    }
+
+    @Override
+    public Collection<Boat> getBoatSubscription(String clientEmail) {
+        Client client = getClientByEmail(clientEmail);
+        return client.getBoatSubscription();
+    }
+
+    @Override
+    public Collection<VacationHome> getVacationHomeSubscription(String clientEmail) {
+        Client client = getClientByEmail(clientEmail);
+        return client.getVacationHomeSubscription();
+    }
+
+    @Override
+    public Collection<Instructor> getInstructorSubscription(String clientEmail) {
+        Client client = getClientByEmail(clientEmail);
+        return client.getInstructorSubscription();
+    }
+
+    @Override
+    public void save(Client client) {
+        clientRepository.save(client);
+    }
+
+    @Override
+    public boolean isClientSubscribed(String clientEmail, String entityType, Long entityId) {
+        Client client = clientRepository.findByEmail(clientEmail);
+        switch (entityType) {
+            case "home": {
+                return clientRepository.vacationHomeSubscriptionExists(client.getId(), entityId);
+            }
+            case "instructor": {
+                return clientRepository.instructorHomeSubscriptionExists(client.getId(), entityId);
+            }
+            case "boat": {
+                return clientRepository.boatSubscriptionExists(client.getId(), entityId);
+            }
+
+        }
+        return false;
+    }
+
+    @Override
+    public Collection<Client> getAll() {
+        return clientRepository.findAllByDeleted(false);
+    }
+
+    @Override
+    public void emailSubscribers(User owner, String entityType){
+        Collection<Client> clients = getAll();
+        clients.forEach(client -> {
+            if(isClientSubscribed(client.getEmail(), entityType, owner.getId())){
+                String content = emailService.createSubscriptionEmail(owner.getFirstName(), owner.getLastName());
+                try {
+                    emailService.sendEmail(client.getEmail(), "New Special Offer At Easy&Peasy Booker", content);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override

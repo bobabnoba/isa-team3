@@ -63,4 +63,5 @@ export class ClientSearchCardReservationComponent implements OnInit {
     return value;
   }
 
+
 }

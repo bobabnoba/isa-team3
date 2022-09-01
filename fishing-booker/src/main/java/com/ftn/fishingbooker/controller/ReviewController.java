@@ -1,6 +1,7 @@
 package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.ClientReviewDto;
+import com.ftn.fishingbooker.dto.ReviewDto;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.enumeration.ReviewStatus;
 import com.ftn.fishingbooker.mapper.ReviewMapper;
@@ -9,6 +10,9 @@ import com.ftn.fishingbooker.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/reviews")
@@ -44,6 +48,21 @@ public class ReviewController {
         }
 
         return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/pending")
+    public ResponseEntity<Collection<ReviewDto>> getAllPending(){
+        Collection<ClientReview> found = reviewService.getAllPendingReviews();
+        Collection<ReviewDto> dtos = found.stream()
+                .map(ReviewMapper::toDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
+
+    @PostMapping("/handle-review/{id}")
+    public ResponseEntity<Object> handleReview(@PathVariable Long id, @RequestBody Boolean approved) {
+        reviewService.handleReview(id, approved);
+        return ResponseEntity.ok().build();
     }
 
 }

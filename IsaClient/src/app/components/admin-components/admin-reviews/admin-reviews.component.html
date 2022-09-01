@@ -1,0 +1,75 @@
+<div id="wrapper">
+    <app-admin-sidebar></app-admin-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <app-admin-topbar></app-admin-topbar>
+        
+
+        <div class="container-fluid">
+
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Client Reservation Reviews</h1>
+            </div>
+
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource">
+              
+                  <ng-container matColumnDef="reservationType">
+                    <th mat-header-cell *matHeaderCellDef> Reservation Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.reservationType}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="review">
+                    <th mat-header-cell *matHeaderCellDef> Review </th>
+                    <td mat-cell *matCellDef="let element"> {{element.review}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="rentalRating">
+                    <th mat-header-cell *matHeaderCellDef> Rental Rating </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rentalRating}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ownerRating">
+                    <th mat-header-cell *matHeaderCellDef> Owner Rating </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ownerRating}} </td>
+                  </ng-container>
+                  
+                  <ng-container matColumnDef="rentalName">
+                    <th mat-header-cell *matHeaderCellDef> Rental Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.rentalName}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="ownerEmail">
+                    <th mat-header-cell *matHeaderCellDef> Owner Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.ownerEmail}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="clientEmail">
+                    <th mat-header-cell *matHeaderCellDef> Client Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.clientEmail}} </td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="respond">
+                    <th mat-header-cell  *matHeaderCellDef >  </th>
+                    <td mat-cell *matCellDef="let row" style="min-width: 140px">
+                      <button mat-mini-fab  (click)="approve(row)" style="margin-right: 14px; background-color: rgba(90, 197, 90, 0.774);"> <i class="fa-solid fa-check"></i></button> 
+                      <button mat-mini-fab (click)="reject(row)" style="background-color: rgba(196, 105, 105, 0.808);"> <i class="fa-solid fa-xmark"></i></button>
+
+                    </td>
+                  </ng-container>
+              
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                               showFirstLastButtons 
+                               aria-label="Select page of periodic elements">
+                </mat-paginator>
+              </div>
+
+        </div>
+
+    </div>
+ </div>
+
