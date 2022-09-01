@@ -10,6 +10,7 @@ import com.ftn.fishingbooker.service.SpecialOfferService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public class SpecialOfferController {
 
     @PostMapping("/{serviceId}")
     public ResponseEntity<SpecialOfferDto> createSpecialOffer(@RequestBody NewSpecialOfferDto specialOffer,
-                                                              @PathVariable  Long serviceId) {
+                                                              @PathVariable  Long serviceId)  throws MessagingException {
         SpecialOffer offer = SpecialOfferMapper.toNewEntity(specialOffer);
         SpecialOffer created = specialOfferService.createSpecialOffer(offer, serviceId);
         return ResponseEntity.ok(SpecialOfferMapper.toDto(created));

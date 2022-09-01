@@ -18,4 +18,6 @@ public interface EmailService {
     void sendReservationEmail(ReservationDto map, Client client);
 
     String createAdminReportResponseEmail(String s, boolean addPenalty);
+
+    String createSubscriptionEmail(String ownerFirstName, String ownerLastName);
 }

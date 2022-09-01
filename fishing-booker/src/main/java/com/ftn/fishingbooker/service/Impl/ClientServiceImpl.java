@@ -33,6 +33,9 @@ public class ClientServiceImpl implements ClientService {
     private UserRankService userRankService;
     @Autowired
     private EarningsService earningsService;
+    @Autowired
+    private EmailService emailService;
+
 
     @Override
     public void registerClient(Client client) throws MessagingException {
@@ -153,6 +156,26 @@ public class ClientServiceImpl implements ClientService {
 
         }
         return false;
+    }
+
+    @Override
+    public Collection<Client> getAll() {
+        return clientRepository.findAllByDeleted(false);
+    }
+
+    @Override
+    public void emailSubscribers(User owner, String entityType){
+        Collection<Client> clients = getAll();
+        clients.forEach(client -> {
+            if(isClientSubscribed(client.getEmail(), entityType, owner.getId())){
+                String content = emailService.createSubscriptionEmail(owner.getFirstName(), owner.getLastName());
+                try {
+                    emailService.sendEmail(client.getEmail(), "New Special Offer At Easy&Peasy Booker", content);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
