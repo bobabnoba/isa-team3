@@ -116,4 +116,23 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "    join a.reservations r " +
             "    where a.boatOwner.id = :id and r.isCancelled = false and r.startDate <= current_date and r.endDate >= current_date")
     Collection<BoatReservationInfo> getCurrentReservationsForBoatOwner(@Param("id") Long id);
+
+    @Query(value = "select r.id as id, r.startDate as startDate, r.endDate as endDate, r.price as price, a.name as boatName" +
+            "    from VacationHome a " +
+            "    join a.reservations r " +
+            "    where a.homeOwner.id = :id and r.isCancelled = false and r.startDate > current_date")
+    Collection<BoatReservationInfo> getUpcomingReservationsForHomeOwner(Long id);
+
+    @Query(value = "select r " +
+            "    from VacationHome a " +
+            "    join a.reservations r " +
+            "    left join r.report report " +
+            "    where a.homeOwner.id = :id and r.isCancelled = false and r.endDate < current_date")
+    Collection<Reservation> getPastReservationsForHomeOwner(Long id);
+
+    @Query(value = "select r.id as id, r.startDate as startDate, r.endDate as endDate, r.price as price, a.name as boatName " +
+            "    from VacationHome a " +
+            "    join a.reservations r " +
+            "    where a.homeOwner.id = :id and r.isCancelled = false and r.startDate <= current_date and r.endDate >= current_date")
+    Collection<BoatReservationInfo> getCurrentReservationsForHomeOwner(Long id);
 }

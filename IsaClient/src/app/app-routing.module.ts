@@ -57,6 +57,9 @@ import { HomeOwnerHomesComponent } from './components/home-owner-components/home
 import { HomeProfileComponent } from './components/home-components/home-profile/home-profile.component';
 import { HomeOwnerHomeProfileComponent } from './components/home-owner-components/home-owner-home-profile/home-owner-home-profile.component';
 import { HomeAvailabilityComponent } from './components/home-components/home-availability/home-availability.component';
+import { HomeReservationsCurrentComponent } from './components/home-owner-components/home-reservations-current/home-reservations-current.component';
+import { HomeReservationsFutureComponent } from './components/home-owner-components/home-reservations-future/home-reservations-future.component';
+import { HomeReservationsHistoryComponent } from './components/home-owner-components/home-reservations-history/home-reservations-history.component';
 
 
 const routes: Routes = [
@@ -270,6 +273,19 @@ const routes: Routes = [
   {
     path: 'home-owner/home/calendar/:id',
     component: HomeAvailabilityComponent
+  },
+  {
+    path: 'home-owner/reservations/past',
+    component: HomeReservationsHistoryComponent
+  },
+
+  {
+    path: 'home-owner/reservations/future',
+    component: HomeReservationsFutureComponent
+  },
+  {
+    path: 'home-owner/reservations/current',
+    component: HomeReservationsCurrentComponent
   },
 
 ];

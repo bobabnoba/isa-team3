@@ -163,6 +163,10 @@ import { AddHomeComponent } from './components/home-components/add-home/add-home
 import { HomeAvailabilityCalendarComponent } from './components/home-components/home-availability-calendar/home-availability-calendar.component';
 import { HomeAvailabilityComponent } from './components/home-components/home-availability/home-availability.component';
 import { AddHomeSpecialOfferComponent } from './components/home-owner-components/add-home-special-offer/add-home-special-offer.component';
+import { HomeReservationInfoComponent } from './components/home-owner-components/home-reservation-info/home-reservation-info.component';
+import { HomeReservationsCurrentComponent } from './components/home-owner-components/home-reservations-current/home-reservations-current.component';
+import { HomeReservationsFutureComponent } from './components/home-owner-components/home-reservations-future/home-reservations-future.component';
+import { HomeReservationsHistoryComponent } from './components/home-owner-components/home-reservations-history/home-reservations-history.component';
 
 @NgModule({
   declarations: [
@@ -299,6 +303,10 @@ import { AddHomeSpecialOfferComponent } from './components/home-owner-components
     HomeAvailabilityCalendarComponent,
     HomeAvailabilityComponent,
     AddHomeSpecialOfferComponent,
+    HomeReservationInfoComponent,
+    HomeReservationsCurrentComponent,
+    HomeReservationsFutureComponent,
+    HomeReservationsHistoryComponent,
   ],
   imports: [
     BrowserModule,

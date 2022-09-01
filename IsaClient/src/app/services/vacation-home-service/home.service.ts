@@ -69,8 +69,8 @@ export class HomeService {
   //   return encodeURIComponent(email);
   // }
 
-  // getBoatForReservation(id : number) : Observable<Boat>{
-  //   return this._http.get<Boat>(`${this.baseURL}/boats/for-reservation/${id}`);
-  // }
+  getHomeForReservation(id : number) : Observable<VacationHome>{
+    return this._http.get<VacationHome>(`${this.baseURL}/vacation/homes/for-reservation/${id}`);
+  }
 
 }

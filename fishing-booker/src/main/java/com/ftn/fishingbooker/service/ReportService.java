@@ -16,4 +16,6 @@ public interface ReportService {
     void processAdminReview(AdminReportResponse response) throws MessagingException;
 
     Report create(BoatReservationReport report, Long reservationId);
+
+    Report create(VacationHomeReservationReport report, Long reservationId);
 }

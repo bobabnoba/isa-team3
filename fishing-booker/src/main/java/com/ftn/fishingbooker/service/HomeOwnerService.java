@@ -9,4 +9,5 @@ public interface HomeOwnerService {
 
     void updatePoints(HomeOwner owner, double reservationPrice);
 
+    HomeOwner getByEmail(String homeOwnerEmail);
 }

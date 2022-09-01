@@ -55,4 +55,9 @@ public interface ReservationService {
 
     Reservation ownerMakeReservation(Client client, ReservationDto reservation);
 
+    Collection<BoatReservationInfo> getUpcomingReservationsForHomeOwner(Long id);
+
+    Collection<Reservation> getPastReservationsForHomeOwner(Long id);
+
+    Collection<BoatReservationInfo> getCurrentReservationsForHomeOwner(Long id);
 }

@@ -236,5 +236,20 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.save(newReservation);
     }
 
+    @Override
+    public Collection<BoatReservationInfo> getUpcomingReservationsForHomeOwner(Long id) {
+        return reservationRepository.getUpcomingReservationsForHomeOwner(id);
+    }
+
+    @Override
+    public Collection<Reservation> getPastReservationsForHomeOwner(Long id) {
+        return reservationRepository.getPastReservationsForHomeOwner(id);
+    }
+
+    @Override
+    public Collection<BoatReservationInfo> getCurrentReservationsForHomeOwner(Long id) {
+        return reservationRepository.getCurrentReservationsForHomeOwner(id);
+    }
+
 
 }
