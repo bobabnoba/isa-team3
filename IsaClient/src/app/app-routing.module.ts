@@ -56,6 +56,7 @@ import { UnauthHomePageComponent } from './components/unauthenticated/unauth-hom
 import { UnauthInstructorPageComponent } from './components/unauthenticated/unauth-instructor-page/unauth-instructor-page.component';
 import { MaterialModule } from './material/material.module';
 import { InstructorAvailabilityComponent } from './components/instructor-components/instructor-availability/instructor-availability.component';
+import { AdminReviewsComponent } from './components/admin-components/admin-reviews/admin-reviews.component';
 
 
 const routes: Routes = [
@@ -159,6 +160,10 @@ const routes: Routes = [
   {
     path: 'admin/reservation-reports',
     component: ReservationReportsComponent
+  },
+  {
+    path: 'admin/reviews',
+    component: AdminReviewsComponent
   },
   {
     path: 'admin/adventures',
