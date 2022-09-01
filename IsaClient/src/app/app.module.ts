@@ -153,6 +153,7 @@ import { HomeSubsComponent } from './components/client-components/home-subs/home
 import { InstructorSubsComponent } from './components/client-components/instructor-subs/instructor-subs.component';
 import { BoatSubsComponent } from './components/client-components/boat-subs/boat-subs.component';
 import { SubCardComponent } from './components/client-components/sub-card/sub-card.component';
+import { AdminReviewsComponent } from './components/admin-components/admin-reviews/admin-reviews.component';
 
 @NgModule({
   declarations: [
@@ -279,6 +280,7 @@ import { SubCardComponent } from './components/client-components/sub-card/sub-ca
     InstructorSubsComponent,
     BoatSubsComponent,
     SubCardComponent,
+    AdminReviewsComponent,
   ],
   imports: [
     BrowserModule,
