@@ -103,8 +103,7 @@ public class HomeController {
         vacationHomeService.makeReservation(homeId, reservation);
         clientService.updatePoints(client, reservation.getPrice());
 
-        //TODO: send mail
-        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 
@@ -187,6 +186,11 @@ public class HomeController {
     public ResponseEntity<HomeInfoDto> getHomeForReservation(@PathVariable Long reservationId){
         VacationHome home = vacationHomeService.getHomeForReservation(reservationId);
         return new ResponseEntity<>(VacationHomeMapper.mapToDtoInfo(home),HttpStatus.OK);
+    }
+
+    @GetMapping("{id}/has-incoming-reservations")
+    public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){
+        return ResponseEntity.ok(vacationHomeService.getNoOfIncomingReservations(id) > 0);
     }
 }
 

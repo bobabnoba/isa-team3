@@ -71,9 +71,9 @@ export class HomeService {
   checkHomeAvailability(from : string, to : string, homeId : number) {
     return this._http.get(`${this.baseURL}/vacation/homes/check-if-available?from=${from}&to=${to}&homeId=${homeId}`);
   }
-  // private handlePlusInEmail(email : string) {
-  //   return encodeURIComponent(email);
-  // }
+  incomingReservationExists(id : number ) : Observable<boolean>{
+    return this._http.get<boolean>(`${this.baseURL}/vacation/homes/${id}/has-incoming-reservations`);
+  }
 
   getHomeForReservation(id : number) : Observable<VacationHome>{
     return this._http.get<VacationHome>(`${this.baseURL}/vacation/homes/for-reservation/${id}`);
