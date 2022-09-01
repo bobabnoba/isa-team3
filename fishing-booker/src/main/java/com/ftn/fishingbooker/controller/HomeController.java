@@ -188,5 +188,7 @@ public class HomeController {
         VacationHome home = vacationHomeService.getHomeForReservation(reservationId);
         return new ResponseEntity<>(VacationHomeMapper.mapToDtoInfo(home),HttpStatus.OK);
     }
+
+
 }
 

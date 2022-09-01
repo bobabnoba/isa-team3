@@ -11,6 +11,7 @@ import com.ftn.fishingbooker.service.BoatService;
 import com.ftn.fishingbooker.service.ClientService;
 import com.ftn.fishingbooker.service.ReservationService;
 import com.ftn.fishingbooker.util.FIleUploadUtil;
+import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -154,12 +155,12 @@ public class BoatController {
 
 
     @PostMapping("/add-availability")
-    public ResponseEntity<?> addAvailabilityPeriod(@RequestBody BoatAvailabilityRequestDto availability) {
-        BoatAvailability saved = boatService.addAvailabilityPeriod(BoatMapper.mapToBoatAvailabilityEntity(availability), availability.boatId);
-        if (saved != null){
-            return ok(BoatMapper.mapToAvailabilityDto(saved));
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Collection<BoatAvailabilityDto>> addAvailabilityPeriod(@RequestBody BoatAvailabilityRequestDto availability) {
+        Collection<BoatAvailability> availabilities = boatService.addAvailabilityPeriod(BoatMapper.mapToBoatAvailabilityEntity(availability), availability.boatId);
+        Collection<BoatAvailabilityDto> dtos = availabilities.stream()
+                .map(BoatMapper::mapToAvailabilityDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/check-if-available")
@@ -173,6 +174,15 @@ public class BoatController {
     public ResponseEntity<BoatInfo> getBoatForReservation(@PathVariable Long reservationId){
         Boat boat = boatService.getBoatForReservation(reservationId);
         return new ResponseEntity<>(BoatMapper.mapToDtoInfo(boat),HttpStatus.OK);
+    }
+
+    @GetMapping("/reservations/{id}")
+    public ResponseEntity<Collection<ReservationDto>> getBoatReservations(@PathVariable Long id){
+        Collection<Reservation> reservations = reservationService.getReservationForBoat(id);
+        Collection<ReservationDto> dtos = reservations.stream()
+                .map(ReservationMapper::map)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
 }

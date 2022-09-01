@@ -7,6 +7,9 @@ import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { Router } from '@angular/router';
+import { Reservation } from 'src/app/interfaces/reservation';
+import { SpecialOffer } from 'src/app/interfaces/special-offer';
+import { DatePipe } from '@angular/common';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -21,7 +24,20 @@ const colors: Record<string, EventColor> = {
     primary: '#e3bc08',
     secondary: '#FDF1BA',
   },
+  green : {
+    primary: '#33cc33',
+    secondary: '#adebad',
+  },
+  magenta : {
+    primary: '#990099',
+    secondary: '#ffb3ff'
+  },
+  purple: {
+    primary: '#5200cc',
+    secondary: '#c299ff'
+  }
 };
+
 
 @Component({
   selector: 'app-home-availability-calendar',
@@ -62,7 +78,7 @@ export class HomeAvailabilityCalendarComponent implements OnInit {
 
   activeDayIsOpen: boolean = false;
 
-  constructor(private _homeService : HomeService,
+  constructor(private _homeService : HomeService, private _datePipe : DatePipe,
      private _storageService: StorageService, private _router : Router) {
     this.newAv = {};
     this.home = {} as VacationHome;
@@ -83,10 +99,18 @@ export class HomeAvailabilityCalendarComponent implements OnInit {
           data.availability.forEach((e : any) => {
             this.addEvent(e.startDate, e.endDate)}
           )
-        }
+          data.specialOffers.forEach((e : any) => {
+            this.addSpecialOfferEvent(e)})
+        }     
       );
-    
-    
+
+      this._homeService.getHomeReservations(this._router.url.substring(26)).subscribe(
+        data => {
+          data.forEach((e : any) => {
+            this.addReservationEvent(e)}
+          )
+        }
+      )
   }
   
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -107,7 +131,7 @@ export class HomeAvailabilityCalendarComponent implements OnInit {
     this.events = [
       ...this.events,
       {
-        title: 'Available day',
+        title: 'Available',
         start: (new Date(sd)),
         end: (new Date(ed)),
         color: colors.blue,
@@ -117,6 +141,37 @@ export class HomeAvailabilityCalendarComponent implements OnInit {
     this.refresh.next();
   }
 
+  addSpecialOfferEvent(offer : SpecialOffer){
+    this.events = [
+      ...this.events,
+      {
+        title: 'Special offer' +   
+        '  from ' + this._datePipe.transform(new Date(offer.reservationStartDate), 'MMM d, y, h:mm') +
+        ' to ' + this._datePipe.transform(new Date(offer.reservationEndDate), 'MMM d, y, h:mm'),
+        start: (new Date(offer.reservationStartDate)),
+        end: (new Date(offer.reservationEndDate)),
+        color: colors.green,
+        allDay: true,
+      },
+    ];
+    this.refresh.next();
+  }
+
+  addReservationEvent(resInfo : Reservation): void {
+    console.log(resInfo)
+    this.events = [
+      ...this.events,
+      {
+        title: 'Booked  from ' + this._datePipe.transform(new Date(resInfo.startDate), 'MMM d, y, h:mm') +
+         ' to ' + this._datePipe.transform(new Date(resInfo.endDate), 'MMM d, y, h:mm') ,
+        start: (new Date(resInfo.startDate)),
+        end: (new Date(resInfo.endDate)),
+        color: colors.purple,
+        allDay: false,
+      },
+    ];
+    this.refresh.next();
+  }
 
   setView(view: CalendarView) {
     this.view = view;

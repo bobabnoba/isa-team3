@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Utility } from 'src/app/interfaces/adventure';
+import { Reservation } from 'src/app/interfaces/reservation';
 import { Rule } from 'src/app/interfaces/rule';
 import { VacationHome } from 'src/app/interfaces/vacation-home';
 import { environment } from 'src/environments/environment';
@@ -77,6 +78,11 @@ export class HomeService {
 
   getHomeForReservation(id : number) : Observable<VacationHome>{
     return this._http.get<VacationHome>(`${this.baseURL}/vacation/homes/for-reservation/${id}`);
+  }
+
+  getHomeReservations(homeId : string ) : Observable<Reservation[]>{
+    return this._http.get<Reservation[]>(`${this.baseURL}/vacation/homes/reservations/${homeId}`);
+
   }
 
 }

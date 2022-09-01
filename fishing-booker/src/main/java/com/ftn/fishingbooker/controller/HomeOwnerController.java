@@ -5,7 +5,6 @@ import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.mapper.*;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.*;
-import org.springframework.format.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +15,6 @@ import java.util.stream.*;
 
 import static org.springframework.http.ResponseEntity.ok;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/home-owner")
 public class HomeOwnerController {
