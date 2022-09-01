@@ -15,6 +15,7 @@ import { environment } from 'src/environments/environment';
 export class InstructorService {
 
 
+
   baseURL = environment.apiURL;
 
   constructor(private _http : HttpClient) { }
@@ -59,6 +60,10 @@ export class InstructorService {
 
   getAllSpecialOffers(email: string) : Observable<AdventureOfferInfo[]>{
     return this._http.get<AdventureOfferInfo[]>(`${this.baseURL}/instructor/special-offers/${email}`);
+  }
+
+  deleteAvailability(body : any ) : Observable<any> {
+    return this._http.post(`${this.baseURL}/instructor/delete-availability`, body);
   }
 
 }

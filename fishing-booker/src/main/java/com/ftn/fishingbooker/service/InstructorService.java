@@ -41,4 +41,6 @@ public interface InstructorService {
     Reservation getOngoingReservationForInstructor(String email);
 
     Instructor getWithAvailabilityById(Long id);
+
+    Collection<InstructorAvailability> deleteAvailability(InstructorAvailability availability, String instructorEmail);
 }

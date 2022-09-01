@@ -118,5 +118,15 @@ public class InstructorController {
         return ResponseEntity.ok(found);
     }
 
+    @PostMapping("/delete-availability")
+    public ResponseEntity<Collection<InstructorAvailabilityResponseDto>> deleteAvailabilityPeriod(@RequestBody InstructorAvailabilityRequestDto dto) {
+        Collection<InstructorAvailability> avs = instructorService.deleteAvailability(new InstructorAvailability(dto.getStartDate(),dto.getEndDate()), dto.getInstructorEmail());
+        Collection<InstructorAvailability> availabilities = instructorService.getWithAvailability(dto.getInstructorEmail()).getAvailability();
+                Collection<InstructorAvailabilityResponseDto> dtos = availabilities.stream()
+                .map(InstructorAvailabilityMapper::mapToResponse)
+                .collect(Collectors.toList());
+        return ok(dtos);
+    }
+
 }
 

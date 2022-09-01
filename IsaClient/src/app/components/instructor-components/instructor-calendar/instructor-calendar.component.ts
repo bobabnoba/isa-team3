@@ -77,7 +77,7 @@ export class InstructorCalendarComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
     if( changes.newAv.currentValue){
-      this.events = [];
+      this.events = [... this.events.filter(e => e.title != 'Available')]
       changes.newAv.currentValue.forEach((e : any) => {
         this.addEvent(e.startDate, e.endDate)
       })

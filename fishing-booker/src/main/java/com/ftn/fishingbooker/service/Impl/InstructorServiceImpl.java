@@ -138,6 +138,38 @@ public class InstructorServiceImpl implements InstructorService {
         return instructorRepository.getActiveById(id);
     }
 
+    @Override
+    @Transactional
+    public Collection<InstructorAvailability> deleteAvailability(InstructorAvailability availability, String email) {
+        Instructor instructor = instructorRepository.findByEmail(email);
+        List<InstructorAvailability> availabilities = new ArrayList<>();
+        for (var a : new ArrayList<>(instructor.getAvailability())) {
+            if (availability.getStartDate().after(a.getStartDate())
+                    && availability.getEndDate().before(a.getEndDate())) {
+                InstructorAvailability partOne = new InstructorAvailability(a.getStartDate(), availability.getStartDate());
+                InstructorAvailability partTwo = new InstructorAvailability(availability.getEndDate(), a.getEndDate());
+                availabilities.add(availabilityService.save(partOne));
+                availabilities.add(availabilityService.save(partTwo));
+            } else if(availability.getStartDate().before(a.getStartDate())
+                    && availability.getEndDate().before(a.getEndDate()) ||
+                    (availability.getStartDate().before(a.getEndDate())
+                    && availability.getEndDate().after(a.getEndDate())) ||
+                    (availability.getStartDate().before(a.getStartDate()) &&
+                     availability.getEndDate().after(a.getStartDate()) &&
+                     availability.getEndDate().before(a.getEndDate()))) {
+                availabilities.add(availabilityService.save(new InstructorAvailability(availability.getEndDate(), a.getEndDate())));
+            }
+            else
+                availabilities.add(a);
+        }
+        instructor.setAvailability(new HashSet<>(availabilities));
+
+        instructorRepository.save(instructor);
+
+        return availabilities;
+    }
+
+
     private List<InstructorAvailability> checkForOverlapping(InstructorAvailability availability, List<InstructorAvailability> availabilities) {
 
         List<InstructorAvailability> retVal = new ArrayList<>();

@@ -40,5 +40,20 @@ export class InstructorAvailabilityComponent implements OnInit {
     this.aFormGroup.reset();
     })
   }
+
+  delete(){
+
+    this._instructorService.deleteAvailability( {
+      startDate : this.aFormGroup.value.startDate,
+      endDate : this.aFormGroup.value.endDate,
+      instructorEmail : this._storageService.getEmail()
+    }).subscribe( data => {
+      this.newAv = data;
+      this._snackBar.open('You are unavailable for the given period. Enjoy your time off!', '',
+      { duration: 3000, panelClass: ['snack-bar'] }
+    );
+    this.aFormGroup.reset();
+    })
+  }
  
 }
