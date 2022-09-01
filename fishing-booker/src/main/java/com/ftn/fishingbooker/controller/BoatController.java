@@ -7,9 +7,7 @@ import com.ftn.fishingbooker.mapper.BoatMapper;
 import com.ftn.fishingbooker.mapper.RentalMapper;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.service.BoatService;
-import com.ftn.fishingbooker.service.ClientService;
-import com.ftn.fishingbooker.service.ReservationService;
+import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.FIleUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.*;
@@ -33,6 +31,7 @@ public class BoatController {
     private final BoatService boatService;
     private final ClientService clientService;
     private final ReservationService reservationService;
+    private final EmailService emailService;
 
     @GetMapping()
     public Collection<RentalDto> GetAll() {
@@ -80,8 +79,7 @@ public class BoatController {
         boatService.makeReservation(boatId, reservation);
         clientService.updatePoints(client, reservation.getPrice());
 
-        //TODO: send mail
-        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 

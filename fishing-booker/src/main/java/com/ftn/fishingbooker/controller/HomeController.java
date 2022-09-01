@@ -94,8 +94,7 @@ public class HomeController {
         vacationHomeService.makeReservation(homeId, reservation);
         clientService.updatePoints(client, reservation.getPrice());
 
-        //TODO: send mail
-        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 

@@ -47,13 +47,14 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
              if(specialOffer.isCaptain()){
                 boatOwnerService.updateAvailability(saved.getReservationStartDate(),saved.getReservationEndDate(), ownerEmail);
             }
+            clientService.emailSubscribers(boat.getBoatOwner(), "boat");
         } else if(specialOffer.getType().equals(ReservationType.VACATION_HOME)){
             VacationHome home = homeService.getById(serviceId);
             home.getSpecialOffers().add(saved);
             homeService.save(home);
 
             homeService.updateAvailability(saved.getReservationStartDate(), saved.getReservationEndDate(), home.getId());
-
+            clientService.emailSubscribers(home.getHomeOwner(), "home");
         }
         return saved;
     }
