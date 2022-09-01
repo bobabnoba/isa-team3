@@ -181,7 +181,7 @@ const routes: Routes = [
     component: AdminBoatsComponent
   },
   {
-    path: 'admin/vacation-homes',
+    path: 'admin/homes',
     component: AdminHomesComponent
   },
   {

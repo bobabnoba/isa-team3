@@ -77,7 +77,7 @@ export class HomeOwnerProfileComponent implements OnInit {
 
   changePassword(){
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
+    dialogConfig.disableClose = false;
     dialogConfig.id = 'modal-component';
     dialogConfig.width = '500px';
     dialogConfig.height = '400px';

@@ -46,6 +46,15 @@ public class HomeController {
         return RentalMapper.mapVacationHomeToRental(homes);
     }
 
+    @GetMapping("/all")
+    public Collection<VacationHomeDto> getAllVacations() {
+        Collection<VacationHome> homes = vacationHomeService.getAll();
+
+        return homes.stream()
+                .map(VacationHomeMapper::mapToHomeOwnerDto)
+                .collect(Collectors.toList());
+    }
+
     @PostMapping("/search")
     public ResponseEntity<Collection<RentalDto>> FilterAll(@RequestBody FilterDto filter) {
         if (clientService.hasOverlappingReservation(filter.getEmail(), filter.getStartDate(), filter.getEndDate())) {
