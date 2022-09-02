@@ -64,4 +64,6 @@ public interface ReservationService {
     Collection<Reservation> getPastReservationsForHomeOwner(Long id);
 
     Collection<BoatReservationInfo> getCurrentReservationsForHomeOwner(Long id);
+
+    Collection<Reservation> getCaptainReservationsForBoatOwner(Long id);
 }

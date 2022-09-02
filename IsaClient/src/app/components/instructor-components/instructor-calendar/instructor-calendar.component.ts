@@ -75,7 +75,6 @@ export class InstructorCalendarComponent implements OnInit, OnChanges {
   constructor(private _instructorService : InstructorService, private _storageService: StorageService, private _datePipe : DatePipe) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if( changes.newAv.currentValue){
       this.events = [... this.events.filter(e => e.title != 'Available')]
       changes.newAv.currentValue.forEach((e : any) => {
@@ -162,6 +161,7 @@ export class InstructorCalendarComponent implements OnInit, OnChanges {
         start: (new Date(so.reservationStartDate)),
         end: (new Date(so.reservationEndDate)),
         color: colors.green,
+        allDay: false,
       },
     ];
     this.refresh.next();

@@ -142,7 +142,7 @@ export class AvailabilityCalendarComponent implements OnInit {
         start: (new Date(sd)),
         end: (new Date(ed)),
         color: colors.blue,
-        allDay: true,
+        allDay: false,
       },
     ];
     this.refresh.next();
@@ -159,7 +159,7 @@ export class AvailabilityCalendarComponent implements OnInit {
         start: (new Date(offer.reservationStartDate)),
         end: (new Date(offer.reservationEndDate)),
         color: colors.green,
-        allDay: true,
+        allDay: false,
       },
     ];
     this.refresh.next();

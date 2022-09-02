@@ -76,4 +76,9 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
         return specialOfferRepository.getAllOffersForInstructor(id);
     }
 
+    @Override
+    public Collection<SpecialOffer> getAllCaptainOffersForBoatOwner(Long id) {
+        return specialOfferRepository.getAllCaptainOffersForBoatOwner(id);
+    }
+
 }

@@ -7,6 +7,10 @@ import { StorageService } from 'src/app/services/storage-service/storage.service
 import { BoatService } from 'src/app/services/boat-service/boat.service';
 import { BoatOwnerService } from 'src/app/services/boat-owner-service/boat-owner.service';
 import { Router } from '@angular/router';
+import { Reservation } from 'src/app/interfaces/reservation';
+import { SpecialOffer } from 'src/app/interfaces/special-offer';
+import { DatePipe } from '@angular/common';
+import { BoatReservation } from 'src/app/interfaces/boat-reservation';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -21,6 +25,18 @@ const colors: Record<string, EventColor> = {
     primary: '#e3bc08',
     secondary: '#FDF1BA',
   },
+  green : {
+    primary: '#33cc33',
+    secondary: '#adebad',
+  },
+  magenta : {
+    primary: '#990099',
+    secondary: '#ffb3ff'
+  },
+  purple: {
+    primary: '#5200cc',
+    secondary: '#c299ff'
+  }
 };
 
 @Component({
@@ -62,22 +78,21 @@ export class AvailabilityCalendarBoatOwnerComponent implements OnInit {
 
   activeDayIsOpen: boolean = false;
 
-  constructor(private _boatService : BoatService,private _boatOwnerService : BoatOwnerService,
-     private _storageService: StorageService, private _router : Router) {
+  constructor(private _boatOwnerService : BoatOwnerService,
+     private _storageService: StorageService, private _datePipe: DatePipe) {
     this.newAv = {};
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // now aw is changed 
-    if(this.newAv !== undefined){
-      if( changes.newAv.currentValue){
-      this.addEvent(changes.newAv.currentValue.startDate, changes.newAv.currentValue.endDate);
-      }
-      } 
+    if( changes.newAv.currentValue){
+      this.events = [... this.events.filter(e => e.title != 'Available')]
+      changes.newAv.currentValue.forEach((e : any) => {
+        this.addEvent(e.startDate, e.endDate)
+      })
+    } 
   }
 
   ngOnInit(): void {
-      console.log(this.boatOwnerEmail);
       this._boatOwnerService.getBoatOwner(this._storageService.getEmail()).subscribe(
         (data) => {
           data.availability.forEach((e : any) => 
@@ -85,6 +100,22 @@ export class AvailabilityCalendarBoatOwnerComponent implements OnInit {
           )
         }
       );
+
+      this._boatOwnerService.getAllReservationsWhereCaptain(this._storageService.getEmail()).subscribe(
+        res => {
+          res.forEach(e => {
+            this.addReservationEvent(e);
+          })
+        }
+      )
+
+      this._boatOwnerService.getAllSpecialOffersWhereCaptain(this._storageService.getEmail()).subscribe(
+        res => {
+          res.forEach(e => {
+            this.addSpecialOfferEvent(e);
+          })
+        }
+      )
     
     
   }
@@ -107,11 +138,43 @@ export class AvailabilityCalendarBoatOwnerComponent implements OnInit {
     this.events = [
       ...this.events,
       {
-        title: 'Available day',
+        title: 'Available',
         start: (new Date(sd)),
         end: (new Date(ed)),
         color: colors.blue,
-        allDay: true,
+        allDay: false,
+      },
+    ];
+    this.refresh.next();
+  }
+
+  addSpecialOfferEvent(offer : SpecialOffer){
+    this.events = [
+      ...this.events,
+      {
+        title: 'Special offer' +   
+        '  from ' + this._datePipe.transform(new Date(offer.reservationStartDate), 'MMM d, y, h:mm') +
+        ' to ' + this._datePipe.transform(new Date(offer.reservationEndDate), 'MMM d, y, h:mm'),
+        start: (new Date(offer.reservationStartDate)),
+        end: (new Date(offer.reservationEndDate)),
+        color: colors.green,
+        allDay: false
+      },
+    ];
+    this.refresh.next();
+  }
+
+  addReservationEvent(resInfo : BoatReservation): void {
+    console.log(resInfo)
+    this.events = [
+      ...this.events,
+      {
+        title: 'Booked from ' + this._datePipe.transform(new Date(resInfo.startDate), 'MMM d, y, h:mm') +
+         ' to ' + this._datePipe.transform(new Date(resInfo.endDate), 'MMM d, y, h:mm') + ' on boat ' + resInfo.boatName,
+        start: (new Date(resInfo.startDate)),
+        end: (new Date(resInfo.endDate)),
+        color: colors.purple,
+        allDay: false,
       },
     ];
     this.refresh.next();

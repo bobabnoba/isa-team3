@@ -145,4 +145,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "    join a.reservations r " +
             "    where a.homeOwner.id = :id and r.isCancelled = false and r.startDate <= current_date and r.endDate >= current_date")
     Collection<BoatReservationInfo> getCurrentReservationsForHomeOwner(Long id);
+
+    @Query(value = "select r " +
+            "    from VacationHome vh " +
+            "    join vh.reservations r " +
+            "    where vh.homeOwner.id = :id and r.isCancelled = false and r.ownerCaptain = true")
+    Collection<Reservation> getCaptainReservationsForBoatOwner(Long id);
 }

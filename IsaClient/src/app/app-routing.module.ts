@@ -64,6 +64,7 @@ import { HomeAvailabilityComponent } from './components/home-components/home-ava
 import { HomeReservationsCurrentComponent } from './components/home-owner-components/home-reservations-current/home-reservations-current.component';
 import { HomeReservationsFutureComponent } from './components/home-owner-components/home-reservations-future/home-reservations-future.component';
 import { HomeReservationsHistoryComponent } from './components/home-owner-components/home-reservations-history/home-reservations-history.component';
+import { BoatOwnerAvailabilityComponent } from './components/boat-owner-components/boat-owner-availability/boat-owner-availability.component';
 
 
 const routes: Routes = [
@@ -231,6 +232,10 @@ const routes: Routes = [
   {
     path: 'boat-owner/boats',
     component: BoatOwnerBoatsComponent
+  },
+  {
+    path: 'boat-owner/availability',
+    component: BoatOwnerAvailabilityComponent
   },
   {
     path: 'instructor/reservations/upcoming',

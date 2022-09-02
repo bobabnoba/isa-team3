@@ -24,4 +24,10 @@ public interface SpecialOfferRepository extends JpaRepository<SpecialOffer, Long
             "    join a.specialOffers so " +
             "    where a.instructor.id = :id and so.isUsed = false")
     Collection<SpecialOfferCalendarInfo> getAllOffersForInstructor(Long id);
+
+    @Query( "    select so " +
+            "    from Boat b " +
+            "    join b.specialOffers so " +
+            "    where b.boatOwner.id = :id and so.isUsed = false and so.isCaptain = true")
+    Collection<SpecialOffer> getAllCaptainOffersForBoatOwner(Long id);
 }

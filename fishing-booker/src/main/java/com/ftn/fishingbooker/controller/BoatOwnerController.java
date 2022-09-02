@@ -17,17 +17,18 @@ import java.util.stream.*;
 
 import static org.springframework.http.ResponseEntity.ok;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/boat-owner")
 public class BoatOwnerController {
 
     private final BoatOwnerService boatOwnerService;
     private final ReservationService reservationService;
+    private final SpecialOfferService specialOfferService;
 
-    public BoatOwnerController(BoatOwnerService boatOwnerService, ReservationService reservationService) {
+    public BoatOwnerController(BoatOwnerService boatOwnerService, ReservationService reservationService, SpecialOfferService specialOfferService) {
         this.boatOwnerService = boatOwnerService;
         this.reservationService = reservationService;
+        this.specialOfferService = specialOfferService;
     }
 
     @PostMapping("/register")
@@ -74,14 +75,24 @@ public class BoatOwnerController {
         return ok(reservations);
     }
 
-//    @GetMapping("ongoing-reservation-client/{email}")
-//    public ResponseEntity<UserDto> getOngoingReservationClient(@PathVariable String email) {
-//        Reservation reservation = instructorService.getOngoingReservationForInstructor(email);
-//        if (reservation != null) {
-//            return ResponseEntity.ok(UserMapper.mapToDto(userService.getUserById(reservation.getClient().getId())));
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @GetMapping("/reservations/captain/{email}")
+    ResponseEntity<Collection<ReservationDto>> getAllCaptainReservations(@PathVariable String email) {
+        BoatOwner owner = boatOwnerService.getByEmail(email);
+        Collection<Reservation> reservations = reservationService.getCaptainReservationsForBoatOwner(owner.getId());
+        Collection<ReservationDto> dtos = reservations.stream()
+                .map(ReservationMapper::map)
+                .collect(Collectors.toList());
+        return ok(dtos);
+    }
+
+    @GetMapping("/special-offers/captain/{email}")
+    ResponseEntity<Collection<SpecialOfferDto>> getAllCaptainSpecialOffers(@PathVariable String email) {
+        BoatOwner owner = boatOwnerService.getByEmail(email);
+        Collection<SpecialOffer> specialOffers = specialOfferService.getAllCaptainOffersForBoatOwner(owner.getId());
+        Collection<SpecialOfferDto> dtos = specialOffers.stream()
+                .map(SpecialOfferMapper::toDto)
+                .collect(Collectors.toList());
+        return ok(dtos);
+    }
 
 }
