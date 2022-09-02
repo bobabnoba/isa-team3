@@ -40,4 +40,6 @@ public class VacationHomeDto {
     public String information;
 
     public Collection<SpecialOfferDto> specialOffers;
+
+    public Collection<HomeAvailabilityDto> availability;
 }

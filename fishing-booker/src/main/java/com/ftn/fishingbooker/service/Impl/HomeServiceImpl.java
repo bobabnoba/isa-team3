@@ -1,7 +1,6 @@
 package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.dto.*;
-import com.ftn.fishingbooker.enumeration.*;
 import com.ftn.fishingbooker.exception.*;
 import com.ftn.fishingbooker.mapper.*;
 import com.ftn.fishingbooker.model.*;
@@ -196,7 +195,7 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     @Transactional
-    public VacationHomeAvailability addAvailabilityPeriod(VacationHomeAvailability newAvailability, Long homeId) {
+    public Collection<VacationHomeAvailability> addAvailabilityPeriod(VacationHomeAvailability newAvailability, Long homeId) {
         VacationHome home = vacationHomeRepository.findById(homeId).orElseThrow(() -> new ResourceConflictException("Home not found"));
         Set<VacationHomeAvailability> availabilities = new HashSet<>(home.getAvailability());
 
@@ -265,11 +264,11 @@ public class HomeServiceImpl implements HomeService {
 
             }else {
                 //7 taj period vec posoji i ne radi nista vec obradjeno
-                return null;
+                return home.getAvailability();
             }
             //TODO:sacuvati sve ovo
             vacationHomeRepository.save(home);
-            return missingPeriod;
+            return home.getAvailability();
 
         }
 
@@ -293,7 +292,7 @@ public class HomeServiceImpl implements HomeService {
             //TODO:OBRISI IH SVE
             homeAvailabilityService.delete(entirelyInsideNewOne);
             //ovo ce na frontu da sjebe stvar vrv ali pri ponovnom ucitavanju trebalo bi da bude ok
-            return newAvailability;
+            return home.getAvailability();
         }else{
             Optional<VacationHomeAvailability> endPartOfNew = availabilities.stream().filter(homeAvailability ->
                     isBetween(homeAvailability.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate()) ||
@@ -308,14 +307,14 @@ public class HomeServiceImpl implements HomeService {
                     missingPeriod.setStartDate(endPartOfNew.get().getStartDate());
                     endPartOfNew.get().setEndDate(newAvailability.getEndDate());
                     vacationHomeRepository.save(home);
-                    return missingPeriod;
+                    return home.getAvailability();
                 }
                 //2 novi zahvata pocetak postojeceg
                 if( startPartOfNew.isPresent() ){
                     missingPeriod.setEndDate(startPartOfNew.get().getEndDate());
                     startPartOfNew.get().setStartDate(newAvailability.getStartDate());
                     vacationHomeRepository.save(home);
-                    return missingPeriod;
+                    return home.getAvailability();
                 }
 
 
@@ -342,7 +341,7 @@ public class HomeServiceImpl implements HomeService {
                 }
                 home.setAvailability(availabilities);
                 vacationHomeRepository.save(home);
-                return newAvailability;
+                return home.getAvailability();
             }
         }
 
@@ -351,7 +350,7 @@ public class HomeServiceImpl implements HomeService {
         availabilities.add(added);
         home.setAvailability(availabilities);
         vacationHomeRepository.save(home);
-        return added;
+        return home.getAvailability();
 
     }
 

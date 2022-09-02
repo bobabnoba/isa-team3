@@ -88,7 +88,10 @@ export class HomeAvailabilityCalendarComponent implements OnInit {
     // now aw is changed 
     if(this.newAv !== undefined){
       if( changes.newAv.currentValue){
-      this.addEvent(changes.newAv.currentValue.startDate, changes.newAv.currentValue.endDate);
+        this.events = [... this.events.filter(e => e.title != 'Available')]
+        changes.newAv.currentValue.forEach((e : any) => {
+          this.addEvent(e.startDate, e.endDate)
+        })
       }
       } 
   }

@@ -33,7 +33,7 @@ public interface HomeService {
     void addImage(Long boatId, String fileName);
 
 
-    VacationHomeAvailability addAvailabilityPeriod(VacationHomeAvailability mapToHomeAvailabilityEntity, Long boatId);
+    Collection<VacationHomeAvailability> addAvailabilityPeriod(VacationHomeAvailability mapToHomeAvailabilityEntity, Long boatId);
 
     boolean checkAvailability(Date from, Date to, Long homeId);
 

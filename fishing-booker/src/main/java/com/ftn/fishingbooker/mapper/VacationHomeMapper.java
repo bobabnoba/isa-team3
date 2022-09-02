@@ -107,6 +107,7 @@ public class VacationHomeMapper {
         vacationHomeDto.setInformation(home.getInformation());
         var offers = SpecialOfferMapper.toDtoSet(home.getSpecialOffers());
         vacationHomeDto.setSpecialOffers(offers.stream().filter(specialOffer -> specialOffer.getActiveTo().after(new Date())).collect(Collectors.toSet()));
+        vacationHomeDto.setAvailability(home.getAvailability().stream().map(VacationHomeMapper::mapToAvailabilityDto).collect(Collectors.toList()));
         return vacationHomeDto;
     }
 
