@@ -182,7 +182,8 @@ public class ClientServiceImpl implements ClientService {
     public boolean cancelUpcomingReservation(Long reservationId, String userEmail) {
         Client client = (Client) userRepository.findByEmail(userEmail);
         for (Reservation reservation : client.getReservationsMade()) {
-            if (reservation.getId() == reservationId) {
+           var id = reservation.getId();
+            if (id == reservationId) {
                 if (canBeCanceled(reservation)) {
                     reservation.setIsCancelled(true);
                     earningsService.deleteEarnings(reservation);

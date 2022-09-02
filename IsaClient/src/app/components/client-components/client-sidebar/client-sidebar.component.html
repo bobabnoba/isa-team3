@@ -9,6 +9,9 @@
     </a>
 
     <hr class="sidebar-divider my-0">
+    <div class="sidebar-heading">
+        Account
+    </div>
 
     <li class="nav-item active">
         <a class="nav-link" [routerLink]="['/client/profile']">
@@ -17,6 +20,9 @@
     </li>
 
     <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Services
+    </div>
 
     <li class="nav-item">
         <a class="nav-link" [routerLink]="['/client/homes']">
@@ -45,6 +51,17 @@
         <a class="nav-link" [routerLink]="['/client/instructors']">
             <i class="fas fa-chalkboard-teacher"></i>
             <span>Instructor Profiles</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Reservations
+    </div>
+    <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/client/reservations']">
+            <i class="fa-solid fa-calendar"></i>
+            <span>Upcoming Reservations</span>
         </a>
     </li>
     <hr class="sidebar-divider">
@@ -78,14 +95,11 @@
         </div>
     </li>
     <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Subscription
+    </div>
 
-    <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/client/reservations']">
-            <i class="fa-solid fa-calendar"></i>
-            <span>Upcoming Reservations</span>
-        </a>
-    </li>
-    <hr class="sidebar-divider">
+
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">

@@ -1,0 +1,25 @@
+<mat-card class="container">
+    <div class="text-center">
+        <h3> Write a complaint </h3>
+    </div>
+    <div class="col-12">
+        <div [formGroup]="createForm" class="content">
+            <div>
+                <!--Complaint-->
+                <mat-form-field appearance="fill" style="width: 100%">
+                    <mat-label>Complaint ...</mat-label>
+                    <textarea id="text" matInput required formControlName="complaint"
+                    style="height:250px"></textarea>
+                </mat-form-field>
+
+            </div>
+
+            <div class="buttons">
+                <button (click)="submit()" class="btn btn-primary text-center">
+                    Submit
+                </button>
+            </div>
+        </div>
+        <br>
+    </div>
+</mat-card>
