@@ -223,7 +223,7 @@ public class BoatServiceImpl implements BoatService {
 
     @Override
     @Transactional
-    public BoatAvailability addAvailabilityPeriod(BoatAvailability newAvailability, Long boatId) {
+    public Collection<BoatAvailability> addAvailabilityPeriod(BoatAvailability newAvailability, Long boatId) {
         Boat boat = boatRepository.findById(boatId).orElseThrow(() -> new ResourceConflictException("Boat not found"));
         Set<BoatAvailability> availabilities = new HashSet<>(boat.getAvailableTimePeriods());
 
@@ -296,7 +296,7 @@ public class BoatServiceImpl implements BoatService {
             }
             //TODO:sacuvati sve ovo
             boatRepository.save(boat);
-            return missingPeriod;
+            return boat.getAvailableTimePeriods();
 
         }
 
@@ -320,7 +320,7 @@ public class BoatServiceImpl implements BoatService {
             //TODO:OBRISI IH SVE
             boatAvailabilityService.delete(entirelyInsideNewOne);
             //ovo ce na frontu da sjebe stvar vrv ali pri ponovnom ucitavanju trebalo bi da bude ok
-            return newAvailability;
+            return boat.getAvailableTimePeriods();
         }else{
             Optional<BoatAvailability> endPartOfNew = availabilities.stream().filter(boatAvailability ->
                     isBetween(boatAvailability.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate()) ||
@@ -335,14 +335,14 @@ public class BoatServiceImpl implements BoatService {
                     missingPeriod.setStartDate(endPartOfNew.get().getStartDate());
                     endPartOfNew.get().setEndDate(newAvailability.getEndDate());
                     boatRepository.save(boat);
-                    return missingPeriod;
+                    return boat.getAvailableTimePeriods();
                 }
                 //2 novi zahvata pocetak postojeceg
                 if( startPartOfNew.isPresent() ){
                     missingPeriod.setEndDate(startPartOfNew.get().getEndDate());
                     startPartOfNew.get().setStartDate(newAvailability.getStartDate());
                     boatRepository.save(boat);
-                    return missingPeriod;
+                    return boat.getAvailableTimePeriods();
                 }
 
 
@@ -369,7 +369,7 @@ public class BoatServiceImpl implements BoatService {
                 }
                 boat.setAvailableTimePeriods(availabilities);
                 boatRepository.save(boat);
-                return newAvailability;
+                return boat.getAvailableTimePeriods();
             }
         }
 
@@ -378,7 +378,7 @@ public class BoatServiceImpl implements BoatService {
         availabilities.add(added);
         boat.setAvailableTimePeriods(new HashSet<>(checkForOverlapping(added, new ArrayList<>(availabilities))));
         boatRepository.save(boat);
-        return added;
+        return boat.getAvailableTimePeriods();
 
     }
 

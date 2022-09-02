@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FishingEquipment, Utility } from 'src/app/interfaces/adventure';
 import { Boat } from 'src/app/interfaces/boat';
+import { Reservation } from 'src/app/interfaces/reservation';
 import { Rule } from 'src/app/interfaces/rule';
 import { environment } from 'src/environments/environment';
 
@@ -38,6 +39,7 @@ export class BoatService {
   getAllByBoatOwner(email: string) : Observable<Boat[]> {
     return this._http.get<Boat[]>(`${this.baseURL}/boats/by-owner/${email}`);
   }
+
   
   baseURL = environment.apiURL;
   constructor(private _http : HttpClient) { }
@@ -62,6 +64,11 @@ export class BoatService {
   }
   getBoatForReservation(id : number) : Observable<Boat>{
     return this._http.get<Boat>(`${this.baseURL}/boats/for-reservation/${id}`);
+  }
+
+  getBoatReservations(id : string) : Observable<Reservation[]>{
+    return this._http.get<Reservation[]>(`${this.baseURL}/boats/reservations/${id}`);
+
   }
   
   incomingReservationExists(id : number ) : Observable<boolean>{

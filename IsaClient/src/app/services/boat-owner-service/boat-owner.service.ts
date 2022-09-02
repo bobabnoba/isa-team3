@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BoatReservation } from 'src/app/interfaces/boat-reservation';
 import { LoggedUser } from 'src/app/interfaces/logged-user';
+import { SpecialOffer } from 'src/app/interfaces/special-offer';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -40,5 +41,13 @@ export class BoatOwnerService {
 
   getOngoingResClient(email: string) : Observable<LoggedUser>{
     return this._http.get<LoggedUser>(`${this.baseURL}/boat-owner/ongoing-reservation-client/${email}`);
+  }
+
+  getAllReservationsWhereCaptain(email: string) : Observable<BoatReservation[]>{
+    return this._http.get<BoatReservation[]>(`${this.baseURL}/boat-owner/reservations/captain/${email}`);
+  }
+
+  getAllSpecialOffersWhereCaptain(email: string) : Observable<SpecialOffer[]>{
+    return this._http.get<SpecialOffer[]>(`${this.baseURL}/boat-owner/special-offers/captain/${email}`);
   }
 }

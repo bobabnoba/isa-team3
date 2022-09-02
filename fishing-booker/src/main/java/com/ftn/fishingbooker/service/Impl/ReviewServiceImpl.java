@@ -7,10 +7,7 @@ import com.ftn.fishingbooker.model.Boat;
 import com.ftn.fishingbooker.model.ClientReview;
 import com.ftn.fishingbooker.model.VacationHome;
 import com.ftn.fishingbooker.repository.ReviewRepository;
-import com.ftn.fishingbooker.service.AdventureService;
-import com.ftn.fishingbooker.service.BoatService;
-import com.ftn.fishingbooker.service.HomeService;
-import com.ftn.fishingbooker.service.ReviewService;
+import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +24,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final UserServiceImpl userService;
     private final BoatService boatService;
     private final HomeService homeService;
+    private final EmailService emailService;
 
     @Override
     public Boolean checkForReview(Long reservationId) {
@@ -79,6 +77,8 @@ public class ReviewServiceImpl implements ReviewService {
         );
         if(approved){
             review.setStatus(ReviewStatus.APPROVED);
+            emailService.sendReviewApprovedEmail(review);
+
         }else {
             review.setStatus(ReviewStatus.DISAPPROVED);
         }

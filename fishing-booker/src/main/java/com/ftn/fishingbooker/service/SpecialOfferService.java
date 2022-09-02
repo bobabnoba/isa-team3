@@ -15,4 +15,6 @@ public interface SpecialOfferService {
     void reserveSpecialOffer(Long offerId);
 
     Collection<SpecialOfferCalendarInfo> getAllInstructorsOffers(Long id);
+
+    Collection<SpecialOffer> getAllCaptainOffersForBoatOwner(Long id);
 }

@@ -173,6 +173,7 @@ import { AdminReviewsComponent } from './components/admin-components/admin-revie
 import { ImageListItemComponent } from './components/common/image-list-item/image-list-item.component';
 import { ImageListComponent } from './components/common/image-list/image-list.component';
 import { VacationHomePageComponent } from './components/rentals/vacation-home-page/vacation-home-page.component';
+import { BoatOwnerAvailabilityComponent } from './components/boat-owner-components/boat-owner-availability/boat-owner-availability.component';
 
 @NgModule({
   declarations: [
@@ -320,6 +321,7 @@ import { VacationHomePageComponent } from './components/rentals/vacation-home-pa
     SubCardComponent,
     AdminReviewsComponent,
     ComplaintComponent,
+    BoatOwnerAvailabilityComponent,
 
   ],
   imports: [

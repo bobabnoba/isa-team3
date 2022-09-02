@@ -167,12 +167,12 @@ public class HomeController {
     }
 
     @PostMapping("/add-availability")
-    public ResponseEntity<?> addAvailabilityPeriod(@RequestBody HomeAvailabilityRequestDto availability) {
-        VacationHomeAvailability saved = vacationHomeService.addAvailabilityPeriod(VacationHomeMapper.mapToHomeAvailabilityEntity(availability), availability.getHomeId());
-        if (saved != null){
-            return ok(VacationHomeMapper.mapToAvailabilityDto(saved));
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Collection<HomeAvailabilityDto>> addAvailabilityPeriod(@RequestBody HomeAvailabilityRequestDto availability) {
+        Collection<VacationHomeAvailability> availabilities = vacationHomeService.addAvailabilityPeriod(VacationHomeMapper.mapToHomeAvailabilityEntity(availability), availability.getHomeId());
+        Collection<HomeAvailabilityDto> dtos = availabilities.stream()
+                .map(VacationHomeMapper::mapToAvailabilityDto)
+                .collect(Collectors.toList());
+        return ok(dtos);
     }
 
     @GetMapping("/check-if-available")

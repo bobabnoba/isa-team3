@@ -42,4 +42,5 @@ public class ClientReview {
     @Enumerated(EnumType.STRING)
     private ReviewStatus status = ReviewStatus.PENDING;
 
+
 }
