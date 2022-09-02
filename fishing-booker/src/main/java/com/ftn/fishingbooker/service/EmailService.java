@@ -3,6 +3,7 @@ package com.ftn.fishingbooker.service;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.ClientReview;
+import com.ftn.fishingbooker.model.Complaint;
 
 import javax.mail.MessagingException;
 
@@ -23,4 +24,8 @@ public interface EmailService {
     String createSubscriptionEmail(String ownerFirstName, String ownerLastName);
 
     void sendReviewApprovedEmail(ClientReview review);
+
+    void sendComplaintResponseClient(Complaint complaint);
+
+    void sendComplaintResponseOwner(Complaint complaint);
 }

@@ -36,16 +36,8 @@ public class ReviewDto {
         this.review = review;
     }
 
-    public Double getOwnerRating() {
-        return ownerRating;
-    }
-
     public void setOwnerRating(Double ownerRating) {
         this.ownerRating = ownerRating;
-    }
-
-    public Double getRentalRating() {
-        return rentalRating;
     }
 
     public void setRentalRating(Double rentalRating) {
@@ -66,10 +58,6 @@ public class ReviewDto {
 
     public void setOwnerEmail(String ownerEmail) {
         this.ownerEmail = ownerEmail;
-    }
-
-    public String getRentalName() {
-        return rentalName;
     }
 
     public void setRentalName(String rentalName) {

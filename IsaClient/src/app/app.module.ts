@@ -174,6 +174,7 @@ import { ImageListItemComponent } from './components/common/image-list-item/imag
 import { ImageListComponent } from './components/common/image-list/image-list.component';
 import { VacationHomePageComponent } from './components/rentals/vacation-home-page/vacation-home-page.component';
 import { BoatOwnerAvailabilityComponent } from './components/boat-owner-components/boat-owner-availability/boat-owner-availability.component';
+import { AdminComplaintsComponent } from './components/admin-components/admin-complaints/admin-complaints.component';
 
 @NgModule({
   declarations: [
@@ -322,7 +323,7 @@ import { BoatOwnerAvailabilityComponent } from './components/boat-owner-componen
     AdminReviewsComponent,
     ComplaintComponent,
     BoatOwnerAvailabilityComponent,
-
+    AdminComplaintsComponent,
   ],
   imports: [
     BrowserModule,
