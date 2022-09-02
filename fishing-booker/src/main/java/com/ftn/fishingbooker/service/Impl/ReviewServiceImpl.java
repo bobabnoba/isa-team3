@@ -31,10 +31,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Boolean checkForReview(Long reservationId) {
         ClientReview review = reviewRepository.findByReservationId(reservationId);
-        if (review != null) {
-            return true;
-        }
-        return false;
+        return review != null;
     }
 
     @Override
@@ -68,15 +65,6 @@ public class ReviewServiceImpl implements ReviewService {
         clientReview.setOwnerEmail(ownerEmail);
 
         return reviewRepository.save(clientReview);
-    }
-
-    @Override
-    public Boolean checkForReview(Long reservationId) {
-        ClientReview review = reviewRepository.findByReservationId(reservationId);
-        if (review != null) {
-            return true;
-        }
-        return false;
     }
 
     @Override
