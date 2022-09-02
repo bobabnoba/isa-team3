@@ -37,6 +37,8 @@ public class Complaint {
     @Enumerated(EnumType.STRING)
     private ComplaintStatus status = ComplaintStatus.PENDING;
 
+    private String adminResponse;
+
     @Enumerated(EnumType.STRING)
     private ReservationType reservationType;
 

@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.mapper;
 
+import com.ftn.fishingbooker.dto.AdminComplaintDto;
 import com.ftn.fishingbooker.dto.ComplaintDto;
 import com.ftn.fishingbooker.model.Complaint;
 
@@ -13,5 +14,11 @@ public class ComplaintMapper {
         complaint.setReservationId(complaintDto.getReservationId());
         complaint.setReservationType(complaintDto.getReservationType());
         return complaint;
+    }
+
+    public static AdminComplaintDto toDto(Complaint complaint){
+        AdminComplaintDto dto = new AdminComplaintDto();
+
+        return dto;
     }
 }

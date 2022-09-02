@@ -1,18 +1,16 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.model.Adventure;
-import com.ftn.fishingbooker.model.Boat;
-import com.ftn.fishingbooker.model.Complaint;
-import com.ftn.fishingbooker.model.VacationHome;
+import com.ftn.fishingbooker.enumeration.ComplaintStatus;
+import com.ftn.fishingbooker.enumeration.ReviewStatus;
+import com.ftn.fishingbooker.exception.ResourceConflictException;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.ComplaintRepository;
-import com.ftn.fishingbooker.service.AdventureService;
-import com.ftn.fishingbooker.service.BoatService;
-import com.ftn.fishingbooker.service.ComplaintService;
-import com.ftn.fishingbooker.service.HomeService;
+import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 
 
 @Service
@@ -25,6 +23,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     private final UserServiceImpl userService;
     private final BoatService boatService;
     private final HomeService homeService;
+    private final EmailService emailService;
 
     @Override
     public Boolean checkForComplaint(Long reservationId) {
@@ -63,5 +62,21 @@ public class ComplaintServiceImpl implements ComplaintService {
         complaint.setOwnerEmail(ownerEmail);
 
         return complaintRepository.save(complaint);
+    }
+
+    @Override
+    public Collection<Complaint> getAllPendingComplaints() {
+        return complaintRepository.findAllByStatus(ComplaintStatus.PENDING);
+    }
+
+    @Override
+    public void addAdminResponse(Long id, String response) {
+        Complaint complaint = complaintRepository.findById(id).orElseThrow(
+                () -> new ResourceConflictException("Complaint not found")
+        );
+        complaint.setAdminResponse(response);
+        complaintRepository.save(complaint);
+        emailService.sendComplaintResponseClient(complaint);
+        emailService.sendComplaintResponseOwner(complaint);
     }
 }

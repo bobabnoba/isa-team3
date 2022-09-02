@@ -1,14 +1,21 @@
 package com.ftn.fishingbooker.controller;
 
+import com.ftn.fishingbooker.dto.AdminComplaintDto;
 import com.ftn.fishingbooker.dto.ComplaintDto;
+import com.ftn.fishingbooker.dto.ReviewDto;
 import com.ftn.fishingbooker.enumeration.ComplaintStatus;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.mapper.ComplaintMapper;
+import com.ftn.fishingbooker.mapper.ReviewMapper;
+import com.ftn.fishingbooker.model.ClientReview;
 import com.ftn.fishingbooker.model.Complaint;
 import com.ftn.fishingbooker.service.ComplaintService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/complaints")
@@ -43,5 +50,20 @@ public class ComplaintController {
         }
 
         return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/pending")
+    public ResponseEntity<Collection<AdminComplaintDto>> getAllPending(){
+        Collection<Complaint> found = complaintService.getAllPendingComplaints();
+        Collection<AdminComplaintDto> dtos = found.stream()
+                .map(ComplaintMapper::toDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
+
+    @PostMapping("/admin-response/{id}")
+    public ResponseEntity<Object> adminResponse(@PathVariable Long id, @RequestBody String response) {
+        complaintService.addAdminResponse(id, response);
+        return ResponseEntity.ok().build();
     }
 }
