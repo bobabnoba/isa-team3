@@ -570,8 +570,8 @@ public class EmailServiceImpl implements EmailService {
                 "        \n" +
 
                 "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Admin has just approved a review from your reservation " +
-                "created by " +  review.getClientEmail() + "! Client rated you with " + review.getOwnerRating() + "stars and your service "
-                + review.getRentalName() +  " with " + review.getRentalRating() + ". Its review: \n" + review.getReview() + "</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">\n </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>Regards, Easy&Peasy Booker team.</p>" +
+                "created by " +  review.getClientEmail() + "! Client rated you with " + review.getOwnerRating() + " stars and your service "
+                + review.getRentalName() +  " with " + review.getRentalRating() + " stars. Its review: \n" + review.getReview() + "</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">\n </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>Regards, Easy&Peasy Booker team.</p>" +
 
 
                 "        \n" +
@@ -647,7 +647,7 @@ public class EmailServiceImpl implements EmailService {
                 "        \n" +
 
                 "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Admin has just processed complaint from your " +
-                complaint.getRentalType() + " reservation with " + complaint.getOwnerEmail() + ". " +
+                complaint.getReservationType() + " reservation with " + complaint.getOwnerEmail() + ". " +
                 "Response: \n" + complaint.getAdminResponse() + "</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">\n </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>Regards, Easy&Peasy Booker team.</p>" +
 
 
@@ -724,8 +724,10 @@ public class EmailServiceImpl implements EmailService {
                 "        \n" +
 
                 "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Admin has just processed complaint from your " +
-                complaint.getRentalType() + " reservation with " + complaint.getClientEmail() + ". " +
-                "Response: \n" + complaint.getAdminResponse() + "</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">\n </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>Regards, Easy&Peasy Booker team.</p>" +
+                complaint.getReservationType() + " reservation with " + complaint.getClientEmail() + ".</p>" +
+                "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Client complaint: " + complaint.getComplaint() + "</p>" +
+                "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Admin response: " + complaint.getAdminResponse() + "</p>" +
+                "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">\n </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>Regards, Easy&Peasy Booker team.</p>" +
 
 
                 "        \n" +

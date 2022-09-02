@@ -65,6 +65,7 @@ import { HomeReservationsCurrentComponent } from './components/home-owner-compon
 import { HomeReservationsFutureComponent } from './components/home-owner-components/home-reservations-future/home-reservations-future.component';
 import { HomeReservationsHistoryComponent } from './components/home-owner-components/home-reservations-history/home-reservations-history.component';
 import { BoatOwnerAvailabilityComponent } from './components/boat-owner-components/boat-owner-availability/boat-owner-availability.component';
+import { AdminComplaintsComponent } from './components/admin-components/admin-complaints/admin-complaints.component';
 
 
 const routes: Routes = [
@@ -172,6 +173,10 @@ const routes: Routes = [
   {
     path: 'admin/reviews',
     component: AdminReviewsComponent
+  },
+  {
+    path:'admin/complaints',
+    component: AdminComplaintsComponent
   },
   {
     path: 'admin/adventures',

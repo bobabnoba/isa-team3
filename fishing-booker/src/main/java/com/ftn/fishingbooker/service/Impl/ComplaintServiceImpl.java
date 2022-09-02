@@ -75,6 +75,7 @@ public class ComplaintServiceImpl implements ComplaintService {
                 () -> new ResourceConflictException("Complaint not found")
         );
         complaint.setAdminResponse(response);
+        complaint.setStatus(ComplaintStatus.ANSWERED);
         complaintRepository.save(complaint);
         emailService.sendComplaintResponseClient(complaint);
         emailService.sendComplaintResponseOwner(complaint);

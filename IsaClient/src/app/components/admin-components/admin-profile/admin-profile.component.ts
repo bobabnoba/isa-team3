@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DeleteAccoutRequest } from 'src/app/interfaces/delete-accout-request';
 import { LoggedUser } from 'src/app/interfaces/logged-user';
 import { DeleteAccountService } from 'src/app/services/delete-account-service/delete-account.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { UserService } from 'src/app/services/user-service/user.service';
-import { AccDeletionExplanationComponent } from '../../instructor-components/acc-deletion-explanation/acc-deletion-explanation.component';
 
 @Component({
   selector: 'app-admin-profile',

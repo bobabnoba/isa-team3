@@ -18,7 +18,11 @@ public class ComplaintMapper {
 
     public static AdminComplaintDto toDto(Complaint complaint){
         AdminComplaintDto dto = new AdminComplaintDto();
-
+        dto.setId(complaint.getId());
+        dto.setComplaint(complaint.getComplaint());
+        dto.setOwnerEmail(complaint.getOwnerEmail());
+        dto.setClientEmail(complaint.getClientEmail());
+        dto.setReservationType(complaint.getReservationType());
         return dto;
     }
 }
