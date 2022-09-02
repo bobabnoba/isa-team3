@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IReview } from 'src/app/interfaces/review';
-import { ReviewService } from 'src/app/services/review-service/review.service';
 import { InstructorReportComponent } from '../../instructor-components/instructor-report/instructor-report.component';
 
 @Component({

@@ -31,8 +31,6 @@ public class ClientReview {
     @Enumerated(EnumType.STRING)
     private ReservationType reservationType;
 
-    // More that needs
-
     private String ownerEmail;
 
     private Long rentalId;
@@ -43,10 +41,5 @@ public class ClientReview {
 
     @Enumerated(EnumType.STRING)
     private ReviewStatus status = ReviewStatus.PENDING;
-
-
-
-
-
 
 }
