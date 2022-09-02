@@ -1,0 +1,36 @@
+.mright {
+    margin-right: 10px;
+}
+
+.cardi {
+    background-color: rgba(228, 220, 195, 0.39);
+    width: 70%;
+    padding: 20px;
+}
+
+.book-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.flex-dir {
+    flex-direction: column;
+    position: relative;
+}
+
+
+.wid {
+    width: max-content;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.client {
+    padding: 4px 6px 0px 0px;
+}
+
+.contact {
+    padding: 0px 6px 6px 0px;
+}

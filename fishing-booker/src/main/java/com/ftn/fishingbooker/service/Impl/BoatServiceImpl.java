@@ -96,7 +96,7 @@ public class BoatServiceImpl implements BoatService {
     public Collection<Boat> getAllByOwner(String email) {
         BoatOwner owner = boatOwnerRepository.findByEmail(email);
         if (owner == null) {
-            throw new ResourceConflictException("Instructor with email " + email + " does not exist");
+            throw new ResourceConflictException("Boat owner with email " + email + " does not exist");
         }
         return boatRepository.findAllByOwnerId(owner.getId());
     }
@@ -115,8 +115,13 @@ public class BoatServiceImpl implements BoatService {
                 .orElseThrow(() -> new ResourceConflictException("Boat not found"));
         //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
         //ako ima ne moze se obrisati ako nema brisi ga
-        found.setDeleted(true);
-        boatRepository.save(found);
+        var noOfFutureRes = reservationService.getNoOfIncomingReservationsForBoat(id);
+        if ( !(noOfFutureRes > 0)){
+            found.setDeleted(true);
+            boatRepository.save(found);
+        }
+        //TODO: dodati povratnu poruku
+
     }
 
     @Override
@@ -148,19 +153,21 @@ public class BoatServiceImpl implements BoatService {
                 .orElseThrow(() -> new ResourceConflictException("Boat not found"));
         //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
         //ako ima ne moze se editovati ako nema edituj ga
-        found.setName(updated.getName());
-        found.setType(BoatType.valueOf(updated.getType()));
-        found.setLength(updated.getLength());
-        found.setEngineCount(updated.getEngineCount());
-        found.setEnginePower(updated.getEnginePower());
-        found.setMaxSpeed(updated.getMaxSpeed());
-        found.setInformation(updated.getInformation());
-        found.setDescription(updated.getDescription());
-        found.setPricePerDay(updated.getPricePerDay());
-        found.setCancelingPercentage(updated.getCancelingPercentage());
-        found.setGuestLimit(updated.getGuestLimit());
-
-        return boatRepository.save(found);
+        var noOfFutureRes = reservationService.getNoOfIncomingReservationsForBoat(id);
+        if ( !(noOfFutureRes > 0)) {
+            found.setName(updated.getName());
+            found.setType(BoatType.valueOf(updated.getType()));
+            found.setLength(updated.getLength());
+            found.setEngineCount(updated.getEngineCount());
+            found.setEnginePower(updated.getEnginePower());
+            found.setMaxSpeed(updated.getMaxSpeed());
+            found.setInformation(updated.getInformation());
+            found.setDescription(updated.getDescription());
+            found.setPricePerDay(updated.getPricePerDay());
+            found.setCancelingPercentage(updated.getCancelingPercentage());
+            found.setGuestLimit(updated.getGuestLimit());
+        }
+            return boatRepository.save(found);
     }
 
     @Override
@@ -171,10 +178,12 @@ public class BoatServiceImpl implements BoatService {
                 .orElseThrow(() -> new ResourceConflictException("Boat not found"));
         //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
         //ako ima ne moze se editovati ako nema edituj ga
-        found.setFishingEquipment(new HashSet<>(updated.getFishingEquipment()));
-        found.setUtilities(new HashSet<>(updated.getUtilities()));
-        found.setNavigationType(updated.getNavigationTypes().stream().map(NavigationType::valueOf).collect(Collectors.toSet()));
-
+        var noOfFutureRes = reservationService.getNoOfIncomingReservationsForBoat(id);
+        if ( !(noOfFutureRes > 0)) {
+            found.setFishingEquipment(new HashSet<>(updated.getFishingEquipment()));
+            found.setUtilities(new HashSet<>(updated.getUtilities()));
+            found.setNavigationType(updated.getNavigationTypes().stream().map(NavigationType::valueOf).collect(Collectors.toSet()));
+        }
         return boatRepository.save(found);
     }
 
@@ -185,7 +194,10 @@ public class BoatServiceImpl implements BoatService {
                 .orElseThrow(() -> new ResourceConflictException("Boat not found"));
         //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
         //ako ima ne moze se editovati ako nema edituj ga
-        found.setCodeOfConduct(new HashSet<>(updated));
+        var noOfFutureRes = reservationService.getNoOfIncomingReservationsForBoat(id);
+        if ( !(noOfFutureRes > 0)) {
+            found.setCodeOfConduct(new HashSet<>(updated));
+        }
         return boatRepository.save(found);
     }
 
@@ -201,7 +213,10 @@ public class BoatServiceImpl implements BoatService {
                 .orElseThrow(() -> new ResourceConflictException("Boat not found"));
         //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
         //ako ima ne moze se editovati ako nema edituj ga
-        found.setAddress(updated);
+        var noOfFutureRes = reservationService.getNoOfIncomingReservationsForBoat(id);
+        if ( !(noOfFutureRes > 0)) {
+            found.setAddress(updated);
+        }
         return boatRepository.save(found);
     }
 
@@ -486,5 +501,10 @@ public class BoatServiceImpl implements BoatService {
             }
         }
         return isAvailable;
+    }
+
+    @Override
+    public int getNoOfIncomingReservations(Long id) {
+        return reservationService.getNoOfIncomingReservationsForBoat(id);
     }
 }

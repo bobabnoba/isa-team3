@@ -35,6 +35,8 @@ public class ClientReview {
 
     private Long rentalId;
 
+    private String rentalName;
+
     private String clientEmail;
 
     @Enumerated(EnumType.STRING)

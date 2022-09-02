@@ -1,14 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AdventureOfferInfo } from 'src/app/interfaces/adventure-offer-info';
 import { AdventureReservation } from 'src/app/interfaces/adventure-reservation';
+import { AdventureReservationInfo } from 'src/app/interfaces/adventure-reservation-info';
 import { LoggedUser } from 'src/app/interfaces/logged-user';
+import { Reservation } from 'src/app/interfaces/reservation';
+import { SpecialOffer } from 'src/app/interfaces/special-offer';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InstructorService {
+
 
 
   baseURL = environment.apiURL;
@@ -47,6 +52,18 @@ export class InstructorService {
 
   checkForOverlappingReservation(from : string, to : string, instructorEmail : string) {
     return this._http.get(`${this.baseURL}/instructor/has-overlapping-reservation?from=${from}&to=${to}&email=${instructorEmail}`);
+  }
+
+  getAllReservations(email: string) : Observable<AdventureReservationInfo[]>{
+    return this._http.get<AdventureReservationInfo[]>(`${this.baseURL}/instructor/reservations/${email}`);
+  }
+
+  getAllSpecialOffers(email: string) : Observable<AdventureOfferInfo[]>{
+    return this._http.get<AdventureOfferInfo[]>(`${this.baseURL}/instructor/special-offers/${email}`);
+  }
+
+  deleteAvailability(body : any ) : Observable<any> {
+    return this._http.post(`${this.baseURL}/instructor/delete-availability`, body);
   }
 
 }

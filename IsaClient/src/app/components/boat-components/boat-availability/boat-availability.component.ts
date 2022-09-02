@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Boat } from 'src/app/interfaces/boat';
-import { BoatAvailability } from 'src/app/interfaces/boat-availability';
+import { BoatAndHomeAvailability } from 'src/app/interfaces/boat-availability';
 import { BoatService } from 'src/app/services/boat-service/boat.service';
 
 @Component({

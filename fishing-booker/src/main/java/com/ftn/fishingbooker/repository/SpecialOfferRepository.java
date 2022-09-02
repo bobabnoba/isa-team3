@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.repository;
 
+import com.ftn.fishingbooker.dao.SpecialOfferCalendarInfo;
 import com.ftn.fishingbooker.model.SpecialOffer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +16,12 @@ public interface SpecialOfferRepository extends JpaRepository<SpecialOffer, Long
             "    where adventure_id = 112 and is_used = false\n" +
             "    and current_date > active_from and current_date <active_to", nativeQuery = true)
     Collection<SpecialOffer> getAvailableOffersForAdventure(Long adventureId);
+
+    @Query( "    select so.activeFrom as activeFrom, so.activeTo as activeTo, " +
+            "    so.reservationStartDate as reservationStartDate, so.reservationEndDate as reservationEndDate, " +
+            "    a.title as title " +
+            "    from Adventure a " +
+            "    join a.specialOffers so " +
+            "    where a.instructor.id = :id and so.isUsed = false")
+    Collection<SpecialOfferCalendarInfo> getAllOffersForInstructor(Long id);
 }

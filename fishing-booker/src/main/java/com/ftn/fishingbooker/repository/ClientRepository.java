@@ -4,6 +4,8 @@ import com.ftn.fishingbooker.model.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Collection;
+
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
     Client findByEmail(String email);
@@ -22,4 +24,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
             "from instructor_subscription as vhs \n" +
             "where client_id = ?1 and instructor_id = ?2);", nativeQuery = true)
     boolean instructorHomeSubscriptionExists(Long clientId, Long entityId);
+
+    Collection<Client> findAllByDeleted(boolean deleted);
 }

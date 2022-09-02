@@ -137,6 +137,7 @@ import { AddBoatSpecialOfferComponent } from './components/boat-owner-components
 import { AvailabilityCalendarBoatOwnerComponent } from './components/boat-owner-components/availability-calendar-boat-owner/availability-calendar-boat-owner.component';
 import { BoatOwnerCreateReservationComponent } from './components/boat-owner-components/boat-owner-create-reservation/boat-owner-create-reservation.component';
 import { BoatOwnerReportComponent } from './components/boat-owner-components/boat-owner-report/boat-owner-report.component';
+import { InstructorAvailabilityComponent } from './components/instructor-components/instructor-availability/instructor-availability.component';
 import { BoatReservationInfoComponent } from './components/boat-owner-components/boat-reservation-info/boat-reservation-info.component';
 import { BoatReservationPreviewComponent } from './components/boat-owner-components/boat-reservation-preview/boat-reservation-preview.component';
 import { BoatReservationsCurrentComponent } from './components/boat-owner-components/boat-reservations-current/boat-reservations-current.component';
@@ -144,10 +145,31 @@ import { BoatReservationsFutureComponent } from './components/boat-owner-compone
 import { BoatReservationsHistoryComponent } from './components/boat-owner-components/boat-reservations-history/boat-reservations-history.component';
 import { BoatSubsComponent } from './components/client-components/boat-subs/boat-subs.component';
 import { ComplaintComponent } from './components/client-components/complaint/complaint.component';
+import { HomeOwnerHomesComponent } from './components/home-owner-components/home-owner-homes/home-owner-homes.component';
+import { HomeSearchPipe } from './pipes/home-search/home-search.pipe';
+import { HomeOwnerTopbarComponent } from './components/home-owner-components/home-owner-topbar/home-owner-topbar.component';
+import { HomePreviewComponent } from './components/home-components/home-preview/home-preview.component';
+import { HomeProfileComponent } from './components/home-components/home-profile/home-profile.component';
+import { HomeInfoComponent } from './components/home-components/home-info/home-info.component';
+import { HomeAdditionalInfoComponent } from './components/home-components/home-additional-info/home-additional-info.component';
+import { HomeLocationComponent } from './components/home-components/home-location/home-location.component';
+import { HomeOwnerInfoComponent } from './components/home-components/home-owner-info/home-owner-info.component';
+import { HomeServicesComponent } from './components/home-components/home-services/home-services.component';
+import { HomeOwnerHomeProfileComponent } from './components/home-owner-components/home-owner-home-profile/home-owner-home-profile.component';
+import { AddHomeComponent } from './components/home-components/add-home/add-home.component';
+import { HomeAvailabilityCalendarComponent } from './components/home-components/home-availability-calendar/home-availability-calendar.component';
+import { HomeAvailabilityComponent } from './components/home-components/home-availability/home-availability.component';
+import { AddHomeSpecialOfferComponent } from './components/home-owner-components/add-home-special-offer/add-home-special-offer.component';
+import { HomeReservationInfoComponent } from './components/home-owner-components/home-reservation-info/home-reservation-info.component';
+import { HomeReservationsCurrentComponent } from './components/home-owner-components/home-reservations-current/home-reservations-current.component';
+import { HomeReservationsFutureComponent } from './components/home-owner-components/home-reservations-future/home-reservations-future.component';
+import { HomeReservationsHistoryComponent } from './components/home-owner-components/home-reservations-history/home-reservations-history.component';
+import { HomeOwnerCreateReservationComponent } from './components/home-owner-components/home-owner-create-reservation/home-owner-create-reservation.component';
 import { HomeSubsComponent } from './components/client-components/home-subs/home-subs.component';
 import { InstructorSubsComponent } from './components/client-components/instructor-subs/instructor-subs.component';
 import { ReviewComponent } from './components/client-components/review/review.component';
 import { SubCardComponent } from './components/client-components/sub-card/sub-card.component';
+import { AdminReviewsComponent } from './components/admin-components/admin-reviews/admin-reviews.component';
 import { ImageListItemComponent } from './components/common/image-list-item/image-list-item.component';
 import { ImageListComponent } from './components/common/image-list/image-list.component';
 import { VacationHomePageComponent } from './components/rentals/vacation-home-page/vacation-home-page.component';
@@ -264,6 +286,7 @@ import { VacationHomePageComponent } from './components/rentals/vacation-home-pa
     AdminAdventuresComponent,
     AdminBoatsComponent,
     AdminHomesComponent,
+    InstructorAvailabilityComponent,
     BoatReservationInfoComponent,
     BoatReservationPreviewComponent,
     BoatReservationsHistoryComponent,
@@ -271,10 +294,31 @@ import { VacationHomePageComponent } from './components/rentals/vacation-home-pa
     BoatReservationsCurrentComponent,
     BoatOwnerCreateReservationComponent,
     BoatOwnerReportComponent,
+    HomeOwnerHomesComponent,
+    HomeSearchPipe,
+    HomeOwnerTopbarComponent,
+    HomePreviewComponent,
+    HomeProfileComponent,
+    HomeInfoComponent,
+    HomeAdditionalInfoComponent,
+    HomeLocationComponent,
+    HomeOwnerInfoComponent,
+    HomeServicesComponent,
+    HomeOwnerHomeProfileComponent,
+    AddHomeComponent,
+    HomeAvailabilityCalendarComponent,
+    HomeAvailabilityComponent,
+    AddHomeSpecialOfferComponent,
+    HomeReservationInfoComponent,
+    HomeReservationsCurrentComponent,
+    HomeReservationsFutureComponent,
+    HomeReservationsHistoryComponent,
+    HomeOwnerCreateReservationComponent,
     HomeSubsComponent,
     InstructorSubsComponent,
     BoatSubsComponent,
     SubCardComponent,
+    AdminReviewsComponent,
     ComplaintComponent,
 
   ],

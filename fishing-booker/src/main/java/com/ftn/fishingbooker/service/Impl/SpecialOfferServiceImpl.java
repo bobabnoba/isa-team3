@@ -1,16 +1,20 @@
 package com.ftn.fishingbooker.service.Impl;
 
+import com.ftn.fishingbooker.dao.SpecialOfferCalendarInfo;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.repository.SpecialOfferRepository;
 import com.ftn.fishingbooker.service.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.util.Collection;
 
 @Service
+@RequiredArgsConstructor
 public class SpecialOfferServiceImpl implements SpecialOfferService {
 
     private final AdventureService adventureService;
@@ -18,24 +22,18 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
     private final InstructorService instructorService;
     private final BoatService boatService;
     private final BoatOwnerService boatOwnerService;
-    public SpecialOfferServiceImpl(AdventureService adventureService, SpecialOfferRepository specialOfferRepository,
-                                   InstructorService instructorService, BoatService boatService, BoatOwnerService boatOwnerService) {
-        this.adventureService = adventureService;
-        this.specialOfferRepository = specialOfferRepository;
-        this.instructorService = instructorService;
-        this.boatService = boatService;
-        this.boatOwnerService = boatOwnerService;
-    }
+    private final ClientService clientService;
+    private final HomeService homeService;
 
     @Override
     @Transactional
-    public SpecialOffer createSpecialOffer(SpecialOffer specialOffer, Long serviceId) {
+    public SpecialOffer createSpecialOffer(SpecialOffer specialOffer, Long serviceId) throws MessagingException {
         SpecialOffer saved = specialOfferRepository.save(specialOffer);
         if (specialOffer.getType().equals(ReservationType.ADVENTURE)) {
             Adventure adventure = adventureService.getById(serviceId);
             adventure.getSpecialOffers().add(saved);
             adventureService.save(adventure);
-
+            clientService.emailSubscribers(adventure.getInstructor(), "instructor");
             String instructorMail = adventure.getInstructor().getEmail();
             instructorService.updateAvailability(new InstructorAvailability(saved.getReservationStartDate(), saved.getReservationEndDate()), instructorMail);
         }else if( specialOffer.getType().equals(ReservationType.BOAT)){
@@ -49,6 +47,14 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
              if(specialOffer.isCaptain()){
                 boatOwnerService.updateAvailability(saved.getReservationStartDate(),saved.getReservationEndDate(), ownerEmail);
             }
+            clientService.emailSubscribers(boat.getBoatOwner(), "boat");
+        } else if(specialOffer.getType().equals(ReservationType.VACATION_HOME)){
+            VacationHome home = homeService.getById(serviceId);
+            home.getSpecialOffers().add(saved);
+            homeService.save(home);
+
+            homeService.updateAvailability(saved.getReservationStartDate(), saved.getReservationEndDate(), home.getId());
+            clientService.emailSubscribers(home.getHomeOwner(), "home");
         }
         return saved;
     }
@@ -64,4 +70,10 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
         specialOffer.setUsed(true);
         specialOfferRepository.save(specialOffer);
     }
+
+    @Override
+    public Collection<SpecialOfferCalendarInfo> getAllInstructorsOffers(Long id) {
+        return specialOfferRepository.getAllOffersForInstructor(id);
+    }
+
 }

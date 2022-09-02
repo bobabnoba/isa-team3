@@ -35,4 +35,8 @@ public interface ClientService {
     void save(Client client);
 
     boolean isClientSubscribed(String clientEmail, String entityType, Long entityId);
+
+    Collection<Client> getAll();
+
+    void emailSubscribers(User owner, String entityType)  throws MessagingException ;
 }

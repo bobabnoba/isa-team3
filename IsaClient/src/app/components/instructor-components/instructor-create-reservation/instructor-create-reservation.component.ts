@@ -101,19 +101,19 @@ export class InstructorCreateReservationComponent implements OnInit {
       }
     )
 
-    this._insService.checkForOverlappingReservation(
-      this._datePipe.transform(resStartDate, 'yyyy-MM-dd HH:mm:ss')!,
-      this._datePipe.transform(resEndDate, 'yyyy-MM-dd HH:mm:ss')!, 
-      this._storageService.getEmail()).subscribe(
-    res => {
-      if (!res) {
-        this.resFrom.reset();
-        this._snackBar.open('You are not available on given time period! Please check your calendar.', '',
-            { duration: 3000, panelClass: ['snack-bar'] }
-        );
-      }
-    }
-  )
+  //   this._insService.checkForOverlappingReservation(
+  //     this._datePipe.transform(resStartDate, 'yyyy-MM-dd HH:mm:ss')!,
+  //     this._datePipe.transform(resEndDate, 'yyyy-MM-dd HH:mm:ss')!, 
+  //     this._storageService.getEmail()).subscribe(
+  //   res => {
+  //     if (!res) {
+  //       this.resFrom.reset();
+  //       this._snackBar.open('You are not available on given time period! Please check your calendar.', '',
+  //           { duration: 3000, panelClass: ['snack-bar'] }
+  //       );
+  //     }
+  //   }
+  // )
 
   this._insService.checkAvailability(
     this._datePipe.transform(resStartDate, 'yyyy-MM-dd HH:mm:ss')!,
@@ -133,7 +133,7 @@ export class InstructorCreateReservationComponent implements OnInit {
   create(){
     if(this.resFrom.valid && this.guests.valid && this.price.valid){ 
 
-      this._rentService.rentAdventure(this.createReservationObject(), this.data.adventureId, this.chosenClient.email).subscribe(
+      this._rentService.rentAdventureInstructor(this.createReservationObject(), this.data.adventureId, this.chosenClient.email).subscribe(
         res => {
           this._snackBar.open('Adventure successfully booked!', '',
             { duration: 3000, panelClass: ['snack-bar'] }
@@ -157,6 +157,7 @@ export class InstructorCreateReservationComponent implements OnInit {
       res.guests = this.guests.value;
       res.duration = this.data.duration;
       res.utilities = this.services;
+      res.cancelingPercentage = this.data.cancelingPercentage;
       
     return res;
   }

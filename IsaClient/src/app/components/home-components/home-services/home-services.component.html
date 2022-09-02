@@ -1,0 +1,20 @@
+<div class="container wrapper">
+    <p *ngIf = "home.utilities.length === 0"> No additional services provided.</p>
+    <div class = "row inner" *ngFor="let service of home.utilities">
+        <div class="col-md" >
+          {{ service.name }}
+        </div>
+        <div class="col-md price">
+            ${{service.price}}
+        </div>
+    </div>
+    <!-- <p *ngIf = "home.rooms.length === 0"> No rooms.</p>
+    <div class = "row inner" *ngFor="let room of home.rooms; let i = index">
+        <div class="col-md" >
+          {{ i }} :
+        </div>
+        <div class="col-md price">
+            ${{room.numOfBeds}} beds
+        </div>
+    </div> -->
+</div>

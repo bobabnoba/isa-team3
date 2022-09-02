@@ -76,10 +76,10 @@ export class BoatOwnerBoatsComponent implements OnInit {
           }
   }
 
-  boatDeleted(adventureId : number){
+  boatDeleted(boatId : number){
     let index = -1;
     this.boats.forEach(element => {
-      if(element.id == adventureId){
+      if(element.id == boatId){
         index = this.boats.indexOf(element);
       }
     });

@@ -2,11 +2,8 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
-import com.ftn.fishingbooker.model.HomeOwner;
-import com.ftn.fishingbooker.model.Registration;
-import com.ftn.fishingbooker.model.User;
-import com.ftn.fishingbooker.repository.RegistrationRepository;
-import com.ftn.fishingbooker.repository.UserRepository;
+import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +14,15 @@ public class HomeOwnerServiceImpl implements HomeOwnerService {
     private final UserRepository userRepository;
     private final RegistrationRepository registrationRepository;
     private final UserRankService userRankService;
+    private final HomeOwnerRepository homeOwnerRepository;
 
-    public HomeOwnerServiceImpl(UserService userService, UserRepository userRepository, RegistrationRepository registrationRepository, UserRankService userRankService) {
+    public HomeOwnerServiceImpl(UserService userService, UserRepository userRepository, RegistrationRepository registrationRepository,
+                                UserRankService userRankService, HomeOwnerRepository homeOwnerRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.registrationRepository = registrationRepository;
         this.userRankService = userRankService;
+        this.homeOwnerRepository = homeOwnerRepository;
     }
 
     @Override
@@ -48,5 +48,10 @@ public class HomeOwnerServiceImpl implements HomeOwnerService {
             }
         });
         userRepository.save(owner);
+    }
+
+    @Override
+    public HomeOwner getByEmail(String homeOwnerEmail) {
+        return homeOwnerRepository.findByEmail(homeOwnerEmail);
     }
 }

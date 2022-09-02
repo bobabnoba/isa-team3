@@ -156,8 +156,8 @@
           <mat-step *ngIf="!editMode">
             <ng-template matStepLabel>Save boat</ng-template>
             <br>
-            <p *ngIf="!showImgUpload">You are done. Confirm to save adventure. Back if you need to correct something. </p>
-            <p *ngIf="showImgUpload">Boat successfuly created! Now you can add photos from previous adventures if you want.</p>
+            <p *ngIf="!showImgUpload">You are done. Confirm to save boat. Back if you need to correct something. </p>
+            <p *ngIf="showImgUpload">Boat successfuly created! Now you can add boat photos if you want.</p>
             <div>
               <button *ngIf="!showImgUpload" mat-button matStepperPrevious>Back</button>
               <button *ngIf="!showImgUpload" mat-button (click)="createBoat()">Confirm</button>
@@ -168,7 +168,7 @@
   
   
          <template *ngIf="showImgUpload || editMode">
-          <mat-step [stepControl]="images" label="Previous adventures" optional>
+          <mat-step [stepControl]="images" label="Boat photos " optional>
             <form [formGroup]="images">
   
                   <br>

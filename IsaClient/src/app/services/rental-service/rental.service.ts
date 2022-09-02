@@ -24,6 +24,13 @@ export class RentalService {
     return this._http.post('http://localhost:8090/adventures/rent/' + adventureId + "/" + email,
       newReservation);
   }
+
+  rentAdventureInstructor(newReservation: IReservation, adventureId: number, email: string) {
+    return this._http.post('http://localhost:8090/adventures/instructor-rent/' + adventureId + "/" + email,
+      newReservation);
+  }
+
+
   rentAdventureSpecialOffer(newReservation: IReservation, adventureId: number, offerId: number, email: string) {
     return this._http.post('http://localhost:8090/adventures/rent/special/offer/' + adventureId + "/" + offerId
       + '/' + email,
@@ -56,6 +63,10 @@ export class RentalService {
   }
   ownerRentBoat(newReservation: IReservation, boatId: number, email: string): Observable<any> {
     return this._http.post('http://localhost:8090/boats/owner-rent/' + boatId + "/" + email,
+      newReservation);
+  }
+  ownerRentHome(newReservation: IReservation, homeId: number, email: string): Observable<any> {
+    return this._http.post('http://localhost:8090/vacation/homes/owner-rent/' + homeId + "/" + email,
       newReservation);
   }
 
