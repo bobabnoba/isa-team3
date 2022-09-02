@@ -1,10 +1,14 @@
 package com.ftn.fishingbooker.model;
 
-import lombok.*;
-import org.hibernate.Hibernate;
+import com.ftn.fishingbooker.enumeration.ComplaintStatus;
+import com.ftn.fishingbooker.enumeration.RentalType;
+import com.ftn.fishingbooker.enumeration.ReservationType;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -13,41 +17,28 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class Complaint {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //TODO: Ovo
-    //private int authorId;
+    private String complaint;
 
-    //private int respondentId;
+    @Column(unique = true)
+    private Long reservationId;
 
-    private String explanation;
+    @Enumerated(EnumType.STRING)
+    RentalType rentalType;
 
-    //TODO: Da li zamijeniti sa user , da user sadrzi listu zalbi ?
+    private String ownerEmail;
 
-    @ManyToOne
-    @JoinColumn(name = "boat_owner_id", nullable = false)
-    private BoatOwner boatOwner;
+    private Long rentalId;
 
-    @ManyToOne
-    @JoinColumn(name = "home_owner_id", nullable = false)
-    private HomeOwner homeOwner;
+    private String clientEmail;
 
-    @ManyToOne
-    @JoinColumn(name = "instructor_id", nullable = false)
-    private Instructor instructor;
+    @Enumerated(EnumType.STRING)
+    private ComplaintStatus status = ComplaintStatus.PENDING;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Complaint complaint = (Complaint) o;
-        return id != null && Objects.equals(id, complaint.id);
-    }
+    @Enumerated(EnumType.STRING)
+    private ReservationType reservationType;
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+
 }

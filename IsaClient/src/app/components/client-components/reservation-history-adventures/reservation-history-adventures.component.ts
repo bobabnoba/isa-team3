@@ -5,12 +5,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { SearchFilter } from 'src/app/filters/search-filter';
+import { IComplaint } from 'src/app/interfaces/complaint';
 import { IReservation } from 'src/app/interfaces/new-reservation';
 import { IReview } from 'src/app/interfaces/review';
+import { ComplaintService } from 'src/app/services/complaint-service/complaint.service';
 import { ReservationSearchService } from 'src/app/services/reservation-search-service/reservation-search.service';
 import { ReservationService } from 'src/app/services/reservation-service/reservation.service';
 import { ReviewService } from 'src/app/services/review-service/review.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
+import { ComplaintComponent } from '../complaint/complaint.component';
 import { ReviewComponent } from '../review/review.component';
 
 @Component({
@@ -26,7 +29,7 @@ export class ReservationHistoryAdventuresComponent implements AfterViewInit {
   userEmail: string = ""
   searchFilter: SearchFilter = new SearchFilter();
   clickedRow: IReservation = {} as IReservation;
-  
+
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -37,7 +40,8 @@ export class ReservationHistoryAdventuresComponent implements AfterViewInit {
     private _searchService: ReservationSearchService,
     private _matDialog: MatDialog,
     private _reviewService: ReviewService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _complaintService: ComplaintService
   ) {
 
     this.userEmail = _storageService.getEmail();
@@ -137,6 +141,75 @@ export class ReservationHistoryAdventuresComponent implements AfterViewInit {
           next: (res: any) => {
             console.log(res);
             this._snackBar.open("Your review has been sent to Admin for approval. ", 'Close',
+              { duration: 3000 })
+          },
+          error: (err: HttpErrorResponse) => {
+            this._snackBar.open("There has been a problem, please try again :( .", 'Close',
+              { duration: 3000 })
+            return;
+          }
+        }
+        )
+      }
+    });
+  }
+
+  makeComplaint() {
+
+
+    if (!this.clickedRow.id) {
+      this._snackBar.open("Please select the reservation for which you would like to write a somplaint.", 'Close',
+        { duration: 3000 })
+      return;
+    }
+
+    let checkComplaint = {
+      next: (res: Boolean) => {
+        if (res == true) {
+          this._snackBar.open("You have already left a complaint for this reservation ! ", 'Close',
+            { duration: 3000 })
+          return;
+        }
+        else {
+          this.makeComplaintPopUp();
+          return;
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this._snackBar.open("There has been a problem, please try again :( .", 'Close',
+          { duration: 3000 })
+        return;
+      }
+    }
+
+    this._complaintService.checkForComplaint(this.clickedRow.id).subscribe(checkComplaint)
+
+  }
+
+  makeComplaintPopUp() {
+    let myData = {
+      resId: this.clickedRow.id
+    }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = 'modal-component';
+    dialogConfig.width = '570px';
+    dialogConfig.height = '500px';
+    dialogConfig.data = myData;
+    const dialogRef = this._matDialog.open(ComplaintComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe({
+      next: (res) => {
+
+        let complaint: IComplaint = {
+          reservationId: res.data.reservationId,
+          reservationType: 'ADVENTURE',
+          complaint: res.data.complaint
+        }
+
+        this._complaintService.makeComplaint(complaint, this.userEmail).subscribe({
+          next: (res: any) => {
+            console.log(res);
+            this._snackBar.open("Your complaint has been sent to admin for revision. ", 'Close',
               { duration: 3000 })
           },
           error: (err: HttpErrorResponse) => {

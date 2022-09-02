@@ -5,12 +5,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { SearchFilter } from 'src/app/filters/search-filter';
+import { IComplaint } from 'src/app/interfaces/complaint';
 import { IReservation } from 'src/app/interfaces/new-reservation';
 import { IReview } from 'src/app/interfaces/review';
+import { ComplaintService } from 'src/app/services/complaint-service/complaint.service';
 import { ReservationSearchService } from 'src/app/services/reservation-search-service/reservation-search.service';
 import { ReservationService } from 'src/app/services/reservation-service/reservation.service';
 import { ReviewService } from 'src/app/services/review-service/review.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
+import { ComplaintComponent } from '../complaint/complaint.component';
 import { ReviewComponent } from '../review/review.component';
 
 
@@ -35,7 +38,8 @@ export class ReservationHistoryHomesComponent implements AfterViewInit {
     private _searchService: ReservationSearchService,
     private _matDialog: MatDialog,
     private _reviewService: ReviewService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private _complaintService: ComplaintService
   ) {
     this.userEmail = _storageService.getEmail();
     const getUpcomingReservations = {
@@ -151,5 +155,76 @@ export class ReservationHistoryHomesComponent implements AfterViewInit {
       }
     });
   }
+
+  makeComplaint() {
+
+
+    if (!this.clickedRow.id) {
+      this._snackBar.open("Please select the reservation for which you would like to write a somplaint.", 'Close',
+        { duration: 3000 })
+      return;
+    }
+
+    let checkComplaint = {
+      next: (res: Boolean) => {
+        if (res == true) {
+          this._snackBar.open("You have already left a complaint for this reservation ! ", 'Close',
+            { duration: 3000 })
+          return;
+        }
+        else {
+          this.makeComplaintPopUp();
+          return;
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        this._snackBar.open("There has been a problem, please try again :( .", 'Close',
+          { duration: 3000 })
+        return;
+      }
+    }
+
+    this._complaintService.checkForComplaint(this.clickedRow.id).subscribe(checkComplaint)
+
+  }
+
+  makeComplaintPopUp() {
+    let myData = {
+      resId: this.clickedRow.id
+    }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = 'modal-component';
+    dialogConfig.width = '570px';
+    dialogConfig.height = '500px';
+    dialogConfig.data = myData;
+    const dialogRef = this._matDialog.open(ComplaintComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe({
+      next: (res) => {
+
+        let complaint: IComplaint = {
+          reservationId: res.data.reservationId,
+          reservationType: 'VACATION_HOME',
+          complaint: res.data.complaint
+        }
+
+        this._complaintService.makeComplaint(complaint, this.userEmail).subscribe({
+          next: (res: any) => {
+            console.log(res);
+            this._snackBar.open("Your complaint has been sent to admin for revision. ", 'Close',
+              { duration: 3000 })
+          },
+          error: (err: HttpErrorResponse) => {
+            this._snackBar.open("There has been a problem, please try again :( .", 'Close',
+              { duration: 3000 })
+            return;
+          }
+        }
+        )
+      }
+    });
+  }
+
+
 
 }
