@@ -18,9 +18,17 @@
             <mat-tab label="Owner"> 
                 <app-home-owner-info [home]="home"></app-home-owner-info>
             </mat-tab>
+            <mat-tab label="Past adventures">
+                <div class="p-2">
+                    <!-- <app-past-experiences [adventure]="adventure"></app-past-experiences> -->
+                </div>
+            </mat-tab>
 
             
           </mat-tab-group>
+    </div>
+    <div>
+        <app-map  [address]="home.address"></app-map>
     </div>
     <div style="padding: 6rem;">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="3000">
