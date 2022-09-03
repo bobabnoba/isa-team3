@@ -18,9 +18,9 @@
             <mat-tab label="Owner"> 
                 <app-home-owner-info [home]="home"></app-home-owner-info>
             </mat-tab>
-            <mat-tab label="Past adventures">
+            <mat-tab label="Pictures">
                 <div class="p-2">
-                    <!-- <app-past-experiences [adventure]="adventure"></app-past-experiences> -->
+                    <app-images [images]="home.imageUrls"></app-images>
                 </div>
             </mat-tab>
 
@@ -30,7 +30,7 @@
     <div>
         <app-map  [address]="home.address"></app-map>
     </div>
-    <div style="padding: 6rem;">
+    <!-- <div style="padding: 6rem;">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="3000">
           <div class="carousel-inner">
               <div [class]="im.act" *ngFor="let im of images" >
@@ -38,7 +38,7 @@
               </div>
           </div>
         </div>
-      </div>
+      </div> -->
    <div class="justify-content-center d-flex flex-dir pt-5">
     <h2 *ngIf="home.specialOffers.length === 0" class="pb-1 align-text">No special offers available.</h2>
     <div  *ngIf="home.specialOffers.length > 0">

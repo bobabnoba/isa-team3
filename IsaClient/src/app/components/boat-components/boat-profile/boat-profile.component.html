@@ -18,9 +18,9 @@
             <mat-tab label="Owner"> 
                 <app-boat-owner-info [boat]="boat"></app-boat-owner-info>
             </mat-tab>
-            <mat-tab label="Past adventures">
+            <mat-tab label="Pictures">
                 <div class="p-2">
-                    <!-- <app-past-experiences [adventure]="adventure"></app-past-experiences> -->
+                    <app-images [images]="boat.images"></app-images>
                 </div>
             </mat-tab>
 
@@ -29,7 +29,7 @@
     </div>
     <div>
         <app-map  [address]="boat.address"></app-map>
-    </div>
+    <!-- </div>
     <div style="padding: 6rem;">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="3000">
           <div class="carousel-inner">
@@ -38,7 +38,7 @@
               </div>
           </div>
         </div>
-      </div>
+      </div> -->
    <div class="justify-content-center d-flex flex-dir pt-5">
     <h2 *ngIf="boat.specialOffers.length === 0" class="pb-1 align-text">No special offers available.</h2>
     <div  *ngIf="boat.specialOffers.length > 0">
