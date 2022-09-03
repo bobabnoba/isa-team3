@@ -23,7 +23,7 @@ id, city, country, street, zip_code) values
 (40, 'Novi Sad', 'Serbia', 'Sime Milosevica', 2100),
 (41, 'Beograd', 'Serbia', 'Knez Mihajlova', 101801),
 (42, 'Bijeljina', 'Bosnia&Herzegovina', 'Sime milosevica', 76300),
-(43, 'Ljubljana', 'Slovenia', 'Jana Kustosa', 1000);
+(43, 'Novi Sad', 'Srbija', 'Kisacka 1', 1000);
 
 -- rank
 insert into user_rank(id, name, min_points, reservation_percentage, percentage)

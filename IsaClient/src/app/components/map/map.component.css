@@ -1,0 +1,18 @@
+.map-container {
+    width: 500px;
+    height: 300px;
+    margin: 30px;
+    margin-left: auto!important;
+    margin-right: auto!important;
+}
+
+.map-frame {
+    border: 2px solid black;
+    height: 100%;
+    width: 100%;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}

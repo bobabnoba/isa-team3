@@ -18,6 +18,7 @@ export class BoatProfileComponent implements OnInit {
   boat! : Boat;
   baseUrl = environment.apiURL
   images : ImageListItem[] = [];
+  address: IAddress = {} as IAddress;
 
   constructor(private _boatService : BoatService) { 
     this.images = [] as ImageListItem[];
@@ -32,6 +33,7 @@ export class BoatProfileComponent implements OnInit {
     this._boatService.getById(this.boatId).subscribe(
       res => {
         this.boat = res;
+        this.address = res.address;
         this.boat.images.map( (image,index) => {
           if(index == 0) {
             this.images.push({src:this.baseUrl  + image, caption:image, act:'carousel-item active '});

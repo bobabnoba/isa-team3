@@ -76,6 +76,7 @@ public class VacationHomeMapper {
         home.setAddress(AddressMapper.toEntity(dto.getAddress()));
         home.setInformation(dto.getInformation());
         home.setRooms(dto.getRooms().stream().map(VacationHomeMapper::mapToRoom).collect(Collectors.toSet()));
+        home.setAvailability(new HashSet<>());
         return home;
     }
 
