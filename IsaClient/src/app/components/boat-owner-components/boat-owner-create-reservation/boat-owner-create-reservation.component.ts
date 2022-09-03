@@ -149,7 +149,7 @@ export class BoatOwnerCreateReservationComponent implements OnInit {
           this.chosenClient.email
         ).subscribe(
           res => {
-            if(res){
+            if(!res){
               this.reservationStartDate.reset();
             this._snackBar.open('Client is not available on given time period!', '',
                 { duration: 3000, panelClass: ['snack-bar'] }
