@@ -28,6 +28,9 @@ public class ReservationController {
     private final AdventureService adventureService;
     private final HomeService homeService;
     private final BoatService boatService;
+    private final BoatOwnerService boatOwnerService;
+    private final HomeOwnerService homeOwnerService;
+    private final InstructorService instructorService;
 
 
     @GetMapping("{id}")
@@ -102,19 +105,35 @@ public class ReservationController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/chart/{id}/{type}")
+    @GetMapping("/chart/{type}")
     public ResponseEntity<Collection<EarningsChartDto>> getReservationChartInDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
-            @PathVariable Long id, @PathVariable ReservationType type) {
+            @RequestParam(required = false) Long id, @RequestParam(required = false) String email,
+            @PathVariable ReservationType type) {
 
         Set<Reservation> found = new HashSet<>();
         if(type.equals(ReservationType.BOAT)){
-            found.addAll(reservationService.getReservationsForBoat(id));
+            if(email != null){
+                BoatOwner owner = boatOwnerService.getByEmail(email);
+                found.addAll(reservationService.getReservationForBoatOwner(owner.getId(), from, to));
+            }else{
+                found.addAll(reservationService.getReservationsForBoat(id, from, to));
+            }
         }else if( type.equals(ReservationType.VACATION_HOME)){
-            found.addAll(reservationService.getReservationsForHome(id));
+            if(email != null){
+                HomeOwner owner = homeOwnerService.getByEmail(email);
+                found.addAll(reservationService.getReservationForHomeOwner(owner.getId(), from, to));
+            }else{
+                found.addAll(reservationService.getReservationsForHome(id, from, to));
+            }
         }else{
-            found.addAll(reservationService.getReservationsForAdventure(id));
+            if(email != null){
+                Instructor instructor = instructorService.findByEmail(email);
+                found.addAll(reservationService.getReservationForInstructor(instructor.getId(), from, to));
+            }else{
+                found.addAll(reservationService.getReservationsForAdventure(id, from, to));
+            }
         }
         Collection<EarningsChartDto> earningsDtos = new ArrayList<>();
         for (Date d = from; d.before(to); d = DateUtil.addDays(d,1)){
@@ -130,39 +149,52 @@ public class ReservationController {
         return ok(earningsDtos);
     }
 
-    @GetMapping("/chart-year/{id}/{type}")
-    public ResponseEntity<Collection<EarningsChartDto>> getReservationChartYearInDateRange(
+    @GetMapping("/chart-year/{type}")
+    public ResponseEntity<Collection<ReservationChartDto>> getReservationChartYearInDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
-            @PathVariable Long id, @PathVariable ReservationType type) {
+            @RequestParam(required = false) Long id, @RequestParam(required = false) String email,
+            @PathVariable ReservationType type) {
 
         Set<Reservation> found = new HashSet<>();
         if(type.equals(ReservationType.BOAT)){
-            found.addAll(reservationService.getReservationsForBoat(id));
+            if(email != null){
+                BoatOwner owner = boatOwnerService.getByEmail(email);
+                found.addAll(reservationService.getReservationForBoatOwner(owner.getId(), from, to));
+            }else{
+                found.addAll(reservationService.getReservationsForBoat(id, from, to));
+            }
         }else if( type.equals(ReservationType.VACATION_HOME)){
-            found.addAll(reservationService.getReservationsForHome(id));
+            if(email != null){
+                HomeOwner owner = homeOwnerService.getByEmail(email);
+                found.addAll(reservationService.getReservationForHomeOwner(owner.getId(), from, to));
+            }else{
+                found.addAll(reservationService.getReservationsForHome(id, from, to));
+            }
         }else{
-            found.addAll(reservationService.getReservationsForAdventure(id));
+            if(email != null){
+                Instructor instructor = instructorService.findByEmail(email);
+                found.addAll(reservationService.getReservationForInstructor(instructor.getId(), from, to));
+            }else{
+                found.addAll(reservationService.getReservationsForAdventure(id, from, to));
+            }
         }
-        Collection<EarningsChartDto> earningsDtos = new ArrayList<>();
-//        Calendar cal = Calendar.getInstance();
-//        cal.setTime(from);
-//        int month = cal.get(Calendar.MONTH);
-        for (Date d = from; d.before(to); d = DateUtil.addDays(d, 30)){
-            Date finalD = new Date(d.getTime() - 1);
-            Collection<Reservation> dtoDay = found.stream().filter(earnings ->
-                    earnings.getStartDate().after(finalD) &&
-                            earnings.getStartDate().before(DateUtil.addDays(finalD,30))).collect(Collectors.toSet());
-            EarningsChartDto dto = new EarningsChartDto();
-            dto.setDate(finalD);
-            dto.setIncome((double) dtoDay.size());
+        Collection<ReservationChartDto> earningsDtos = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        for (int i = 1; i<13; i++){
+            int sum = 0;
+            for (Reservation r : found) {
+                var m = cal.get(Calendar.MONTH);
+                cal.setTime(new Date(r.getStartDate().getTime()));
+                if( cal.get(Calendar.MONTH) == i){
+                    sum++;
+                }
+            }
+            ReservationChartDto dto = new ReservationChartDto();
+            dto.setMonth(i);
+            dto.setNumOfRes(sum);
             earningsDtos.add(dto);
         }
-
-        Collection<EarningsChartDto> months = new ArrayList<>();
-        EarningsChartDto dto = new EarningsChartDto();
-
-
         return ok(earningsDtos);
     }
 

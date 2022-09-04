@@ -75,12 +75,20 @@ export class ReservationService {
     );
   }
 
-  getReservationChartForDateRange(from : string, to : string, id : string, type : string) : Observable<any[]>{
-    return this._http.get<any[]>(`${this.baseURL}/reservations/chart/${id}/${type}?from=${from}&to=${to}`);
+  getReservationChartForDateRangeObject(from : string, to : string, id : number, type : string) : Observable<any[]>{
+    return this._http.get<any[]>(`${this.baseURL}/reservations/chart/${type}?from=${from}&to=${to}&id=${id}`);
   }
 
-  getReservationChartForDateRangeYear(from : string, to : string, id : string, type : string) : Observable<any[]>{
-    return this._http.get<any[]>(`${this.baseURL}/reservations/chart-year/${id}/${type}?from=${from}&to=${to}`);
+  getReservationChartForDateRangeYearObject(from : string, to : string, id : number, type : string) : Observable<any[]>{
+    return this._http.get<any[]>(`${this.baseURL}/reservations/chart-year/${type}?from=${from}&to=${to}&id=${id}`);
+  }
+
+  getReservationChartForDateRangeOwner(from : string, to : string, email : string, type : string) : Observable<any[]>{
+    return this._http.get<any[]>(`${this.baseURL}/reservations/chart/${type}?from=${from}&to=${to}&email=${email}`);
+  }
+
+  getReservationChartForDateRangeYearOwner(from : string, to : string, email : string, type : string) : Observable<any[]>{
+    return this._http.get<any[]>(`${this.baseURL}/reservations/chart-year/${type}?from=${from}&to=${to}&email=${email}`);
   }
 
 }

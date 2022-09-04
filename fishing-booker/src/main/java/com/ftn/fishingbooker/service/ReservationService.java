@@ -68,8 +68,10 @@ public interface ReservationService {
 
     Collection<Reservation> getCaptainReservationsForBoatOwner(Long id);
 
-    Collection<Reservation> getReservationsForBoat(Long id);
-    Collection<Reservation> getReservationsForHome(Long id);
-    Collection<Reservation> getReservationsForAdventure(Long id);
-
+    Collection<Reservation> getReservationsForBoat(Long id, Date from, Date to);
+    Collection<Reservation> getReservationsForHome(Long id, Date from, Date to);
+    Collection<Reservation> getReservationsForAdventure(Long id, Date from, Date to);
+    Collection<Reservation> getReservationForBoatOwner(Long id, Date from, Date to);
+    Collection<Reservation> getReservationForHomeOwner(Long id, Date from, Date to);
+    Collection<Reservation> getReservationForInstructor(Long id, Date from, Date to);
 }

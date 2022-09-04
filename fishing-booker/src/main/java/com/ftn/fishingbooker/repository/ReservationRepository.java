@@ -157,16 +157,33 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     @Query(value = "select r " +
             "    from Boat a " +
             "    join a.reservations r " +
-            "    where a.id = :id and r.isCancelled = false")
-    Collection<Reservation> getReservationsForBoat(Long id);
+            "    where a.id = :id and r.isCancelled = false and r.startDate >= :from and r.endDate <= :to" )
+    Collection<Reservation> getReservationsForBoat(Long id, Date from, Date to);
     @Query(value = "select r " +
             "    from VacationHome a " +
             "    join a.reservations r " +
-            "    where a.id = :id and r.isCancelled = false")
-    Collection<Reservation> getReservationsForHome(Long id);
+            "    where a.id = :id and r.isCancelled = false and r.startDate >= :from and r.endDate <= :to")
+    Collection<Reservation> getReservationsForHome(Long id, Date from, Date to);
     @Query(value = "select r " +
             "    from Adventure a " +
             "    join a.reservations r " +
-            "    where a.id = :id and r.isCancelled = false")
-    Collection<Reservation> getReservationsForAdventure(Long id);
+            "    where a.id = :id and r.isCancelled = false and r.startDate >= :from and r.endDate <= :to")
+    Collection<Reservation> getReservationsForAdventure(Long id, Date from, Date to);
+    @Query(value = "select r " +
+            "    from Boat a " +
+            "    join a.reservations r " +
+            "    where a.boatOwner.id = :id and r.isCancelled = false and r.startDate >= :from and r.endDate <= :to")
+    Collection<Reservation> getReservationForBoatOwner(Long id, Date from, Date to);
+
+    @Query(value = "select r " +
+            "    from VacationHome a " +
+            "    join a.reservations r " +
+            "    where a.homeOwner.id = :id and r.isCancelled = false and r.startDate >= :from and r.endDate <= :to")
+    Collection<Reservation> getReservationForHomeOwner(Long id, Date from, Date to);
+
+    @Query(value = "select r " +
+            "    from Adventure a " +
+            "    join a.reservations r " +
+            "    where a.instructor.id = :id and r.isCancelled = false and r.startDate >= :from and r.endDate <= :to")
+    Collection<Reservation> getReservationForInstructor(Long id, Date from, Date to);
 }
