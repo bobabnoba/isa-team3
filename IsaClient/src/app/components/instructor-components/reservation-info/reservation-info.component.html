@@ -4,7 +4,7 @@
             <h3> {{ reservation.startDate | date : 'short'}}  - 
                 {{ reservation.endDate | date : 'short'}}  </h3>
             <p class="pt-2"> <i class="fa-solid fa-user"></i> {{ reservation.guests }} guests </p>
-            <p> <i class="fa-solid fa-dollar-sign fa-md"></i>{{ reservation.price }} </p>
+            <p> <i class="fa-solid fa-dollar-sign fa-md"></i>{{ reservation.price | number : '1.2-2' }} </p>
             <div class="d-flex">
             <mat-label class="mright">{{ 'Utilities: ' }} </mat-label>
             <div>

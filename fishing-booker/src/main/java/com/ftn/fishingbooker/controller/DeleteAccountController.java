@@ -37,13 +37,9 @@ public class DeleteAccountController {
         return ResponseEntity.ok(dtos);
     }
 
-    @PostMapping("/process-request")
-    public ResponseEntity<Void> processDeletionRequest(@RequestBody DeleteAccountResponse request) {
-        try {
-            deleteAccountService.processRequest(DeleteAccountRequestMapper.mapToEntityFromResponse(request));
-        } catch (MessagingException e) {
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
-        }
+    @PostMapping("/process-request/{id}")
+    public ResponseEntity<Void> processDeletionRequest(@PathVariable Long id, @RequestBody DeleteAccountResponse request) {
+        deleteAccountService.processRequest(id, DeleteAccountRequestMapper.mapToEntityFromResponse(request));
         return ResponseEntity.ok().build();
     }
 }

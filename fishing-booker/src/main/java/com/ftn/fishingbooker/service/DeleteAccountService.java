@@ -8,6 +8,8 @@ import java.util.Collection;
 public interface DeleteAccountService {
 
     DeleteAccountRequest createRequest(DeleteAccountRequest request);
+
     Collection<DeleteAccountRequest> getAllUnprocessed();
-    void processRequest(DeleteAccountRequest request) throws MessagingException;
+
+    void processRequest(Long id, DeleteAccountRequest request);
 }
