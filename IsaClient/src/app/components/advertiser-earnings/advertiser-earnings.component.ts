@@ -3,9 +3,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
+import { Chart } from 'chart.js';
 import { Earnings } from 'src/app/interfaces/earnings';
 import { EarningsService } from 'src/app/services/earnings-service/earnings.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
+
 
 @Component({
   selector: 'app-advertiser-earnings',
@@ -21,6 +23,9 @@ export class AdvertiserEarningsComponent implements OnInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
+  labels: any[] = [];
+  values: number[] = [];
+
   constructor(private _snackBar : MatSnackBar, private _storage : StorageService, 
               private _earningsService : EarningsService, private _pipe : DatePipe) { }
 
@@ -28,6 +33,8 @@ export class AdvertiserEarningsComponent implements OnInit {
       this.dataSource = new MatTableDataSource<Earnings>()
       this.dataSource.paginator = this.paginator;
   }
+
+ 
 
   dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
     
@@ -41,6 +48,40 @@ export class AdvertiserEarningsComponent implements OnInit {
           this.dataSource._updateChangeSubscription();
         })
     }
+    if(dateRangeStart.value != '' && dateRangeEnd.value != ''){
+    this._earningsService.getEarningsChartForDateRangeForAdvertiser(
+      this._pipe.transform(dateRangeStart.value, 'yyyy-MM-dd')!, 
+      this._pipe.transform(dateRangeEnd.value, 'yyyy-MM-dd')!,
+      this._storage.getEmail()).subscribe(
+        res => {
+          console.log(res);
+          res.forEach(earning => {  
+            this.labels.push(this._pipe.transform(earning.date, 'yyyy-MM-dd'));
+            this.values.push(earning.income);
+          })
+          
+          const data = {
+            labels: this.labels,
+            datasets: [{
+              label: 'Chart for your reservations earnings',
+              backgroundColor: 'rgb(255, 99, 132)',
+              borderColor: 'rgb(255, 99, 132)',
+              data: this.values,
+            }]
+          };
+          
+            const myChart = new Chart(
+              'myChart',
+              {
+                type: 'line',
+                data: data,
+                options: {}
+              }
+            );
+          })
+
+
+      }
   }
 
   ngAfterViewInit() {

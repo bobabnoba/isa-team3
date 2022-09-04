@@ -3,6 +3,7 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.dao.*;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.UtilityDto;
+import com.ftn.fishingbooker.enumeration.*;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.model.Client;
@@ -278,6 +279,21 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Collection<Reservation> getCaptainReservationsForBoatOwner(Long id) {
         return reservationRepository.getCaptainReservationsForBoatOwner(id);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationsForBoat(Long id) {
+        return reservationRepository.getReservationsForBoat(id);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationsForHome(Long id) {
+        return reservationRepository.getReservationsForHome(id);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationsForAdventure(Long id) {
+        return reservationRepository.getReservationsForAdventure(id);
     }
 
 

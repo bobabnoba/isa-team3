@@ -75,4 +75,12 @@ export class ReservationService {
     );
   }
 
+  getReservationChartForDateRange(from : string, to : string, id : string, type : string) : Observable<any[]>{
+    return this._http.get<any[]>(`${this.baseURL}/reservations/chart/${id}/${type}?from=${from}&to=${to}`);
+  }
+
+  getReservationChartForDateRangeYear(from : string, to : string, id : string, type : string) : Observable<any[]>{
+    return this._http.get<any[]>(`${this.baseURL}/reservations/chart-year/${id}/${type}?from=${from}&to=${to}`);
+  }
+
 }

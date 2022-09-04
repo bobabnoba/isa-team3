@@ -21,4 +21,9 @@ export class EarningsService {
   getEarningsForDateRangeForAdvertiser(from : string, to : string, email : string) : Observable<Earnings[]>{
     return this._http.get<Earnings[]>(`${this.baseURL}/earnings/advertiser/${email}?from=${from}&to=${to}`);
   }
+
+  getEarningsChartForDateRangeForAdvertiser(from : string, to : string, email : string) : Observable<any[]>{
+    return this._http.get<Earnings[]>(`${this.baseURL}/earnings/advertiser-chart/${email}?from=${from}&to=${to}`);
+  }
+  
 }

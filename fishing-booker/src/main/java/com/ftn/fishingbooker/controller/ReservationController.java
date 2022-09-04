@@ -3,16 +3,20 @@ package com.ftn.fishingbooker.controller;
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.mapper.*;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.ClientReview;
-import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.*;
+import com.ftn.fishingbooker.util.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import java.util.*;
+import java.util.concurrent.atomic.*;
+import java.util.stream.*;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/reservations")
@@ -96,6 +100,70 @@ public class ReservationController {
             return new ResponseEntity<>(ClientMapper.map(reservation.getClient()), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/chart/{id}/{type}")
+    public ResponseEntity<Collection<EarningsChartDto>> getReservationChartInDateRange(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
+            @PathVariable Long id, @PathVariable ReservationType type) {
+
+        Set<Reservation> found = new HashSet<>();
+        if(type.equals(ReservationType.BOAT)){
+            found.addAll(reservationService.getReservationsForBoat(id));
+        }else if( type.equals(ReservationType.VACATION_HOME)){
+            found.addAll(reservationService.getReservationsForHome(id));
+        }else{
+            found.addAll(reservationService.getReservationsForAdventure(id));
+        }
+        Collection<EarningsChartDto> earningsDtos = new ArrayList<>();
+        for (Date d = from; d.before(to); d = DateUtil.addDays(d,1)){
+            Date finalD = new Date(d.getTime() - 1);
+            Collection<Reservation> dtoDay = found.stream().filter(earnings ->
+                earnings.getStartDate().after(finalD) &&
+                        earnings.getStartDate().before(DateUtil.addDays(finalD,1))).collect(Collectors.toSet());
+            EarningsChartDto dto = new EarningsChartDto();
+            dto.setDate(finalD);
+            dto.setIncome((double) dtoDay.size());
+            earningsDtos.add(dto);
+        }
+        return ok(earningsDtos);
+    }
+
+    @GetMapping("/chart-year/{id}/{type}")
+    public ResponseEntity<Collection<EarningsChartDto>> getReservationChartYearInDateRange(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
+            @PathVariable Long id, @PathVariable ReservationType type) {
+
+        Set<Reservation> found = new HashSet<>();
+        if(type.equals(ReservationType.BOAT)){
+            found.addAll(reservationService.getReservationsForBoat(id));
+        }else if( type.equals(ReservationType.VACATION_HOME)){
+            found.addAll(reservationService.getReservationsForHome(id));
+        }else{
+            found.addAll(reservationService.getReservationsForAdventure(id));
+        }
+        Collection<EarningsChartDto> earningsDtos = new ArrayList<>();
+//        Calendar cal = Calendar.getInstance();
+//        cal.setTime(from);
+//        int month = cal.get(Calendar.MONTH);
+        for (Date d = from; d.before(to); d = DateUtil.addDays(d, 30)){
+            Date finalD = new Date(d.getTime() - 1);
+            Collection<Reservation> dtoDay = found.stream().filter(earnings ->
+                    earnings.getStartDate().after(finalD) &&
+                            earnings.getStartDate().before(DateUtil.addDays(finalD,30))).collect(Collectors.toSet());
+            EarningsChartDto dto = new EarningsChartDto();
+            dto.setDate(finalD);
+            dto.setIncome((double) dtoDay.size());
+            earningsDtos.add(dto);
+        }
+
+        Collection<EarningsChartDto> months = new ArrayList<>();
+        EarningsChartDto dto = new EarningsChartDto();
+
+
+        return ok(earningsDtos);
     }
 
 }

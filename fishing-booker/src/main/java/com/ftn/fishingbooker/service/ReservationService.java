@@ -2,6 +2,7 @@ package com.ftn.fishingbooker.service;
 
 import com.ftn.fishingbooker.dao.*;
 import com.ftn.fishingbooker.dto.ReservationDto;
+import com.ftn.fishingbooker.enumeration.*;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.Reservation;
 
@@ -66,4 +67,9 @@ public interface ReservationService {
     Collection<BoatReservationInfo> getCurrentReservationsForHomeOwner(Long id);
 
     Collection<Reservation> getCaptainReservationsForBoatOwner(Long id);
+
+    Collection<Reservation> getReservationsForBoat(Long id);
+    Collection<Reservation> getReservationsForHome(Long id);
+    Collection<Reservation> getReservationsForAdventure(Long id);
+
 }
