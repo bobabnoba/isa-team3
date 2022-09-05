@@ -16,7 +16,7 @@ public interface BoatOwnerService {
 
     boolean checkAvailability(Date from, Date to, String boatOwnerEmail);
 
-    void updateAvailability(Date reservationStartDate, Date reservationEndDate, String ownerEmail);
+    Collection<BoatOwnerAvailability> updateAvailability(Date reservationStartDate, Date reservationEndDate, String ownerEmail);
 
     BoatOwner getByEmail(String boatOwnerEmail);
 

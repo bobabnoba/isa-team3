@@ -381,7 +381,7 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     @Transactional
-    public void updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id) {
+    public Collection<VacationHomeAvailability> updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id) {
         //TODO:
         VacationHome home = vacationHomeRepository.findById(id).orElseThrow(() -> new ResourceConflictException("Vacation home not found"));
         Set<VacationHomeAvailability> availabilities = new HashSet<>(home.getAvailability());
@@ -403,6 +403,7 @@ public class HomeServiceImpl implements HomeService {
             home.setAvailability(availabilities);
             vacationHomeRepository.save(home);
             homeAvailabilityService.delete(theOne.get().getId());
+            return home.getAvailability();
         }else if (onStart.isPresent()){
             VacationHomeAvailability newOne = new VacationHomeAvailability();
             newOne.setStartDate(DateUtil.addDays(reservationEndDate,1));
@@ -413,6 +414,7 @@ public class HomeServiceImpl implements HomeService {
             home.setAvailability(availabilities);
             vacationHomeRepository.save(home);
             homeAvailabilityService.delete(onStart.get().getId());
+            return home.getAvailability();
         }else if (onEnd.isPresent()){
             VacationHomeAvailability newOne = new VacationHomeAvailability();
             newOne.setStartDate(onEnd.get().getStartDate());
@@ -423,7 +425,7 @@ public class HomeServiceImpl implements HomeService {
             home.setAvailability(availabilities);
             vacationHomeRepository.save(home);
             homeAvailabilityService.delete(onEnd.get().getId());
-
+            return home.getAvailability();
         }else if (availabilityInBetween.isPresent()){
             VacationHomeAvailability newOne = new VacationHomeAvailability();
             newOne.setStartDate(DateUtil.addDays(reservationEndDate,1));
@@ -440,7 +442,9 @@ public class HomeServiceImpl implements HomeService {
             home.setAvailability(availabilities);
             vacationHomeRepository.save(home);
             homeAvailabilityService.delete(availabilityInBetween.get().getId());
+            return home.getAvailability();
         }
+        return home.getAvailability();
     }
 
     @Override

@@ -86,4 +86,26 @@ export class BoatAvailabilityComponent implements OnInit {
     }).subscribe( observer );
   }
 
+  removePeriod(){
+    const observer = {
+      next: (data : any) => { 
+        this.newAv = data;
+        this._snackBar.open('Availability period successfully removed.', '',
+        { duration: 3000, panelClass: ['snack-bar'] });
+       },
+      error: (err : any) => { 
+        this._snackBar.open('Error removing availability period.', '',
+        { duration: 3000, panelClass: ['snack-bar'] }
+        ); },
+      complete: () => {  }
+    };
+
+    this._boatService.removeAvailability( {
+      startDate : this.aFormGroup.value.startDate,
+      endDate : this.aFormGroup.value.endDate,
+      boatId : this.boat.id
+    }).subscribe( observer );
+
+  }
+
 }

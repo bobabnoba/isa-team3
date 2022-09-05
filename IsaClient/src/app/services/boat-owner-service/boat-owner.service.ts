@@ -57,4 +57,8 @@ export class BoatOwnerService {
   checkIfReservationOverlapsAvailability(body : any ) : Observable<any> {
     return this._http.post(`${this.baseURL}/boat-owner/check-if-res-overlaps-avail`, body);
   }
+
+  removeAvailability(body : any ) : Observable<any> {
+    return this._http.post(`${this.baseURL}/boat-owner/remove-availability`, body);
+  }
 }

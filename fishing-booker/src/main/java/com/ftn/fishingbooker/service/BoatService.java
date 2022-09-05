@@ -37,7 +37,7 @@ public interface BoatService {
 
     Collection<BoatAvailability> addAvailabilityPeriod(BoatAvailability mapToBoatAvailabilityEntity, Long boatId);
 
-    void updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id);
+    Collection<BoatAvailability> updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id);
 
     boolean checkAvailability(Date from, Date to, Long boatId);
 

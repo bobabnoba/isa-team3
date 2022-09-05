@@ -83,6 +83,28 @@ export class HomeAvailabilityComponent implements OnInit {
       homeId : this.home.id
     }).subscribe( observer );
   }
+
+  removePeriod(){
+    const observer = {
+      next: (data : any) => { 
+        this.newAv = data;
+        this._snackBar.open('Availability period successfully removed.', '',
+        { duration: 3000, panelClass: ['snack-bar'] });
+       },
+      error: (err : any) => { 
+        this._snackBar.open('Error removing availability period.', '',
+        { duration: 3000, panelClass: ['snack-bar'] }
+        ); },
+      complete: () => {  }
+    };
+
+    this._homeService.removeAvailability( {
+      startDate : this.aFormGroup.value.startDate,
+      endDate : this.aFormGroup.value.endDate,
+      homeId : this.home.id
+    }).subscribe( observer );
+
+  }
   }
 
 

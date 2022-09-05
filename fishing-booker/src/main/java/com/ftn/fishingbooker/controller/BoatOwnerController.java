@@ -109,4 +109,13 @@ public class BoatOwnerController {
 
     }
 
+    @PostMapping("/remove-availability")
+    public ResponseEntity<Collection<BoatAvailabilityDto>> deleteAvailabilityPeriod(@RequestBody BoatOwnerAvailabilityRequestDto availability) {
+        Collection<BoatOwnerAvailability> availabilities = boatOwnerService.updateAvailability(availability.getStartDate(), availability.getEndDate(), availability.getEmail());
+        Collection<BoatAvailabilityDto> dtos = availabilities.stream()
+                .map(BoatMapper::mapToAvailabilityDtoFromOwnerAvailability)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
+
 }

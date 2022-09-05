@@ -90,7 +90,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
 
     @Transactional
     @Override
-    public void updateAvailability(Date reservationStartDate, Date reservationEndDate, String ownerEmail) {
+    public Collection<BoatOwnerAvailability> updateAvailability(Date reservationStartDate, Date reservationEndDate, String ownerEmail) {
         BoatOwner boatOwner = boatOwnerRepository.findByEmail(ownerEmail);
         if (boatOwner == null) throw  new ResourceConflictException("Boat owner not found");
         Set<BoatOwnerAvailability> availabilities = new HashSet<>(boatOwner.getAvailability());
@@ -112,6 +112,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
             boatOwner.setAvailability(availabilities);
             boatOwnerRepository.save(boatOwner);
             boatOwnerAvailabilityService.delete(theOne.get().getId());
+            return boatOwner.getAvailability();
         }else if (onStart.isPresent()){
             BoatOwnerAvailability newOne = new BoatOwnerAvailability();
             newOne.setStartDate(DateUtil.addDays(reservationEndDate,1));
@@ -122,6 +123,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
             boatOwner.setAvailability(availabilities);
             boatOwnerRepository.save(boatOwner);
             boatOwnerAvailabilityService.delete(onStart.get().getId());
+            return boatOwner.getAvailability();
         }else if (onEnd.isPresent()){
             BoatOwnerAvailability newOne = new BoatOwnerAvailability();
             newOne.setStartDate(onEnd.get().getStartDate());
@@ -132,6 +134,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
             boatOwner.setAvailability(availabilities);
             boatOwnerRepository.save(boatOwner);
             boatOwnerAvailabilityService.delete(onEnd.get().getId());
+            return boatOwner.getAvailability();
 
         }else if (availabilityInBetween.isPresent()){
             BoatOwnerAvailability newOne = new BoatOwnerAvailability();
@@ -149,7 +152,9 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
             boatOwner.setAvailability(availabilities);
             boatOwnerRepository.save(boatOwner);
             boatOwnerAvailabilityService.delete(availabilityInBetween.get().getId());
+            return boatOwner.getAvailability();
         }
+        return boatOwner.getAvailability();
     }
 
 

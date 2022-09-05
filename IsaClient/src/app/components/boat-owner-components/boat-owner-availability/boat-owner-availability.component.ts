@@ -76,5 +76,27 @@ export class BoatOwnerAvailabilityComponent implements OnInit {
       email : this._storage.getEmail()
     }).subscribe( observer );
   }
+
+  removePeriod(){
+    const observer = {
+      next: (data : any) => { 
+        this.newAv = data;
+        this._snackBar.open('New availability period successfully added.', '',
+        { duration: 3000, panelClass: ['snack-bar'] });
+       },
+      error: (err : any) => { 
+        this._snackBar.open('Error adding new availability period.', '',
+        { duration: 3000, panelClass: ['snack-bar'] }
+        ); },
+      complete: () => {  }
+    };
+
+    this._boatOwnerService.removeAvailability( {
+      startDate : this.aFormGroup.value.startDate,
+      endDate : this.aFormGroup.value.endDate,
+      email : this._storage.getEmail()
+    }).subscribe( observer );
+
+  }
  
 }

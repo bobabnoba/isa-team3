@@ -433,7 +433,7 @@ public class BoatServiceImpl implements BoatService {
 
     @Transactional
     @Override
-    public void updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id) {
+    public Collection<BoatAvailability> updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id) {
         //TODO:
         Boat boat = boatRepository.findById(id).orElseThrow(() -> new ResourceConflictException("Boat not found"));
         Set<BoatAvailability> availabilities = new HashSet<>(boat.getAvailableTimePeriods());
@@ -455,6 +455,7 @@ public class BoatServiceImpl implements BoatService {
             boat.setAvailableTimePeriods(availabilities);
             boatRepository.save(boat);
             boatAvailabilityService.delete(theOne.get().getId());
+            return boat.getAvailableTimePeriods();
         }else if (onStart.isPresent()){
             BoatAvailability newOne = new BoatAvailability();
             newOne.setStartDate(DateUtil.addDays(reservationEndDate,1));
@@ -465,6 +466,7 @@ public class BoatServiceImpl implements BoatService {
             boat.setAvailableTimePeriods(availabilities);
             boatRepository.save(boat);
             boatAvailabilityService.delete(onStart.get().getId());
+            return boat.getAvailableTimePeriods();
         }else if (onEnd.isPresent()){
             BoatAvailability newOne = new BoatAvailability();
             newOne.setStartDate(onEnd.get().getStartDate());
@@ -475,6 +477,7 @@ public class BoatServiceImpl implements BoatService {
             boat.setAvailableTimePeriods(availabilities);
             boatRepository.save(boat);
             boatAvailabilityService.delete(onEnd.get().getId());
+            return boat.getAvailableTimePeriods();
 
         }else if (availabilityInBetween.isPresent()){
             BoatAvailability newOne = new BoatAvailability();
@@ -492,7 +495,9 @@ public class BoatServiceImpl implements BoatService {
             boat.setAvailableTimePeriods(availabilities);
             boatRepository.save(boat);
             boatAvailabilityService.delete(availabilityInBetween.get().getId());
+            return boat.getAvailableTimePeriods();
         }
+        return boat.getAvailableTimePeriods();
     }
 
     @Override
