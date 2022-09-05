@@ -1,5 +1,7 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { BoatOwnerService } from 'src/app/services/boat-owner-service/boat-owner.service';
+import { ReservationService } from 'src/app/services/reservation-service/reservation.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 
 @Component({
@@ -10,12 +12,12 @@ import { StorageService } from 'src/app/services/storage-service/storage.service
 export class BoatOwnerDashboardComponent implements OnInit {
 
   email : string = '';
-  constructor(private _boatOwnerService : BoatOwnerService, private _storageService: StorageService) {
+  constructor(private _boatOwnerService : BoatOwnerService, private _pipe : DatePipe,
+     private _reservationService : ReservationService, private _storageService: StorageService) {
     this.email = this._storageService.getEmail();
    }
 
   ngOnInit(): void {
-  
   }
 
 }

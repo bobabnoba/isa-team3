@@ -3,16 +3,22 @@ package com.ftn.fishingbooker.controller;
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.mapper.*;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.ClientReview;
-import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.*;
+import com.ftn.fishingbooker.util.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
+import java.sql.*;
 import java.util.*;
+import java.util.Date;
+import java.util.concurrent.atomic.*;
+import java.util.stream.*;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/reservations")
@@ -24,6 +30,9 @@ public class ReservationController {
     private final AdventureService adventureService;
     private final HomeService homeService;
     private final BoatService boatService;
+    private final BoatOwnerService boatOwnerService;
+    private final HomeOwnerService homeOwnerService;
+    private final InstructorService instructorService;
 
 
     @GetMapping("{id}")
@@ -91,11 +100,113 @@ public class ReservationController {
 
     @GetMapping("check-if-ongoing/{id}")
     public ResponseEntity<ClientDto> checkIfReservationIsOngoing(@PathVariable Long id){
+
+        TimeZone timeZone = TimeZone.getTimeZone("UTC");
+        Calendar cal = Calendar.getInstance(timeZone);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0 , 0 , 0);
+        var t = cal.getTime() ;
+        var now = t.getTime() - 2*3600*1000;
+        var dateNow = new Timestamp(now);
         Reservation reservation = reservationService.getReservationById(id);
-        if(reservation.getStartDate().before(new Date()) && reservation.getEndDate().after(new Date())){
+        dateNow.setNanos(0);
+        if(reservation.getStartDate().before(dateNow) && ( reservation.getEndDate().after(dateNow) || reservation.getEndDate().equals(dateNow))){
             return new ResponseEntity<>(ClientMapper.map(reservation.getClient()), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/chart/{type}")
+    public ResponseEntity<Collection<EarningsChartDto>> getReservationChartInDateRange(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
+            @RequestParam(required = false) Long id, @RequestParam(required = false) String email,
+            @PathVariable ReservationType type) {
+
+        Set<Reservation> found = new HashSet<>();
+        if(type.equals(ReservationType.BOAT)){
+            if(email != null){
+                BoatOwner owner = boatOwnerService.getByEmail(email);
+                found.addAll(reservationService.getReservationForBoatOwner(owner.getId(), from, to));
+            }else{
+                found.addAll(reservationService.getReservationsForBoat(id, from, to));
+            }
+        }else if( type.equals(ReservationType.VACATION_HOME)){
+            if(email != null){
+                HomeOwner owner = homeOwnerService.getByEmail(email);
+                found.addAll(reservationService.getReservationForHomeOwner(owner.getId(), from, to));
+            }else{
+                found.addAll(reservationService.getReservationsForHome(id, from, to));
+            }
+        }else{
+            if(email != null){
+                Instructor instructor = instructorService.findByEmail(email);
+                found.addAll(reservationService.getReservationForInstructor(instructor.getId(), from, to));
+            }else{
+                found.addAll(reservationService.getReservationsForAdventure(id, from, to));
+            }
+        }
+        Collection<EarningsChartDto> earningsDtos = new ArrayList<>();
+        for (Date d = from; d.before(to); d = DateUtil.addDays(d,1)){
+            Date finalD = new Date(d.getTime());
+            Collection<Reservation> dtoDay = found.stream().filter(earnings ->
+                    ( earnings.getStartDate().after(finalD) || earnings.getStartDate().getTime() == finalD.getTime()) &&
+                        earnings.getStartDate().before(DateUtil.addDays(finalD,1))).collect(Collectors.toSet());
+            EarningsChartDto dto = new EarningsChartDto();
+            dto.setDate(finalD);
+            dto.setIncome((double) dtoDay.size());
+            earningsDtos.add(dto);
+        }
+        return ok(earningsDtos);
+    }
+
+    @GetMapping("/chart-year/{type}")
+    public ResponseEntity<Collection<ReservationChartDto>> getReservationChartYearInDateRange(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
+            @RequestParam(required = false) Long id, @RequestParam(required = false) String email,
+            @PathVariable ReservationType type) {
+
+        Set<Reservation> found = new HashSet<>();
+        if(type.equals(ReservationType.BOAT)){
+            if(email != null){
+                BoatOwner owner = boatOwnerService.getByEmail(email);
+                found.addAll(reservationService.getReservationForBoatOwner(owner.getId(), from, to));
+            }else{
+                found.addAll(reservationService.getReservationsForBoat(id, from, to));
+            }
+        }else if( type.equals(ReservationType.VACATION_HOME)){
+            if(email != null){
+                HomeOwner owner = homeOwnerService.getByEmail(email);
+                found.addAll(reservationService.getReservationForHomeOwner(owner.getId(), from, to));
+            }else{
+                found.addAll(reservationService.getReservationsForHome(id, from, to));
+            }
+        }else{
+            if(email != null){
+                Instructor instructor = instructorService.findByEmail(email);
+                found.addAll(reservationService.getReservationForInstructor(instructor.getId(), from, to));
+            }else{
+                found.addAll(reservationService.getReservationsForAdventure(id, from, to));
+            }
+        }
+        Collection<ReservationChartDto> earningsDtos = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        for (int i = 1; i<13; i++){
+            int sum = 0;
+            for (Reservation r : found) {
+                var m = cal.get(Calendar.MONTH);
+                cal.setTime(new Date(r.getStartDate().getTime()));
+                if( cal.get(Calendar.MONTH) == i){
+                    sum++;
+                }
+            }
+            ReservationChartDto dto = new ReservationChartDto();
+            dto.setMonth(i);
+            dto.setNumOfRes(sum);
+            earningsDtos.add(dto);
+        }
+        return ok(earningsDtos);
     }
 
 }

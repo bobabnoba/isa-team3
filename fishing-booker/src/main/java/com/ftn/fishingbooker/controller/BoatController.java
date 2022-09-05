@@ -8,7 +8,7 @@ import com.ftn.fishingbooker.mapper.RentalMapper;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.*;
-import com.ftn.fishingbooker.util.FIleUploadUtil;
+import com.ftn.fishingbooker.util.*;
 import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.*;
@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -187,5 +188,7 @@ public class BoatController {
     public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){
         return ResponseEntity.ok(boatService.getNoOfIncomingReservations(id) > 0);
     }
+
+
 
 }
