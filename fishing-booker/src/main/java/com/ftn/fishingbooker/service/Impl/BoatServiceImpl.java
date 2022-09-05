@@ -8,7 +8,6 @@ import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -529,5 +528,13 @@ public class BoatServiceImpl implements BoatService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void updateBoatRating(Long id, double boatRating) {
+        Boat boat = boatRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Boat not found"));
+        boat.setRating(boatRating);
+        boatRepository.save(boat);
     }
 }

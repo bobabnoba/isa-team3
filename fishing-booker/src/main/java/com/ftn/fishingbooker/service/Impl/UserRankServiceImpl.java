@@ -6,11 +6,15 @@ import com.ftn.fishingbooker.repository.UserRankRepository;
 import com.ftn.fishingbooker.service.UserRankService;
 import com.ftn.fishingbooker.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class UserRankServiceImpl implements UserRankService {
 
     private final UserRankRepository userRankRepository;
@@ -30,14 +34,14 @@ public class UserRankServiceImpl implements UserRankService {
     public Collection<UserRank> saveLoyaltyProgram(Collection<UserRank> ranks) {
         Collection<User> users = new ArrayList<>();
 
-        for (User u : userService.getAll()) {
+        for (User u : userService.findAllByDeleted(false)) {
             String userType;
             if( u.getRole().getName().equalsIgnoreCase("ROLE_CLIENT")) {
                 userType = "CLIENT";
             } else {
                 userType = "ADVERTISER";
             }
-            for(var r : ranks) {
+            for(var r : ranks.stream().sorted(Comparator.comparingDouble(UserRank::getMinPoints)).collect(Collectors.toList())) {
                 if (r.getName().contains(userType) && r.getMinPoints() < u.getPoints() ){
                     u.setRank(r);
                 }
