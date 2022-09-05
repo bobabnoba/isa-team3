@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { SpecialOffer } from 'src/app/interfaces/special-offer';
 import { IAvailableReservations, IVacationHouseProfile } from 'src/app/interfaces/vacation-house-profile';
 import { ClientService } from 'src/app/services/client-service/client.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
@@ -20,9 +21,11 @@ export class VacationHomePageComponent implements OnInit {
   roomsNumber!: number;
   bedsNumber!: number;
   id!: string;
+  type:string = 'home';
   isSubscribed: boolean = false;
   userEmail: string = "";
-  baseUrl = environment.apiURL
+  baseUrl = environment.apiURL;
+  filteredOffers = [] as SpecialOffer[];
 
   constructor(
     private homeService: HomeService,
@@ -37,6 +40,8 @@ export class VacationHomePageComponent implements OnInit {
 
     this.getHomeDetails();
     this.isUserSubscribed();
+
+
 
   }
   isUserSubscribed() {
@@ -61,13 +66,15 @@ export class VacationHomePageComponent implements OnInit {
         var b = 0
         this.item.rooms.forEach(x => b = b + x.numberOfBeds)
         this.bedsNumber = b;
-
+        if (data.specialOffers) {
+          this.filteredOffers = data.specialOffers.filter(offer => new Date(offer.activeTo) >= new Date());
+        }
       },
       error: (err: HttpErrorResponse) => {
         this._router.navigate(['/404']);
       },
     }
-    this.homeService.getVacationHomeDetails(this.id).subscribe(homeObserver)
+    this.homeService.getById(this.id).subscribe(homeObserver)
   }
   subscribe() {
     this._subService

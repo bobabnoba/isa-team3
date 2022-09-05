@@ -1,13 +1,13 @@
 package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.enumeration.ComplaintStatus;
-import com.ftn.fishingbooker.enumeration.ReviewStatus;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.ComplaintRepository;
 import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 
 import javax.transaction.Transactional;
 import java.util.Collection;

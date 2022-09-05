@@ -20,9 +20,13 @@ export class AdventureSpecialOfferComponent implements OnInit {
   @Input()
   adventureId!: number;
   @Input()
+  rentalId!: number
+  @Input()
   offer: SpecialOffer = {} as SpecialOffer;
   @Input()
   adventureDuration: number = 0;
+  @Input()
+  type: string = "";
   endsIn!: string;
   isClient: boolean = false;
   newReservation: IReservation = {} as IReservation;
@@ -30,7 +34,7 @@ export class AdventureSpecialOfferComponent implements OnInit {
   displayDiscount = false;
   calculatedPrice: number = 0;
   showTotalPrice: boolean = false;
-  
+
   constructor(
     private _rentalService: RentalService,
     private _snackBar: MatSnackBar,
@@ -51,11 +55,11 @@ export class AdventureSpecialOfferComponent implements OnInit {
           this.client = data;
           if (this.client.rank.percentage == 0) {
             this.displayDiscount = false;
-  
+
           }
           this.displayDiscount = true;
           this.calculatePrice();
-  
+
         }
       );
     }
@@ -73,8 +77,8 @@ export class AdventureSpecialOfferComponent implements OnInit {
   calculatePrice() {
     let discount = 0;
     let originalPrice = this.offer.price
-    if(this.displayDiscount){
-      discount = originalPrice * this.client.rank.percentage /100
+    if (this.displayDiscount) {
+      discount = originalPrice * this.client.rank.percentage / 100
     }
     this.calculatedPrice = originalPrice - discount
     this.showTotalPrice = true;
@@ -122,7 +126,17 @@ export class AdventureSpecialOfferComponent implements OnInit {
           });
       }
     }
-    this._rentalService.rentAdventureSpecialOffer(this.newReservation, this.adventureId, this.offer.id, this._storageService.getEmail()).subscribe(reservation);
+    if (this.type == 'adventure') {
+      this._rentalService.rentAdventureSpecialOffer(this.newReservation, this.adventureId, this.offer.id, this._storageService.getEmail()).subscribe(reservation);
+    } else if (this.type == 'home') {
+      this._rentalService.rentHomeSpecialOffer(this.newReservation, this.rentalId, this.offer.id, this._storageService.getEmail()).subscribe(reservation);
+    } else if (this.type == 'boat') {
+      this._rentalService.rentBoatSpecialOffer(this.newReservation, this.rentalId, this.offer.id, this._storageService.getEmail()).subscribe(reservation);
+    } else {
+      this._snackBar.open('No type specified', 'Close', {
+        duration: 3000
+      })
+    }
   }
 
 }

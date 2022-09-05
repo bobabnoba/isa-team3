@@ -3,16 +3,16 @@ package com.ftn.fishingbooker.controller;
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.mapper.*;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.ClientReview;
-import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/reservations")
@@ -24,6 +24,8 @@ public class ReservationController {
     private final AdventureService adventureService;
     private final HomeService homeService;
     private final BoatService boatService;
+    private final InstructorService instructorService;
+    private final BoatOwnerService boatOwnerService;
 
 
     @GetMapping("{id}")
@@ -64,12 +66,32 @@ public class ReservationController {
 
     @PostMapping("/cancel/{userEmail}")
     public ResponseEntity<Collection<ReservationDto>> CancelUpcomingReservation(@PathVariable String userEmail, @RequestBody Long reservationId) {
-        boolean isCanceled = clientService.cancelUpcomingReservation(reservationId, userEmail);
+        Reservation reservation = clientService.cancelUpcomingReservation(reservationId, userEmail);
         List<Reservation> reservationList = clientService.getUpcomingReservations(userEmail);
-        if (isCanceled == true) {
-            return ResponseEntity.ok(ReservationMapper.map(reservationList));
+
+        if (reservation == null) {
+            return new ResponseEntity<>(ReservationMapper.map(reservationList), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(ReservationMapper.map(reservationList), HttpStatus.CONFLICT);
+        switch (reservation.getType()) {
+            case ADVENTURE:
+                Adventure adventure = adventureService.getAdventureForReservation(reservationId);
+                instructorService.addAvailabilityPeriod(new InstructorAvailability(reservation.getStartDate(), reservation.getEndDate()), adventure.getInstructor().getEmail());
+                break;
+            case VACATION_HOME:
+                VacationHome vacationHome = homeService.getVacationHomeForReservation(reservationId);
+                homeService.addAvailabilityPeriod(new VacationHomeAvailability(reservation.getStartDate(), reservation.getEndDate()), vacationHome.getId());
+                break;
+            case BOAT:
+                Boat boat = boatService.getBoatForReservation(reservationId);
+                boatService.addAvailabilityPeriod(new BoatAvailability(reservation.getStartDate(), reservation.getEndDate()), boat.getId());
+                //boatOwnerService.add(reservation.getStartDate(), reservation.getEndDate(), boat.getBoatOwner().getEmail());
+
+                break;
+            default:
+                break;
+        }
+
+        return ResponseEntity.ok(ReservationMapper.map(reservationList));
     }
 
     @GetMapping("/adventure/{ReservationId}")
@@ -88,11 +110,10 @@ public class ReservationController {
     }
 
 
-
     @GetMapping("check-if-ongoing/{id}")
-    public ResponseEntity<ClientDto> checkIfReservationIsOngoing(@PathVariable Long id){
+    public ResponseEntity<ClientDto> checkIfReservationIsOngoing(@PathVariable Long id) {
         Reservation reservation = reservationService.getReservationById(id);
-        if(reservation.getStartDate().before(new Date()) && reservation.getEndDate().after(new Date())){
+        if (reservation.getStartDate().before(new Date()) && reservation.getEndDate().after(new Date())) {
             return new ResponseEntity<>(ClientMapper.map(reservation.getClient()), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);

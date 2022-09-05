@@ -164,10 +164,10 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void emailSubscribers(User owner, String entityType){
+    public void emailSubscribers(User owner, String entityType) {
         Collection<Client> clients = getAll();
         clients.forEach(client -> {
-            if(isClientSubscribed(client.getEmail(), entityType, owner.getId())){
+            if (isClientSubscribed(client.getEmail(), entityType, owner.getId())) {
                 String content = emailService.createSubscriptionEmail(owner.getFirstName(), owner.getLastName());
                 try {
                     emailService.sendEmail(client.getEmail(), "New Special Offer At Easy&Peasy Booker", content);
@@ -179,21 +179,23 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean cancelUpcomingReservation(Long reservationId, String userEmail) {
+    public Reservation cancelUpcomingReservation(Long reservationId, String userEmail) {
         Client client = (Client) userRepository.findByEmail(userEmail);
+
         for (Reservation reservation : client.getReservationsMade()) {
-           var id = reservation.getId();
+            var id = reservation.getId();
             if (id == reservationId) {
                 if (canBeCanceled(reservation)) {
                     reservation.setIsCancelled(true);
                     earningsService.deleteEarnings(reservation);
-                    return true;
+                    return reservation;
                 }
             }
         }
 
-        return false;
+        return null;
     }
+
 
     private boolean canBeCanceled(Reservation reservation) {
         Date inThreeDays = dateService.addDaysToJavaUtilDate(new Date(), 3);

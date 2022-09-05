@@ -27,6 +27,9 @@
                                 <li>Max Speed : {{item.maxSpeed}} Knots</li>
                                 <li>Guest Limit : {{item.guestLimit}}</li>
                             </div>
+                            <button mat-raised-button color="primary"
+                            style="max-width: fit-content; height: 25px; margin-top:10px" (click)="subscribe()"
+                            [disabled]="isSubscribed">Subscribe</button>
                         </mat-card-subtitle>
 
                         <div class="image-display">
@@ -100,17 +103,24 @@
             </mat-card>
             <hr>
             <h2 style="margin-left: 15px; color: blue;">Special Offers</h2>
-
-            <div class="displaySection">
-                <div class="sectionOverflow">
-                    <div *ngFor="let item of item.specialOffers">
-                        <app-adventure-special-offer [offer]="item" class="p-3">
-                        </app-adventure-special-offer>
+            <div *ngIf="item.specialOffers">
+                <div *ngIf="filteredOffers.length > 0">
+                    <div *ngFor="let offer of filteredOffers">
+                        <div class="displaySection">
+                            <div class="sectionOverflow">
+                                <app-adventure-special-offer [rentalId]="item.id" [type]="type" [offer]="offer" class="p-3">
+                                </app-adventure-special-offer>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div *ngIf="filteredOffers.length == 0">
+                    <h3 style="margin-left: 15px;"> No special offers available.</h3>
+                </div>
 
+                
             </div>
-            <div *ngIf="item.specialOffers.length == 0">
+            <div *ngIf="!item.specialOffers">
                 <h3 style="margin-left: 15px;"> No special offers available.</h3>
             </div>
         </div>

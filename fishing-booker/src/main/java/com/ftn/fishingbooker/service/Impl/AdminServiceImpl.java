@@ -4,10 +4,12 @@ import com.ftn.fishingbooker.model.Admin;
 import com.ftn.fishingbooker.model.Registration;
 import com.ftn.fishingbooker.model.User;
 import com.ftn.fishingbooker.repository.*;
-import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.ftn.fishingbooker.service.AdminService;
+import com.ftn.fishingbooker.service.EmailService;
+import com.ftn.fishingbooker.service.RoleService;
 
 import javax.mail.*;
 import javax.transaction.Transactional;

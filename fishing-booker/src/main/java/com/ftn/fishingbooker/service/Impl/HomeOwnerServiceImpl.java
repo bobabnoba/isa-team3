@@ -4,8 +4,10 @@ import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.*;
-import com.ftn.fishingbooker.service.*;
 import org.springframework.stereotype.Service;
+import com.ftn.fishingbooker.service.HomeOwnerService;
+import com.ftn.fishingbooker.service.UserRankService;
+import com.ftn.fishingbooker.service.UserService;
 
 @Service
 public class HomeOwnerServiceImpl implements HomeOwnerService {

@@ -259,41 +259,41 @@ insert into boat_owner_availability(
 	boat_owner_id, availability_id)
 	values (109, 200), (109,201), (109, 202), (109, 203), (109, 204);
 
----- Reservations
-insert into reservation(
-	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage, owner_captain)
-	values
-	(201, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5, 'false'),
-	(202, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5, 'false'),
-	(203, '2022-08-31', 'false', 3, 200, '2022-08-28', 'BOAT', 10, 5, 'false'),
-	(204, '2022-09-13', 'false', 3, 200, '2022-09-11', 'BOAT', 10, 5, 'false'),
-	(205, '2022-09-17', 'false', 3, 200, '2022-09-15', 'BOAT', 10, 5, 'false'),
-		(206, '2022-08-31', 'false', 3, 200, '2022-08-28', 'BOAT', 10, 5, 'false'),
-    	(207, '2022-09-13', 'false', 3, 200, '2022-09-11', 'BOAT', 10, 5, 'false'),
-    	(208, '2022-09-17', 'false', 3, 200, '2022-09-15', 'BOAT', 10, 5, 'false'),
-    	(209, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5, 'false'),
-        	(210, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5, 'false');
-
---Boat reservations
-
-insert into boat_reservations(boat_id, reservations_id) values
-    (100, 201),(100, 202),(100, 203), (100, 204), (100, 205), (101, 206), (101, 207), (101, 208), (101, 209), (101, 210);
-
-insert into reservation(
-	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage, owner_captain)
-	values
-	(211, '2022-08-21', 'false', 3, 300, '2022-08-20', 'VACATION_HOME', 12, 5, 'false'),
-	(212, '2022-08-13', 'false', 3, 300, '2022-08-11', 'VACATION_HOME', 12, 5, 'false'),
-	(213, '2022-09-03', 'false', 3, 300, '2022-08-28', 'VACATION_HOME', 12, 5, 'false'),
-	(214, '2022-09-13', 'false', 3, 300, '2022-09-11', 'VACATION_HOME', 12, 5, 'false'),
-	(215, '2022-09-17', 'false', 3, 300, '2022-09-15', 'VACATION_HOME', 12, 5, 'false'),
-		(216, '2022-09-03', 'false', 3, 300, '2022-08-28', 'VACATION_HOME', 12, 5, 'false'),
-    	(217, '2022-09-13', 'false', 3, 300, '2022-09-11', 'VACATION_HOME', 12, 5, 'false'),
-    	(218, '2022-09-17', 'false', 3, 300, '2022-09-15', 'VACATION_HOME', 12, 5, 'false'),
-    	(219, '2022-08-21', 'false', 3, 300, '2022-08-20', 'VACATION_HOME', 12, 5, 'false'),
-        	(220, '2022-08-13', 'false', 3, 300, '2022-08-11', 'VACATION_HOME', 12, 5, 'false');
-
---Boat reservations
-
-insert into vacation_home_reservations(vacation_home_id, reservations_id) values
-    (102, 211),(102, 212),(102, 213), (102, 214), (102, 215), (103, 216), (103, 217), (103, 218), (103, 219), (103, 220);
+------ Reservations
+--insert into reservation(
+--	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage, owner_captain)
+--	values
+--	(201, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5, 'false'),
+--	(202, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5, 'false'),
+--	(203, '2022-08-31', 'false', 3, 200, '2022-08-28', 'BOAT', 10, 5, 'false'),
+--	(204, '2022-09-13', 'false', 3, 200, '2022-09-11', 'BOAT', 10, 5, 'false'),
+--	(205, '2022-09-17', 'false', 3, 200, '2022-09-15', 'BOAT', 10, 5, 'false'),
+--		(206, '2022-08-31', 'false', 3, 200, '2022-08-28', 'BOAT', 10, 5, 'false'),
+--    	(207, '2022-09-13', 'false', 3, 200, '2022-09-11', 'BOAT', 10, 5, 'false'),
+--    	(208, '2022-09-17', 'false', 3, 200, '2022-09-15', 'BOAT', 10, 5, 'false'),
+--    	(209, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5, 'false'),
+--        	(210, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5, 'false');
+--
+----Boat reservations
+--
+--insert into boat_reservations(boat_id, reservations_id) values
+--    (100, 201),(100, 202),(100, 203), (100, 204), (100, 205), (101, 206), (101, 207), (101, 208), (101, 209), (101, 210);
+--
+--insert into reservation(
+--	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage, owner_captain)
+--	values
+--	(211, '2022-08-21', 'false', 3, 300, '2022-08-20', 'VACATION_HOME', 12, 5, 'false'),
+--	(212, '2022-08-13', 'false', 3, 300, '2022-08-11', 'VACATION_HOME', 12, 5, 'false'),
+--	(213, '2022-09-03', 'false', 3, 300, '2022-08-28', 'VACATION_HOME', 12, 5, 'false'),
+--	(214, '2022-09-13', 'false', 3, 300, '2022-09-11', 'VACATION_HOME', 12, 5, 'false'),
+--	(215, '2022-09-17', 'false', 3, 300, '2022-09-15', 'VACATION_HOME', 12, 5, 'false'),
+--		(216, '2022-09-03', 'false', 3, 300, '2022-08-28', 'VACATION_HOME', 12, 5, 'false'),
+--    	(217, '2022-09-13', 'false', 3, 300, '2022-09-11', 'VACATION_HOME', 12, 5, 'false'),
+--    	(218, '2022-09-17', 'false', 3, 300, '2022-09-15', 'VACATION_HOME', 12, 5, 'false'),
+--    	(219, '2022-08-21', 'false', 3, 300, '2022-08-20', 'VACATION_HOME', 12, 5, 'false'),
+--        	(220, '2022-08-13', 'false', 3, 300, '2022-08-11', 'VACATION_HOME', 12, 5, 'false');
+--
+----Boat reservations
+--
+--insert into vacation_home_reservations(vacation_home_id, reservations_id) values
+--    (102, 211),(102, 212),(102, 213), (102, 214), (102, 215), (103, 216), (103, 217), (103, 218), (103, 219), (103, 220);

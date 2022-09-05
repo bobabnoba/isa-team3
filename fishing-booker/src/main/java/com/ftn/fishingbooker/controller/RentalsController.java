@@ -2,7 +2,6 @@ package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.RentalDto;
 import com.ftn.fishingbooker.mapper.RentalMapper;
-import com.ftn.fishingbooker.service.AdventureService;
 import com.ftn.fishingbooker.service.BoatService;
 import com.ftn.fishingbooker.service.HomeService;
 import com.ftn.fishingbooker.service.InstructorService;

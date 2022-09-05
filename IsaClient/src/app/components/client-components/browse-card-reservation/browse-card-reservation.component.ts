@@ -1,11 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { IAddress } from 'src/app/interfaces/address';
 import { LoggedClient } from 'src/app/interfaces/logged-client';
 import { IReservation } from 'src/app/interfaces/new-reservation';
 import { IUtility } from 'src/app/interfaces/vacation-house-profile';
+import { BoatOwnerService } from 'src/app/services/boat-owner-service/boat-owner.service';
 import { ClientService } from 'src/app/services/client-service/client.service';
 import { RentalService } from 'src/app/services/rental-service/rental.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
@@ -36,6 +38,7 @@ export class BrowseCardReservationComponent implements OnInit {
   @Input() utilities: IUtility[] = [];
   @Input() imageUrls: string[] = [];
   image: any;
+  @Input() ownerEmail: string = ""
   @Input() id: number = 0;
   @Input() type: string = 'entity';
   @Input() startDate: Date = new Date();
@@ -47,6 +50,8 @@ export class BrowseCardReservationComponent implements OnInit {
   client: LoggedClient = {} as LoggedClient;
   calculatedPrice: number = 0;
   showTotalPrice: boolean = false;
+  canBeCaptain: boolean = false;
+  isCaptain = new FormControl();
 
 
   constructor(
@@ -54,7 +59,8 @@ export class BrowseCardReservationComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private _storageService: StorageService,
     private _datePipe: DatePipe,
-    private _clientService: ClientService) {
+    private _clientService: ClientService,
+    private _boatOwnerService: BoatOwnerService) {
     this.newReservation.utilities = [];
 
     this._clientService.getClientInfo(this._storageService.getEmail()).subscribe(
@@ -66,17 +72,29 @@ export class BrowseCardReservationComponent implements OnInit {
         }
         this.displayDiscount = true;
         this.calculatePrice();
-      
-      }
-    );
-
-
-
+      });
+    this.isCaptain.setValue(false);
   }
 
   ngOnInit(): void {
+    if (this.type == 'boat') {
+      this._boatOwnerService.checkOwnerAvailability(
+        this._datePipe.transform(this.startDate, 'yyyy-MM-dd HH:mm:ss')!,
+        this._datePipe.transform(this.endDate, 'yyyy-MM-dd HH:mm:ss')!,
+        this.ownerEmail).subscribe({
+          next: (res: any) => {
+            this.canBeCaptain = res
+            console.log(res);
 
+
+          },
+          error: (err: HttpErrorResponse) => {
+            console.log(err);
+          }
+        });
+    }
   }
+
 
   onChangeDemo(ob: any) {
 
@@ -104,7 +122,7 @@ export class BrowseCardReservationComponent implements OnInit {
 
     let days = new Date(this.endDate).getTime() - new Date(this.startDate).getTime()
     let numOfDays = Math.round(days / (24 * 60 * 60 * 1000));
-    if (numOfDays == 0 ) {
+    if (numOfDays == 0) {
       numOfDays = 1;
     }
     let utilitesPrice = 0;
@@ -114,7 +132,7 @@ export class BrowseCardReservationComponent implements OnInit {
     }
     let discount = 0
     let originalPrice = (numOfDays * this.price + utilitesPrice)
-    
+
     if (this.displayDiscount) {
       discount = originalPrice * this.client.rank.percentage / 100;
     }
@@ -129,6 +147,7 @@ export class BrowseCardReservationComponent implements OnInit {
     this.newReservation.guests = this.guests;
     this.newReservation.price = this.price;
     this.newReservation.cancelingPercentage = this.cancelingPercentage;
+    this.newReservation.ownerCaptain = this.isCaptain.value
 
 
     console.log(this.newReservation);

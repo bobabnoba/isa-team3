@@ -36,7 +36,7 @@ public interface AdventureService {
 
     Collection<Adventure> filterAll(FilterDto filter);
 
-    void makeReservation(Long adventureId, Reservation reservation);
+    Adventure makeReservation(Long adventureId, Reservation reservation);
 
     Collection<Long> getAllIdsByInstructorId(Long instructorId);
 

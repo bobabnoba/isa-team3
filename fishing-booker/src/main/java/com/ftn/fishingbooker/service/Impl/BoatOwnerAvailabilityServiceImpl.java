@@ -2,8 +2,8 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.*;
-import com.ftn.fishingbooker.service.*;
 import org.springframework.stereotype.*;
+import com.ftn.fishingbooker.service.BoatOwnerAvailabilityService;
 
 @Service
 public class BoatOwnerAvailabilityServiceImpl implements BoatOwnerAvailabilityService {

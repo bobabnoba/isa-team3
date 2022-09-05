@@ -5,9 +5,9 @@ import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.dao.DatabaseReport;
 import com.ftn.fishingbooker.repository.ReportRepository;
+import com.ftn.fishingbooker.service.ReservationService;
 import com.ftn.fishingbooker.service.EmailService;
 import com.ftn.fishingbooker.service.ReportService;
-import com.ftn.fishingbooker.service.ReservationService;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;

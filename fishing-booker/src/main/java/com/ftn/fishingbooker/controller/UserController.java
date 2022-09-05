@@ -69,26 +69,14 @@ public class UserController {
         return ReservationMapper.map(reservationList);
     }
 
-    @PostMapping("/cancel/reservation/{userEmail}")
-    public ResponseEntity<Collection<ReservationDto>> CancelUpcomingReservation(@PathVariable String userEmail, @RequestBody Long reservationId) {
-       
-        boolean isCanceled = clientService.cancelUpcomingReservation(reservationId, userEmail);
-        List<Reservation> reservationList = clientService.getUpcomingReservations(userEmail);
-        if (isCanceled == true) {
-            return ResponseEntity.ok(ReservationMapper.map(reservationList));
-        }
-        return new ResponseEntity<>(ReservationMapper.map(reservationList), HttpStatus.CONFLICT);
-    }
-
     @PutMapping(value = "change-password/{email}")
-    public ResponseEntity<HttpStatus> changePassword(@RequestBody PasswordChangeDto request, @PathVariable String email)
-    {
+    public ResponseEntity<HttpStatus> changePassword(@RequestBody PasswordChangeDto request, @PathVariable String email) {
         userService.changePassword(email, request);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("{id}/has-incoming-reservations")
-    public ResponseEntity<Boolean> userHasIncomingReservations(@PathVariable Long id, @RequestParam String role){
+    public ResponseEntity<Boolean> userHasIncomingReservations(@PathVariable Long id, @RequestParam String role) {
         return ResponseEntity.ok(reservationService.getNoOfIncomingReservationsForUser(id, role) > 0);
     }
 

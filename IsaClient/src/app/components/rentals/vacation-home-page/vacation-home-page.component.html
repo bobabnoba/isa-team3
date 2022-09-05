@@ -80,9 +80,9 @@
             <mat-card class="wrapper">
                 <mat-card-title>Availability Period </mat-card-title>
                 <div class="box">
-                    <span *ngIf="!item.availability[0]"> Currently there are no set availablities for this vacation home
+                    <span *ngIf="!item.availability"> Currently there are no set availablities for this vacation home
                         !</span>
-                    <div *ngIf="item.availability[0]">
+                    <div *ngIf="item.availability">
                         <span *ngFor="let item of item.availability; index as i;" class="listing">
                             <label style="font-weight: bold;">{{item.startDate | date:"shortDate"}} - {{item.endDate |
                                 date:"shortDate"}}, &nbsp; </label>
@@ -92,18 +92,25 @@
             </mat-card>
             <hr>
             <h2 style="margin-left: 15px; color: blue;">Special Offers</h2>
-            <div *ngIf="item.specialOffers.length > 0">
-                <div *ngFor="let item of item.specialOffers">
-                    <div class="displaySection">
-                        <div class="sectionOverflow">
-                            <app-adventure-special-offer [offer]="item" class="p-3">
-                            </app-adventure-special-offer>
+            <div *ngIf="item.specialOffers">
+                <div *ngIf="filteredOffers.length > 0">
+                    <div *ngFor="let item of filteredOffers">
+                        <div class="displaySection">
+                            <div class="sectionOverflow">
+                                <app-adventure-special-offer [rentalId]="item.id" [type]="type" [offer]="item" class="p-3">
+                                </app-adventure-special-offer>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div *ngIf="filteredOffers.length == 0">
+                    <h3 style="margin-left: 15px;"> No special offers available.</h3>
+                </div>
+
+                
             </div>
-            <div  *ngIf="item.specialOffers.length == 0">
-                <h3 style="margin-left: 15px;">  No special offers available.</h3>
+            <div *ngIf="!item.specialOffers">
+                <h3 style="margin-left: 15px;"> No special offers available.</h3>
             </div>
         </div>
     </div>

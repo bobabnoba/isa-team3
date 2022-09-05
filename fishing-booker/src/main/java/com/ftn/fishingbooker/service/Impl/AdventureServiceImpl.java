@@ -23,7 +23,6 @@ public class AdventureServiceImpl implements AdventureService {
 
     private final AdventureRepository adventureRepository;
     private final InstructorRepository instructorRepository;
-
     private final DateService dateService;
     private final ReservationService reservationService;
 
@@ -178,7 +177,7 @@ public class AdventureServiceImpl implements AdventureService {
 
     @Override
     @Transactional
-    public void makeReservation(Long adventureId, Reservation reservation) {
+    public Adventure makeReservation(Long adventureId, Reservation reservation) {
         Adventure adventure = adventureRepository.getWithReservations(adventureId);
         if (adventure == null) {
             adventure = adventureRepository.findById(adventureId)
@@ -186,7 +185,7 @@ public class AdventureServiceImpl implements AdventureService {
             adventure.setReservations(new HashSet<>());
         }
         adventure.getReservations().add(reservation);
-        adventureRepository.save(adventure);
+        return adventureRepository.save(adventure);
     }
 
 
