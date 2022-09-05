@@ -19,6 +19,10 @@ public class ClientReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version
+    @Column(nullable = false)
+    private Integer version;
+
     @Column(unique = true)
     private Long reservationId;
 

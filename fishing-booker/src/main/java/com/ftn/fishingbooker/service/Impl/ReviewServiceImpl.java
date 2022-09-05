@@ -1,6 +1,7 @@
 package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.enumeration.ReviewStatus;
+import com.ftn.fishingbooker.exception.EntityNotFoundException;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.Adventure;
 import com.ftn.fishingbooker.model.Boat;
@@ -9,6 +10,9 @@ import com.ftn.fishingbooker.model.VacationHome;
 import com.ftn.fishingbooker.repository.ReviewRepository;
 import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,6 +29,8 @@ public class ReviewServiceImpl implements ReviewService {
     private final BoatService boatService;
     private final HomeService homeService;
     private final EmailService emailService;
+    protected final Log loggerLog = LogFactory.getLog(getClass());
+
 
     @Override
     public Boolean checkForReview(Long reservationId) {
@@ -72,17 +78,26 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void handleReview(Long id, Boolean approved) {
-        ClientReview review = reviewRepository.findById(id).orElseThrow(
-                () -> new ResourceConflictException("Review not found")
-        );
-        if(approved){
-            review.setStatus(ReviewStatus.APPROVED);
-            emailService.sendReviewApprovedEmail(review);
+        try {
+            ClientReview review = reviewRepository.findById(id).orElseThrow(
+                    () -> new EntityNotFoundException("Review not found"));
 
-        }else {
-            review.setStatus(ReviewStatus.DISAPPROVED);
+            if (review.getStatus() != ReviewStatus.PENDING) {
+                throw new ResourceConflictException("Review already processed!");
+            }
+
+            if (approved) {
+                review.setStatus(ReviewStatus.APPROVED);
+                emailService.sendReviewApprovedEmail(review);
+
+            } else {
+                review.setStatus(ReviewStatus.REJECTED);
+            }
+            reviewRepository.save(review);
+
+        } catch (ObjectOptimisticLockingFailureException e) {
+            loggerLog.debug("Optimistic lock exception");
         }
-        reviewRepository.save(review);
     }
 }
 

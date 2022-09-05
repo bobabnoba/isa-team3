@@ -2,6 +2,7 @@ package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.enumeration.ComplaintStatus;
 import com.ftn.fishingbooker.exception.EntityNotFoundException;
+import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.ComplaintRepository;
 import com.ftn.fishingbooker.service.*;
@@ -80,6 +81,11 @@ public class ComplaintServiceImpl implements ComplaintService {
             Complaint complaint = complaintRepository.findById(id).orElseThrow(
                     () -> new EntityNotFoundException("Complaint not found")
             );
+
+            if (complaint.getAdminResponse() != null) {
+                throw new ResourceConflictException("Complaint already processed!");
+            }
+
             complaint.setAdminResponse(response);
             complaint.setStatus(ComplaintStatus.ANSWERED);
             complaintRepository.save(complaint);

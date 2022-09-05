@@ -1,6 +1,7 @@
 package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.exception.EntityNotFoundException;
+import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.DeleteAccountRequest;
 import com.ftn.fishingbooker.repository.DeleteAccountRepository;
 import com.ftn.fishingbooker.service.DeleteAccountService;
@@ -46,21 +47,25 @@ public class DeleteAccountServiceImpl implements DeleteAccountService {
     public void processRequest(Long id, DeleteAccountRequest request) {
 
         try {
-           DeleteAccountRequest found = deleteAccountRepository.findById(id).orElseThrow(
-                   () -> new EntityNotFoundException("Delete Account Request not found")
-           );
+            DeleteAccountRequest found = deleteAccountRepository.findById(id).orElseThrow(
+                    () -> new EntityNotFoundException("Delete Account Request not found")
+            );
 
-           found.setApproved(request.isApproved());
-           found.setAdminResponse(request.getAdminResponse());
+            if (found.getAdminResponse() != null) {
+               throw new ResourceConflictException("Delete Account Request already processed!");
+            }
 
-           if (found.isApproved()){
-               userService.delete(found.getEmail());
-           }
-           deleteAccountRepository.save(found);
-           emailService.sendDeleteAccountResponseEmail(found);
+            found.setApproved(request.isApproved());
+            found.setAdminResponse(request.getAdminResponse());
 
-        } catch(ObjectOptimisticLockingFailureException e){
-           loggerLog.debug("Optimistic lock exception");
-       }
+            if (found.isApproved()) {
+                userService.delete(found.getEmail());
+            }
+            deleteAccountRepository.save(found);
+            emailService.sendDeleteAccountResponseEmail(found);
+
+        } catch (ObjectOptimisticLockingFailureException e) {
+            loggerLog.debug("Optimistic lock exception");
+        }
     }
 }

@@ -38,8 +38,10 @@ public class DeleteAccountController {
     }
 
     @PostMapping("/process-request/{id}")
-    public ResponseEntity<Void> processDeletionRequest(@PathVariable Long id, @RequestBody DeleteAccountResponse request) {
-        deleteAccountService.processRequest(id, DeleteAccountRequestMapper.mapToEntityFromResponse(request));
+    public ResponseEntity<Void> processDeletionRequest
+            (@PathVariable Long id, @RequestBody DeleteAccountResponse request) {
+        deleteAccountService.processRequest(id,
+                DeleteAccountRequestMapper.mapToEntityFromResponse(request));
         return ResponseEntity.ok().build();
     }
 }
