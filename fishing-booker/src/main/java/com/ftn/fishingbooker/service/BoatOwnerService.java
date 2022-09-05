@@ -18,11 +18,9 @@ public interface BoatOwnerService {
 
     void updateAvailability(Date reservationStartDate, Date reservationEndDate, String ownerEmail);
 
-//    Collection<ReservationInfo> getUpcomingReservationsForBoatOwner(String email);
-//
-//    Collection<Reservation> getPastReservationsForBoatOwner(String email);
-//
-//    Collection<Reservation> getCurrentReservationsForBoatOwner(String email);
-
     BoatOwner getByEmail(String boatOwnerEmail);
+
+    Collection<BoatOwnerAvailability> addAvailabilityPeriod(BoatOwnerAvailability mapToBoatOwnerAvailabilityEntity, String email);
+
+    Boolean checkIfReservationOverlapsAvailability(BoatOwnerAvailability mapToBoatOwnerAvailabilityEntity, String email);
 }
