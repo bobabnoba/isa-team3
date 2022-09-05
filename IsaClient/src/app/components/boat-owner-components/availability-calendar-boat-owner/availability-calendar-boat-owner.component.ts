@@ -170,7 +170,7 @@ export class AvailabilityCalendarBoatOwnerComponent implements OnInit {
       ...this.events,
       {
         title: 'Booked from ' + this._datePipe.transform(new Date(resInfo.startDate), 'MMM d, y, h:mm') +
-         ' to ' + this._datePipe.transform(new Date(resInfo.endDate), 'MMM d, y, h:mm') + ' on boat ' + resInfo.boatName,
+         ' to ' + this._datePipe.transform(new Date(resInfo.endDate), 'MMM d, y, h:mm') ,
         start: (new Date(resInfo.startDate)),
         end: (new Date(resInfo.endDate)),
         color: colors.purple,
