@@ -189,6 +189,12 @@ public class BoatController {
         return ResponseEntity.ok(boatService.getNoOfIncomingReservations(id) > 0);
     }
 
+    @PostMapping("/check-if-res-overlaps-avail")
+    public ResponseEntity<Boolean> checkIfReservationOverlapsAvailability(@RequestBody BoatAvailabilityRequestDto availability) {
+        return ok(boatService.checkIfReservationOverlapsAvailability(BoatMapper.mapToBoatAvailabilityEntity(availability), availability.boatId));
+
+    }
+
 
 
 }

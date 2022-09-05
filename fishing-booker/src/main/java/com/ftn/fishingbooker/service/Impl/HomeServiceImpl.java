@@ -448,5 +448,17 @@ public class HomeServiceImpl implements HomeService {
         return reservationService.getNoOfIncomingReservationsForVacationHome(id);
     }
 
+    @Override
+    public Boolean checkIfReservationOverlapsAvailability(VacationHomeAvailability newAvailability, Long homeId) {
+        VacationHome home = vacationHomeRepository.findById(homeId).orElseThrow(() -> new ResourceConflictException("Home not found"));
+        //TODO:PROVERITI DA LI IMA REZ U TOM PERIODU
+        Collection<Reservation> homeReservations = reservationService.getReservationForVacationHome(homeId);
+        var foundOverlaps = homeReservations.stream().filter(reservation -> dateService.reservationOverlapsWithAvailability(reservation.getStartDate(), reservation.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate())).collect(Collectors.toSet());
+        if(foundOverlaps.size() > 0){
+            return true;
+        }
+        return false;
+    }
+
 
 }

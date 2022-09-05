@@ -85,4 +85,8 @@ export class HomeService {
 
   }
 
+  checkIfReservationOverlapsAvailability(body : any ) : Observable<any> {
+    return this._http.post(`${this.baseURL}/vacation/homes/check-if-res-overlaps-avail`, body);
+  }
+
 }

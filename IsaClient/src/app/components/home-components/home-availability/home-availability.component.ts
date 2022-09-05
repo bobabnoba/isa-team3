@@ -16,6 +16,7 @@ export class HomeAvailabilityComponent implements OnInit {
   
   aFormGroup!: FormGroup;
   newAv! : any;
+  todayDate:Date = new Date();
   constructor(private _formBuilder: FormBuilder, private _homeService : HomeService,
                private _snackBar : MatSnackBar, private _router : Router) {
                 this.home = {} as VacationHome;
@@ -39,6 +40,32 @@ export class HomeAvailabilityComponent implements OnInit {
 
     const observer = {
       next: (data : any) => { 
+        if(data == false){
+          this.addAvailability();
+        }else{
+          this._snackBar.open('Reservation exists for choosen period.', '',
+        { duration: 3000, panelClass: ['snack-bar'] }
+        );
+        }
+       },
+      error: (err : any) => { 
+        this._snackBar.open('Error.', '',
+        { duration: 3000, panelClass: ['snack-bar'] }
+        ); },
+      complete: () => {  }
+    };
+
+    this._homeService.checkIfReservationOverlapsAvailability( {
+      startDate : this.aFormGroup.value.startDate,
+      endDate : this.aFormGroup.value.endDate,
+      homeId : this.home.id
+    }).subscribe( observer );
+
+  }
+
+  addAvailability(){
+    const observer = {
+      next: (data : any) => { 
         this.newAv = data;
         this._snackBar.open('New availability period successfully added.', '',
         { duration: 3000, panelClass: ['snack-bar'] });
@@ -56,5 +83,6 @@ export class HomeAvailabilityComponent implements OnInit {
       homeId : this.home.id
     }).subscribe( observer );
   }
+  }
 
-}
+

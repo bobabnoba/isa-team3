@@ -17,6 +17,7 @@ export class BoatAvailabilityComponent implements OnInit {
   
   aFormGroup!: FormGroup;
   newAv! : any;
+  todayDate:Date = new Date();
   constructor(private _formBuilder: FormBuilder, private _boatService : BoatService,
                private _snackBar : MatSnackBar, private _router : Router) {
                 this.boat = {} as Boat;
@@ -37,7 +38,34 @@ export class BoatAvailabilityComponent implements OnInit {
   }
 
   addNew(){
+    
+    const observer = {
+      next: (data : any) => { 
+        if(data == false){
+          this.addAvailability();
+        }else{
+          this._snackBar.open('Reservation exists for choosen period.', '',
+        { duration: 3000, panelClass: ['snack-bar'] }
+        );
+        }
+       },
+      error: (err : any) => { 
+        this._snackBar.open('Error.', '',
+        { duration: 3000, panelClass: ['snack-bar'] }
+        ); },
+      complete: () => {  }
+    };
 
+    this._boatService.checkIfReservationOverlapsAvailability( {
+      startDate : this.aFormGroup.value.startDate,
+      endDate : this.aFormGroup.value.endDate,
+      boatId : this.boat.id
+    }).subscribe( observer );
+    
+    
+  }
+ 
+  addAvailability(){
     const observer = {
       next: (data : any) => { 
         this.newAv = data;
@@ -57,6 +85,5 @@ export class BoatAvailabilityComponent implements OnInit {
       boatId : this.boat.id
     }).subscribe( observer );
   }
- 
 
 }
