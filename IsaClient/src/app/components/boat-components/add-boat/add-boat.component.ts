@@ -184,7 +184,7 @@ export class AddBoatComponent implements OnInit {
     this.newABoat.description = this.info.value.description;
     this.newABoat.pricePerDay = this.info.value.pricePerDay;
     this.newABoat.information = this.info.value.information;
-    this.newABoat.cancelingPercentage = this.info.value.cancellationPercentage;
+    this.newABoat.cancelingPercentage = this.info.value.cancelingPercentage;
     this.newABoat.guestLimit = this.info.value.guestsLimit;
     this.newABoat.codeOfConduct = this.rules;
     this.newABoat.ownerEmail = this._storageService.getEmail();
