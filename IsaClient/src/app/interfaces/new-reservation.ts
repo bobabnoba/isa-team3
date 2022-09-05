@@ -11,5 +11,5 @@ export interface IReservation {
     duration: number,
     cancelingPercentage : number,
     ownerCaptain: boolean,
-    type : ReservationType;
+    type : ReservationType
 }

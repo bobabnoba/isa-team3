@@ -2,12 +2,9 @@ package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.AdminComplaintDto;
 import com.ftn.fishingbooker.dto.ComplaintDto;
-import com.ftn.fishingbooker.dto.ReviewDto;
 import com.ftn.fishingbooker.enumeration.ComplaintStatus;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.mapper.ComplaintMapper;
-import com.ftn.fishingbooker.mapper.ReviewMapper;
-import com.ftn.fishingbooker.model.ClientReview;
 import com.ftn.fishingbooker.model.Complaint;
 import com.ftn.fishingbooker.service.ComplaintService;
 import lombok.RequiredArgsConstructor;

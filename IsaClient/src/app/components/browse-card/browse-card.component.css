@@ -10,4 +10,10 @@
     color: rgb(241, 207, 11);
     font-size: 20px;
   }
+  .img1 {
+    width: 400px;
+    height: 250px;
+    object-fit: cover;
+
+  }
   

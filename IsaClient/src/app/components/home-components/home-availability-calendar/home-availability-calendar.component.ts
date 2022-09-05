@@ -24,11 +24,11 @@ const colors: Record<string, EventColor> = {
     primary: '#e3bc08',
     secondary: '#FDF1BA',
   },
-  green : {
+  green: {
     primary: '#33cc33',
     secondary: '#adebad',
   },
-  magenta : {
+  magenta: {
     primary: '#990099',
     secondary: '#ffb3ff'
   },
@@ -60,10 +60,10 @@ const colors: Record<string, EventColor> = {
 export class HomeAvailabilityCalendarComponent implements OnInit {
 
   @Input()
-  newAv! : any;
+  newAv!: any;
 
   @Input()
-  home! : VacationHome;
+  home!: VacationHome;
 
   view: CalendarView = CalendarView.Month;
 
@@ -78,44 +78,50 @@ export class HomeAvailabilityCalendarComponent implements OnInit {
 
   activeDayIsOpen: boolean = false;
 
-  constructor(private _homeService : HomeService, private _datePipe : DatePipe,
-     private _storageService: StorageService, private _router : Router) {
+  constructor(private _homeService: HomeService, private _datePipe: DatePipe,
+    private _storageService: StorageService, private _router: Router) {
     this.newAv = {};
     this.home = {} as VacationHome;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     // now aw is changed 
-    if(this.newAv !== undefined){
-      if( changes.newAv.currentValue){
+    if (this.newAv !== undefined) {
+      if (changes.newAv.currentValue) {
         this.events = [... this.events.filter(e => e.title != 'Available')]
-        changes.newAv.currentValue.forEach((e : any) => {
+        changes.newAv.currentValue.forEach((e: any) => {
           this.addEvent(e.startDate, e.endDate)
         })
       }
-      } 
+    }
   }
 
   ngOnInit(): void {
-      this._homeService.getById(this._router.url.substring(26)).subscribe(
-        (data) => {
-          data.availability.forEach((e : any) => {
-            this.addEvent(e.startDate, e.endDate)}
-          )
-          data.specialOffers.forEach((e : any) => {
-            this.addSpecialOfferEvent(e)})
-        }     
-      );
-
-      this._homeService.getHomeReservations(this._router.url.substring(26)).subscribe(
-        data => {
-          data.forEach((e : any) => {
-            this.addReservationEvent(e)}
-          )
+    this._homeService.getById(this._router.url.substring(26)).subscribe(
+      (data) => {
+        data.availability.forEach((e: any) => {
+          this.addEvent(e.startDate, e.endDate)
         }
-      )
+        )
+        data.specialOffers.forEach((e: SpecialOffer) => {
+          if (e.isUsed == false) {
+            this.addSpecialOfferEvent(e)
+          }
+        })
+
+      }
+    );
+
+    this._homeService.getHomeReservations(this._router.url.substring(26)).subscribe(
+      data => {
+        data.forEach((e: any) => {
+          this.addReservationEvent(e)
+        }
+        )
+      }
+    )
   }
-  
+
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -130,7 +136,7 @@ export class HomeAvailabilityCalendarComponent implements OnInit {
     }
   }
 
-  addEvent(sd : any, ed : any): void {
+  addEvent(sd: any, ed: any): void {
     this.events = [
       ...this.events,
       {
@@ -144,13 +150,13 @@ export class HomeAvailabilityCalendarComponent implements OnInit {
     this.refresh.next();
   }
 
-  addSpecialOfferEvent(offer : SpecialOffer){
+  addSpecialOfferEvent(offer: SpecialOffer) {
     this.events = [
       ...this.events,
       {
-        title: 'Special offer' +   
-        '  from ' + this._datePipe.transform(new Date(offer.reservationStartDate), 'MMM d, y, h:mm') +
-        ' to ' + this._datePipe.transform(new Date(offer.reservationEndDate), 'MMM d, y, h:mm'),
+        title: 'Special offer' +
+          '  from ' + this._datePipe.transform(new Date(offer.reservationStartDate), 'MMM d, y, h:mm') +
+          ' to ' + this._datePipe.transform(new Date(offer.reservationEndDate), 'MMM d, y, h:mm'),
         start: (new Date(offer.reservationStartDate)),
         end: (new Date(offer.reservationEndDate)),
         color: colors.green,
@@ -160,13 +166,13 @@ export class HomeAvailabilityCalendarComponent implements OnInit {
     this.refresh.next();
   }
 
-  addReservationEvent(resInfo : Reservation): void {
+  addReservationEvent(resInfo: Reservation): void {
     console.log(resInfo)
     this.events = [
       ...this.events,
       {
         title: 'Booked  from ' + this._datePipe.transform(new Date(resInfo.startDate), 'MMM d, y, h:mm') +
-         ' to ' + this._datePipe.transform(new Date(resInfo.endDate), 'MMM d, y, h:mm') ,
+          ' to ' + this._datePipe.transform(new Date(resInfo.endDate), 'MMM d, y, h:mm'),
         start: (new Date(resInfo.startDate)),
         end: (new Date(resInfo.endDate)),
         color: colors.purple,

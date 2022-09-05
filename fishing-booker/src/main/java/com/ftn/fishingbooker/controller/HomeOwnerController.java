@@ -4,10 +4,11 @@ import com.ftn.fishingbooker.dao.*;
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.mapper.*;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.ftn.fishingbooker.service.HomeOwnerService;
+import com.ftn.fishingbooker.service.ReservationService;
 
 import javax.mail.MessagingException;
 import java.util.*;

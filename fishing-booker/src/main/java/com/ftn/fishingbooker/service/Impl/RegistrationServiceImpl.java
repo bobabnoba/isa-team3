@@ -1,10 +1,10 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.service.RegistrationService;
 import com.ftn.fishingbooker.service.EmailService;
+import com.ftn.fishingbooker.service.RegistrationService;
+import com.ftn.fishingbooker.service.UserService;
 import com.ftn.fishingbooker.model.ConfirmationToken;
 import com.ftn.fishingbooker.security.util.TokenUtils;
-import com.ftn.fishingbooker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

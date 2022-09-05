@@ -31,11 +31,22 @@ export class RentalService {
   }
 
 
-  rentAdventureSpecialOffer(newReservation: IReservation, adventureId: number, offerId: number, email: string) {
-    return this._http.post('http://localhost:8090/adventures/rent/special/offer/' + adventureId + "/" + offerId
+  rentAdventureSpecialOffer(newReservation: IReservation, rentalId: number, offerId: number, email: string) {
+    return this._http.post('http://localhost:8090/special-offers/rent/' + 'adventure/' + rentalId + "/" + offerId
       + '/' + email,
       newReservation);
   }
+  rentBoatSpecialOffer(newReservation: IReservation, rentalId: number, offerId: number, email: string) {
+    return this._http.post('http://localhost:8090/special-offers/rent/' + 'boat/' + rentalId + "/" + offerId
+      + '/' + email,
+      newReservation);
+  }
+  rentHomeSpecialOffer(newReservation: IReservation, rentalId: number, offerId: number, email: string) {
+    return this._http.post('http://localhost:8090/special-offers/rent/' + 'home/' + rentalId + "/" + offerId
+      + '/' + email,
+      newReservation);
+  }
+  
 
   getAllRentals() {
     return this._http.get<any>(

@@ -1,13 +1,15 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.dao.*;
 import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.*;
-import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.*;
 import org.springframework.stereotype.*;
+import com.ftn.fishingbooker.service.BoatOwnerAvailabilityService;
+import com.ftn.fishingbooker.service.BoatOwnerService;
+import com.ftn.fishingbooker.service.UserRankService;
+import com.ftn.fishingbooker.service.UserService;
 
 import javax.transaction.*;
 import java.util.*;

@@ -4,9 +4,7 @@
     align-items: center;
     overflow: hidden;
     max-width: 100%;
-    
     ">
-
         <figure class="media-left" style="
             max-width: 30%;
             display: flex;
@@ -14,9 +12,8 @@
             align-items: center;
             overflow: hidden;
            ">
-
-            <!-- <img style="min-height: 100%; min-width:100%" [src]="image" /> -->
-            <img style="min-height: 100%; min-width:100%" src="{{baseUrl}}{{imageUrl}}"
+            <img *ngIf="!imageUrls" src='../../../assets/images/instructor-bgs.jpg' alt="Image not available">
+            <img *ngIf="imageUrls" style="min-height: 100%; min-width:100%" src="{{baseUrl}}{{imageUrls[0]}}"
                 onerror="this.onerror;this.src='../../../../assets/images/no-img.png'" alt="Image not available">
         </figure>
 
@@ -58,12 +55,12 @@
             </div>
         </div>
         <div style="align-self: flex-start;" *ngIf="client">
-            <aside *ngIf="displayDiscount"><i
-                    class="fa-solid fa-tags"></i>&nbsp;{{client.rank.percentage}} % OFF! </aside>
+            <aside *ngIf="displayDiscount"><i class="fa-solid fa-tags"></i>&nbsp;{{client.rank.percentage}} % OFF!
+            </aside>
         </div>
         <div style="align-self: flex-start;" *ngIf="client">
-            <aside *ngIf="showTotalPrice"><i
-                    class="fas fa-dollar-sign"></i>&nbsp; Price : {{calculatedPrice}} $ </aside>
+            <aside *ngIf="showTotalPrice"><i class="fas fa-dollar-sign"></i>&nbsp; Price : {{calculatedPrice}} $
+            </aside>
         </div>
     </article>
     <div class="card shadow mb-4" *ngIf="utilities.length!=0">
@@ -72,6 +69,10 @@
             aria-expanded="true" aria-controls="collapseCardExample">
             <h6 class="m-0 font-weight-bold">Utilites list</h6>
         </a>
+        <p style="font-style:italic; margin:10px;">
+            <mat-checkbox *ngIf="canBeCaptain" [formControl]="isCaptain"> The owner provides the services of a captain</mat-checkbox>
+
+        </p>
         <!-- Card Content - Collapse -->
         <div class="collapse show" id="collapseCardExample" style="margin: 10px; margin-right: 50px;">
             <mat-checkbox *ngFor="let utility of utilities " class="example-margin" [value]="utility.name"

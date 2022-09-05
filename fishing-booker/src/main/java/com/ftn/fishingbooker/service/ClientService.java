@@ -22,7 +22,7 @@ public interface ClientService {
 
     List<Reservation> getUpcomingReservations(String email);
 
-    boolean cancelUpcomingReservation(Long reservationId, String userEmail);
+    Reservation cancelUpcomingReservation(Long reservationId, String userEmail);
 
     List<Reservation> getPastReservations(String userEmail, ReservationType vacationHome);
 

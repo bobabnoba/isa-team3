@@ -7,9 +7,7 @@ import com.ftn.fishingbooker.mapper.BoatMapper;
 import com.ftn.fishingbooker.mapper.RentalMapper;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.*;
-import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -17,11 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.ftn.fishingbooker.service.BoatService;
+import com.ftn.fishingbooker.service.ClientService;
+import com.ftn.fishingbooker.service.EmailService;
+import com.ftn.fishingbooker.service.ReservationService;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.atomic.*;
-import java.util.stream.*;
 
 import static org.springframework.http.ResponseEntity.ok;
 

@@ -8,17 +8,11 @@ import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 
-import java.sql.*;
 import java.util.*;
-import java.util.Date;
-import java.util.concurrent.atomic.*;
-import java.util.stream.*;
-
-import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/reservations")
@@ -30,9 +24,11 @@ public class ReservationController {
     private final AdventureService adventureService;
     private final HomeService homeService;
     private final BoatService boatService;
-    private final BoatOwnerService boatOwnerService;
-    private final HomeOwnerService homeOwnerService;
     private final InstructorService instructorService;
+    private final BoatOwnerService boatOwnerService;
+
+    private final HomeOwnerService homeOwnerService;
+
 
 
     @GetMapping("{id}")
@@ -73,12 +69,53 @@ public class ReservationController {
 
     @PostMapping("/cancel/{userEmail}")
     public ResponseEntity<Collection<ReservationDto>> CancelUpcomingReservation(@PathVariable String userEmail, @RequestBody Long reservationId) {
-        boolean isCanceled = clientService.cancelUpcomingReservation(reservationId, userEmail);
+        Reservation reservation = clientService.cancelUpcomingReservation(reservationId, userEmail);
         List<Reservation> reservationList = clientService.getUpcomingReservations(userEmail);
-        if (isCanceled == true) {
-            return ResponseEntity.ok(ReservationMapper.map(reservationList));
+
+        if (reservation == null) {
+            return new ResponseEntity<>(ReservationMapper.map(reservationList), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(ReservationMapper.map(reservationList), HttpStatus.CONFLICT);
+        switch (reservation.getType()) {
+            case ADVENTURE:
+                Adventure adventure = adventureService.getAdventureForReservation(reservationId);
+                instructorService.addAvailabilityPeriod(new InstructorAvailability(reservation.getStartDate(), reservation.getEndDate()), adventure.getInstructor().getEmail());
+                break;
+            case VACATION_HOME:
+                VacationHome vacationHome = homeService.getVacationHomeForReservation(reservationId);
+                homeService.addAvailabilityPeriod(new VacationHomeAvailability(reservation.getStartDate(), reservation.getEndDate()), vacationHome.getId());
+                break;
+            case BOAT:
+                Boat boat = boatService.getBoatForReservation(reservationId);
+                boatService.addAvailabilityPeriod(new BoatAvailability(reservation.getStartDate(), reservation.getEndDate()), boat.getId());
+                //boatOwnerService.add(reservation.getStartDate(), reservation.getEndDate(), boat.getBoatOwner().getEmail());
+
+                break;
+            default:
+                break;
+        }
+
+        return ResponseEntity.ok(ReservationMapper.map(reservationList));
+    }
+        switch (reservation.getType()) {
+            case ADVENTURE:
+                Adventure adventure = adventureService.getAdventureForReservation(reservationId);
+                instructorService.addAvailabilityPeriod(new InstructorAvailability(reservation.getStartDate(), reservation.getEndDate()), adventure.getInstructor().getEmail());
+                break;
+            case VACATION_HOME:
+                VacationHome vacationHome = homeService.getVacationHomeForReservation(reservationId);
+                homeService.addAvailabilityPeriod(new VacationHomeAvailability(reservation.getStartDate(), reservation.getEndDate()), vacationHome.getId());
+                break;
+            case BOAT:
+                Boat boat = boatService.getBoatForReservation(reservationId);
+                boatService.addAvailabilityPeriod(new BoatAvailability(reservation.getStartDate(), reservation.getEndDate()), boat.getId());
+                //boatOwnerService.add(reservation.getStartDate(), reservation.getEndDate(), boat.getBoatOwner().getEmail());
+
+                break;
+            default:
+                break;
+        }
+
+        return ResponseEntity.ok(ReservationMapper.map(reservationList));
     }
 
     @GetMapping("/adventure/{ReservationId}")
@@ -95,7 +132,6 @@ public class ReservationController {
     public BoatDto GetBoatForReservation(@PathVariable Long ReservationId) {
         return BoatMapper.mapToDto(boatService.getBoatForReservation(ReservationId));
     }
-
 
 
     @GetMapping("check-if-ongoing/{id}")

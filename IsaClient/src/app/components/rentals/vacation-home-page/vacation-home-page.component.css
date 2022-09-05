@@ -114,3 +114,21 @@ ngb-rating {
   width: 50%;
   align-self: center;
 }
+
+
+.displaySection {
+  display: flex;
+  max-height: 33%;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.sectionOverflow {
+  overflow-y: scroll;
+  width: 100%;
+  max-height: 900px;
+}
+
+.sectionOverflow::-webkit-scrollbar {
+  display: none;
+}

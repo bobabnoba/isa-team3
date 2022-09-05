@@ -10,6 +10,7 @@ import com.ftn.fishingbooker.util.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.*;
@@ -77,7 +78,6 @@ public class HomeServiceImpl implements HomeService {
         vacationHomeRepository.save(home);
         homeOwnerService.updatePoints(home.getHomeOwner(), reservation.getPrice());
         earningsService.saveEarnings(reservation, home.getHomeOwner().getEmail(), home.getHomeOwner().getRank());
-
     }
 
     @Override

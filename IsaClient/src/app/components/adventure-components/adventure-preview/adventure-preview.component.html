@@ -1,36 +1,50 @@
-<mat-card style="width: 100%; margin-bottom: 10px;" >
-    
+<mat-card style="width: 100%; margin-bottom: 10px;">
+
     <div class="row">
 
-        <div class="col-md-12 mhe" >
+        <div class="col-md-12 mhe">
             <div class="row p-2 main-row">
                 <div class="col-6 col-md-4 mhe" (click)="openDetailed()">
-                    <img src="{{baseUrl}}{{adventure.images[0]}}" class="img" onerror="this.onerror;this.src='../../../../assets/images/no-img.png'" alt="Image not available">                    
+                    <img src="{{baseUrl}}{{adventure.images[0]}}" class="img"
+                        onerror="this.onerror;this.src='../../../../assets/images/no-img.png'"
+                        alt="Image not available">
                 </div>
                 <div class="col-12 col-md-8 mhe">
-                    
-                    <div class = "row " style="height: 25%;">
+
+                    <div class="row " style="height: 25%;">
                         <div class="col-md-8 d-flex" (click)="openDetailed()">
                             <h2 class="title"> {{ adventure.title }}</h2>
                         </div>
-                        <div  class="col-md-4 d-flex justify-content-end pt-2">
+                        <div class="col-md-4 d-flex justify-content-end pt-2">
                             <i *ngIf="instructor" class="fa-solid fa-pencil fa-lg icons" (click)="edit()"></i>
                             <i *ngIf="instructor || admin" class="fa-solid fa-trash fa-lg icons" (click)="delete()"></i>
                         </div>
                     </div>
-                  
-                  <div class="row"  style="height: 60%;" (click)="openDetailed()">
-                    <div class="col-lg-12 col-md-12 description"> {{ adventure.description }} <br> 
-                        Max number of participants: {{ adventure.maxNumberOfParticipants}} <br>
-                        Duration: {{ adventure.durationInHours}} hours 
+
+                    <div class="row" style="height: 60%;" (click)="openDetailed()">
+                        <div class="col-lg-12 col-md-12 description"> {{ adventure.description }} <br>
+                            Max number of participants: {{ adventure.maxNumberOfParticipants}} <br>
+                            Duration: {{ adventure.durationInHours}} hours <br>
+                            <label style="margin-bottom:5px;">Average rating : </label>
+                            <ngb-rating [max]="5" [(rate)]="adventure.rating" [readonly]="true"
+                                style="margin-left: 5px;">
+                            </ngb-rating>
+                        </div>
+
                     </div>
-                  </div>
-                  <div class="row align-items-end" style="height: 15%;" >
-                    <div class="col-md-8">
-                        <h5 class="m-0"> {{ adventure.address.street }}, {{ adventure.address.city }}, {{ adventure.address.country }} {{adventure.address.zipCode }}</h5>
+                    <div>
+
                     </div>
-                    <div class="col-md-4"> <h5 class="people taller m-0" > <i class="fa-solid fa-dollar-sign fa-md"></i>{{adventure.pricePerDay }} per person</h5> </div>
-                  </div>
+                    <div class="row align-items-end" style="height: 15%;">
+                        <div class="col-md-8">
+                            <h5 class="m-0"> {{ adventure.address.street }}, {{ adventure.address.city }}, {{
+                                adventure.address.country }} {{adventure.address.zipCode }}</h5>
+                        </div>
+                        <div class="col-md-4">
+                            <h5 class="people taller m-0"> <i
+                                    class="fa-solid fa-dollar-sign fa-md"></i>{{adventure.pricePerDay }} per person</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

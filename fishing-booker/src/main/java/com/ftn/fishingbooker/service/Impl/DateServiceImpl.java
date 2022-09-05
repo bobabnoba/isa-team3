@@ -16,7 +16,9 @@ import java.util.concurrent.TimeUnit;
 public class DateServiceImpl implements DateService {
     @Override
     public boolean doPeriodsOverlap(Date startDate1, Date endDate1, Date startDate2, Date endDate2) {
-        return !(endDate1.before(startDate2) || endDate2.before(startDate1));
+        return ((startDate1.before(startDate2) || startDate1.getTime() == startDate2.getTime())
+                && startDate1.before(endDate2) && (endDate1.after(endDate2) || endDate1.getTime() == endDate2.getTime())
+                && endDate1.after(startDate2));
 
     }
 

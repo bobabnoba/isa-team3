@@ -7,16 +7,17 @@ export enum ReservationType {
 }
 
 export interface SpecialOffer {
-    id : number;
-    discount : number;
-    price : number;
-    activeFrom : string;
-    activeTo : string;
-    reservationStartDate : string;
-    reservationEndDate : string;
-    guests : number;
-    type : ReservationType;
-    cancelingPercentage : number;
-    utilities : Utility[];
-    isCaptain : boolean;
+    id: number;
+    discount: number;
+    price: number;
+    activeFrom: string;
+    activeTo: string;
+    reservationStartDate: string;
+    reservationEndDate: string;
+    guests: number;
+    type: ReservationType;
+    cancelingPercentage: number;
+    utilities: Utility[];
+    isCaptain: boolean;
+    isUsed: boolean;
 }

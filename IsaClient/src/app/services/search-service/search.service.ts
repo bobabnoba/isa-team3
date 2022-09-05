@@ -3,7 +3,6 @@ import { SearchFilter } from 'src/app/filters/search-filter';
 import { IAddress } from 'src/app/interfaces/address';
 import { IProfileView } from 'src/app/interfaces/rental-view';
 import { InstructorBrowse } from '../../interfaces/instructor-browse';
-import { IUtility, IVacationHouseProfile } from '../../interfaces/vacation-house-profile';
 
 
 @Injectable({
@@ -107,13 +106,11 @@ export class SearchService {
           //Match search box-a
           this.matchName(item.name, filter.text) ||
           this.matchAddress(item.address, filter.text) ||
+          this.matchName(item.owner.firstName, filter.text) ||
           this.matchName(item.pricePerDay.toString(), filter.text)
 
         ) {
           retVal.push(item)
-        } else if (item.owner != null) {
-          if (this.matchName(item.owner.firstName, filter.text))
-            retVal.push(item)
         }
       }
     }
@@ -172,7 +169,9 @@ export class SearchService {
   }
 
   matchName(string1: string, string2: string) {
-
+    if (string1 == null || string2 == null) {
+      return false
+    }
     string1 = string1.toLowerCase().replace(/\s/g, '');
     string2 = string2.toLowerCase().replace(/\s/g, '');
     return string1.includes(string2) || string2 == '';

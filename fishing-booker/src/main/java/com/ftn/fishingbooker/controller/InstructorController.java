@@ -6,12 +6,15 @@ import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.mapper.*;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.dao.ReservationInfo;
-import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.ftn.fishingbooker.service.InstructorService;
+import com.ftn.fishingbooker.service.ReservationService;
+import com.ftn.fishingbooker.service.SpecialOfferService;
+import com.ftn.fishingbooker.service.UserService;
 
 import javax.mail.MessagingException;
 import java.util.Collection;
