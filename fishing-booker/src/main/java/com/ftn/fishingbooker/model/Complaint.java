@@ -20,6 +20,10 @@ public class Complaint {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version
+    @Column(nullable = false)
+    private Integer version;
+
     private String complaint;
 
     @Column(unique = true)

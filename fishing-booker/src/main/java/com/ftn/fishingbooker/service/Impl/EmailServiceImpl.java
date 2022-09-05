@@ -5,6 +5,7 @@ import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.model.ClientReview;
 import com.ftn.fishingbooker.model.Complaint;
+import com.ftn.fishingbooker.model.DeleteAccountRequest;
 import com.ftn.fishingbooker.service.EmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -203,13 +204,13 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public String createDeleteAccountResponseEmail(String message, boolean isApproved) {
+    public void sendDeleteAccountResponseEmail(DeleteAccountRequest request) {
 
-        String response = isApproved ? "Your account deletion request has been approved." : "Your account deletion request has been denied.";
+        String response = request.isApproved() ? "Your account deletion request has been approved." : "Your account deletion request has been denied.";
 
-        String temp = "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" + response + " </p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  Here are our reasons: \n" + message + " \n </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>Kind regards, Easy&Peasy Booker team.</p>";
+        String temp = "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" + response + " </p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  Here are our reasons: \n" + request.getAdminResponse() + " \n </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>Kind regards, Easy&Peasy Booker team.</p>";
 
-        String retVal = "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
+        String content = "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
                 "\n" +
@@ -278,7 +279,7 @@ public class EmailServiceImpl implements EmailService {
                 "\n" +
                 "</div></div>";
 
-        return retVal;
+        sendEmail(request.getEmail(), "Delete account response", content);
     }
 
     @Override

@@ -48,12 +48,17 @@ export class AdminDeleteRequestsComponent implements OnInit, AfterViewInit  {
       next: (res) => {
         request.adminResponse = res.data;
         request.approved = true;
-        this._deleteService.processRequest(request).subscribe(
+        this._deleteService.processRequest(request.id, request).subscribe(
           () => {
             this.updateTable(request);
             this._snackBar.open('Account deletion request accepted.', '',
               {duration : 3000, panelClass: ['snack-bar']}
             );
+          }, 
+          () => {
+            this._snackBar.open('This request is currently being processed by another admin.', '',
+            {duration : 3000, panelClass: ['snack-bar']}
+        );
           }
         );
       }
@@ -71,10 +76,16 @@ export class AdminDeleteRequestsComponent implements OnInit, AfterViewInit  {
       next: (res) => {
         request.adminResponse = res.data;
         request.approved = false;
-        this._deleteService.processRequest(request).subscribe(
+        this._deleteService.processRequest(request.id, request).subscribe(
           () => {
             this.updateTable(request);
             this._snackBar.open('Account deletion request denied.', '',
+            {duration : 3000, panelClass: ['snack-bar']}
+        );
+          },
+          () => {
+            this.updateTable(request);
+            this._snackBar.open('This request is currently being processed by another admin.', '',
             {duration : 3000, panelClass: ['snack-bar']}
         );
           }

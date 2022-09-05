@@ -18,6 +18,10 @@ public class DeleteAccountRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version
+    @Column(nullable = false)
+    private Integer version;
+
     @Column(nullable = false)
     private String explanation;
 
