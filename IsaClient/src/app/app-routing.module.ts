@@ -226,7 +226,6 @@ const routes: Routes = [
   {
     path: 'adventure',
     component: AdventureProfileComponent,
-    canActivate: [AuthGuardInstructor, AuthGuardAdmin, AuthGuardClient] 
   },
   {
     path: 'add-adventure',
@@ -251,7 +250,6 @@ const routes: Routes = [
   {
     path: 'instructor/adventure/:id',
     component: InstructorServiceComponent,
-    canActivate: [AuthGuardInstructor, AuthGuardAdmin, AuthGuardClient] 
   },
   {
     path: 'instructor/availability',

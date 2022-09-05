@@ -34,21 +34,27 @@ export class ReservationReportsComponent implements OnInit, AfterViewInit {
   
           if(r.type === "AdventureReservationReport"){
             r.type = "ADVENTURE"
+            this._userService.getUserById(r.instructorId).subscribe(
+              user => {
+                r.ownerEmail = user.email;
+              }
+            );
           } else if (r.type === "BoatReservationReport"){
             r.type = "BOAT"
+            this._userService.getUserById(r.boatOwnerId).subscribe(
+              user => {
+                r.ownerEmail = user.email;
+              }
+            );
           } else {
             r.type = "VACATION HOME"
-          }
-
-          ids.push(r.instructorId); ids.push(r.boatOwnerId); ids.push(r.homeOwnerId);
-          let idx = ids.filter(i => i!== null)
-          if(idx.length !== 0) {
-            this._userService.getUserById(idx[0]).subscribe(
+            this._userService.getUserById(r.homeOwnerId).subscribe(
               user => {
                 r.ownerEmail = user.email;
               }
             );
           }
+
         })
         this.dataSource = new MatTableDataSource<Report>(res)
         this.dataSource.paginator = this.paginator;
