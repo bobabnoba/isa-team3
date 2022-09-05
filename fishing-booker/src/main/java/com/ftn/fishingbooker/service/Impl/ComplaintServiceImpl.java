@@ -1,12 +1,15 @@
 package com.ftn.fishingbooker.service.Impl;
 
 import com.ftn.fishingbooker.enumeration.ComplaintStatus;
-import com.ftn.fishingbooker.enumeration.ReviewStatus;
+import com.ftn.fishingbooker.exception.EntityNotFoundException;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.ComplaintRepository;
 import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -24,6 +27,8 @@ public class ComplaintServiceImpl implements ComplaintService {
     private final BoatService boatService;
     private final HomeService homeService;
     private final EmailService emailService;
+    protected final Log loggerLog = LogFactory.getLog(getClass());
+
 
     @Override
     public Boolean checkForComplaint(Long reservationId) {
@@ -71,13 +76,27 @@ public class ComplaintServiceImpl implements ComplaintService {
 
     @Override
     public void addAdminResponse(Long id, String response) {
-        Complaint complaint = complaintRepository.findById(id).orElseThrow(
-                () -> new ResourceConflictException("Complaint not found")
-        );
-        complaint.setAdminResponse(response);
-        complaint.setStatus(ComplaintStatus.ANSWERED);
-        complaintRepository.save(complaint);
-        emailService.sendComplaintResponseClient(complaint);
-        emailService.sendComplaintResponseOwner(complaint);
+
+        try {
+            Complaint complaint = complaintRepository.findById(id).orElseThrow(
+                    () -> new EntityNotFoundException("Complaint not found")
+            );
+
+            if (complaint.getAdminResponse() != null) {
+                throw new ResourceConflictException("Complaint already processed!");
+            }
+
+            complaint.setAdminResponse(response);
+            complaint.setStatus(ComplaintStatus.ANSWERED);
+            complaintRepository.save(complaint);
+
+            emailService.sendComplaintResponseClient(complaint);
+            emailService.sendComplaintResponseOwner(complaint);
+
+        } catch (
+                ObjectOptimisticLockingFailureException e) {
+            loggerLog.debug("Optimistic lock exception");
+        }
+
     }
 }

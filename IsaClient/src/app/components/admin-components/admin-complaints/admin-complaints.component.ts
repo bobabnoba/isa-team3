@@ -57,10 +57,16 @@ export class AdminComplaintsComponent implements OnInit {
             {duration : 3000, panelClass: ['snack-bar']}
         );
           },
-          () => {
+          (err) => {
+            console.log(err)
+            if(err.error.status == 500) {
             this._snackBar.open("Couldn't send email responses. Try again later!", '',
-            {duration : 3000, panelClass: ['snack-bar']}
-        );
+            {duration : 3000, panelClass: ['snack-bar']});
+            } else {
+              this._snackBar.open('This request is currently being processed by another admin.', '',
+              {duration : 3000, panelClass: ['snack-bar']});
+              this.updateTable(complaint);
+            }
           }
         );
       }

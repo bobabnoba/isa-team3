@@ -26,9 +26,6 @@ public class DeleteAccountRequestMapper {
 
     public static DeleteAccountRequest mapToEntityFromResponse(DeleteAccountResponse dto) {
         DeleteAccountRequest request = new DeleteAccountRequest();
-        request.setId(dto.getId());
-        request.setEmail(dto.getEmail());
-        request.setExplanation(dto.getExplanation());
         request.setApproved(dto.isApproved());
         request.setAdminResponse(dto.getAdminResponse());
         return request;

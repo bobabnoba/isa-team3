@@ -4,6 +4,7 @@ import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.ClientReview;
 import com.ftn.fishingbooker.model.Complaint;
+import com.ftn.fishingbooker.model.DeleteAccountRequest;
 
 import javax.mail.MessagingException;
 
@@ -15,7 +16,7 @@ public interface EmailService {
 
     void sendEmail(String to, String subject, String emailContent) throws MessagingException;
 
-    String createDeleteAccountResponseEmail(String message, boolean isApproved);
+    void sendDeleteAccountResponseEmail(DeleteAccountRequest request);
 
     void sendReservationEmail(ReservationDto map, Client client);
 
