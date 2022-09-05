@@ -48,6 +48,8 @@ export class AdvertiserEarningsComponent implements OnInit {
           this.dataSource._updateChangeSubscription();
         })
     }
+    this.labels = [];
+    this.values = [];
     if(dateRangeStart.value != '' && dateRangeEnd.value != ''){
     this._earningsService.getEarningsChartForDateRangeForAdvertiser(
       this._pipe.transform(dateRangeStart.value, 'yyyy-MM-dd')!, 
@@ -73,7 +75,7 @@ export class AdvertiserEarningsComponent implements OnInit {
             const myChart = new Chart(
               'myChart',
               {
-                type: 'line',
+                type: 'bar',
                 data: data,
                 options: {}
               }

@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
+import java.sql.*;
 import java.util.*;
+import java.util.Date;
 import java.util.concurrent.atomic.*;
 import java.util.stream.*;
 
@@ -98,8 +100,17 @@ public class ReservationController {
 
     @GetMapping("check-if-ongoing/{id}")
     public ResponseEntity<ClientDto> checkIfReservationIsOngoing(@PathVariable Long id){
+
+        TimeZone timeZone = TimeZone.getTimeZone("UTC");
+        Calendar cal = Calendar.getInstance(timeZone);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0 , 0 , 0);
+        var t = cal.getTime() ;
+        var now = t.getTime() - 2*3600*1000;
+        var dateNow = new Timestamp(now);
         Reservation reservation = reservationService.getReservationById(id);
-        if(reservation.getStartDate().before(new Date()) && reservation.getEndDate().after(new Date())){
+        dateNow.setNanos(0);
+        if(reservation.getStartDate().before(dateNow) && ( reservation.getEndDate().after(dateNow) || reservation.getEndDate().equals(dateNow))){
             return new ResponseEntity<>(ClientMapper.map(reservation.getClient()), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -137,9 +148,9 @@ public class ReservationController {
         }
         Collection<EarningsChartDto> earningsDtos = new ArrayList<>();
         for (Date d = from; d.before(to); d = DateUtil.addDays(d,1)){
-            Date finalD = new Date(d.getTime() - 1);
+            Date finalD = new Date(d.getTime());
             Collection<Reservation> dtoDay = found.stream().filter(earnings ->
-                earnings.getStartDate().after(finalD) &&
+                    ( earnings.getStartDate().after(finalD) || earnings.getStartDate().getTime() == finalD.getTime()) &&
                         earnings.getStartDate().before(DateUtil.addDays(finalD,1))).collect(Collectors.toSet());
             EarningsChartDto dto = new EarningsChartDto();
             dto.setDate(finalD);
