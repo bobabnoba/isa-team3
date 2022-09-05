@@ -69,6 +69,13 @@ import { AdminComplaintsComponent } from './components/admin-components/admin-co
 import { ReservationChartsComponent } from './components/boat-owner-components/reservation-charts/reservation-charts.component';
 import { HomeReservationChartComponent } from './components/home-owner-components/home-reservation-chart/home-reservation-chart.component';
 import { AdventureReservationChartsComponent } from './components/instructor-components/adventure-reservation-charts/adventure-reservation-charts.component';
+import { ErrorNotFoundComponent } from './pages/error-not-found/error-not-found.component';
+import { ErrorForbiddenComponent } from './pages/error-forbidden/error-forbidden.component';
+import { AuthGuardAdmin } from './AuthGuard/AuthGuardAdmin';
+import { AuthGuardInstructor } from './AuthGuard/AuthGuardInstructor';
+import { AuthGuardHomeOwner } from './AuthGuard/AuthGuardHomeOwner';
+import { AuthGuardBoatOwner } from './AuthGuard/AuthGuardBoatOwner';
+import { AuthGuardClient } from './AuthGuard/AuthGuardClient';
 
 
 const routes: Routes = [
@@ -78,51 +85,63 @@ const routes: Routes = [
   },
   {
     path: 'client/profile',
-    component: ClientProfileComponent
+    component: ClientProfileComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/browse',
-    component: ClientBrowseComponent
+    component: ClientBrowseComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/homes',
-    component: ClientHomesComponent
+    component: ClientHomesComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/boats',
-    component: ClientBoatsComponent
+    component: ClientBoatsComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/instructors',
-    component: ClientInstructorsComponent
+    component: ClientInstructorsComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/homes/reservation',
-    component: HomeReservationsComponent
+    component: HomeReservationsComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/boats/reservation',
-    component: BoatReservationsComponent
+    component: BoatReservationsComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/adventures/reservation',
-    component: AdventureReservationsComponent
+    component: AdventureReservationsComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/reservations',
-    component: ClientReservationsComponent
+    component: ClientReservationsComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/homes/history',
-    component: ReservationHistoryHomesComponent
+    component: ReservationHistoryHomesComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/adventures/history',
-    component: ReservationHistoryAdventuresComponent
+    component: ReservationHistoryAdventuresComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/boats/history',
-    component: ReservationHistoryBoatsComponent
+    component: ReservationHistoryBoatsComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'home/page/:id',
@@ -151,107 +170,133 @@ const routes: Routes = [
   },
   {
     path: 'admin/dashboard',
-    component: AdminDashboardComponent
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuardAdmin] 
   },
   {
     path: 'admin/profile',
     component: AdminProfileComponent,
+    canActivate: [AuthGuardAdmin] 
   },
   {
     path: 'admin/registration-requests',
     component: AdminRegistrationRequestsComponent,
+    canActivate: [AuthGuardAdmin] 
   },
   {
     path: 'admin/account-deletion-requests',
-    component: AdminDeleteRequestsComponent
+    component: AdminDeleteRequestsComponent,
+    canActivate: [AuthGuardAdmin] 
   },
   {
     path: 'admin/users',
-    component: AdminUsersComponent
+    component: AdminUsersComponent,
+    canActivate: [AuthGuardAdmin] 
   },
   {
     path: 'admin/reservation-reports',
-    component: ReservationReportsComponent
+    component: ReservationReportsComponent,
+    canActivate: [AuthGuardAdmin] 
   },
   {
     path: 'admin/reviews',
-    component: AdminReviewsComponent
+    component: AdminReviewsComponent,
+    canActivate: [AuthGuardAdmin] 
   },
   {
     path:'admin/complaints',
-    component: AdminComplaintsComponent
+    component: AdminComplaintsComponent,
+    canActivate: [AuthGuardAdmin] 
   },
   {
     path: 'admin/adventures',
-    component: AdminAdventuresComponent
+    component: AdminAdventuresComponent,
+    canActivate: [AuthGuardAdmin] 
   },
   {
     path: 'admin/boats',
-    component: AdminBoatsComponent
+    component: AdminBoatsComponent,
+    canActivate: [AuthGuardAdmin] 
   },
   {
     path: 'admin/homes',
-    component: AdminHomesComponent
+    component: AdminHomesComponent,
+    canActivate: [AuthGuardAdmin] 
   },
   {
     path: 'adventure',
-    component: AdventureProfileComponent
+    component: AdventureProfileComponent,
+    canActivate: [AuthGuardInstructor, AuthGuardAdmin, AuthGuardClient] 
   },
   {
     path: 'add-adventure',
-    component: AddAdventureComponent
+    component: AddAdventureComponent,
+    canActivate: [AuthGuardInstructor] 
   },
   {
     path: 'instructor/dashboard',
     component: InstructorDashboardComponent,
+    canActivate: [AuthGuardInstructor] 
   },
   {
     path: 'instructor/profile',
-    component: InstructorProfileComponent
+    component: InstructorProfileComponent,
+    canActivate: [AuthGuardInstructor] 
   },
   {
     path: 'instructor/services',
-    component: InstructorServiceListComponent
+    component: InstructorServiceListComponent,
+    canActivate: [AuthGuardInstructor] 
   },
   {
     path: 'instructor/adventure/:id',
-    component: InstructorServiceComponent
+    component: InstructorServiceComponent,
+    canActivate: [AuthGuardInstructor, AuthGuardAdmin, AuthGuardClient] 
   },
   {
     path: 'instructor/availability',
-    component: InstructorAvailabilityComponent
+    component: InstructorAvailabilityComponent,
+    canActivate: [AuthGuardInstructor] 
   },
   {
     path: 'home-owner/dashboard',
     component: HomeOwnerDashboardComponent,
+    canActivate: [AuthGuardHomeOwner] 
   },
   {
     path: 'home-owner/profile',
-    component: HomeOwnerProfileComponent
+    component: HomeOwnerProfileComponent,
+    canActivate: [AuthGuardHomeOwner] 
   },
   {
     path: 'boat-owner/dashboard',
     component: BoatOwnerDashboardComponent,
+    canActivate: [AuthGuardBoatOwner] 
   },
   {
     path: 'boat-owner/profile',
-    component: BoatOwnerProfileComponent
+    component: BoatOwnerProfileComponent,
+    canActivate: [AuthGuardBoatOwner] 
   },
   {
     path: 'boat-owner/boats',
-    component: BoatOwnerBoatsComponent
+    component: BoatOwnerBoatsComponent,
+    canActivate: [AuthGuardBoatOwner] 
   },
   {
     path: 'boat-owner/availability',
-    component: BoatOwnerAvailabilityComponent
+    component: BoatOwnerAvailabilityComponent,
+    canActivate: [AuthGuardBoatOwner] 
   },
   {
     path: 'instructor/reservations/upcoming',
-    component: ReservationsUpcomingComponent
+    component: ReservationsUpcomingComponent,
+    canActivate: [AuthGuardInstructor] 
   },
   {
     path: 'instructor/reservations/history',
-    component: ReservationsHistoryComponent
+    component: ReservationsHistoryComponent,
+    canActivate: [AuthGuardInstructor] 
   },
   {
     path: 'unauth/boat/page/:id',
@@ -268,74 +313,99 @@ const routes: Routes = [
 
   {
     path: 'boat-owner/boat/:id',
-    component: BoatOwnerBoatProfileComponent
+    component: BoatOwnerBoatProfileComponent,
+    canActivate: [AuthGuardBoatOwner] 
   },
   {
     path: 'boat-owner/boat/calendar/:id',
-    component: BoatAvailabilityComponent
+    component: BoatAvailabilityComponent,
+    canActivate: [AuthGuardBoatOwner] 
   },
   {
     path: 'boat-owner/reservations/past',
-    component: BoatReservationsHistoryComponent
+    component: BoatReservationsHistoryComponent,
+    canActivate: [AuthGuardBoatOwner] 
   },
 
   {
     path: 'boat-owner/reservations/future',
-    component: BoatReservationsFutureComponent
+    component: BoatReservationsFutureComponent,
+    canActivate: [AuthGuardBoatOwner] 
   },
   {
     path: 'boat-owner/reservations/current',
-    component: BoatReservationsCurrentComponent
+    component: BoatReservationsCurrentComponent,
+    canActivate: [AuthGuardBoatOwner] 
   },
   {
     path: 'client/subscribed/boats',
-    component: BoatSubsComponent
+    component: BoatSubsComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/subscribed/homes',
-    component: HomeSubsComponent
+    component: HomeSubsComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'client/subscribed/instructors',
-    component: InstructorSubsComponent
+    component: InstructorSubsComponent,
+    canActivate: [AuthGuardClient] 
   },
   {
     path: 'home-owner/homes',
-    component: HomeOwnerHomesComponent
+    component: HomeOwnerHomesComponent,
+    canActivate: [AuthGuardHomeOwner] 
   },
   {
     path: 'home-owner/home/:id',
-    component: HomeOwnerHomeProfileComponent
+    component: HomeOwnerHomeProfileComponent,
+    canActivate: [AuthGuardHomeOwner] 
   },
   {
     path: 'home-owner/home/calendar/:id',
-    component: HomeAvailabilityComponent
+    component: HomeAvailabilityComponent,
+    canActivate: [AuthGuardHomeOwner] 
   },
   {
     path: 'home-owner/reservations/past',
-    component: HomeReservationsHistoryComponent
+    component: HomeReservationsHistoryComponent,
+    canActivate: [AuthGuardHomeOwner] 
   },
 
   {
     path: 'home-owner/reservations/future',
-    component: HomeReservationsFutureComponent
+    component: HomeReservationsFutureComponent,
+    canActivate: [AuthGuardHomeOwner] 
   },
   {
     path: 'home-owner/reservations/current',
-    component: HomeReservationsCurrentComponent
+    component: HomeReservationsCurrentComponent,
+    canActivate: [AuthGuardHomeOwner] 
   },
   {
     path: 'boat-owner/charts',
-    component: ReservationChartsComponent
+    component: ReservationChartsComponent,
+    canActivate: [AuthGuardBoatOwner] 
   },
   {
     path: 'home-owner/charts',
-    component: HomeReservationChartComponent
+    component: HomeReservationChartComponent,
+    canActivate: [AuthGuardHomeOwner] 
   },
   {
     path: 'instructor/charts',
-    component: AdventureReservationChartsComponent
+    component: AdventureReservationChartsComponent,
+    canActivate: [AuthGuardInstructor] 
   },
+  {
+     path: '404',
+     component: ErrorNotFoundComponent 
+  },
+  {
+    path: '403',
+    component: ErrorForbiddenComponent 
+ }
 
 ];
 @NgModule({

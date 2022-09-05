@@ -180,6 +180,8 @@ import { ImagesComponent } from './components/boat-components/images/images.comp
 import { ReservationChartsComponent } from './components/boat-owner-components/reservation-charts/reservation-charts.component';
 import { HomeReservationChartComponent } from './components/home-owner-components/home-reservation-chart/home-reservation-chart.component';
 import { AdventureReservationChartsComponent } from './components/instructor-components/adventure-reservation-charts/adventure-reservation-charts.component';
+import { ErrorNotFoundComponent } from './pages/error-not-found/error-not-found.component';
+import { ErrorForbiddenComponent } from './pages/error-forbidden/error-forbidden.component';
 
 @NgModule({
   declarations: [
@@ -334,6 +336,8 @@ import { AdventureReservationChartsComponent } from './components/instructor-com
     ReservationChartsComponent,
     HomeReservationChartComponent,
     AdventureReservationChartsComponent,
+    ErrorNotFoundComponent,
+    ErrorForbiddenComponent,
   ],
   imports: [
     BrowserModule,
