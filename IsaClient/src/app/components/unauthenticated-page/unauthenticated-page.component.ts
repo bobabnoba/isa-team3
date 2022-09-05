@@ -38,6 +38,4 @@ export class UnauthenticatedPageComponent implements OnInit {
     this.filteredItems = this.searchService.filterUnauthProfiles(this.currentItems, filter)!;
     console.log(this.filteredItems);
   }
-
-
 }

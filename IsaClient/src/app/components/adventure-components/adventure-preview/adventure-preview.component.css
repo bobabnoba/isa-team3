@@ -43,3 +43,8 @@
     height: 100%;
 
 }
+
+ngb-rating {
+    color: rgb(241, 207, 11);
+    font-size: 30px;
+}

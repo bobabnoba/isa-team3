@@ -1,1 +1,118 @@
-<p>boat-page works!</p>
+<div id="wrapper" class="container">
+    <app-client-sidebar></app-client-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div *ngIf="item" class="containersss">
+            <div class="about" style="height:fit-content;">
+                <mat-card class="example-card" style="height: 100%;">
+                    <mat-card-title-group style="height: 70%;width: 100% ;">
+                        <mat-card-title>
+                            <h2>{{item.name}}
+                            </h2>
+                        </mat-card-title>
+                        <mat-card-title style="font-size: 20px;">Type: {{item.type}}</mat-card-title>
+                        <mat-card-subtitle>
+                            <div>{{item.address.country}},
+                                {{item.address.city}},
+                                {{item.address.street}},
+                                {{item.address.zipCode}}
+                            </div>
+                            <div>
+                                <label style="font-size: bold;">Contact:</label>
+                                <li>@Email :{{item.ownerEmail}}</li>
+                            </div>
+                            <div>
+                                <li>Engine Count : {{item.engineCount}}</li>
+                                <li>Engine Power : {{item.enginePower}}</li>
+                                <li>Length : {{item.length}}</li>
+                                <li>Max Speed : {{item.maxSpeed}} Knots</li>
+                                <li>Guest Limit : {{item.guestLimit}}</li>
+                            </div>
+                        </mat-card-subtitle>
+
+                        <div class="image-display">
+                            <img *ngIf="item.images" lass="img1" src="{{baseUrl}}{{item.images[0]}}" class="img1"
+                                onerror="this.onerror;this.src='../../../../assets/images/no-img.png'"
+                                alt="Image not available">
+                        </div>
+                    </mat-card-title-group>
+                    <mat-card-content>
+                        <h4 *ngIf="item.pricePerDay" style="font-size: 30px;">${{ item.pricePerDay }}/day</h4>
+                    </mat-card-content>
+                    <label style="margin-bottom:5px;">Average rating : </label>
+                    <ngb-rating [max]="5" [(rate)]="item.rating" [readonly]="true" style="margin-left: 5px;">
+                    </ngb-rating>
+
+                    <mat-card-content>
+                        {{item.description}}
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div class="moreInfo">
+
+                <mat-card class="wrapper">
+                    <mat-card-title>Fishing Equipment</mat-card-title>
+                    <div class="box">
+                        <span *ngFor="let item of item.fishingEquipment;" class="listing">
+                            <label style="font-weight: bold;"> - {{item.name}}</label>
+                        </span>
+                    </div>
+                </mat-card>
+
+                <mat-card class="wrapper">
+                    <mat-card-title>Navigation Types</mat-card-title>
+                    <div class="box">
+                        <span *ngFor="let item of item.navigationTypes;" class="listing">
+                            <label style="font-weight: bold;"> - {{item}}</label>
+                        </span>
+                    </div>
+                </mat-card>
+                <mat-card class="wrapper">
+                    <mat-card-title>Services/Utilities</mat-card-title>
+                    <div class="box">
+                        <span *ngFor="let item of item.utilities;" class="listing">
+                            <label style="font-weight: bold;">{{item.name}}</label>
+                            <h6>- ${{ item.price }}/day</h6>
+                        </span>
+                    </div>
+                </mat-card>
+
+                <mat-card class="wrapper">
+                    <mat-card-title>House rules</mat-card-title>
+                    <div class="box">
+                        <span *ngFor="let item of item.codeOfConduct;" class="listing">
+                            <label style="font-weight: bold;"> - {{item.name}}</label>
+                        </span>
+                    </div>
+                </mat-card>
+            </div>
+            <mat-card class="wrapper">
+                <mat-card-title>Availability Period </mat-card-title>
+                <div class="box">
+                    <span *ngIf="!item.availability[0]"> Currently there are no set availablities for this boat !</span>
+                    <div *ngIf="item.availability[0]">
+                        <span *ngFor="let item of item.availability; index as i;" class="listing">
+                            <label style="font-weight: bold;">{{item.startDate | date:"shortDate"}} - {{item.endDate |
+                                date:"shortDate"}} &nbsp; | &nbsp; </label>
+
+                        </span>
+                    </div>
+                </div>
+            </mat-card>
+            <hr>
+            <h2 style="margin-left: 15px; color: blue;">Special Offers</h2>
+
+            <div class="displaySection">
+                <div class="sectionOverflow">
+                    <div *ngFor="let item of item.specialOffers">
+                        <app-adventure-special-offer [offer]="item" class="p-3">
+                        </app-adventure-special-offer>
+                    </div>
+                </div>
+
+            </div>
+            <div *ngIf="item.specialOffers.length == 0">
+                <h3 style="margin-left: 15px;"> No special offers available.</h3>
+            </div>
+        </div>
+    </div>
+</div>

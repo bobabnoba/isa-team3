@@ -2,11 +2,12 @@
     <article class="media shadow p-4">
       <figure class="media-left" style="display: flex; justify-content: space-between;">
         <p class="image">
-          <img  style="min-height: 100%; min-width:100%" src="{{baseUrl}}{{imageUrl}}" onerror="this.onerror;this.src='../../../../assets/images/no-img.png'" alt="Image not available">  
+          <img *ngIf="!imageUrls || !imageUrls[0]" class="img1" src='../../../assets/images/no-img.png' alt="Image not available">
+          <img class="img1" *ngIf="imageUrls && imageUrls[0]" style="min-height: 100%; min-width:100%" src="{{baseUrl}}{{imageUrls[0]}}" onerror="this.onerror;this.src='../../../../assets/images/no-img.png'" alt="Image not available">  
         </p>
       </figure>
-      <div class="media-content">
-        <div class="content">
+      <div class="media-content" style="margin-top: 40px;">
+        <div class="content"  >
           <div>
             <p>
               <strong

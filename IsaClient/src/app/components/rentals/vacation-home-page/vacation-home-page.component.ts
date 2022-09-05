@@ -7,6 +7,7 @@ import { ClientService } from 'src/app/services/client-service/client.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
 import { SubService } from 'src/app/services/sub-service/sub.service';
 import { HomeService } from 'src/app/services/vacation-home-service/home.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-vacation-home-page',
   templateUrl: './vacation-home-page.component.html',
@@ -21,6 +22,7 @@ export class VacationHomePageComponent implements OnInit {
   id!: string;
   isSubscribed: boolean = false;
   userEmail: string = "";
+  baseUrl = environment.apiURL
 
   constructor(
     private homeService: HomeService,
@@ -29,7 +31,7 @@ export class VacationHomePageComponent implements OnInit {
     private _subService: SubService,
     _storageService: StorageService,
     private _matSnackBar: MatSnackBar
-    ) {
+  ) {
     this.id = this._router.url.substring(11) ?? '';
     this.userEmail = _storageService.getEmail();
 

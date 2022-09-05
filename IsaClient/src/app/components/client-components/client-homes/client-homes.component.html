@@ -9,7 +9,7 @@
                 <div *ngFor="let item of filteredItems">
                     <app-browse-card [name]="item.name" [description]="item.description" [address]="item.address"
                         [utilities]="item.utilities" [price]="item.pricePerDay" [rating]="item.rating" [id]="item.id"
-                        [type]="item.rentalType" [ownerName]="item.owner.email"></app-browse-card>
+                        [type]="item.rentalType" [ownerName]="item.owner.email"  [imageUrls]="item.images" ></app-browse-card>
                 </div>
             </div>
         </div>

@@ -66,9 +66,10 @@ export class BrowseCardReservationComponent implements OnInit {
         }
         this.displayDiscount = true;
         this.calculatePrice();
-
+      
       }
     );
+
 
 
   }

@@ -5,23 +5,37 @@
             <div class="about">
                 <mat-card class="example-card">
                     <mat-card-title-group>
-                        <mat-card-title>{{item.name}}</mat-card-title>
+                        <mat-card-title>{{item.name}}
+                        </mat-card-title>
                         <mat-card-subtitle>
                             <div>{{item.address.country}},
                                 {{item.address.city}},
                                 {{item.address.street}},
                                 {{item.address.zipCode}}
                             </div>
+                            <div>
+                                <label *ngIf="item.vacationHomeOwner">Contact:</label>
+                                <li>@Email :{{item.vacationHomeOwner.email}}</li>
+                                <li>Phone Number : {{item.vacationHomeOwner.phone}}</li>
+
+                            </div>
+                            <br>
                             <button mat-raised-button color="primary"
                                 style="max-width: fit-content; height: 25px; margin-top:10px" (click)="subscribe()"
                                 [disabled]="isSubscribed">Subscribe</button>
 
+
                         </mat-card-subtitle>
 
                         <div class="image-display">
-                            <img class="img1" src="../../../assets/images/beach-houses.jpg">
+                            <img *ngIf="item.imageUrls" src="{{baseUrl}}{{item.imageUrls[0]}}" class="img1"
+                                onerror="this.onerror;this.src='../../../../assets/images/no-img.png'"
+                                alt="Image not available">
                         </div>
                     </mat-card-title-group>
+                    <mat-card-content>
+                        <h4 *ngIf="item.pricePerDay" style="font-size: 30px;">${{ item.pricePerDay }}/day</h4>
+                    </mat-card-content>
                     <label style="margin-bottom:5px;">Average rating : </label>
                     <ngb-rating [max]="5" [(rate)]="item.rating" [readonly]="true" style="margin-left: 5px;">
                     </ngb-rating>
@@ -46,7 +60,7 @@
                     <mat-card-title>House rules</mat-card-title>
                     <div class="box">
                         <span *ngFor="let item of item.codeOfConduct; index as i;" class="listing">
-                            <label style="font-weight: bold;">{{item}}</label>
+                            <label style="font-weight: bold;">{{item.name}}</label>
                         </span>
                     </div>
                 </mat-card>
@@ -63,11 +77,34 @@
 
             </div>
             <hr>
+            <mat-card class="wrapper">
+                <mat-card-title>Availability Period </mat-card-title>
+                <div class="box">
+                    <span *ngIf="!item.availability[0]"> Currently there are no set availablities for this vacation home
+                        !</span>
+                    <div *ngIf="item.availability[0]">
+                        <span *ngFor="let item of item.availability; index as i;" class="listing">
+                            <label style="font-weight: bold;">{{item.startDate | date:"shortDate"}} - {{item.endDate |
+                                date:"shortDate"}}, &nbsp; </label>
+                        </span>
+                    </div>
+                </div>
+            </mat-card>
+            <hr>
             <h2 style="margin-left: 15px; color: blue;">Special Offers</h2>
-            <div *ngFor="let item of item.availableReservations;">
-                <app-reservation-view [action]="item"></app-reservation-view>
+            <div *ngIf="item.specialOffers.length > 0">
+                <div *ngFor="let item of item.specialOffers">
+                    <div class="displaySection">
+                        <div class="sectionOverflow">
+                            <app-adventure-special-offer [offer]="item" class="p-3">
+                            </app-adventure-special-offer>
+                        </div>
+                    </div>
+                </div>
             </div>
-
+            <div  *ngIf="item.specialOffers.length == 0">
+                <h3 style="margin-left: 15px;">  No special offers available.</h3>
+            </div>
         </div>
     </div>
 </div>

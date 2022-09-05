@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HomeService } from 'src/app/services/vacation-home-service/home.service';
 import { IAvailableReservations, IVacationHouseProfile } from 'src/app/interfaces/vacation-house-profile';
+import { HomeService } from 'src/app/services/vacation-home-service/home.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-unauth-home-page',
   templateUrl: './unauth-home-page.component.html',
@@ -14,9 +15,10 @@ export class UnauthHomePageComponent implements OnInit {
   roomsNumber!: number;
   bedsNumber!: number;
   id!: string;
+  baseUrl = environment.apiURL
   constructor(private homeService: HomeService, private _router: Router) {
     this.id = this._router.url.substring(18) ?? '';
-    console.log(this.id); 
+    console.log(this.id);
     this.getHomeDetails();
 
   }

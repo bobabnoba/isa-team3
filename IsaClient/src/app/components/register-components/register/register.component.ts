@@ -4,10 +4,11 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { IAddress } from "src/app/interfaces/address";
 import { LoggedUser } from 'src/app/interfaces/logged-user';
 import { INewUser } from 'src/app/interfaces/new-user';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
@@ -34,6 +35,7 @@ export class RegisterComponent implements OnInit {
     private _authService: AuthService
   ) {
     this.newUser = {} as INewUser;
+
   }
 
   ngOnInit(): void {
@@ -58,29 +60,34 @@ export class RegisterComponent implements OnInit {
         Validators.required,
         Validators.minLength(8),
       ]),
-      passConfirmed: new FormControl(null, [
+      passConfirmed: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
+
       ])
     });
   }
 
   onSubmit(): void {
-
+    if (this.passMatch == false) {
+      this._snackBar.open('Passwords do not match', 'Close',
+        { duration: 3000 })
+      return;
+    }
     this.createUser();
-    console.log(this.newUser);
-    
+ 
+
     this._authService.registerUser(this.newUser).subscribe({
       next: (res) => {
         this.myUser = res;
         this._router.navigate(['/']);
         this._snackBar.open('Your registration request has been sumbitted. Please check your email and confirm your email adress to activate your account.', '',
-          {duration : 3000,panelClass: ['snack-bar']}
+          { duration: 3000, panelClass: ['snack-bar'] }
         );
       },
       error: (err: HttpErrorResponse) => {
         this._snackBar.open(err.error.message + "!", 'Dismiss',
-          {duration : 3000,panelClass: ['snack-bar']});
+          { duration: 3000, panelClass: ['snack-bar'] });
       },
       complete: () => console.info('complete')
     });
@@ -89,17 +96,24 @@ export class RegisterComponent implements OnInit {
   onPasswordInput(): void {
     this.passMatch =
       this.createForm.value.password === this.createForm.value.passConfirmed;
+    console.log(this.passMatch);
+
   }
 
   createUser(): void {
+   
+
+
     this.newUser.firstName = this.createForm.value.firstName;
     this.newUser.lastName = this.createForm.value.lastName;
-    this.newUser.address = this.createForm.value.adress;
+    this.newUser.address = {} as IAddress;
+    this.newUser.address.street = this.createForm.value.adress;
+    this.newUser.address.city = this.createForm.value.city;
+    this.newUser.address.country = this.createForm.value.country;
+    this.newUser.address.zipCode = this.createForm.value.zipCode;
     this.newUser.phone = this.createForm.value.phone;
     this.newUser.email = this.createForm.value.email;
-    this.newUser.city = this.createForm.value.city;
-    this.newUser.country = this.createForm.value.country;
     this.newUser.password = this.createForm.value.password;
-    this.newUser.zipCode = this.createForm.value.zipCode;
+
   }
 }
