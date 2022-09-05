@@ -3,15 +3,12 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.dao.*;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.UtilityDto;
+import com.ftn.fishingbooker.enumeration.*;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
-import com.ftn.fishingbooker.model.Client;
-import com.ftn.fishingbooker.model.Reservation;
-import com.ftn.fishingbooker.model.Utility;
-import com.ftn.fishingbooker.repository.ReservationRepository;
-import com.ftn.fishingbooker.service.DateService;
-import com.ftn.fishingbooker.service.ReservationService;
-import com.ftn.fishingbooker.service.UtilityService;
+import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.repository.*;
+import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -278,6 +275,36 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Collection<Reservation> getCaptainReservationsForBoatOwner(Long id) {
         return reservationRepository.getCaptainReservationsForBoatOwner(id);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationsForBoat(Long id, Date from, Date to) {
+        return reservationRepository.getReservationsForBoat(id, from, to);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationsForHome(Long id, Date from, Date to) {
+        return reservationRepository.getReservationsForHome(id, from, to);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationsForAdventure(Long id, Date from, Date to) {
+        return reservationRepository.getReservationsForAdventure(id, from, to);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationForBoatOwner(Long id, Date from, Date to) {
+        return reservationRepository.getReservationForBoatOwner(id, from, to);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationForHomeOwner(Long id, Date from, Date to) {
+        return reservationRepository.getReservationForHomeOwner(id, from, to);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationForInstructor(Long id, Date from, Date to) {
+        return reservationRepository.getReservationForInstructor(id, from, to);
     }
 
 

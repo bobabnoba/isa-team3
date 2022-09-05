@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { SpecialOffer } from 'src/app/interfaces/special-offer';
+import { VacationHome } from 'src/app/interfaces/vacation-home';
 import { IAvailableReservations, IVacationHouseProfile } from 'src/app/interfaces/vacation-house-profile';
 import { ClientService } from 'src/app/services/client-service/client.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
@@ -16,7 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export class VacationHomePageComponent implements OnInit {
 
-  item!: IVacationHouseProfile;
+  item!: VacationHome;
   actions!: IAvailableReservations[];
   roomsNumber!: number;
   bedsNumber!: number;
@@ -59,7 +60,7 @@ export class VacationHomePageComponent implements OnInit {
   }
   getHomeDetails() {
     const homeObserver = {
-      next: (data: IVacationHouseProfile) => {
+      next: (data: VacationHome) => {
         this.item = data;
         console.log(data);
         this.roomsNumber = this.item.rooms.length
@@ -67,7 +68,8 @@ export class VacationHomePageComponent implements OnInit {
         this.item.rooms.forEach(x => b = b + x.numberOfBeds)
         this.bedsNumber = b;
         if (data.specialOffers) {
-          this.filteredOffers = data.specialOffers.filter(offer => new Date(offer.activeTo) >= new Date());
+          this.filteredOffers = data.specialOffers.filter(offer => new Date(offer.activeFrom) <= new Date()
+          && new Date(offer.activeTo) >= new Date() && offer.isUsed == false);
         }
       },
       error: (err: HttpErrorResponse) => {

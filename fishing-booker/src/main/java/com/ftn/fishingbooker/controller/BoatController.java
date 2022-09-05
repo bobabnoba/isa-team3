@@ -7,7 +7,7 @@ import com.ftn.fishingbooker.mapper.BoatMapper;
 import com.ftn.fishingbooker.mapper.RentalMapper;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.util.FIleUploadUtil;
+import com.ftn.fishingbooker.util.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,6 @@ import com.ftn.fishingbooker.service.ReservationService;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.*;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -189,5 +188,21 @@ public class BoatController {
     public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){
         return ResponseEntity.ok(boatService.getNoOfIncomingReservations(id) > 0);
     }
+
+    @PostMapping("/check-if-res-overlaps-avail")
+    public ResponseEntity<Boolean> checkIfReservationOverlapsAvailability(@RequestBody BoatAvailabilityRequestDto availability) {
+        return ok(boatService.checkIfReservationOverlapsAvailability(BoatMapper.mapToBoatAvailabilityEntity(availability), availability.boatId));
+
+    }
+
+    @PostMapping("/remove-availability")
+    public ResponseEntity<Collection<BoatAvailabilityDto>> deleteAvailabilityPeriod(@RequestBody BoatAvailabilityRequestDto availability) {
+        Collection<BoatAvailability> availabilities = boatService.updateAvailability(availability.getStartDate(), availability.getEndDate(), availability.boatId);
+        Collection<BoatAvailabilityDto> dtos = availabilities.stream()
+                .map(BoatMapper::mapToAvailabilityDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
+
 
 }

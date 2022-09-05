@@ -74,4 +74,12 @@ export class BoatService {
   incomingReservationExists(id : number ) : Observable<boolean>{
     return this._http.get<boolean>(`${this.baseURL}/boats/${id}/has-incoming-reservations`);
   }
+
+  checkIfReservationOverlapsAvailability(body : any ) : Observable<any> {
+    return this._http.post(`${this.baseURL}/boats/check-if-res-overlaps-avail`, body);
+  }
+
+  removeAvailability(body : any ) : Observable<any> {
+    return this._http.post(`${this.baseURL}/boats/remove-availability`, body);
+  }
 }

@@ -8,6 +8,7 @@ import com.ftn.fishingbooker.repository.*;
 import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -224,6 +225,12 @@ public class BoatServiceImpl implements BoatService {
     @Transactional
     public Collection<BoatAvailability> addAvailabilityPeriod(BoatAvailability newAvailability, Long boatId) {
         Boat boat = boatRepository.findById(boatId).orElseThrow(() -> new ResourceConflictException("Boat not found"));
+        //TODO:PROVERITI DA LI IMA REZ U TOM PERIODU
+        Collection<Reservation> boatReservations = reservationService.getReservationForBoat(boatId);
+        var foundOverlaps = boatReservations.stream().filter(reservation -> dateService.reservationOverlapsWithAvailability(reservation.getStartDate(), reservation.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate())).collect(Collectors.toSet());
+        if(foundOverlaps.size() > 0){
+            return boat.getAvailableTimePeriods();
+        }
         Set<BoatAvailability> availabilities = new HashSet<>(boat.getAvailableTimePeriods());
 
         Optional<BoatAvailability> endOfNewPartOfSecond = availabilities.stream().filter(boatAvailability ->
@@ -425,7 +432,7 @@ public class BoatServiceImpl implements BoatService {
 
     @Transactional
     @Override
-    public void updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id) {
+    public Collection<BoatAvailability> updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id) {
         //TODO:
         Boat boat = boatRepository.findById(id).orElseThrow(() -> new ResourceConflictException("Boat not found"));
         Set<BoatAvailability> availabilities = new HashSet<>(boat.getAvailableTimePeriods());
@@ -447,6 +454,7 @@ public class BoatServiceImpl implements BoatService {
             boat.setAvailableTimePeriods(availabilities);
             boatRepository.save(boat);
             boatAvailabilityService.delete(theOne.get().getId());
+            return boat.getAvailableTimePeriods();
         }else if (onStart.isPresent()){
             BoatAvailability newOne = new BoatAvailability();
             newOne.setStartDate(DateUtil.addDays(reservationEndDate,1));
@@ -457,6 +465,7 @@ public class BoatServiceImpl implements BoatService {
             boat.setAvailableTimePeriods(availabilities);
             boatRepository.save(boat);
             boatAvailabilityService.delete(onStart.get().getId());
+            return boat.getAvailableTimePeriods();
         }else if (onEnd.isPresent()){
             BoatAvailability newOne = new BoatAvailability();
             newOne.setStartDate(onEnd.get().getStartDate());
@@ -467,6 +476,7 @@ public class BoatServiceImpl implements BoatService {
             boat.setAvailableTimePeriods(availabilities);
             boatRepository.save(boat);
             boatAvailabilityService.delete(onEnd.get().getId());
+            return boat.getAvailableTimePeriods();
 
         }else if (availabilityInBetween.isPresent()){
             BoatAvailability newOne = new BoatAvailability();
@@ -484,7 +494,9 @@ public class BoatServiceImpl implements BoatService {
             boat.setAvailableTimePeriods(availabilities);
             boatRepository.save(boat);
             boatAvailabilityService.delete(availabilityInBetween.get().getId());
+            return boat.getAvailableTimePeriods();
         }
+        return boat.getAvailableTimePeriods();
     }
 
     @Override
@@ -505,5 +517,17 @@ public class BoatServiceImpl implements BoatService {
     @Override
     public int getNoOfIncomingReservations(Long id) {
         return reservationService.getNoOfIncomingReservationsForBoat(id);
+    }
+
+    @Override
+    public Boolean checkIfReservationOverlapsAvailability(BoatAvailability newAvailability, Long boatId) {
+        Boat boat = boatRepository.findById(boatId).orElseThrow(() -> new ResourceConflictException("Boat not found"));
+        //TODO:PROVERITI DA LI IMA REZ U TOM PERIODU
+        Collection<Reservation> boatReservations = reservationService.getReservationForBoat(boatId);
+        var foundOverlaps = boatReservations.stream().filter(reservation -> dateService.reservationOverlapsWithAvailability(reservation.getStartDate(), reservation.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate())).collect(Collectors.toSet());
+        if(foundOverlaps.size() > 0){
+            return true;
+        }
+        return false;
     }
 }

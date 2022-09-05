@@ -10,7 +10,9 @@
                 <app-home-additional-info [home]="home" ></app-home-additional-info>
             </mat-tab>
             <mat-tab label="Location"> 
-                <app-home-location [home]="home"></app-home-location>
+                <!-- <app-home-location [home]="home"></app-home-location> -->
+                <!-- <h5 style="text-align: center;">{{home.address.street}} , {{home.address.city}} , {{home.address.country}}</h5> -->
+                <app-map  [address]="home.address"></app-map>
             </mat-tab>
             <mat-tab label="Additional Services"> 
                 <app-home-services [home]="home"></app-home-services>
@@ -27,9 +29,9 @@
             
           </mat-tab-group>
     </div>
-    <div>
+    <!-- <div>
         <app-map  [address]="home.address"></app-map>
-    </div>
+    </div> -->
     <!-- <div style="padding: 6rem;">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="3000">
           <div class="carousel-inner">

@@ -10,7 +10,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class BoatOwnerService {
-
   baseURL = environment.apiURL;
 
   constructor(private _http : HttpClient) { }
@@ -49,5 +48,17 @@ export class BoatOwnerService {
 
   getAllSpecialOffersWhereCaptain(email: string) : Observable<SpecialOffer[]>{
     return this._http.get<SpecialOffer[]>(`${this.baseURL}/boat-owner/special-offers/captain/${email}`);
+  }
+
+  addAvailability(body : any ) : Observable<any> {
+    return this._http.post(`${this.baseURL}/boat-owner/add-availability`, body);
+  }
+
+  checkIfReservationOverlapsAvailability(body : any ) : Observable<any> {
+    return this._http.post(`${this.baseURL}/boat-owner/check-if-res-overlaps-avail`, body);
+  }
+
+  removeAvailability(body : any ) : Observable<any> {
+    return this._http.post(`${this.baseURL}/boat-owner/remove-availability`, body);
   }
 }

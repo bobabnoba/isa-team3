@@ -11,7 +11,9 @@
                 <app-adventure-addtional-info [adventure]="adventure"></app-adventure-addtional-info>
             </mat-tab>
             <mat-tab label="Location">
-                <app-adventure-location [adventure]="adventure"></app-adventure-location>
+                <!-- <app-adventure-location [adventure]="adventure"></app-adventure-location> -->
+                <!-- <h5 style="text-align: center;">{{adventure.address.street}} , {{adventure.address.city}} , {{adventure.address.country}}</h5> -->
+                <app-map [address]="adventure.address"></app-map>
             </mat-tab>
             <mat-tab label="Additional Services">
                 <app-adventure-services [adventure]="adventure"></app-adventure-services>
@@ -26,9 +28,9 @@
             </mat-tab>
         </mat-tab-group>
     </div>
-    <div>
+    <!-- <div>
         <app-map  [address]="adventure.address"></app-map>
-    </div>
+    </div> -->
     <div class="justify-content-center d-flex flex-dir pt-5">
         <h2 *ngIf="filteredOffers.length === 0" class="pb-1 align-text">No special offers available.</h2>
         <div *ngIf="filteredOffers.length > 0">

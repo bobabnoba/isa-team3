@@ -59,7 +59,7 @@ public class ComplaintController {
     }
 
     @PostMapping("/admin-response/{id}")
-    public ResponseEntity<Object> adminResponse(@PathVariable Long id, @RequestBody String response) {
+    public ResponseEntity<Object> processComplaint(@PathVariable Long id, @RequestBody String response) {
         complaintService.addAdminResponse(id, response);
         return ResponseEntity.ok().build();
     }

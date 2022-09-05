@@ -1,0 +1,43 @@
+<div id="wrapper">
+    <app-boat-owner-sidebar></app-boat-owner-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <app-boat-owner-topbar ></app-boat-owner-topbar>
+        <div class="container-fluid">
+            <h1>Reservation statistics</h1>
+  
+            <div class="row">
+                
+                <div   class="col-xl-6 col-lg-9">
+                    <div style="margin-top: 3rem;">
+                        <canvas id="myChartWeek"></canvas>
+                    </div>
+                    <div >
+                        <canvas id="myChartMonth"></canvas>
+                    </div>
+                    <div >
+                        <canvas id="myChartYear"></canvas>
+                    </div>
+                </div>
+    
+                <div   class="col-xl-6 col-lg-9">
+                    <mat-label>Select your adventure</mat-label>
+                    <mat-select style="background-color: #f1efef" [formControl]="adventure"  (selectionChange)="adventureChosen()" [(ngModel)]="selectedAdventure" >
+                        <mat-option *ngFor="let b of adventures" [value]="b">{{b.title}}</mat-option>
+                    </mat-select>
+                    <div >
+                        <canvas id="myChartWeekBoat"></canvas>
+                    </div>
+                    <div >
+                        <canvas id="myChartMonthBoat"></canvas>
+                    </div>
+                    <div >
+                        <canvas id="myChartYearBoat"></canvas>
+                    </div>
+                </div>
+            </div>
+  
+        </div>
+    </div>
+</div>
+  
+  

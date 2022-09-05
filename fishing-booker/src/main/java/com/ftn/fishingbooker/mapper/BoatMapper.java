@@ -3,8 +3,7 @@ package com.ftn.fishingbooker.mapper;
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.enumeration.BoatType;
 import com.ftn.fishingbooker.enumeration.NavigationType;
-import com.ftn.fishingbooker.model.Boat;
-import com.ftn.fishingbooker.model.BoatAvailability;
+import com.ftn.fishingbooker.model.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -146,6 +145,14 @@ public class BoatMapper {
         dto.setPricePerDay(boat.getPricePerDay());
         dto.setCancelingPercentage(boat.getCancelingPercentage());
         dto.setGuestLimit(boat.getGuestLimit());
+        return dto;
+    }
+
+    public static BoatAvailabilityDto mapToAvailabilityDtoFromOwnerAvailability(BoatOwnerAvailability availability) {
+        BoatAvailabilityDto dto = new BoatAvailabilityDto();
+        dto.setId(availability.getId());
+        dto.setStartDate(availability.getStartDate());
+        dto.setEndDate(availability.getEndDate());
         return dto;
     }
 }

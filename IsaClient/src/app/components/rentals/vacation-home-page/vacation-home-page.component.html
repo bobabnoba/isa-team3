@@ -94,10 +94,10 @@
             <h2 style="margin-left: 15px; color: blue;">Special Offers</h2>
             <div *ngIf="item.specialOffers">
                 <div *ngIf="filteredOffers.length > 0">
-                    <div *ngFor="let item of filteredOffers">
+                    <div *ngFor="let offer of filteredOffers">
                         <div class="displaySection">
                             <div class="sectionOverflow">
-                                <app-adventure-special-offer [rentalId]="item.id" [type]="type" [offer]="item" class="p-3">
+                                <app-adventure-special-offer [rentalId]="item.id" [type]="type" [offer]="offer" class="p-3">
                                 </app-adventure-special-offer>
                             </div>
                         </div>

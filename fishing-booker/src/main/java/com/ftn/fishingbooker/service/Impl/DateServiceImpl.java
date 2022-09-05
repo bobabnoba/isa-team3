@@ -46,4 +46,14 @@ public class DateServiceImpl implements DateService {
         c.add(Calendar.DATE, days);  // number of days to add
         return c.getTime();
     }
+
+    @Override
+    public boolean reservationOverlapsWithAvailability(Date resStartDate, Date resEndDate, Date availStartDate, Date availEndDate) {
+         var overlaps = (inBetweenOrEqual(resStartDate,availStartDate,availEndDate) || inBetweenOrEqual(resEndDate, availStartDate, availEndDate));
+        return overlaps;
+    }
+
+    private boolean inBetweenOrEqual(Date date, Date start, Date end){
+        return (date.after(start) && date.before(end)) || date.equals(start) || date.equals(end);
+    }
 }

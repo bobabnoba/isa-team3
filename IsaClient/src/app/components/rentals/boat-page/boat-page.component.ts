@@ -56,7 +56,8 @@ export class BoatPageComponent implements OnInit {
         this.item = data;
         console.log(data);
         if (data.specialOffers) {
-          this.filteredOffers = data.specialOffers.filter(offer => new Date(offer.activeTo) >= new Date());
+          this.filteredOffers = data.specialOffers.filter(offer => new Date(offer.activeFrom) <= new Date()
+          && new Date(offer.activeTo) >= new Date() && offer.isUsed == false);
         }
 
       },

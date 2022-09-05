@@ -2,6 +2,7 @@ package com.ftn.fishingbooker.service;
 
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.model.*;
+import org.springframework.http.*;
 
 import java.util.*;
 
@@ -36,9 +37,11 @@ public interface BoatService {
 
     Collection<BoatAvailability> addAvailabilityPeriod(BoatAvailability mapToBoatAvailabilityEntity, Long boatId);
 
-    void updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id);
+    Collection<BoatAvailability> updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id);
 
     boolean checkAvailability(Date from, Date to, Long boatId);
 
     int getNoOfIncomingReservations(Long id);
+
+    Boolean checkIfReservationOverlapsAvailability(BoatAvailability mapToBoatAvailabilityEntity, Long boatId);
 }

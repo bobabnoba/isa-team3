@@ -10,7 +10,9 @@
                 <app-boat-additional-info [boat]="boat" ></app-boat-additional-info>
             </mat-tab>
             <mat-tab label="Location"> 
-                <app-boat-location [boat]="boat"></app-boat-location>
+                <!-- <app-boat-location [boat]="boat"></app-boat-location> -->
+                <!-- <h5 style="text-align: center;">{{boat.address.street}} , {{boat.address.city}} , {{boat.address.country}}</h5> -->
+                <app-map  [address]="boat.address"></app-map>
             </mat-tab>
             <mat-tab label="Additional Services"> 
                 <app-boat-services [boat]="boat"></app-boat-services>
@@ -27,9 +29,9 @@
             
           </mat-tab-group>
     </div>
-    <div>
+    <!-- <div>
         <app-map  [address]="boat.address"></app-map>
-    <!-- </div>
+    </div>
     <div style="padding: 6rem;">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="3000">
           <div class="carousel-inner">
