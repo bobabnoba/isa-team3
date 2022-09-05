@@ -32,9 +32,6 @@ public class SpecialOfferController {
     private final ReservationService reservationService;
     private final EmailService emailService;
     private final InstructorService instructorService;
-    private final BoatOwnerService boatOwnerService;
-    private final HomeOwnerService homeOwnerService;
-
 
     @PostMapping("/{serviceId}")
     public ResponseEntity<SpecialOfferDto> createSpecialOffer(@RequestBody NewSpecialOfferDto specialOffer,
@@ -71,7 +68,7 @@ public class SpecialOfferController {
         if (type.equals("adventure")) {
             reservationDto.setType(ReservationType.ADVENTURE);
             reservation = reservationService.makeSpecialOfferReservation(client, reservationDto);
-            Adventure adventure = adventureService.makeReservation(rentalId,reservation);
+            Adventure adventure = adventureService.makeReservation(rentalId, reservation);
             instructorService.updateAvailability(new InstructorAvailability(reservation.getStartDate(), reservation.getEndDate()), adventure.getInstructor().getEmail());
             instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
 

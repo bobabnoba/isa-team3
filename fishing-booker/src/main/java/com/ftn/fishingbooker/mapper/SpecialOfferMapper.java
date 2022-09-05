@@ -39,6 +39,7 @@ public class SpecialOfferMapper {
         dto.setGuests(offer.getGuests());
         dto.setUtilities(UtilityMapper.map(offer.getUtilities()));
         dto.setCancelingPercentage(offer.getCancelingPercentage());
+        dto.setUsed(offer.isUsed());
         return dto;
     }
 
@@ -58,6 +59,7 @@ public class SpecialOfferMapper {
                 dto.setReservationEndDate(specialOffer.getReservationEndDate());
                 dto.setGuests(specialOffer.getGuests());
                 dto.setUtilities(UtilityMapper.map(specialOffer.getUtilities()));
+                dto.setUsed(specialOffer.isUsed());
                 dtos.add(dto);
             });
         }
@@ -83,6 +85,7 @@ public class SpecialOfferMapper {
                 dto.setUtilities(UtilityMapper.map(specialOffer.getUtilities()));
                 dto.setCancelingPercentage(specialOffer.getCancelingPercentage());
                 dto.setCaptain(specialOffer.isCaptain());
+                dto.setUsed(specialOffer.isUsed());
                 dtos.add(dto);
             });
         }

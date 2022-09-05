@@ -40,4 +40,6 @@ public class SpecialOfferDto {
     public double cancelingPercentage;
 
     public boolean isCaptain;
+
+    public boolean isUsed;
 }
