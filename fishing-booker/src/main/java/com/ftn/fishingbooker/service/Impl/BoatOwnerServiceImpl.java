@@ -11,6 +11,7 @@ import org.springframework.stereotype.*;
 
 import javax.transaction.*;
 import java.util.*;
+import java.util.stream.*;
 
 @Service
 public class BoatOwnerServiceImpl implements BoatOwnerService {
@@ -21,16 +22,21 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
     private final UserRankService userRankService;
     private final BoatOwnerRepository boatOwnerRepository;
     private final BoatOwnerAvailabilityService boatOwnerAvailabilityService;
+    private final ReservationService reservationService;
+    private final DateService dateService;
 
     public BoatOwnerServiceImpl(UserService userService, UserRepository userRepository, RegistrationRepository registrationRepository,
                                 UserRankService userRankService, BoatOwnerRepository boatOwnerRepository,
-                                BoatOwnerAvailabilityService boatOwnerAvailabilityService) {
+                                BoatOwnerAvailabilityService boatOwnerAvailabilityService, ReservationService reservationService,
+                                DateService dateService) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.registrationRepository = registrationRepository;
         this.userRankService = userRankService;
         this.boatOwnerRepository = boatOwnerRepository;
         this.boatOwnerAvailabilityService = boatOwnerAvailabilityService;
+        this.reservationService = reservationService;
+        this.dateService = dateService;
 
     }
 
@@ -84,7 +90,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
 
     @Transactional
     @Override
-    public void updateAvailability(Date reservationStartDate, Date reservationEndDate, String ownerEmail) {
+    public Collection<BoatOwnerAvailability> updateAvailability(Date reservationStartDate, Date reservationEndDate, String ownerEmail) {
         BoatOwner boatOwner = boatOwnerRepository.findByEmail(ownerEmail);
         if (boatOwner == null) throw  new ResourceConflictException("Boat owner not found");
         Set<BoatOwnerAvailability> availabilities = new HashSet<>(boatOwner.getAvailability());
@@ -106,6 +112,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
             boatOwner.setAvailability(availabilities);
             boatOwnerRepository.save(boatOwner);
             boatOwnerAvailabilityService.delete(theOne.get().getId());
+            return boatOwner.getAvailability();
         }else if (onStart.isPresent()){
             BoatOwnerAvailability newOne = new BoatOwnerAvailability();
             newOne.setStartDate(DateUtil.addDays(reservationEndDate,1));
@@ -116,6 +123,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
             boatOwner.setAvailability(availabilities);
             boatOwnerRepository.save(boatOwner);
             boatOwnerAvailabilityService.delete(onStart.get().getId());
+            return boatOwner.getAvailability();
         }else if (onEnd.isPresent()){
             BoatOwnerAvailability newOne = new BoatOwnerAvailability();
             newOne.setStartDate(onEnd.get().getStartDate());
@@ -126,6 +134,7 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
             boatOwner.setAvailability(availabilities);
             boatOwnerRepository.save(boatOwner);
             boatOwnerAvailabilityService.delete(onEnd.get().getId());
+            return boatOwner.getAvailability();
 
         }else if (availabilityInBetween.isPresent()){
             BoatOwnerAvailability newOne = new BoatOwnerAvailability();
@@ -143,30 +152,195 @@ public class BoatOwnerServiceImpl implements BoatOwnerService {
             boatOwner.setAvailability(availabilities);
             boatOwnerRepository.save(boatOwner);
             boatOwnerAvailabilityService.delete(availabilityInBetween.get().getId());
+            return boatOwner.getAvailability();
         }
+        return boatOwner.getAvailability();
     }
 
-//    @Override
-//    public Collection<ReservationInfo> getUpcomingReservationsForBoatOwner(String email) {
-//        BoatOwner owner = boatOwnerRepository.findByEmail(email);
-//        return reservationService.getUpcomingReservationsForBoatOwner(owner.getId());
-//    }
-//
-//    @Override
-//    public Collection<Reservation> getPastReservationsForBoatOwner(String email) {
-//        BoatOwner owner = boatOwnerRepository.findByEmail(email);
-//        return reservationService.getPastReservationsForBoatOwner(owner.getId());
-//    }
-//
-//    @Override
-//    public Collection<Reservation> getCurrentReservationsForBoatOwner(String email) {
-//        BoatOwner owner = boatOwnerRepository.findByEmail(email);
-//        return reservationService.getCurrentReservationsForBoatOwner(owner.getId());
-//    }
 
     @Override
     public BoatOwner getByEmail(String boatOwnerEmail) {
         BoatOwner owner = boatOwnerRepository.findByEmail(boatOwnerEmail);
         return owner;
+    }
+
+    @Transactional
+    @Override
+    public Collection<BoatOwnerAvailability> addAvailabilityPeriod(BoatOwnerAvailability newAvailability, String email) {
+        BoatOwner owner = boatOwnerRepository.findByEmail(email);
+        //TODO:PROVERITI DA LI IMA REZ U TOM PERIODU
+        Collection<Reservation> boatReservations = reservationService.getCaptainReservationsForBoatOwner(owner.getId());
+        var foundOverlaps = boatReservations.stream().filter(reservation -> dateService.reservationOverlapsWithAvailability(reservation.getStartDate(), reservation.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate())).collect(Collectors.toSet());
+        if(foundOverlaps.size() > 0){
+            return owner.getAvailability();
+        }
+        Set<BoatOwnerAvailability> availabilities = new HashSet<>(owner.getAvailability());
+
+        Optional<BoatOwnerAvailability> endOfNewPartOfSecond = availabilities.stream().filter(boatAvailability ->
+                isBetween(newAvailability.getEndDate(), boatAvailability.getStartDate(), boatAvailability.getEndDate()) ||
+                        newAvailability.getEndDate().equals(boatAvailability.getStartDate())).findFirst();
+        Optional<BoatOwnerAvailability> startOfNewPartOfFirst = availabilities.stream().filter(boatAvailability ->
+                isBetween(newAvailability.getStartDate(), boatAvailability.getStartDate(), boatAvailability.getEndDate()) ||
+                        newAvailability.getStartDate().equals(boatAvailability.getEndDate())).findFirst();
+
+        BoatOwnerAvailability missingPeriod = new BoatOwnerAvailability();
+        missingPeriod.setStartDate(newAvailability.getStartDate());
+        missingPeriod.setEndDate(newAvailability.getEndDate());
+
+
+        if( endOfNewPartOfSecond.isPresent() && startOfNewPartOfFirst.isPresent()){
+            // novi zahvata pocetak jednog i kraj drugog
+            if(!startOfNewPartOfFirst.equals(endOfNewPartOfSecond)){
+                //6  nadji one koji se mzd nalaze izmedju ova 2
+                var mybInBetween = availabilities.stream().filter(boatAvailability ->
+                        isBetween(boatAvailability.getStartDate(),startOfNewPartOfFirst.get().getEndDate(), endOfNewPartOfSecond.get().getStartDate()) &&
+                                isBetween(boatAvailability.getEndDate(),startOfNewPartOfFirst.get().getEndDate(), endOfNewPartOfSecond.get().getStartDate())).collect(Collectors.toSet());
+
+                //4 i 5 mybInBetween je potrebno izbrisati ako postoji  i kreirati samo jedan novi
+                if ( !mybInBetween.isEmpty()){
+                    missingPeriod.setStartDate(startOfNewPartOfFirst.get().getEndDate());
+                    missingPeriod.setEndDate(endOfNewPartOfSecond.get().getStartDate());
+                    //startOfNewPartOfFirst i endOfNewPartOfSecond brisemo
+                    //ujesto njih kreiram novi koji kopicinje kad pocetak startOfNewPartOfFirst i zavrsava se kad kraj endOfNewPartOfSecond
+                    BoatOwnerAvailability newOne = new BoatOwnerAvailability();
+                    newOne.setStartDate(startOfNewPartOfFirst.get().getStartDate());
+                    newOne.setEndDate(endOfNewPartOfSecond.get().getEndDate());
+                    var saved = boatOwnerAvailabilityService.save(newOne);
+                    availabilities.add(saved);
+
+                    availabilities.remove(startOfNewPartOfFirst.get());
+                    availabilities.remove(endOfNewPartOfSecond.get());
+                    boatOwnerAvailabilityService.delete(startOfNewPartOfFirst.get().getId());
+                    boatOwnerAvailabilityService.delete(endOfNewPartOfSecond.get().getId());
+
+                    //OBRISI IH i ukloni iz broda
+                    availabilities.removeAll(mybInBetween);
+                    boatOwnerAvailabilityService.delete(mybInBetween);
+
+                    owner.setAvailability(availabilities);
+                    boatOwnerRepository.save(owner);
+                }else{
+                    //3 zahvata pocetak jednog a kraj drugog, pri tome ta dva su jedan pored drugog
+                    missingPeriod.setStartDate(startOfNewPartOfFirst.get().getEndDate());
+                    missingPeriod.setEndDate(endOfNewPartOfSecond.get().getStartDate());
+                    //startOfNewPartOfFirst i endOfNewPartOfSecond brisemo
+                    //ujesto njih kreiram novi koji kopicinje kad pocetak startOfNewPartOfFirst i zavrsava se kad kraj endOfNewPartOfSecond
+                    BoatOwnerAvailability newOne = new BoatOwnerAvailability();
+                    newOne.setStartDate(startOfNewPartOfFirst.get().getStartDate());
+                    newOne.setEndDate(endOfNewPartOfSecond.get().getEndDate());
+                    var saved  = boatOwnerAvailabilityService.save(newOne);
+                    availabilities.add(saved);
+
+                    availabilities.remove(startOfNewPartOfFirst.get());
+                    availabilities.remove(endOfNewPartOfSecond.get());
+                    boatOwnerAvailabilityService.delete(startOfNewPartOfFirst.get().getId());
+                    boatOwnerAvailabilityService.delete(endOfNewPartOfSecond.get().getId());
+
+                    owner.setAvailability(availabilities);
+                }
+
+            }else {
+                //7 taj period vec posoji i ne radi nista vec obradjeno
+               // return null;
+                return  owner.getAvailability();
+            }
+            //TODO:sacuvati sve ovo
+            boatOwnerRepository.save(owner);
+            return owner.getAvailability();
+
+        }
+
+//doraditi
+        var entirelyInsideNewOne = availabilities.stream().filter(boatAvailability ->
+                (isBetween(boatAvailability.getStartDate(), newAvailability.getStartDate(), newAvailability.getEndDate())  ||
+                        boatAvailability.getStartDate().getTime() == (newAvailability.getStartDate().getTime()))&&
+                        (isBetween(boatAvailability.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate()) ||
+                                boatAvailability.getEndDate().getTime() == (newAvailability.getEndDate().getTime()))).collect(Collectors.toSet());
+        if(!entirelyInsideNewOne.isEmpty()){
+
+            //KREIRAJ NOVI
+            BoatOwnerAvailability added = boatOwnerAvailabilityService.save(newAvailability);
+            availabilities.add(added);
+            //boat.setAvailableTimePeriods(new HashSet<>(checkForOverlapping(added, new ArrayList<>(availabilities))));
+
+            //izbaci iz liste kod broda
+            availabilities.removeAll(entirelyInsideNewOne);
+            owner.setAvailability(availabilities);
+            boatOwnerRepository.save(owner);
+            //TODO:OBRISI IH SVE
+            boatOwnerAvailabilityService.delete(entirelyInsideNewOne);
+            //ovo ce na frontu da sjebe stvar vrv ali pri ponovnom ucitavanju trebalo bi da bude ok
+            return owner.getAvailability();
+        }else{
+            Optional<BoatOwnerAvailability> endPartOfNew = availabilities.stream().filter(boatAvailability ->
+                    isBetween(boatAvailability.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate()) ||
+                            boatAvailability.getEndDate().equals(newAvailability.getStartDate())).findFirst();
+            Optional<BoatOwnerAvailability> startPartOfNew = availabilities.stream().filter(boatAvailability ->
+                    isBetween(boatAvailability.getStartDate(), newAvailability.getStartDate(), newAvailability.getEndDate()) ||
+                            boatAvailability.getStartDate().equals(newAvailability.getEndDate())).findFirst();
+
+            if(!(endPartOfNew.isPresent() && startPartOfNew.isPresent())){
+                //1 novi zahvata kraj postojeceg
+                if( endPartOfNew.isPresent() ){
+                    missingPeriod.setStartDate(endPartOfNew.get().getStartDate());
+                    endPartOfNew.get().setEndDate(newAvailability.getEndDate());
+                    boatOwnerRepository.save(owner);
+                    return owner.getAvailability();
+                }
+                //2 novi zahvata pocetak postojeceg
+                if( startPartOfNew.isPresent() ){
+                    missingPeriod.setEndDate(startPartOfNew.get().getEndDate());
+                    startPartOfNew.get().setStartDate(newAvailability.getStartDate());
+                    boatOwnerRepository.save(owner);
+                    return owner.getAvailability();
+                }
+
+
+            }else{
+                //ovdje zeleno 5
+                var anyInBetween = availabilities.stream().filter(boatAvailability ->
+                        isBetween(boatAvailability.getStartDate(),endPartOfNew.get().getEndDate(), startPartOfNew.get().getStartDate()) &&
+                                isBetween(boatAvailability.getEndDate(), endPartOfNew.get().getEndDate(), startPartOfNew.get().getStartDate())).collect(Collectors.toSet());
+                BoatOwnerAvailability newOne = new BoatOwnerAvailability();
+                newOne.setStartDate(newAvailability.getStartDate());
+                newOne.setEndDate(newAvailability.getEndDate());
+                boatOwnerAvailabilityService.save(newOne);
+                availabilities.add(newOne);
+
+                availabilities.remove(endPartOfNew.get());
+                availabilities.remove(startPartOfNew.get());
+                boatOwnerAvailabilityService.delete(endPartOfNew.get().getId());
+                boatOwnerAvailabilityService.delete(startPartOfNew.get().getId());
+
+
+                if(!anyInBetween.isEmpty()){
+                    availabilities.remove(anyInBetween);
+                    boatOwnerAvailabilityService.delete(anyInBetween);
+                }
+                owner.setAvailability(availabilities);
+                boatOwnerRepository.save(owner);
+                return owner.getAvailability();
+            }
+        }
+
+        //u slucaju da nema nikakvih preklapanja samo ga dodaj
+        BoatOwnerAvailability added = boatOwnerAvailabilityService.save(newAvailability);
+        availabilities.add(added);
+        owner.setAvailability(availabilities);
+        boatOwnerRepository.save(owner);
+        return owner.getAvailability();
+    }
+
+    @Override
+    @Transactional
+    public Boolean checkIfReservationOverlapsAvailability(BoatOwnerAvailability newAvailability, String email) {
+        BoatOwner owner = boatOwnerRepository.findByEmail(email);
+        //TODO:PROVERITI DA LI IMA REZ U TOM PERIODU
+        Collection<Reservation> ownerReservations = reservationService.getCaptainReservationsForBoatOwner(owner.getId());
+        var foundOverlaps = ownerReservations.stream().filter(reservation -> dateService.reservationOverlapsWithAvailability(reservation.getStartDate(), reservation.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate())).collect(Collectors.toSet());
+        if(foundOverlaps.size() > 0){
+            return true;
+        }
+        return false;
     }
 }

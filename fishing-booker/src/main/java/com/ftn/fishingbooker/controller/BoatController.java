@@ -189,6 +189,20 @@ public class BoatController {
         return ResponseEntity.ok(boatService.getNoOfIncomingReservations(id) > 0);
     }
 
+    @PostMapping("/check-if-res-overlaps-avail")
+    public ResponseEntity<Boolean> checkIfReservationOverlapsAvailability(@RequestBody BoatAvailabilityRequestDto availability) {
+        return ok(boatService.checkIfReservationOverlapsAvailability(BoatMapper.mapToBoatAvailabilityEntity(availability), availability.boatId));
+
+    }
+
+    @PostMapping("/remove-availability")
+    public ResponseEntity<Collection<BoatAvailabilityDto>> deleteAvailabilityPeriod(@RequestBody BoatAvailabilityRequestDto availability) {
+        Collection<BoatAvailability> availabilities = boatService.updateAvailability(availability.getStartDate(), availability.getEndDate(), availability.boatId);
+        Collection<BoatAvailabilityDto> dtos = availabilities.stream()
+                .map(BoatMapper::mapToAvailabilityDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
 
 
 }

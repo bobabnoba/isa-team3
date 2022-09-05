@@ -11,4 +11,11 @@ public class BoatOwnerMapper {
         dto.setAvailability(boatOwner.getAvailability());
         return dto;
     }
+
+    public static BoatOwnerAvailability mapToBoatOwnerAvailabilityEntity(BoatOwnerAvailabilityRequestDto availability) {
+        BoatOwnerAvailability entity = new BoatOwnerAvailability();
+        entity.setStartDate(availability.startDate);
+        entity.setEndDate(availability.endDate);
+        return entity;
+    }
 }

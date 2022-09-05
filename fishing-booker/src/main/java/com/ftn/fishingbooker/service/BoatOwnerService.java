@@ -16,13 +16,11 @@ public interface BoatOwnerService {
 
     boolean checkAvailability(Date from, Date to, String boatOwnerEmail);
 
-    void updateAvailability(Date reservationStartDate, Date reservationEndDate, String ownerEmail);
-
-//    Collection<ReservationInfo> getUpcomingReservationsForBoatOwner(String email);
-//
-//    Collection<Reservation> getPastReservationsForBoatOwner(String email);
-//
-//    Collection<Reservation> getCurrentReservationsForBoatOwner(String email);
+    Collection<BoatOwnerAvailability> updateAvailability(Date reservationStartDate, Date reservationEndDate, String ownerEmail);
 
     BoatOwner getByEmail(String boatOwnerEmail);
+
+    Collection<BoatOwnerAvailability> addAvailabilityPeriod(BoatOwnerAvailability mapToBoatOwnerAvailabilityEntity, String email);
+
+    Boolean checkIfReservationOverlapsAvailability(BoatOwnerAvailability mapToBoatOwnerAvailabilityEntity, String email);
 }

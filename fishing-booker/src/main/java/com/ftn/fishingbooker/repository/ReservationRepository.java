@@ -148,9 +148,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     Collection<BoatReservationInfo> getCurrentReservationsForHomeOwner(Long id);
 
     @Query(value = "select r " +
-            "    from VacationHome vh " +
+            "    from Boat vh " +
             "    join vh.reservations r " +
-            "    where vh.homeOwner.id = :id and r.isCancelled = false and r.ownerCaptain = true")
+            "    where vh.boatOwner.id = :id and r.isCancelled = false and r.ownerCaptain = true")
     Collection<Reservation> getCaptainReservationsForBoatOwner(Long id);
 
 

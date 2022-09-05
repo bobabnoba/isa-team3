@@ -95,4 +95,27 @@ public class BoatOwnerController {
         return ok(dtos);
     }
 
+    @PostMapping("/add-availability")
+    public ResponseEntity<Collection<BoatAvailabilityDto>> addAvailabilityPeriod(@RequestBody BoatOwnerAvailabilityRequestDto availability) {
+        Collection<BoatOwnerAvailability> availabilities = boatOwnerService.addAvailabilityPeriod(BoatOwnerMapper.mapToBoatOwnerAvailabilityEntity(availability), availability.getEmail());
+        Collection<BoatAvailabilityDto> dtos = availabilities.stream()
+                .map(BoatMapper::mapToAvailabilityDtoFromOwnerAvailability)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
+    @PostMapping("/check-if-res-overlaps-avail")
+    public ResponseEntity<Boolean> checkIfReservationOverlapsAvailability(@RequestBody BoatOwnerAvailabilityRequestDto availability) {
+        return ok(boatOwnerService.checkIfReservationOverlapsAvailability(BoatOwnerMapper.mapToBoatOwnerAvailabilityEntity(availability), availability.getEmail()));
+
+    }
+
+    @PostMapping("/remove-availability")
+    public ResponseEntity<Collection<BoatAvailabilityDto>> deleteAvailabilityPeriod(@RequestBody BoatOwnerAvailabilityRequestDto availability) {
+        Collection<BoatOwnerAvailability> availabilities = boatOwnerService.updateAvailability(availability.getStartDate(), availability.getEndDate(), availability.getEmail());
+        Collection<BoatAvailabilityDto> dtos = availabilities.stream()
+                .map(BoatMapper::mapToAvailabilityDtoFromOwnerAvailability)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
+
 }

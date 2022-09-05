@@ -41,7 +41,9 @@ public interface HomeService {
 
     VacationHome save(VacationHome home);
 
-    void updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id);
+    Collection<VacationHomeAvailability> updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id);
 
     int getNoOfIncomingReservations(Long id);
+
+    Boolean checkIfReservationOverlapsAvailability(VacationHomeAvailability mapToHomeAvailabilityEntity, Long homeId);
 }

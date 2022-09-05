@@ -192,5 +192,20 @@ public class HomeController {
     public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){
         return ResponseEntity.ok(vacationHomeService.getNoOfIncomingReservations(id) > 0);
     }
+
+    @PostMapping("/check-if-res-overlaps-avail")
+    public ResponseEntity<Boolean> checkIfReservationOverlapsAvailability(@RequestBody HomeAvailabilityRequestDto availability) {
+        return ok(vacationHomeService.checkIfReservationOverlapsAvailability(VacationHomeMapper.mapToHomeAvailabilityEntity(availability), availability.getHomeId()));
+
+    }
+
+    @PostMapping("/remove-availability")
+    public ResponseEntity<Collection<HomeAvailabilityDto>> deleteAvailabilityPeriod(@RequestBody HomeAvailabilityRequestDto availability) {
+        Collection<VacationHomeAvailability> availabilities = vacationHomeService.updateAvailability(availability.getStartDate(), availability.getEndDate(), availability.homeId);
+        Collection<HomeAvailabilityDto> dtos = availabilities.stream()
+                .map(VacationHomeMapper::mapToAvailabilityDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
+    }
 }
 

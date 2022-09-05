@@ -15,11 +15,11 @@
                 <div  style="padding-top: 72px;" class="col-xl-4 col-lg-5">
                     <h5>Add new available period</h5>
                     
-                    <div class="picker">
-                      <form [formGroup]="aFormGroup">
+                    
+                      <form [formGroup]="aFormGroup" class="pb-2">
                         <mat-form-field appearance="fill">
                           <mat-label>Enter a date range</mat-label>
-                          <mat-date-range-input [rangePicker]="picker">
+                          <mat-date-range-input [min]="todayDate" [rangePicker]="picker">
                             <input matStartDate formControlName="startDate" placeholder="Start date">
                             <input matEndDate formControlName="endDate" placeholder="End date">
                           </mat-date-range-input>
@@ -30,9 +30,19 @@
                       </form>
                       
                     </div>
-                    <button type="button"
-                       class="btn btn--outline-primary submit-btn" (click)="addNew()">Submit</button>
-                </div>
+                    <div class="row">
+                      <div class="col-md p-0">
+                        <button type="button"
+                        class="btn btn-outline-dark btn-w" (click)="addNew()">Add</button>
+                      </div>
+                      <div class="col-md p-0">
+                        <button type="button"
+                        class="btn btn-outline-dark btn-w" (click)="removePeriod()">Remove</button>
+                      </div>
+                      
+                        
+                    </div>
+                
             </div>
 
             <div class="row">
