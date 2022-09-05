@@ -22,6 +22,7 @@ import com.ftn.fishingbooker.service.ReservationService;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.ok;
 

@@ -5,14 +5,18 @@ import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.mapper.*;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.*;
-import com.ftn.fishingbooker.util.*;
+import com.ftn.fishingbooker.util.DateUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/reservations")
@@ -30,17 +34,16 @@ public class ReservationController {
     private final HomeOwnerService homeOwnerService;
 
 
-
     @GetMapping("{id}")
     public ResponseEntity<ReservationWithClientDto> getReservation(@PathVariable Long id) {
         Reservation reservation = reservationService.getReservationById(id);
-        return ResponseEntity.ok(ReservationMapper.toDtoWClient(reservation));
+        return ok(ReservationMapper.toDtoWClient(reservation));
     }
 
     @GetMapping("/client/{id}")
     public ResponseEntity<Reservation> GetReservation(@PathVariable Long id) {
         Reservation reservation = reservationService.getReservationById(id);
-        return ResponseEntity.ok(reservation);
+        return ok(reservation);
     }
 
     @GetMapping("/upcoming/{userEmail}")
@@ -87,36 +90,17 @@ public class ReservationController {
             case BOAT:
                 Boat boat = boatService.getBoatForReservation(reservationId);
                 boatService.addAvailabilityPeriod(new BoatAvailability(reservation.getStartDate(), reservation.getEndDate()), boat.getId());
-                //boatOwnerService.add(reservation.getStartDate(), reservation.getEndDate(), boat.getBoatOwner().getEmail());
-
+                if (reservation.isOwnerCaptain()) {
+                    boatOwnerService.addAvailabilityPeriod(new BoatOwnerAvailability(reservation.getStartDate(), reservation.getEndDate()), boat.getBoatOwner().getEmail());
+                }
                 break;
             default:
                 break;
         }
 
-        return ResponseEntity.ok(ReservationMapper.map(reservationList));
+        return ok(ReservationMapper.map(reservationList));
     }
-        switch (reservation.getType()) {
-            case ADVENTURE:
-                Adventure adventure = adventureService.getAdventureForReservation(reservationId);
-                instructorService.addAvailabilityPeriod(new InstructorAvailability(reservation.getStartDate(), reservation.getEndDate()), adventure.getInstructor().getEmail());
-                break;
-            case VACATION_HOME:
-                VacationHome vacationHome = homeService.getVacationHomeForReservation(reservationId);
-                homeService.addAvailabilityPeriod(new VacationHomeAvailability(reservation.getStartDate(), reservation.getEndDate()), vacationHome.getId());
-                break;
-            case BOAT:
-                Boat boat = boatService.getBoatForReservation(reservationId);
-                boatService.addAvailabilityPeriod(new BoatAvailability(reservation.getStartDate(), reservation.getEndDate()), boat.getId());
-                //boatOwnerService.add(reservation.getStartDate(), reservation.getEndDate(), boat.getBoatOwner().getEmail());
 
-                break;
-            default:
-                break;
-        }
-
-        return ResponseEntity.ok(ReservationMapper.map(reservationList));
-    }
 
     @GetMapping("/adventure/{ReservationId}")
     public AdventureDto GetAdventureForReservation(@PathVariable Long ReservationId) {
@@ -135,18 +119,18 @@ public class ReservationController {
 
 
     @GetMapping("check-if-ongoing/{id}")
-    public ResponseEntity<ClientDto> checkIfReservationIsOngoing(@PathVariable Long id){
+    public ResponseEntity<ClientDto> checkIfReservationIsOngoing(@PathVariable Long id) {
 
         TimeZone timeZone = TimeZone.getTimeZone("UTC");
         Calendar cal = Calendar.getInstance(timeZone);
         cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0 , 0 , 0);
-        var t = cal.getTime() ;
-        var now = t.getTime() - 2*3600*1000;
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        var t = cal.getTime();
+        var now = t.getTime() - 2 * 3600 * 1000;
         var dateNow = new Timestamp(now);
         Reservation reservation = reservationService.getReservationById(id);
         dateNow.setNanos(0);
-        if(reservation.getStartDate().before(dateNow) && ( reservation.getEndDate().after(dateNow) || reservation.getEndDate().equals(dateNow))){
+        if (reservation.getStartDate().before(dateNow) && (reservation.getEndDate().after(dateNow) || reservation.getEndDate().equals(dateNow))) {
             return new ResponseEntity<>(ClientMapper.map(reservation.getClient()), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -160,34 +144,34 @@ public class ReservationController {
             @PathVariable ReservationType type) {
 
         Set<Reservation> found = new HashSet<>();
-        if(type.equals(ReservationType.BOAT)){
-            if(email != null){
+        if (type.equals(ReservationType.BOAT)) {
+            if (email != null) {
                 BoatOwner owner = boatOwnerService.getByEmail(email);
                 found.addAll(reservationService.getReservationForBoatOwner(owner.getId(), from, to));
-            }else{
+            } else {
                 found.addAll(reservationService.getReservationsForBoat(id, from, to));
             }
-        }else if( type.equals(ReservationType.VACATION_HOME)){
-            if(email != null){
+        } else if (type.equals(ReservationType.VACATION_HOME)) {
+            if (email != null) {
                 HomeOwner owner = homeOwnerService.getByEmail(email);
                 found.addAll(reservationService.getReservationForHomeOwner(owner.getId(), from, to));
-            }else{
+            } else {
                 found.addAll(reservationService.getReservationsForHome(id, from, to));
             }
-        }else{
-            if(email != null){
+        } else {
+            if (email != null) {
                 Instructor instructor = instructorService.findByEmail(email);
                 found.addAll(reservationService.getReservationForInstructor(instructor.getId(), from, to));
-            }else{
+            } else {
                 found.addAll(reservationService.getReservationsForAdventure(id, from, to));
             }
         }
         Collection<EarningsChartDto> earningsDtos = new ArrayList<>();
-        for (Date d = from; d.before(to); d = DateUtil.addDays(d,1)){
+        for (Date d = from; d.before(to); d = DateUtil.addDays(d, 1)) {
             Date finalD = new Date(d.getTime());
             Collection<Reservation> dtoDay = found.stream().filter(earnings ->
-                    ( earnings.getStartDate().after(finalD) || earnings.getStartDate().getTime() == finalD.getTime()) &&
-                        earnings.getStartDate().before(DateUtil.addDays(finalD,1))).collect(Collectors.toSet());
+                    (earnings.getStartDate().after(finalD) || earnings.getStartDate().getTime() == finalD.getTime()) &&
+                            earnings.getStartDate().before(DateUtil.addDays(finalD, 1))).collect(Collectors.toSet());
             EarningsChartDto dto = new EarningsChartDto();
             dto.setDate(finalD);
             dto.setIncome((double) dtoDay.size());
@@ -204,36 +188,36 @@ public class ReservationController {
             @PathVariable ReservationType type) {
 
         Set<Reservation> found = new HashSet<>();
-        if(type.equals(ReservationType.BOAT)){
-            if(email != null){
+        if (type.equals(ReservationType.BOAT)) {
+            if (email != null) {
                 BoatOwner owner = boatOwnerService.getByEmail(email);
                 found.addAll(reservationService.getReservationForBoatOwner(owner.getId(), from, to));
-            }else{
+            } else {
                 found.addAll(reservationService.getReservationsForBoat(id, from, to));
             }
-        }else if( type.equals(ReservationType.VACATION_HOME)){
-            if(email != null){
+        } else if (type.equals(ReservationType.VACATION_HOME)) {
+            if (email != null) {
                 HomeOwner owner = homeOwnerService.getByEmail(email);
                 found.addAll(reservationService.getReservationForHomeOwner(owner.getId(), from, to));
-            }else{
+            } else {
                 found.addAll(reservationService.getReservationsForHome(id, from, to));
             }
-        }else{
-            if(email != null){
+        } else {
+            if (email != null) {
                 Instructor instructor = instructorService.findByEmail(email);
                 found.addAll(reservationService.getReservationForInstructor(instructor.getId(), from, to));
-            }else{
+            } else {
                 found.addAll(reservationService.getReservationsForAdventure(id, from, to));
             }
         }
         Collection<ReservationChartDto> earningsDtos = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
-        for (int i = 1; i<13; i++){
+        for (int i = 1; i < 13; i++) {
             int sum = 0;
             for (Reservation r : found) {
                 var m = cal.get(Calendar.MONTH);
                 cal.setTime(new Date(r.getStartDate().getTime()));
-                if( cal.get(Calendar.MONTH) == i){
+                if (cal.get(Calendar.MONTH) == i) {
                     sum++;
                 }
             }

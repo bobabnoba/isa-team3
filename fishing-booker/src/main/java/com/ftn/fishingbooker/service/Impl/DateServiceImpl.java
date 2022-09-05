@@ -16,9 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class DateServiceImpl implements DateService {
     @Override
     public boolean doPeriodsOverlap(Date startDate1, Date endDate1, Date startDate2, Date endDate2) {
-        return ((startDate1.before(startDate2) || startDate1.getTime() == startDate2.getTime())
-                && startDate1.before(endDate2) && (endDate1.after(endDate2) || endDate1.getTime() == endDate2.getTime())
-                && endDate1.after(startDate2));
+        return !(endDate1.before(startDate2) || endDate2.before(startDate1));
 
     }
 
@@ -49,11 +47,18 @@ public class DateServiceImpl implements DateService {
 
     @Override
     public boolean reservationOverlapsWithAvailability(Date resStartDate, Date resEndDate, Date availStartDate, Date availEndDate) {
-         var overlaps = (inBetweenOrEqual(resStartDate,availStartDate,availEndDate) || inBetweenOrEqual(resEndDate, availStartDate, availEndDate));
+        var overlaps = (inBetweenOrEqual(resStartDate, availStartDate, availEndDate) || inBetweenOrEqual(resEndDate, availStartDate, availEndDate));
         return overlaps;
     }
 
-    private boolean inBetweenOrEqual(Date date, Date start, Date end){
+    public boolean inBetweenOrEqual(Date date, Date start, Date end) {
         return (date.after(start) && date.before(end)) || date.equals(start) || date.equals(end);
+    }
+
+    @Override
+    public boolean inBetweenOrEqual(Date startDate1, Date endDate1, Date startDate2, Date endDate2) {
+        return ((startDate1.before(startDate2) || startDate1.getTime() == startDate2.getTime())
+                && startDate1.before(endDate2) && (endDate1.after(endDate2) || endDate1.getTime() == endDate2.getTime())
+                && endDate1.after(startDate2));
     }
 }

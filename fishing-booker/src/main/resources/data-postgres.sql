@@ -1,5 +1,3 @@
-delete from vacation_home_reservations;
-delete from reservation;
 delete from boat;
 delete from room;
 delete from vacation_home;
@@ -87,11 +85,6 @@ insert into adventure(
 	(111, 2.00, 20, 'Snorkeling with eels', 3, 45, 4, 'Eeel pradise', 'false', 40, 110),
 	(112, 5.00, 20, 'We fish Sharks', 3, 45, 4, 'Shark soup', 'false', 40, 110);
 
---Rooms
---insert into room(
---	id, bed_number, home_id)
---	values (100, 4, 100);
-
 
 --Utilities
 insert into utility(
@@ -144,61 +137,6 @@ insert into adventure_utilities(
 	(111, 103),
 	(112, 104);
 
----- Reservations
-insert into reservation(
-	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage, owner_captain)
-	values
-	(101, '2022-08-24', 'false', 3, 200, '2022-08-20', 'VACATION_HOME', 10, 0, 'false'),
-	(104, '2022-08-30', 'false', 3, 200, '2022-08-29', 'ADVENTURE', 10, 0, 'false'),
-	(105, '2022-08-24 09:00:00', 'false', 3, 500, '2022-08-24 05:00:00', 'ADVENTURE', 10,0, 'false'),
-	(106, '2022-08-24 15:00:00', 'false', 3, 400, '2022-08-24 09:00:00', 'ADVENTURE', 10,0, 'false'),
-	(107, '2022-08-24 20:00:00', 'false', 3, 90, '2022-08-24 11:00:00', 'ADVENTURE', 10,0, 'false'),
-	(108, '2022-08-24 12:00:00', 'false', 3, 354, '2022-08-24 10:00:00', 'ADVENTURE', 10, 0, 'false');
-
---	(102, '2022-08-30', 'false', 5, 200, '2022-08-25', 'VACATION_HOME', 12);
-
-
--- Vacation Home Availability
-insert into vacation_home_availability_periods(id, end_date, start_date)
-values
-(100,  '2022-08-30', '2022-08-01'), --available
-(101,  '2022-08-30', '2022-08-01'), --available
-(102,  '2022-08-30', '2022-08-01'), --available
-(103,  '2022-09-14', '2022-08-26'); --available
-
-insert into vacation_home_availability(
-	vacation_home_id, availability_id)
-	values (100, 100),
-	(101,101),
-	(102,102),
-	(103,103);
---Instructor Availability
---insert into instructor_availability_periods(
---	id, end_date, start_date)
---	values (100,  '2022-08-30', '2022-08-01'), --available
---	(101,  '2022-09-30', '2022-09-01'), --available
---	(102,  '2022-10-30', '2022-10-01'); --available
---
---insert into instructor_availability(
---	instructor_id, availability_id)
---	values (110, 100),
---	(110, 101),
---	(110, 102);
-
-----Boats Availability
---insert into boat_availability_periods(id, end_date, start_date)
---values
---(100,  '2022-08-30', '2022-08-01'); --available
---insert into boat_available_time_periods (boat_id, available_time_periods_id)
---values
---(100, 100);
-
--- Vacation Home Reservations
-insert into vacation_home_reservations(vacation_home_id, reservations_id)
-values
-(101, 101);
---(102, 102);
-
 
 -- Equipment
 insert into fishing_equipment(id, name)
@@ -222,78 +160,3 @@ insert into rule(id, name)
             (104, 'WiFi included'),
             (105, 'No kids');
 
-           insert into adventure_code_of_conduct(adventure_id, code_of_conduct_id)
-            values (111, 100);
-
-insert into adventure_reservations(adventure_id, reservations_id)
-values (112, 105),
-    (112, 106),
-    (112, 107),
-    (111,104),
-    (112, 108);
-
-
-insert into special_offer(id, active_from, active_to, discount, guests, is_used, price, reservation_end_date, reservation_start_date, type, canceling_percentage, is_captain)
-	values (100, '2022-08-25 19:50:00', '2022-09-02 19:50:00', 5, 3, 'false', 202, '2022-09-05 00:50:00', '2022-09-04 19:50:00', 'ADVENTURE',0, 'false'),
-	 (101, '2022-09-02 19:50:00', '2022-09-03 19:50:00', 5, 3, 'false', 303, '2022-09-06 00:50:00', '2022-09-05 19:50:00', 'ADVENTURE',0, 'false'),
-	 (102, '2022-09-03 19:50:00', '2022-09-14 19:50:00', 5, 3, 'false', 404, '2022-09-28 00:50:00', '2022-09-25 19:50:00', 'ADVENTURE',10, 'false');
-
-insert into adventure_special_offers(
-	adventure_id, special_offers_id)
-	values (112, 100),
-	 (112, 101),
-	 (112, 102);
-
-
---Boat owner availability
-insert into boat_owner_availability_periods(
-	id, end_date, start_date)
-	values (200,  '2022-08-30', '2022-08-01'),
-	 (201,  '2022-09-04', '2022-09-01'),
-	 (202,  '2022-09-08', '2022-09-07'),
-	 (203,  '2022-09-13', '2022-09-10'),
-	 (204,  '2022-09-23', '2022-09-18'); --available
-
-
-insert into boat_owner_availability(
-	boat_owner_id, availability_id)
-	values (109, 200), (109,201), (109, 202), (109, 203), (109, 204);
-
------- Reservations
---insert into reservation(
---	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage, owner_captain)
---	values
---	(201, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5, 'false'),
---	(202, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5, 'false'),
---	(203, '2022-08-31', 'false', 3, 200, '2022-08-28', 'BOAT', 10, 5, 'false'),
---	(204, '2022-09-13', 'false', 3, 200, '2022-09-11', 'BOAT', 10, 5, 'false'),
---	(205, '2022-09-17', 'false', 3, 200, '2022-09-15', 'BOAT', 10, 5, 'false'),
---		(206, '2022-08-31', 'false', 3, 200, '2022-08-28', 'BOAT', 10, 5, 'false'),
---    	(207, '2022-09-13', 'false', 3, 200, '2022-09-11', 'BOAT', 10, 5, 'false'),
---    	(208, '2022-09-17', 'false', 3, 200, '2022-09-15', 'BOAT', 10, 5, 'false'),
---    	(209, '2022-08-21', 'false', 3, 200, '2022-08-20', 'BOAT', 10, 5, 'false'),
---        	(210, '2022-08-13', 'false', 3, 200, '2022-08-11', 'BOAT', 10, 5, 'false');
---
-----Boat reservations
---
---insert into boat_reservations(boat_id, reservations_id) values
---    (100, 201),(100, 202),(100, 203), (100, 204), (100, 205), (101, 206), (101, 207), (101, 208), (101, 209), (101, 210);
---
---insert into reservation(
---	id, end_date, is_cancelled, guests, price, start_date, type, client_id, canceling_percentage, owner_captain)
---	values
---	(211, '2022-08-21', 'false', 3, 300, '2022-08-20', 'VACATION_HOME', 12, 5, 'false'),
---	(212, '2022-08-13', 'false', 3, 300, '2022-08-11', 'VACATION_HOME', 12, 5, 'false'),
---	(213, '2022-09-03', 'false', 3, 300, '2022-08-28', 'VACATION_HOME', 12, 5, 'false'),
---	(214, '2022-09-13', 'false', 3, 300, '2022-09-11', 'VACATION_HOME', 12, 5, 'false'),
---	(215, '2022-09-17', 'false', 3, 300, '2022-09-15', 'VACATION_HOME', 12, 5, 'false'),
---		(216, '2022-09-03', 'false', 3, 300, '2022-08-28', 'VACATION_HOME', 12, 5, 'false'),
---    	(217, '2022-09-13', 'false', 3, 300, '2022-09-11', 'VACATION_HOME', 12, 5, 'false'),
---    	(218, '2022-09-17', 'false', 3, 300, '2022-09-15', 'VACATION_HOME', 12, 5, 'false'),
---    	(219, '2022-08-21', 'false', 3, 300, '2022-08-20', 'VACATION_HOME', 12, 5, 'false'),
---        	(220, '2022-08-13', 'false', 3, 300, '2022-08-11', 'VACATION_HOME', 12, 5, 'false');
---
-----Boat reservations
---
---insert into vacation_home_reservations(vacation_home_id, reservations_id) values
---    (102, 211),(102, 212),(102, 213), (102, 214), (102, 215), (103, 216), (103, 217), (103, 218), (103, 219), (103, 220);

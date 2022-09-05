@@ -14,4 +14,6 @@ public interface DateService {
     Date addDaysToJavaUtilDate(Date date, int days);
 
     boolean reservationOverlapsWithAvailability(Date resStartDate, Date resEndDate, Date availStartDate, Date availEndDate);
+
+    boolean inBetweenOrEqual(Date startDate1, Date endDate1, Date startDate2, Date endDate2);
 }

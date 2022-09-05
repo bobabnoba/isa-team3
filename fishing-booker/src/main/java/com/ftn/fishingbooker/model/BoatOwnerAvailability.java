@@ -1,12 +1,18 @@
 package com.ftn.fishingbooker.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.Date;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "boat_owner_availability_periods")
 public class BoatOwnerAvailability {
     @Id
@@ -19,4 +25,10 @@ public class BoatOwnerAvailability {
 
     @Column(name = "endDate", nullable = false)
     private Date endDate;
+
+
+    public BoatOwnerAvailability(Date startDate, Date endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 }
