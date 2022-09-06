@@ -46,4 +46,6 @@ public interface BoatService {
     Boolean checkIfReservationOverlapsAvailability(BoatAvailability mapToBoatAvailabilityEntity, Long boatId);
 
     void updateBoatRating(Long rentalId, double boatRating);
+
+    Boat findLockedById(Long id);
 }

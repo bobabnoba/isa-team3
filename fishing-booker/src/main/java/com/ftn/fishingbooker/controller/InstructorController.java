@@ -49,8 +49,8 @@ public class InstructorController {
         return ok(InstructorMapper.toDto(found));
     }
 
-    @GetMapping("/info")
-    public ResponseEntity<InstructorInfoDto> getInstructorWithAvailability(Long id) {
+    @GetMapping("/info/{id}")
+    public ResponseEntity<InstructorInfoDto> getInstructorWithAvailability(@PathVariable Long id) {
         Instructor found = instructorService.getWithAvailabilityById(id);
         return ok(InstructorMapper.mapToInstructorInfo(found));
     }
@@ -66,6 +66,7 @@ public class InstructorController {
     }
 
     @GetMapping("/available")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public Collection<InstructorBrowseDto> GetAll() {
         Collection<Instructor> instructors = instructorService.getAll();
 
@@ -98,6 +99,7 @@ public class InstructorController {
     }
 
     @GetMapping("/has-overlapping-reservation")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Boolean> checkIfAvailable(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
                                                     @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
                                                     @RequestParam String email) {

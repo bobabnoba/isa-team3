@@ -19,7 +19,7 @@ public class Client extends User {
     @JsonIgnore
     private Set<Reservation> reservationsMade;
 
-    private int noOfPenalties;
+    private int noOfPenalties = 0;
 
     @ManyToMany(targetEntity = Boat.class, fetch = FetchType.EAGER)
     @JoinTable(

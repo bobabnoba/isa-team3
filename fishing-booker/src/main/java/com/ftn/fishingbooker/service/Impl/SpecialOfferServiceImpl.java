@@ -7,6 +7,7 @@ import com.ftn.fishingbooker.repository.SpecialOfferRepository;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,8 +46,11 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
             clientService.emailSubscribers(adventure.getInstructor(), "instructor");
             String instructorMail = adventure.getInstructor().getEmail();
             instructorService.updateAvailability(new InstructorAvailability(saved.getReservationStartDate(), saved.getReservationEndDate()), instructorMail);
-        } else if (specialOffer.getType().equals(ReservationType.BOAT)) {
-            Boat boat = boatService.getById(serviceId);
+        }else if( specialOffer.getType().equals(ReservationType.BOAT)){
+            Boat boat = boatService.findLockedById(serviceId);
+            if ( boat == null ){
+                throw new PessimisticLockingFailureException("Someone is already trying to reserve same boat at this moment!");
+            }
             boat.getSpecialOffers().add(saved);
             boatService.save(boat);
 
@@ -57,8 +61,11 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
                 boatOwnerService.updateAvailability(saved.getReservationStartDate(), saved.getReservationEndDate(), ownerEmail);
             }
             clientService.emailSubscribers(boat.getBoatOwner(), "boat");
-        } else if (specialOffer.getType().equals(ReservationType.VACATION_HOME)) {
-            VacationHome home = homeService.getById(serviceId);
+        } else if(specialOffer.getType().equals(ReservationType.VACATION_HOME)){
+            VacationHome home = homeService.findLockedById(serviceId);
+            if ( home == null ){
+                throw new PessimisticLockingFailureException("Someone is already trying to reserve same vacation home at this moment!");
+            }
             home.getSpecialOffers().add(saved);
             homeService.save(home);
 

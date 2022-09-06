@@ -21,7 +21,7 @@ public class ClientController {
 
 
     @GetMapping("/check-if-available")
-    @PreAuthorize("hasRole('INSTRUCTOR')")
+    @PreAuthorize("hasAnyRole('HOME_OWNER', 'BOAT_OWNER', 'INSTRUCTOR')")
     public ResponseEntity<Boolean> checkIfAvailable(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
                                                     @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
                                                     @RequestParam String email) {
@@ -29,12 +29,14 @@ public class ClientController {
     }
 
     @GetMapping("{email}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<ClientDto> getClientInfo(@PathVariable String email) {
         Client clientInfo = clientService.getClientByEmail(email);
         return ResponseEntity.ok(ClientMapper.map(clientInfo));
     }
 
     @GetMapping("/{clientEmail}/subscribed/{entityType}/{entityId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public boolean isClientSubscribed(@PathVariable String clientEmail, @PathVariable String entityType, @PathVariable Long entityId) {
         return clientService.isClientSubscribed(clientEmail, entityType, entityId);
     }

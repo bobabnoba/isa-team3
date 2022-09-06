@@ -13,11 +13,12 @@ import com.ftn.fishingbooker.service.HomeService;
 import com.ftn.fishingbooker.service.ReservationService;
 import com.ftn.fishingbooker.util.FIleUploadUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.StringUtils;
+import org.springframework.util.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,6 +47,7 @@ public class HomeController {
     }
 
     @GetMapping()
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public Collection<RentalDto> GetAll() {
         Collection<VacationHome> homes = vacationHomeService.getAll();
 
@@ -53,7 +55,7 @@ public class HomeController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN', 'HOME_OWNER')")
     public Collection<VacationHomeDto> getAllVacations() {
         Collection<VacationHome> homes = vacationHomeService.getAll();
 
@@ -63,6 +65,7 @@ public class HomeController {
     }
 
     @PostMapping("/search")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Collection<RentalDto>> FilterAll(@RequestBody FilterDto filter) {
         if (clientService.hasOverlappingReservation(filter.getEmail(), filter.getStartDate(), filter.getEndDate())) {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
@@ -73,6 +76,7 @@ public class HomeController {
     }
 
     @GetMapping("/reservations/{homeId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public Collection<ReservationDto> GetVacationHomeReservations(@PathVariable Long homeId) {
 
         return ReservationMapper.map(reservationService.getReservationForVacationHome(homeId));
@@ -86,6 +90,7 @@ public class HomeController {
     }
 
     @PostMapping("/rent/{homeId}/{userEmail}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long homeId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
         if (client.getNoOfPenalties() >= 3) {
@@ -96,28 +101,26 @@ public class HomeController {
         }
         reservationDto.setType(ReservationType.VACATION_HOME);
         Reservation reservation = reservationService.makeVacationHomeReservation(client, homeId, reservationDto);
-        if (reservation == null) {
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
 
-        } else {
-            emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
-            return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
-        }
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+
     }
 
     @PostMapping("/owner-rent/{homeId}/{userEmail}")
-    public ResponseEntity<ReservationDto> ownerMakeReservation(@PathVariable String userEmail, @PathVariable Long homeId, @RequestBody ReservationDto reservationDto) {
+    @PreAuthorize("hasRole('HOME_OWNER')")
+    public ResponseEntity<?> ownerMakeReservation(@PathVariable String userEmail, @PathVariable Long homeId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
         if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-
         Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto, homeId);
-
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+
     }
 
     @GetMapping("/by-owner/{email}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Collection<VacationHomeDto>> getAllHomesByOwner(@PathVariable String email) {
         Collection<VacationHome> found = vacationHomeService.getAllByOwner(email);
         Collection<VacationHomeDto> dtos = found.stream()
@@ -130,12 +133,19 @@ public class HomeController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'HOME_OWNER')")
-    public ResponseEntity<Void> deleteHome(@PathVariable Long id) {
-        vacationHomeService.deleteById(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deleteHome(@PathVariable Long id) {
+
+        try{
+            vacationHomeService.deleteById(id);
+            return new ResponseEntity<>("Deleted", HttpStatus.OK);
+        }
+        catch (PessimisticLockingFailureException e){
+            return new ResponseEntity<>("Lock:" + e.getMessage(),HttpStatus.CONFLICT);
+        }
     }
 
     @PostMapping("")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<VacationHomeDto> addNewHome(@RequestBody NewHomeDto dto) {
         VacationHome home = VacationHomeMapper.toEntity(dto);
         VacationHome saved = vacationHomeService.addHome(home, dto.getOwnerEmail());
@@ -143,30 +153,35 @@ public class HomeController {
     }
 
     @PostMapping("/info-update/{id}")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<VacationHomeDto> updateHomeInfo(@PathVariable Long id, @RequestBody HomeInfoDto updated) {
         VacationHome saved = vacationHomeService.updateHomeInfo(id, updated);
         return ResponseEntity.ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
 
     @PostMapping("/additional-update/{id}")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<VacationHomeDto> updateHomeAdditionalInfo(@PathVariable Long id, @RequestBody HomeAdditionalInfo updated) {
         VacationHome saved = vacationHomeService.updateHomeAdditionalInfo(id, updated);
         return ResponseEntity.ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
 
     @PostMapping("/code-of-conduct-update/{id}")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<VacationHomeDto> updateHomeCodeOfConduct(@PathVariable Long id, @RequestBody Collection<Rule> updated) {
         VacationHome saved = vacationHomeService.updateHomeRules(id, updated);
         return ResponseEntity.ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
 
     @PostMapping("/address-update/{id}")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<VacationHomeDto> updateHomeAddress(@PathVariable Long id, @RequestBody AddressDto updated) {
         VacationHome saved = vacationHomeService.updateHomeAddress(id, AddressMapper.toEntity(updated));
         return ResponseEntity.ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
 
     @PostMapping("/image-upload/{id}")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<Object> uploadImages(@RequestParam MultipartFile file, @PathVariable Long id) throws IOException {
 
         String uploadDir = "images/homes/" + id;
@@ -179,6 +194,7 @@ public class HomeController {
     }
 
     @PostMapping("/add-availability")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<Collection<HomeAvailabilityDto>> addAvailabilityPeriod(@RequestBody HomeAvailabilityRequestDto availability) {
         Collection<VacationHomeAvailability> availabilities = vacationHomeService.addAvailabilityPeriod(VacationHomeMapper.mapToHomeAvailabilityEntity(availability), availability.getHomeId());
         Collection<HomeAvailabilityDto> dtos = availabilities.stream()
@@ -188,6 +204,7 @@ public class HomeController {
     }
 
     @GetMapping("/check-if-available")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     ResponseEntity<Boolean> checkAvailability(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
                                               @RequestParam Long homeId) {
@@ -195,6 +212,7 @@ public class HomeController {
     }
 
     @GetMapping("for-reservation/{reservationId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<HomeInfoDto> getHomeForReservation(@PathVariable Long reservationId) {
         VacationHome home = vacationHomeService.getHomeForReservation(reservationId);
         return new ResponseEntity<>(VacationHomeMapper.mapToDtoInfo(home), HttpStatus.OK);
@@ -207,12 +225,14 @@ public class HomeController {
     }
 
     @PostMapping("/check-if-res-overlaps-avail")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Boolean> checkIfReservationOverlapsAvailability(@RequestBody HomeAvailabilityRequestDto availability) {
         return ok(vacationHomeService.checkIfReservationOverlapsAvailability(VacationHomeMapper.mapToHomeAvailabilityEntity(availability), availability.getHomeId()));
 
     }
 
     @PostMapping("/remove-availability")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<Collection<HomeAvailabilityDto>> deleteAvailabilityPeriod(@RequestBody HomeAvailabilityRequestDto availability) {
         Collection<VacationHomeAvailability> availabilities = vacationHomeService.updateAvailability(availability.getStartDate(), availability.getEndDate(), availability.homeId);
         Collection<HomeAvailabilityDto> dtos = availabilities.stream()

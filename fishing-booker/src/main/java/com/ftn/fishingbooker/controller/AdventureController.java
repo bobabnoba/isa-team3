@@ -139,6 +139,7 @@ public class AdventureController {
     }
 
     @PostMapping("/search")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<Collection<RentalDto>> FilterAll(@RequestBody FilterDto filter) {
         if (clientService.hasOverlappingReservation(filter.getEmail(), filter.getStartDate(), filter.getEndDate())) {
 
@@ -150,6 +151,7 @@ public class AdventureController {
     }
 
     @PostMapping("/rent/special/offer/{adventureId}/{offerId}/{userEmail}")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<ReservationDto> makeSpecialOfferReservation(@PathVariable String userEmail, @PathVariable Long offerId, @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
 
@@ -177,6 +179,7 @@ public class AdventureController {
     }
 
     @PostMapping("/rent/{adventureId}/{userEmail}")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
         if (client.getNoOfPenalties() >= 3) {
@@ -186,14 +189,9 @@ public class AdventureController {
         reservationDto.setType(ReservationType.ADVENTURE);
         Reservation reservation = reservationService.makeAdventureReservation(client, adventureId, reservationDto);
 
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
 
-        if (reservation == null) {
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
-
-        } else {
-            emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
-            return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
-        }
     }
 
     @PostMapping("/instructor-rent/{adventureId}/{userEmail}")

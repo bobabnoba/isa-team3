@@ -16,6 +16,7 @@ import com.ftn.fishingbooker.repository.ReservationRepository;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -334,12 +335,10 @@ public class ReservationServiceImpl implements ReservationService {
 
             return newReservation;
 
-        } catch (Exception e) {
+        } catch (PessimisticLockingFailureException e) {
             System.out.println("Pessimistic lock: Vacation Home");
-
+            throw  e;
         }
-        return null;
-
     }
 
     @Override
@@ -354,11 +353,10 @@ public class ReservationServiceImpl implements ReservationService {
 
             return newReservation;
 
-        } catch (Exception e) {
+        } catch (PessimisticLockingFailureException e) {
             System.out.println("Pessimistic lock: Vacation Home");
-
+            throw e;
         }
-        return null;
     }
 
     @Override
@@ -374,11 +372,10 @@ public class ReservationServiceImpl implements ReservationService {
 
             return newReservation;
 
-        } catch (Exception e) {
+        } catch (PessimisticLockingFailureException e) {
             System.out.println("Pessimistic lock: Vacation Home");
-
+            throw e;
         }
-        return null;
     }
     @Override
     public Reservation makeSpecialOfferReservation(Client client, ReservationDto reservationDto) {

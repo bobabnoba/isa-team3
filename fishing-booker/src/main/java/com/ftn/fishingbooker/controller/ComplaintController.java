@@ -28,6 +28,7 @@ public class ComplaintController {
     }
 
     @PostMapping("/{clientEmail}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity CreateComplaint(@PathVariable String clientEmail, @RequestBody ComplaintDto complaintDto) {
 
         Complaint complaint = ComplaintMapper.map(complaintDto);

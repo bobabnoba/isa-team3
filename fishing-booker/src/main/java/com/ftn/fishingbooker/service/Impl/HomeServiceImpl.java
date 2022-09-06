@@ -13,6 +13,7 @@ import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -108,7 +109,7 @@ public class HomeServiceImpl implements HomeService {
             homeOwnerService.updatePoints(home.getHomeOwner(), reservation.getPrice());
             earningsService.saveEarnings(reservation, home.getHomeOwner().getEmail(), home.getHomeOwner().getRank());
 
-        } catch (Exception exception) {
+        } catch (PessimisticLockingFailureException exception) {
             throw exception;
 
         }
@@ -131,8 +132,11 @@ public class HomeServiceImpl implements HomeService {
     @Override
     @Transactional
     public void deleteById(Long id) {
-        VacationHome found = vacationHomeRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Vacation home not found"));
+        VacationHome found = vacationHomeRepository.findLockedById(id);
+//                .orElseThrow(() -> new ResourceConflictException("Boat not found"));
+        if ( found == null ){
+            throw new PessimisticLockingFailureException("Someone is already trying to reserve same boat at this moment!");
+        }
         //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVU VIKENDICU!
         var noOfFutureRes = reservationService.getNoOfIncomingReservationsForVacationHome(id);
         if (!(noOfFutureRes > 0)) {
@@ -489,6 +493,11 @@ public class HomeServiceImpl implements HomeService {
                 .orElseThrow(() -> new EntityNotFoundException("Home not found"));
         home.setRating(rating);
         vacationHomeRepository.save(home);
+    }
+
+    @Override
+    public VacationHome findLockedById(Long id){
+        return vacationHomeRepository.findLockedById(id);
     }
 
 

@@ -14,6 +14,7 @@ import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,7 +80,7 @@ public class BoatServiceImpl implements BoatService {
                 boatOwnerService.updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boat.getBoatOwner().getEmail());
             }
 
-        } catch (Exception exception) {
+        } catch (PessimisticLockingFailureException exception) {
             throw exception;
 
         }
@@ -126,16 +127,15 @@ public class BoatServiceImpl implements BoatService {
     @Override
     @Transactional
     public void deleteById(Long id) {
-        Boat found = boatRepository.findById(id)
-                .orElseThrow(() -> new ResourceConflictException("Boat not found"));
-        //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
-        //ako ima ne moze se obrisati ako nema brisi ga
+        Boat found = boatRepository.findLockedById(id);
+        if ( found == null ){
+            throw new PessimisticLockingFailureException("Someone is already trying to reserve same boat at this moment!");
+        }
         var noOfFutureRes = reservationService.getNoOfIncomingReservationsForBoat(id);
         if (!(noOfFutureRes > 0)) {
             found.setDeleted(true);
             boatRepository.save(found);
         }
-        //TODO: dodati povratnu poruku
 
     }
 
@@ -552,5 +552,10 @@ public class BoatServiceImpl implements BoatService {
                 .orElseThrow(() -> new EntityNotFoundException("Boat not found"));
         boat.setRating(boatRating);
         boatRepository.save(boat);
+    }
+
+    @Override
+    public Boat findLockedById(Long id){
+        return boatRepository.findLockedById(id);
     }
 }

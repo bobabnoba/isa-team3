@@ -52,4 +52,6 @@ public interface HomeService {
     Boolean checkIfReservationOverlapsAvailability(VacationHomeAvailability mapToHomeAvailabilityEntity, Long homeId);
 
     void updateHomeRating(Long id, double rating);
+
+    VacationHome findLockedById(Long id);
 }

@@ -10,6 +10,7 @@ import com.ftn.fishingbooker.repository.AdventureRepository;
 import com.ftn.fishingbooker.repository.InstructorRepository;
 import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -206,7 +207,7 @@ public class AdventureServiceImpl implements AdventureService {
             instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
             earningsService.saveEarnings(reservation, adventure.getInstructor().getEmail(), adventure.getInstructor().getRank());
 
-        }catch (Exception exception) {
+        }catch (PessimisticLockingFailureException exception) {
             throw exception;
 
         }

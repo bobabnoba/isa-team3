@@ -13,6 +13,7 @@ import com.ftn.fishingbooker.service.EmailService;
 import com.ftn.fishingbooker.service.ReservationService;
 import com.ftn.fishingbooker.util.FIleUploadUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class BoatController {
     private final EmailService emailService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'BOAT_OWNER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'BOAT_OWNER', 'CLIENT')")
     public Collection<RentalDto> GetAll() {
         Collection<Boat> boats = boatService.getAll();
 
@@ -47,6 +48,7 @@ public class BoatController {
     }
 
     @PostMapping("/search")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<Collection<RentalDto>> FilterAll(@RequestBody FilterDto filter) {
         if (clientService.hasOverlappingReservation(filter.getEmail(), filter.getStartDate(), filter.getEndDate())) {
 
@@ -58,6 +60,7 @@ public class BoatController {
     }
 
     @PostMapping("/rent/{boatId}/{userEmail}")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long boatId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
         if (client.getNoOfPenalties() >= 3) {
@@ -69,26 +72,25 @@ public class BoatController {
 
         reservationDto.setType(ReservationType.BOAT);
         Reservation reservation = reservationService.makeBoatReservation(client, boatId, reservationDto);
-        if (reservation == null) {
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
 
-        } else {
-            emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
-            return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
-        }
     }
 
     @PostMapping("/owner-rent/{boatId}/{userEmail}")
-    public ResponseEntity<ReservationDto> ownerMakeReservation(@PathVariable String userEmail, @PathVariable Long boatId, @RequestBody ReservationDto reservationDto) {
+    @PreAuthorize("hasRole('BOAT_OWNER')")
+    public ResponseEntity<?> ownerMakeReservation(@PathVariable String userEmail, @PathVariable Long boatId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
         if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto, boatId);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+
     }
 
     @GetMapping("/by-owner/{email}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<Collection<BoatDto>> getAllBoatsByOwner(@PathVariable String email) {
         Collection<Boat> found = boatService.getAllByOwner(email);
 
@@ -108,12 +110,18 @@ public class BoatController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'BOAT_OWNER')")
-    public ResponseEntity<Void> deleteABoat(@PathVariable Long id) {
-        boatService.deleteById(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deleteABoat(@PathVariable Long id) {
+        try{
+            boatService.deleteById(id);
+            return new ResponseEntity<>("Deleted", HttpStatus.OK);
+        }
+        catch (PessimisticLockingFailureException e){
+            return new ResponseEntity<>("Lock:" + e.getMessage(),HttpStatus.CONFLICT);
+        }
     }
 
     @PostMapping("")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<BoatDto> addNewBoat(@RequestBody NewBoatDto dto) {
         Boat boat = BoatMapper.toEntity(dto);
         Boat saved = boatService.addBoat(boat, dto.getOwnerEmail());
@@ -121,30 +129,35 @@ public class BoatController {
     }
 
     @PostMapping("/info-update/{id}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<BoatDto> updateBoatInfo(@PathVariable Long id, @RequestBody BoatInfo updated) {
         Boat saved = boatService.updateBoatInfo(id, updated);
         return ResponseEntity.ok(BoatMapper.mapToDto(saved));
     }
 
     @PostMapping("/additional-update/{id}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<BoatDto> updateBoatAdditionalInfo(@PathVariable Long id, @RequestBody BoatAdditionalInfo updated) {
         Boat saved = boatService.updateBoatAdditionalInfo(id, updated);
         return ResponseEntity.ok(BoatMapper.mapToDto(saved));
     }
 
     @PostMapping("/code-of-conduct-update/{id}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<BoatDto> updateBoatCodeOfConduct(@PathVariable Long id, @RequestBody Collection<Rule> updated) {
         Boat saved = boatService.updateBoatRules(id, updated);
         return ResponseEntity.ok(BoatMapper.mapToDto(saved));
     }
 
     @PostMapping("/address-update/{id}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<BoatDto> updateBoatAddress(@PathVariable Long id, @RequestBody AddressDto updated) {
         Boat saved = boatService.updateBoatAddress(id, AddressMapper.toEntity(updated));
         return ResponseEntity.ok(BoatMapper.mapToDto(saved));
     }
 
     @PostMapping("/image-upload/{id}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<Object> uploadImages(@RequestParam MultipartFile file, @PathVariable Long id) throws IOException {
 
         String uploadDir = "images/boats/" + id;
@@ -158,6 +171,7 @@ public class BoatController {
 
 
     @PostMapping("/add-availability")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<Collection<BoatAvailabilityDto>> addAvailabilityPeriod(@RequestBody BoatAvailabilityRequestDto availability) {
         Collection<BoatAvailability> availabilities = boatService.addAvailabilityPeriod(BoatMapper.mapToBoatAvailabilityEntity(availability), availability.boatId);
         Collection<BoatAvailabilityDto> dtos = availabilities.stream()
@@ -167,6 +181,7 @@ public class BoatController {
     }
 
     @GetMapping("/check-if-available")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     ResponseEntity<Boolean> checkAvailability(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
                                               @RequestParam Long boatId) {
@@ -174,12 +189,14 @@ public class BoatController {
     }
 
     @GetMapping("for-reservation/{reservationId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<BoatInfo> getBoatForReservation(@PathVariable Long reservationId) {
         Boat boat = boatService.getBoatForReservation(reservationId);
         return new ResponseEntity<>(BoatMapper.mapToDtoInfo(boat), HttpStatus.OK);
     }
 
     @GetMapping("/reservations/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Collection<ReservationDto>> getBoatReservations(@PathVariable Long id) {
         Collection<Reservation> reservations = reservationService.getReservationForBoat(id);
         Collection<ReservationDto> dtos = reservations.stream()
@@ -189,17 +206,20 @@ public class BoatController {
     }
 
     @GetMapping("{id}/has-incoming-reservations")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id) {
         return ResponseEntity.ok(boatService.getNoOfIncomingReservations(id) > 0);
     }
 
     @PostMapping("/check-if-res-overlaps-avail")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Boolean> checkIfReservationOverlapsAvailability(@RequestBody BoatAvailabilityRequestDto availability) {
         return ok(boatService.checkIfReservationOverlapsAvailability(BoatMapper.mapToBoatAvailabilityEntity(availability), availability.boatId));
 
     }
 
     @PostMapping("/remove-availability")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<Collection<BoatAvailabilityDto>> deleteAvailabilityPeriod(@RequestBody BoatAvailabilityRequestDto availability) {
         Collection<BoatAvailability> availabilities = boatService.updateAvailability(availability.getStartDate(), availability.getEndDate(), availability.boatId);
         Collection<BoatAvailabilityDto> dtos = availabilities.stream()
