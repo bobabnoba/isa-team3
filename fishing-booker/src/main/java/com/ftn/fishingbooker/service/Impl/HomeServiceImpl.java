@@ -50,7 +50,6 @@ public class HomeServiceImpl implements HomeService {
             if (home.getGuestLimit() >= filter.getPeople()) {
                 // Date should overlap with vacation home availability
                 if (inBetweenOrEqual(filter.getStartDate(), filter.getEndDate(), home.getAvailability())) {
-
                     boolean available = checkAvailability(filter.getStartDate(), filter.getEndDate(), home.getId());
 
                     if (available) {
@@ -60,6 +59,20 @@ public class HomeServiceImpl implements HomeService {
             }
         }
         return filteredHomeList;
+    }
+    @Override
+    public boolean checkAvailability(Date from, Date to, Long homeId) {
+        boolean isAvailable = false;
+        VacationHome home = vacationHomeRepository.findById(homeId).orElseThrow(() -> new ResourceConflictException("Vacation home not found"));
+        List<VacationHomeAvailability> availabilityPeriods = new ArrayList<>(home.getAvailability());
+
+        for (VacationHomeAvailability period : availabilityPeriods) {
+            if ((from.after(period.getStartDate()) || from.equals(period.getStartDate())) && (to.before(period.getEndDate()) || to.equals(period.getEndDate()))) {
+                isAvailable = true;
+                break;
+            }
+        }
+        return isAvailable;
     }
 
     private boolean inBetweenOrEqual(Date startDate, Date endDate, Set<VacationHomeAvailability> availableTimePeriods) {
@@ -353,21 +366,6 @@ public class HomeServiceImpl implements HomeService {
         vacationHomeRepository.save(home);
         return home.getAvailability();
 
-    }
-
-    @Override
-    public boolean checkAvailability(Date from, Date to, Long homeId) {
-        boolean isAvailable = false;
-        VacationHome home = vacationHomeRepository.findById(homeId).orElseThrow(() -> new ResourceConflictException("Vacation home not found"));
-        List<VacationHomeAvailability> availabilityPeriods = new ArrayList<>(home.getAvailability());
-
-        for (VacationHomeAvailability period : availabilityPeriods) {
-            if ((from.after(period.getStartDate()) || from.equals(period.getStartDate())) && (to.before(period.getEndDate()) || to.equals(period.getEndDate()))) {
-                isAvailable = true;
-                break;
-            }
-        }
-        return isAvailable;
     }
 
     @Override

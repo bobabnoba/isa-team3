@@ -19,6 +19,7 @@ export class AdventureProfileComponent implements OnInit {
   instructor: boolean = false
   clientSpecialOffers: SpecialOffer[] = [];
   filteredOffers! : SpecialOffer[];
+  type:string = 'adventure'
 
   constructor(
     private _adventureService: AdventureService,
@@ -39,17 +40,10 @@ export class AdventureProfileComponent implements OnInit {
       res => {
         this.adventure = res;
         this.filteredOffers = this.adventure.specialOffers.filter(offer => new Date(offer.activeTo) >= new Date());
+        this.clientSpecialOffers = this.adventure.specialOffers.filter(offer => new Date(offer.activeFrom) <= new Date()
+        && new Date(offer.activeTo) >= new Date() && offer.isUsed == false);
       }
     )
-    if (this._service.getRole() == 'ROLE_CLIENT') {
-
-      this._specialOfferService.getForAdventure(this.adventureId).subscribe(
-        res => {
-          this.clientSpecialOffers = res;
-        }
-      )
-
-    }
   }
 
   bookForClient() {

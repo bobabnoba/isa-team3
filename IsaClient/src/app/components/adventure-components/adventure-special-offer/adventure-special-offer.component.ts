@@ -90,8 +90,8 @@ export class AdventureSpecialOfferComponent implements OnInit {
     else return false
   }
   bookNow() {
-    this.newReservation.endDate = this._datePipe.transform(new Date(this.offer.reservationStartDate), 'yyyy-MM-ddTHH:mm')!;
-    this.newReservation.startDate = this._datePipe.transform(new Date(this.offer.reservationEndDate), 'yyyy-MM-ddTHH:mm')!;
+    this.newReservation.endDate = this._datePipe.transform(new Date(this.offer.reservationEndDate), 'yyyy-MM-ddTHH:mm')!;
+    this.newReservation.startDate = this._datePipe.transform(new Date(this.offer.reservationStartDate), 'yyyy-MM-ddTHH:mm')!;
     this.newReservation.guests = this.offer.guests;
     this.newReservation.price = this.offer.price;
     this.newReservation.utilities = this.offer.utilities;

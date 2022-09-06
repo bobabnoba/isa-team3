@@ -159,8 +159,7 @@ public class AdventureServiceImpl implements AdventureService {
 
             if (adventure.getMaxNumberOfParticipants() >= filter.getPeople()) {
                 // Date should overlap with vacation home availability
-                if (doPeriodsOverlap(filter.getStartDate(), filter.getEndDate(), adventure.getInstructor().getAvailability())) {
-
+                if (inBetweenOrEqual(filter.getStartDate(), filter.getEndDate(), adventure.getInstructor().getAvailability())) {
 
                     Collection<Long> adventures = adventureRepository.getAllIdsByInstructorId(adventure.getInstructor().getId());
                     Collection<Reservation> reservations = reservationService.getReservationsForAdventures(adventures);
@@ -174,6 +173,17 @@ public class AdventureServiceImpl implements AdventureService {
         }
         return filteredAdventuresList;
     }
+
+    private boolean inBetweenOrEqual(Date startDate, Date endDate, Set<InstructorAvailability> availableTimePeriods) {
+
+        for (InstructorAvailability period : availableTimePeriods) {
+            if (dateService.inBetweenOrEqual(period.getStartDate(), period.getEndDate(), startDate, endDate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @Override
     @Transactional
