@@ -1,7 +1,7 @@
 package com.ftn.fishingbooker.controller;
 
-import com.ftn.fishingbooker.dao.*;
 import com.ftn.fishingbooker.dto.*;
+import com.ftn.fishingbooker.dao.BoatReservationInfo;
 import com.ftn.fishingbooker.mapper.*;
 import com.ftn.fishingbooker.model.*;
 import org.springframework.http.HttpStatus;

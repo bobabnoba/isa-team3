@@ -48,6 +48,7 @@ public class BoatController {
     }
 
     @PostMapping("/search")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<Collection<RentalDto>> FilterAll(@RequestBody FilterDto filter) {
         if (clientService.hasOverlappingReservation(filter.getEmail(), filter.getStartDate(), filter.getEndDate())) {
 
@@ -59,16 +60,21 @@ public class BoatController {
     }
 
     @PostMapping("/rent/{boatId}/{userEmail}")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long boatId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
         if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+        if (clientService.hasOverlappingReservation(userEmail, reservationDto.getStartDate(), reservationDto.getEndDate())) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
 
         reservationDto.setType(ReservationType.BOAT);
         Reservation reservation = reservationService.makeBoatReservation(client, boatId, reservationDto);
-
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+
     }
 
     @PostMapping("/owner-rent/{boatId}/{userEmail}")
@@ -78,13 +84,8 @@ public class BoatController {
         if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        try{
-            Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto, boatId);
-            return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
-        }
-        catch (PessimisticLockingFailureException e){
-            return new ResponseEntity<>("Lock:" + e.getMessage(),HttpStatus.CONFLICT);
-        }
+        Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto, boatId);
+        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
 
     }
 
@@ -101,6 +102,7 @@ public class BoatController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<BoatDto> getBoatById(@PathVariable Long id) {
         Boat found = boatService.getById(id);
         BoatDto dto = BoatMapper.mapToDtoWithAvailability(found);
@@ -180,6 +182,7 @@ public class BoatController {
     }
 
     @GetMapping("/check-if-available")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     ResponseEntity<Boolean> checkAvailability(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
                                               @RequestParam Long boatId) {
@@ -187,12 +190,14 @@ public class BoatController {
     }
 
     @GetMapping("for-reservation/{reservationId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<BoatInfo> getBoatForReservation(@PathVariable Long reservationId) {
         Boat boat = boatService.getBoatForReservation(reservationId);
         return new ResponseEntity<>(BoatMapper.mapToDtoInfo(boat), HttpStatus.OK);
     }
 
     @GetMapping("/reservations/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Collection<ReservationDto>> getBoatReservations(@PathVariable Long id) {
         Collection<Reservation> reservations = reservationService.getReservationForBoat(id);
         Collection<ReservationDto> dtos = reservations.stream()
@@ -202,11 +207,13 @@ public class BoatController {
     }
 
     @GetMapping("{id}/has-incoming-reservations")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id) {
         return ResponseEntity.ok(boatService.getNoOfIncomingReservations(id) > 0);
     }
 
     @PostMapping("/check-if-res-overlaps-avail")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Boolean> checkIfReservationOverlapsAvailability(@RequestBody BoatAvailabilityRequestDto availability) {
         return ok(boatService.checkIfReservationOverlapsAvailability(BoatMapper.mapToBoatAvailabilityEntity(availability), availability.boatId));
 

@@ -6,6 +6,7 @@ import com.ftn.fishingbooker.service.BoatService;
 import com.ftn.fishingbooker.service.HomeService;
 import com.ftn.fishingbooker.service.InstructorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ public class RentalsController {
 
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public Collection<RentalDto> getAllRentals() {
         Collection<RentalDto> allRentals = new ArrayList<>();
         Collection<RentalDto> boatRentals = RentalMapper.mapBoatToRental(boatService.getAll());

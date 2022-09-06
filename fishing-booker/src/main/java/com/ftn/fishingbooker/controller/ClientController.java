@@ -29,12 +29,14 @@ public class ClientController {
     }
 
     @GetMapping("{email}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<ClientDto> getClientInfo(@PathVariable String email) {
         Client clientInfo = clientService.getClientByEmail(email);
         return ResponseEntity.ok(ClientMapper.map(clientInfo));
     }
 
     @GetMapping("/{clientEmail}/subscribed/{entityType}/{entityId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public boolean isClientSubscribed(@PathVariable String clientEmail, @PathVariable String entityType, @PathVariable Long entityId) {
         return clientService.isClientSubscribed(clientEmail, entityType, entityId);
     }

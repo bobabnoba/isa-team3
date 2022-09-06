@@ -5,17 +5,18 @@ import com.ftn.fishingbooker.dto.BoatInfo;
 import com.ftn.fishingbooker.dto.FilterDto;
 import com.ftn.fishingbooker.enumeration.BoatType;
 import com.ftn.fishingbooker.enumeration.NavigationType;
-import com.ftn.fishingbooker.exception.*;
+import com.ftn.fishingbooker.exception.EntityNotFoundException;
+import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.BoatOwnerRepository;
 import com.ftn.fishingbooker.repository.BoatRepository;
 import com.ftn.fishingbooker.service.*;
-import com.ftn.fishingbooker.util.*;
-import lombok.RequiredArgsConstructor;
+import com.ftn.fishingbooker.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -63,18 +64,25 @@ public class BoatServiceImpl implements BoatService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void makeReservation(Long boatId, Reservation reservation) {
-        Boat boat = boatRepository.findLockedById(boatId);
-        if ( boat == null ){
-            throw new PessimisticLockingFailureException("Someone is already trying to reserve same boat at this moment!");
-        }
-        boat.getReservations().add(reservation);
-        boatRepository.save(boat);
-        boatOwnerService.updatePoints(boat.getBoatOwner(), reservation.getPrice());
-        earningsService.saveEarnings(reservation, boat.getBoatOwner().getEmail(), boat.getBoatOwner().getRank());
-        updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boatId);
-        if (reservation.isOwnerCaptain()) {
-            boatOwnerService.updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boat.getBoatOwner().getEmail());
+
+        try {
+            //Ako pokusa ne daj da mijenja tj da doda reservation
+            Boat boat = boatRepository.findLockedById(boatId);
+            boat.getReservations().add(reservation);
+            boatRepository.save(boat);
+            updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boatId);
+            boatOwnerService.updatePoints(boat.getBoatOwner(), reservation.getPrice());
+            earningsService.saveEarnings(reservation, boat.getBoatOwner().getEmail(), boat.getBoatOwner().getRank());
+            updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boatId);
+            if (reservation.isOwnerCaptain()) {
+                boatOwnerService.updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boat.getBoatOwner().getEmail());
+            }
+
+        } catch (PessimisticLockingFailureException exception) {
+            throw exception;
+
         }
     }
 

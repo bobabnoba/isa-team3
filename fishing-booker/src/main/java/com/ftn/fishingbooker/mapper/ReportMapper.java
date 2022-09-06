@@ -6,8 +6,6 @@ import com.ftn.fishingbooker.dto.NewReportDto;
 import com.ftn.fishingbooker.dto.ReportDto;
 import com.ftn.fishingbooker.model.*;
 
-import java.util.Set;
-
 public class ReportMapper {
 
     public static AdventureReservationReport toAdventureEntity(NewReportDto report, Instructor instructor) {

@@ -1,6 +1,7 @@
 package com.ftn.fishingbooker.exception;
 
 import org.hibernate.StaleObjectStateException;
+import org.springframework.dao.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -55,5 +56,11 @@ public class ResourceConflictHandler {
     protected ResponseEntity<Object> handleStaleObjectStateException(StaleObjectStateException exception) {
         HttpStatus status = HttpStatus.CONFLICT;
         return ResponseEntity.status(status).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(PessimisticLockingFailureException.class)
+    protected ResponseEntity<Object> handleLockException(PessimisticLockingFailureException exception) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        return ResponseEntity.status(status).body("Lock:" + exception.getMessage());
     }
 }

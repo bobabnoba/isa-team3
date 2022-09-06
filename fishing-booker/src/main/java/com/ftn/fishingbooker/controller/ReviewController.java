@@ -29,6 +29,7 @@ public class ReviewController {
     }
 
     @PostMapping("/{clientEmail}")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity CreateReview(@PathVariable String clientEmail, @RequestBody ClientReviewDto clientReviewDto) {
 
         ClientReview clientReview = ReviewMapper.map(clientReviewDto);

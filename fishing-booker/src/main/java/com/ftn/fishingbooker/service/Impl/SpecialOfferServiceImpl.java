@@ -3,29 +3,37 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.dao.SpecialOfferCalendarInfo;
 import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.repository.SpecialOfferRepository;
 import com.ftn.fishingbooker.service.*;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.*;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
-import javax.transaction.Transactional;
 import java.util.Collection;
 
 @Service
-@RequiredArgsConstructor
+@Transactional
 public class SpecialOfferServiceImpl implements SpecialOfferService {
 
-    private final AdventureService adventureService;
-    private final SpecialOfferRepository specialOfferRepository;
-    private final InstructorService instructorService;
-    private final BoatService boatService;
-    private final BoatOwnerService boatOwnerService;
-    private final ClientService clientService;
-    private final HomeService homeService;
+    @Autowired
+    @Lazy
+    private  AdventureService adventureService;
+    @Autowired
+    private  SpecialOfferRepository specialOfferRepository;
+    @Autowired
+    private  InstructorService instructorService;
+    @Autowired
+    private  BoatService boatService;
+    @Autowired
+    private  BoatOwnerService boatOwnerService;
+    @Autowired
+    private  ClientService clientService;
+    @Autowired
+    private  HomeService homeService;
 
     @Override
     @Transactional
@@ -49,8 +57,8 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
             String ownerEmail = boat.getBoatOwner().getEmail();
             boatService.updateAvailability(saved.getReservationStartDate(), saved.getReservationEndDate(), boat.getId());
 
-             if(specialOffer.isCaptain()){
-                boatOwnerService.updateAvailability(saved.getReservationStartDate(),saved.getReservationEndDate(), ownerEmail);
+            if (specialOffer.isCaptain()) {
+                boatOwnerService.updateAvailability(saved.getReservationStartDate(), saved.getReservationEndDate(), ownerEmail);
             }
             clientService.emailSubscribers(boat.getBoatOwner(), "boat");
         } else if(specialOffer.getType().equals(ReservationType.VACATION_HOME)){
@@ -73,11 +81,18 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void reserveSpecialOffer(Long offerId) {
-        SpecialOffer specialOffer = specialOfferRepository.findById(offerId).orElseThrow(() -> new ResourceConflictException("Offer not found"));
-        specialOffer.setUsed(true);
-        specialOfferRepository.save(specialOffer);
+        try {
+            SpecialOffer specialOffer = specialOfferRepository.findLockedById(offerId);
+            specialOffer.setUsed(true);
+            specialOfferRepository.save(specialOffer);
+        } catch (Exception e) {
+            System.out.println("Pessimistic lock: SpecialOffer");
+            throw e;
+        }
     }
+
 
     @Override
     public Collection<SpecialOfferCalendarInfo> getAllInstructorsOffers(Long id) {

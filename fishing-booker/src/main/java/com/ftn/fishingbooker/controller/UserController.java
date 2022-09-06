@@ -54,6 +54,7 @@ public class UserController {
     }
 
     @GetMapping("by-id/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<UserDto> getUserInfo(@PathVariable Long id) {
         User userInfo = userService.getUserById(id);
         return ResponseEntity.ok(UserMapper.mapToDto(userInfo));
@@ -67,6 +68,7 @@ public class UserController {
     }
 
     @GetMapping("/reservations/upcoming/{userEmail}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public Collection<ReservationDto> GetClientReservations(@PathVariable String userEmail) {
         List<Reservation> reservationList = clientService.getUpcomingReservations(userEmail);
         return ReservationMapper.map(reservationList);

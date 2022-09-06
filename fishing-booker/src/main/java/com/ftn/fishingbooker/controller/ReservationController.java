@@ -43,36 +43,42 @@ public class ReservationController {
     }
 
     @GetMapping("/client/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Reservation> GetReservation(@PathVariable Long id) {
         Reservation reservation = reservationService.getReservationById(id);
         return ok(reservation);
     }
 
     @GetMapping("/upcoming/{userEmail}")
+    @PreAuthorize("hasRole('CLIENT')")
     public Collection<ReservationDto> GetUpcomingReservations(@PathVariable String userEmail) {
         List<Reservation> reservationList = clientService.getUpcomingReservations(userEmail);
         return ReservationMapper.map(reservationList);
     }
 
     @GetMapping("/past/home/{userEmail}")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<Collection<ReservationDto>> GetPastVacationHomeReservations(@PathVariable String userEmail) {
         List<Reservation> reservationList = clientService.getPastReservations(userEmail, ReservationType.VACATION_HOME);
         return new ResponseEntity<>(ReservationMapper.map(reservationList), HttpStatus.OK);
     }
 
     @GetMapping("/past/boat/{userEmail}")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<Collection<ReservationDto>> GetPastBoatReservations(@PathVariable String userEmail) {
         List<Reservation> reservationList = clientService.getPastReservations(userEmail, ReservationType.BOAT);
         return new ResponseEntity<>(ReservationMapper.map(reservationList), HttpStatus.OK);
     }
 
     @GetMapping("/past/adventure/{userEmail}")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<Collection<ReservationDto>> GetPastAdventureReservations(@PathVariable String userEmail) {
         List<Reservation> reservationList = clientService.getPastReservations(userEmail, ReservationType.ADVENTURE);
         return new ResponseEntity<>(ReservationMapper.map(reservationList), HttpStatus.OK);
     }
 
     @PostMapping("/cancel/{userEmail}")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<Collection<ReservationDto>> CancelUpcomingReservation(@PathVariable String userEmail, @RequestBody Long reservationId) {
         Reservation reservation = clientService.cancelUpcomingReservation(reservationId, userEmail);
         List<Reservation> reservationList = clientService.getUpcomingReservations(userEmail);
@@ -105,22 +111,26 @@ public class ReservationController {
 
 
     @GetMapping("/adventure/{ReservationId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public AdventureDto GetAdventureForReservation(@PathVariable Long ReservationId) {
         return AdventureMapper.mapToDto(adventureService.getAdventureForReservation(ReservationId));
     }
 
     @GetMapping("/vacation/home/{ReservationId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public VacationHomeDto GetVacationHomeForReservation(@PathVariable Long ReservationId) {
         return VacationHomeMapper.map(homeService.getVacationHomeForReservation(ReservationId));
     }
 
     @GetMapping("/boat/{ReservationId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public BoatDto GetBoatForReservation(@PathVariable Long ReservationId) {
         return BoatMapper.mapToDto(boatService.getBoatForReservation(ReservationId));
     }
 
 
     @GetMapping("check-if-ongoing/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<ClientDto> checkIfReservationIsOngoing(@PathVariable Long id) {
 
         TimeZone timeZone = TimeZone.getTimeZone("UTC");

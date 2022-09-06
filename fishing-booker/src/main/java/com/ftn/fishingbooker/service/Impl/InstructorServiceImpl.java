@@ -1,31 +1,39 @@
 package com.ftn.fishingbooker.service.Impl;
 
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.enumeration.RegistrationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.repository.InstructorRepository;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.service.*;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-
 
 import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
-@RequiredArgsConstructor
+@Transactional
 public class InstructorServiceImpl implements InstructorService {
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
     // TODO: add new userService method that will save both user and registration ...
-    private final RegistrationRepository registrationRepository;
-    private final InstructorAvailabilityService availabilityService;
-    private final InstructorRepository instructorRepository;
-    private final AdventureService adventureService;
-    private final UserRankService userRankService;
-    private final ReservationService reservationService;
+    @Autowired
+    private RegistrationRepository registrationRepository;
+    @Autowired
+    private InstructorAvailabilityService availabilityService;
+    @Autowired
+    private InstructorRepository instructorRepository;
+    @Autowired
+    @Lazy
+    private AdventureService adventureService;
+    @Autowired
+    private UserRankService userRankService;
+    @Autowired
+    private ReservationService reservationService;
 
     @Transactional
     @Override
@@ -151,16 +159,15 @@ public class InstructorServiceImpl implements InstructorService {
                 InstructorAvailability partTwo = new InstructorAvailability(availability.getEndDate(), a.getEndDate());
                 availabilities.add(availabilityService.save(partOne));
                 availabilities.add(availabilityService.save(partTwo));
-            } else if(availability.getStartDate().before(a.getStartDate())
+            } else if (availability.getStartDate().before(a.getStartDate())
                     && availability.getEndDate().before(a.getEndDate()) ||
                     (availability.getStartDate().before(a.getEndDate())
-                    && availability.getEndDate().after(a.getEndDate())) ||
+                            && availability.getEndDate().after(a.getEndDate())) ||
                     (availability.getStartDate().before(a.getStartDate()) &&
-                     availability.getEndDate().after(a.getStartDate()) &&
-                     availability.getEndDate().before(a.getEndDate()))) {
+                            availability.getEndDate().after(a.getStartDate()) &&
+                            availability.getEndDate().before(a.getEndDate()))) {
                 availabilities.add(availabilityService.save(new InstructorAvailability(availability.getEndDate(), a.getEndDate())));
-            }
-            else
+            } else
                 availabilities.add(a);
         }
         instructor.setAvailability(new HashSet<>(availabilities));

@@ -1,7 +1,8 @@
 package com.ftn.fishingbooker.repository;
 
-import com.ftn.fishingbooker.dao.*;
-import com.ftn.fishingbooker.enumeration.*;
+import com.ftn.fishingbooker.dao.BoatReservationInfo;
+import com.ftn.fishingbooker.dao.ReservationCalendarInfo;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.model.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

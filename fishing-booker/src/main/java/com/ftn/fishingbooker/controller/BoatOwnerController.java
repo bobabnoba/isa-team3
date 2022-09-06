@@ -1,7 +1,7 @@
 package com.ftn.fishingbooker.controller;
 
-import com.ftn.fishingbooker.dao.*;
 import com.ftn.fishingbooker.dto.*;
+import com.ftn.fishingbooker.dao.BoatReservationInfo;
 import com.ftn.fishingbooker.mapper.*;
 import com.ftn.fishingbooker.model.*;
 import org.springframework.format.annotation.*;
@@ -49,6 +49,7 @@ public class BoatOwnerController {
     }
 
     @GetMapping("/check-if-available")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     ResponseEntity<Boolean> checkAvailability(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
                                               @RequestParam String boatOwnerEmail) {
@@ -82,6 +83,7 @@ public class BoatOwnerController {
     }
 
     @GetMapping("/reservations/captain/{email}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     ResponseEntity<Collection<ReservationDto>> getAllCaptainReservations(@PathVariable String email) {
         BoatOwner owner = boatOwnerService.getByEmail(email);
         Collection<Reservation> reservations = reservationService.getCaptainReservationsForBoatOwner(owner.getId());
@@ -92,6 +94,7 @@ public class BoatOwnerController {
     }
 
     @GetMapping("/special-offers/captain/{email}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     ResponseEntity<Collection<SpecialOfferDto>> getAllCaptainSpecialOffers(@PathVariable String email) {
         BoatOwner owner = boatOwnerService.getByEmail(email);
         Collection<SpecialOffer> specialOffers = specialOfferService.getAllCaptainOffersForBoatOwner(owner.getId());
@@ -111,6 +114,7 @@ public class BoatOwnerController {
         return ResponseEntity.ok(dtos);
     }
     @PostMapping("/check-if-res-overlaps-avail")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Boolean> checkIfReservationOverlapsAvailability(@RequestBody BoatOwnerAvailabilityRequestDto availability) {
         return ok(boatOwnerService.checkIfReservationOverlapsAvailability(BoatOwnerMapper.mapToBoatOwnerAvailabilityEntity(availability), availability.getEmail()));
 
