@@ -9,6 +9,7 @@ import com.ftn.fishingbooker.model.ClientReview;
 import com.ftn.fishingbooker.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -51,6 +52,7 @@ public class ReviewController {
     }
 
     @GetMapping("/pending")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Collection<ReviewDto>> getAllPending(){
         Collection<ClientReview> found = reviewService.getAllPendingReviews();
         Collection<ReviewDto> dtos = found.stream()
@@ -60,6 +62,7 @@ public class ReviewController {
     }
 
     @PostMapping("/handle-review/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> handleReview(@PathVariable Long id, @RequestBody Boolean approved) {
         reviewService.handleReview(id, approved);
         return ResponseEntity.ok().build();

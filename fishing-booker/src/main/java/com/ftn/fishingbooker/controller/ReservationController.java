@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -35,6 +36,7 @@ public class ReservationController {
 
 
     @GetMapping("{id}")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<ReservationWithClientDto> getReservation(@PathVariable Long id) {
         Reservation reservation = reservationService.getReservationById(id);
         return ok(ReservationMapper.toDtoWClient(reservation));
@@ -137,6 +139,7 @@ public class ReservationController {
     }
 
     @GetMapping("/chart/{type}")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<Collection<EarningsChartDto>> getReservationChartInDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
@@ -181,6 +184,7 @@ public class ReservationController {
     }
 
     @GetMapping("/chart-year/{type}")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<Collection<ReservationChartDto>> getReservationChartYearInDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
