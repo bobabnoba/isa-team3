@@ -38,7 +38,8 @@ export class AdventureProfileComponent implements OnInit {
     this._adventureService.getById(this.adventureId).subscribe(
       res => {
         this.adventure = res;
-        this.filteredOffers = this.adventure.specialOffers.filter(offer => new Date(offer.activeTo) >= new Date());
+        this.filteredOffers = this.adventure.specialOffers
+        .filter(offer => new Date(offer.activeFrom) >= new Date() && new Date(offer.activeTo) <= new Date());
       }
     )
     if (this._service.getRole() == 'ROLE_CLIENT') {

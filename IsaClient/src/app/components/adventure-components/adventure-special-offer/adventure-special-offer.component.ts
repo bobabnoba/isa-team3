@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Utility } from 'src/app/interfaces/adventure';
 import { LoggedClient } from 'src/app/interfaces/logged-client';
 import { IReservation } from 'src/app/interfaces/new-reservation';
-import { SpecialOffer } from 'src/app/interfaces/special-offer';
+import { ReservationType, SpecialOffer } from 'src/app/interfaces/special-offer';
 import { ClientService } from 'src/app/services/client-service/client.service';
 import { RentalService } from 'src/app/services/rental-service/rental.service';
 import { StorageService } from 'src/app/services/storage-service/storage.service';
@@ -90,12 +90,12 @@ export class AdventureSpecialOfferComponent implements OnInit {
     else return false
   }
   bookNow() {
-    this.newReservation.endDate = this._datePipe.transform(new Date(this.offer.reservationStartDate), 'yyyy-MM-ddTHH:mm')!;
-    this.newReservation.startDate = this._datePipe.transform(new Date(this.offer.reservationEndDate), 'yyyy-MM-ddTHH:mm')!;
+    this.newReservation.endDate = this._datePipe.transform(new Date(this.offer.reservationEndDate), 'yyyy-MM-ddTHH:mm')!;
+    this.newReservation.startDate = this._datePipe.transform(new Date(this.offer.reservationStartDate), 'yyyy-MM-ddTHH:mm')!;
     this.newReservation.guests = this.offer.guests;
     this.newReservation.price = this.offer.price;
     this.newReservation.utilities = this.offer.utilities;
-
+    this.newReservation.type = ReservationType.ADVENTURE;
     console.log(this.newReservation);
 
     const reservation = {
