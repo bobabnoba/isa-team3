@@ -546,4 +546,9 @@ public class BoatServiceImpl implements BoatService {
         boat.setRating(boatRating);
         boatRepository.save(boat);
     }
+
+    @Override
+    public Boat findLockedById(Long id){
+        return boatRepository.findLockedById(id);
+    }
 }

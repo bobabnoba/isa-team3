@@ -501,5 +501,10 @@ public class HomeServiceImpl implements HomeService {
         vacationHomeRepository.save(home);
     }
 
+    @Override
+    public VacationHome findLockedById(Long id){
+        return vacationHomeRepository.findLockedById(id);
+    }
+
 
 }

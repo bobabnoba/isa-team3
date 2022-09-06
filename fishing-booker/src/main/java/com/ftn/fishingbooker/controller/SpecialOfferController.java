@@ -9,6 +9,7 @@ import com.ftn.fishingbooker.mapper.SpecialOfferMapper;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,12 +36,16 @@ public class SpecialOfferController {
     private final InstructorService instructorService;
 
     @PostMapping("/{serviceId}")
-    @PreAuthorize("hasRole('INSTRUCTOR')")
-    public ResponseEntity<SpecialOfferDto> createSpecialOffer(@RequestBody NewSpecialOfferDto specialOffer,
+    @PreAuthorize("hasAnyRole('INSTRUCTOR','HOME_OWNER','BOAT_OWNER')")
+    public ResponseEntity<?> createSpecialOffer(@RequestBody NewSpecialOfferDto specialOffer,
                                                               @PathVariable Long serviceId) throws MessagingException {
         SpecialOffer offer = SpecialOfferMapper.toNewEntity(specialOffer);
-        SpecialOffer created = specialOfferService.createSpecialOffer(offer, serviceId);
-        return ResponseEntity.ok(SpecialOfferMapper.toDto(created));
+        try {
+            SpecialOffer created = specialOfferService.createSpecialOffer(offer, serviceId);
+            return ResponseEntity.ok(SpecialOfferMapper.toDto(created));
+        }catch (PessimisticLockingFailureException e){
+            return new ResponseEntity<>("Lock:" + e.getMessage(),HttpStatus.CONFLICT);
+        }
     }
 
     @GetMapping("/adventure/{adventureId}")

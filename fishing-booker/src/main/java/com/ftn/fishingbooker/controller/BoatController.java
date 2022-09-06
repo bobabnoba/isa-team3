@@ -82,7 +82,7 @@ public class BoatController {
             return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
         }
         catch (PessimisticLockingFailureException e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Lock:" + e.getMessage(),HttpStatus.CONFLICT);
         }
 
     }

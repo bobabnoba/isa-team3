@@ -7,6 +7,7 @@ import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.repository.SpecialOfferRepository;
 import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.*;
 import org.springframework.stereotype.Service;
 
 
@@ -38,7 +39,10 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
             String instructorMail = adventure.getInstructor().getEmail();
             instructorService.updateAvailability(new InstructorAvailability(saved.getReservationStartDate(), saved.getReservationEndDate()), instructorMail);
         }else if( specialOffer.getType().equals(ReservationType.BOAT)){
-            Boat boat = boatService.getById(serviceId);
+            Boat boat = boatService.findLockedById(serviceId);
+            if ( boat == null ){
+                throw new PessimisticLockingFailureException("Someone is already trying to reserve same boat at this moment!");
+            }
             boat.getSpecialOffers().add(saved);
             boatService.save(boat);
 
@@ -50,7 +54,10 @@ public class SpecialOfferServiceImpl implements SpecialOfferService {
             }
             clientService.emailSubscribers(boat.getBoatOwner(), "boat");
         } else if(specialOffer.getType().equals(ReservationType.VACATION_HOME)){
-            VacationHome home = homeService.getById(serviceId);
+            VacationHome home = homeService.findLockedById(serviceId);
+            if ( home == null ){
+                throw new PessimisticLockingFailureException("Someone is already trying to reserve same vacation home at this moment!");
+            }
             home.getSpecialOffers().add(saved);
             homeService.save(home);
 
