@@ -40,7 +40,7 @@ public class BoatController {
     private final EmailService emailService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'BOAT_OWNER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'BOAT_OWNER', 'CLIENT')")
     public Collection<RentalDto> GetAll() {
         Collection<Boat> boats = boatService.getAll();
 
@@ -102,7 +102,6 @@ public class BoatController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<BoatDto> getBoatById(@PathVariable Long id) {
         Boat found = boatService.getById(id);
         BoatDto dto = BoatMapper.mapToDtoWithAvailability(found);

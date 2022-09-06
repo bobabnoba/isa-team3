@@ -24,7 +24,7 @@ export class InstructorService {
     return this._http.get(`${this.baseURL}/instructor?email=${email}`);
   }
   getInstructorInfo(id: string) : Observable<any>  {
-    return this._http.get(`${this.baseURL}/instructor/info?id=${id}`);
+    return this._http.get(`${this.baseURL}/instructor/info/${id}`);
   }
   addAvailability(body : any ) : Observable<any> {
     return this._http.post(`${this.baseURL}/instructor/add-availability`, body);

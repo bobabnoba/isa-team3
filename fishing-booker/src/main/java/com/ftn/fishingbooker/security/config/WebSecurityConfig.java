@@ -63,6 +63,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home-owner/register").permitAll()
                 .antMatchers("/instructor/register").permitAll()
                 .antMatchers("/rentals/**").permitAll()
+                .antMatchers("/boats/{id}").permitAll()
+                .antMatchers("/adventures/by-instructor-id/{id}").permitAll()
+                .antMatchers("/vacation/homes/profile/{id}").permitAll()
+                .antMatchers("/instructor/info/{id}").permitAll()
+
+
 
                 .anyRequest().authenticated().and()
                 .cors().and()

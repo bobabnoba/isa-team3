@@ -83,7 +83,6 @@ public class HomeController {
     }
 
     @GetMapping("/profile/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<VacationHomeDto> getHomeProfileById(@PathVariable Long id) {
         VacationHome found = vacationHomeService.getById(id);
         VacationHomeDto dto = VacationHomeMapper.mapToHomeOwnerDto(found);

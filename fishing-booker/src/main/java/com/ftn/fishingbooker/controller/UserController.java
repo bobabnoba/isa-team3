@@ -82,7 +82,7 @@ public class UserController {
     }
 
     @GetMapping("{id}/has-incoming-reservations")
-    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'ADMIN', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Boolean> userHasIncomingReservations(@PathVariable Long id, @RequestParam String role) {
         return ResponseEntity.ok(reservationService.getNoOfIncomingReservationsForUser(id, role) > 0);
     }

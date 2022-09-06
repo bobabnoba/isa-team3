@@ -24,7 +24,6 @@ public class RentalsController {
 
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public Collection<RentalDto> getAllRentals() {
         Collection<RentalDto> allRentals = new ArrayList<>();
         Collection<RentalDto> boatRentals = RentalMapper.mapBoatToRental(boatService.getAll());

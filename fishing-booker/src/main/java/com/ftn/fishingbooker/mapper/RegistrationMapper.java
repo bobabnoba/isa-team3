@@ -38,7 +38,9 @@ public class RegistrationMapper {
         client.setPoints(0);
         UserRole role = roleService.findByName("ROLE_CLIENT");
         client.setRole(role);
-
+        client.setRank(rankService.findByName("REGULAR_CLIENT"));
+        client.setPoints(0);
+        client.setNoOfPenalties(0);
         return client;
     }
 

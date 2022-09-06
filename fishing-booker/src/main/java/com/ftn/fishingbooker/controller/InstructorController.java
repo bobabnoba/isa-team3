@@ -49,9 +49,8 @@ public class InstructorController {
         return ok(InstructorMapper.toDto(found));
     }
 
-    @GetMapping("/info")
-    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
-    public ResponseEntity<InstructorInfoDto> getInstructorWithAvailability(Long id) {
+    @GetMapping("/info/{id}")
+    public ResponseEntity<InstructorInfoDto> getInstructorWithAvailability(@PathVariable Long id) {
         Instructor found = instructorService.getWithAvailabilityById(id);
         return ok(InstructorMapper.mapToInstructorInfo(found));
     }

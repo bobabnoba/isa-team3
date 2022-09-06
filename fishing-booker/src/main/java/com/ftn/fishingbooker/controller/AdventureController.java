@@ -64,7 +64,6 @@ public class AdventureController {
     }
 
     @GetMapping("/by-instructor-id/{id}")
-    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<Collection<AdventureDto>> getAllAdventuresByInstructor(@PathVariable Long id) {
         Collection<Adventure> found = adventureService.findAllByInstructorId(id);
 
@@ -180,6 +179,7 @@ public class AdventureController {
     }
 
     @PostMapping("/rent/{adventureId}/{userEmail}")
+    @PreAuthorize("hasRole('CLIENT')")
     public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
         if (client.getNoOfPenalties() >= 3) {
