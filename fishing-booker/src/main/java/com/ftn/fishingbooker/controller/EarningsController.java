@@ -40,7 +40,7 @@ public class EarningsController {
 
 
     @GetMapping("/advertiser/{email}")
-    @PreAuthorize("hasRole('INSTRUCTOR','BOAT_OWNER', 'HOME_OWNER')")
+    @PreAuthorize("hasAnyRole('INSTRUCTOR','BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Collection<EarningsDto>> getAllForAdvertiserInDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
@@ -53,7 +53,7 @@ public class EarningsController {
     }
 
     @GetMapping("/advertiser-chart/{email}")
-    @PreAuthorize("hasRole('INSTRUCTOR','BOAT_OWNER', 'HOME_OWNER')")
+    @PreAuthorize("hasAnyRole('INSTRUCTOR','BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Collection<EarningsChartDto>> getAllForAdvertiserChartInDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
