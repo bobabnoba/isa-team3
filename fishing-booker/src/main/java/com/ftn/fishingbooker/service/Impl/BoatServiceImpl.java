@@ -5,6 +5,7 @@ import com.ftn.fishingbooker.dto.BoatInfo;
 import com.ftn.fishingbooker.dto.FilterDto;
 import com.ftn.fishingbooker.enumeration.BoatType;
 import com.ftn.fishingbooker.enumeration.NavigationType;
+import com.ftn.fishingbooker.exception.EntityNotFoundException;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.BoatOwnerRepository;
@@ -70,7 +71,7 @@ public class BoatServiceImpl implements BoatService {
             Boat boat = boatRepository.findLockedById(boatId);
             boat.getReservations().add(reservation);
             boatRepository.save(boat);
-            updateAvailability(reservation.getStartDate(), reservation.getEndDate(),boatId);
+            updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boatId);
             boatOwnerService.updatePoints(boat.getBoatOwner(), reservation.getPrice());
             earningsService.saveEarnings(reservation, boat.getBoatOwner().getEmail(), boat.getBoatOwner().getRank());
             updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boatId);
@@ -543,5 +544,13 @@ public class BoatServiceImpl implements BoatService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void updateBoatRating(Long id, double boatRating) {
+        Boat boat = boatRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Boat not found"));
+        boat.setRating(boatRating);
+        boatRepository.save(boat);
     }
 }

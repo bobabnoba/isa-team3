@@ -3,6 +3,7 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.dto.FilterDto;
 import com.ftn.fishingbooker.dto.HomeAdditionalInfo;
 import com.ftn.fishingbooker.dto.HomeInfoDto;
+import com.ftn.fishingbooker.exception.EntityNotFoundException;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.VacationHomeMapper;
 import com.ftn.fishingbooker.model.*;
@@ -47,7 +48,7 @@ public class HomeServiceImpl implements HomeService {
     @Override
     @Transactional
     public VacationHome getById(Long id) {
-        return vacationHomeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Home with id " + id + " does not exist"));
+        return vacationHomeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Home with id " + id + " does not exist"));
     }
 
     @Override
@@ -122,7 +123,7 @@ public class HomeServiceImpl implements HomeService {
     public Collection<VacationHome> getAllByOwner(String email) {
         HomeOwner owner = homeOwnerRepository.findByEmail(email);
         if (owner == null) {
-            throw new ResourceConflictException("Home owner with email " + email + " does not exist");
+            throw new EntityNotFoundException("Home owner with email " + email + " does not exist");
         }
         return vacationHomeRepository.findAllByOwnerId(owner.getId());
     }
@@ -131,7 +132,7 @@ public class HomeServiceImpl implements HomeService {
     @Transactional
     public void deleteById(Long id) {
         VacationHome found = vacationHomeRepository.findById(id)
-                .orElseThrow(() -> new ResourceConflictException("Vacation home not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Vacation home not found"));
         //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVU VIKENDICU!
         var noOfFutureRes = reservationService.getNoOfIncomingReservationsForVacationHome(id);
         if (!(noOfFutureRes > 0)) {
@@ -154,7 +155,7 @@ public class HomeServiceImpl implements HomeService {
     @Transactional
     public VacationHome updateHomeInfo(Long id, HomeInfoDto updated) {
         VacationHome found = vacationHomeRepository.findById(id)
-                .orElseThrow(() -> new ResourceConflictException("Vacation home not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Vacation home not found"));
         //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
         //ako ima ne moze se editovati ako nema edituj ga
         var noOfFutureRes = reservationService.getNoOfIncomingReservationsForVacationHome(id);
@@ -174,7 +175,7 @@ public class HomeServiceImpl implements HomeService {
     public VacationHome updateHomeAdditionalInfo(Long id, HomeAdditionalInfo updated) {
 
         VacationHome found = vacationHomeRepository.findById(id)
-                .orElseThrow(() -> new ResourceConflictException("Vacation home not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Vacation home not found"));
         //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
         //ako ima ne moze se editovati ako nema edituj ga
         var noOfFutureRes = reservationService.getNoOfIncomingReservationsForVacationHome(id);
@@ -189,7 +190,7 @@ public class HomeServiceImpl implements HomeService {
     @Transactional
     public VacationHome updateHomeRules(Long id, Collection<Rule> updated) {
         VacationHome found = vacationHomeRepository.findById(id)
-                .orElseThrow(() -> new ResourceConflictException("Vacation home not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Vacation home not found"));
         //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
         //ako ima ne moze se editovati ako nema edituj ga
         var noOfFutureRes = reservationService.getNoOfIncomingReservationsForVacationHome(id);
@@ -203,7 +204,7 @@ public class HomeServiceImpl implements HomeService {
     @Transactional
     public VacationHome updateHomeAddress(Long id, Address updated) {
         VacationHome found = vacationHomeRepository.findById(id)
-                .orElseThrow(() -> new ResourceConflictException("Vacation home not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Vacation home not found"));
         //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
         //ako ima ne moze se editovati ako nema edituj ga
         var noOfFutureRes = reservationService.getNoOfIncomingReservationsForVacationHome(id);
@@ -217,7 +218,7 @@ public class HomeServiceImpl implements HomeService {
     @Transactional
     public void addImage(Long boatId, String fileName) {
         VacationHome found = vacationHomeRepository.findById(boatId)
-                .orElseThrow(() -> new ResourceConflictException("Vacation home not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Vacation home not found"));
         found.getImages().add(new Image(fileName));
         vacationHomeRepository.save(found);
     }
@@ -401,7 +402,7 @@ public class HomeServiceImpl implements HomeService {
     @Transactional
     public Collection<VacationHomeAvailability> updateAvailability(Date reservationStartDate, Date reservationEndDate, Long id) {
         //TODO:
-        VacationHome home = vacationHomeRepository.findById(id).orElseThrow(() -> new ResourceConflictException("Vacation home not found"));
+        VacationHome home = vacationHomeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Vacation home not found"));
         Set<VacationHomeAvailability> availabilities = new HashSet<>(home.getAvailability());
 
         var availabilityInBetween = availabilities.stream().filter(homeAvailability ->
@@ -472,7 +473,7 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public Boolean checkIfReservationOverlapsAvailability(VacationHomeAvailability newAvailability, Long homeId) {
-        VacationHome home = vacationHomeRepository.findById(homeId).orElseThrow(() -> new ResourceConflictException("Home not found"));
+        VacationHome home = vacationHomeRepository.findById(homeId).orElseThrow(() -> new EntityNotFoundException("Home not found"));
         //TODO:PROVERITI DA LI IMA REZ U TOM PERIODU
         Collection<Reservation> homeReservations = reservationService.getReservationForVacationHome(homeId);
         var foundOverlaps = homeReservations.stream().filter(reservation -> dateService.reservationOverlapsWithAvailability(reservation.getStartDate(), reservation.getEndDate(), newAvailability.getStartDate(), newAvailability.getEndDate())).collect(Collectors.toSet());
@@ -480,6 +481,14 @@ public class HomeServiceImpl implements HomeService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void updateHomeRating(Long id, double rating) {
+        VacationHome home = vacationHomeRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Home not found"));
+        home.setRating(rating);
+        vacationHomeRepository.save(home);
     }
 
 

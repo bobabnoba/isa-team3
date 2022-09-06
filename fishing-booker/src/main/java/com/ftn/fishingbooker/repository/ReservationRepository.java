@@ -187,4 +187,39 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "    join a.reservations r " +
             "    where a.instructor.id = :id and r.isCancelled = false and r.startDate >= :from and r.endDate <= :to")
     Collection<Reservation> getReservationForInstructor(Long id, Date from, Date to);
+
+
+    @Query(value = "select r " +
+            "    from Boat a " +
+            "    join a.reservations r " +
+            "    where a.id = :id and r.isCancelled = false and r.startDate >= :from  and r.startDate <= :to " )
+    Collection<Reservation> getReservationsForBoatChart(Long id, Date from, Date to);
+    @Query(value = "select r " +
+            "    from VacationHome a " +
+            "    join a.reservations r " +
+            "    where a.id = :id and r.isCancelled = false and r.startDate >= :from and r.startDate <= :to  ")
+    Collection<Reservation> getReservationsForHomeChart(Long id, Date from, Date to);
+    @Query(value = "select r " +
+            "    from Adventure a " +
+            "    join a.reservations r " +
+            "    where a.id = :id and r.isCancelled = false and r.startDate >= :from and r.startDate <= :to  ")
+    Collection<Reservation> getReservationsForAdventureChart(Long id, Date from, Date to);
+    @Query(value = "select r " +
+            "    from Boat a " +
+            "    join a.reservations r " +
+            "    where a.boatOwner.id = :id and r.isCancelled = false and r.startDate >= :from and r.startDate <= :to  ")
+    Collection<Reservation> getReservationForBoatOwnerChart(Long id, Date from, Date to);
+
+    @Query(value = "select r " +
+            "    from VacationHome a " +
+            "    join a.reservations r " +
+            "    where a.homeOwner.id = :id and r.isCancelled = false and r.startDate >= :from and r.startDate <= :to ")
+    Collection<Reservation> getReservationForHomeOwnerChart(Long id, Date from, Date to);
+
+    @Query(value = "select r " +
+            "    from Adventure a " +
+            "    join a.reservations r " +
+            "    where a.instructor.id = :id and r.isCancelled = false and r.startDate >= :from  and r.startDate <= :to ")
+    Collection<Reservation> getReservationForInstructorChart(Long id, Date from, Date to);
+
 }

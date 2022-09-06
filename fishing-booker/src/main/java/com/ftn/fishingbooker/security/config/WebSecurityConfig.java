@@ -56,10 +56,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/**").permitAll()
                 .antMatchers("/auth/register/**").permitAll()
                 .antMatchers("/auth/register/client").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/boat-owner/register").permitAll()
+                .antMatchers("/home-owner/register").permitAll()
+                .antMatchers("/instructor/register").permitAll()
+
                 .anyRequest().authenticated().and()
                 .cors().and()
                 .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService),
@@ -81,7 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(AUTH_WHITELIST);
         web.ignoring().antMatchers(HttpMethod.POST, "/auth/**");//login
         web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "swagger-ui/**", "/swagger-ui.html", "/webjars/**");
-        web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "favicon.ico", "/**/*.html",
+        web.ignoring().antMatchers(HttpMethod.GET, "/images/**", "/", "/webjars/**", "/*.html", "favicon.ico", "/**/*.html",
                 "*.css", "/**/*.js");
     }
 }

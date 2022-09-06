@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +38,8 @@ public class BoatController {
     private final ReservationService reservationService;
     private final EmailService emailService;
 
-    @GetMapping()
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'BOAT_OWNER')")
     public Collection<RentalDto> GetAll() {
         Collection<Boat> boats = boatService.getAll();
 
@@ -105,6 +107,7 @@ public class BoatController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'BOAT_OWNER')")
     public ResponseEntity<Void> deleteABoat(@PathVariable Long id) {
         boatService.deleteById(id);
         return ResponseEntity.noContent().build();

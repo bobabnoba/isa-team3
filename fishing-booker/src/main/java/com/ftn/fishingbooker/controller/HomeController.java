@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,6 +53,7 @@ public class HomeController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public Collection<VacationHomeDto> getAllVacations() {
         Collection<VacationHome> homes = vacationHomeService.getAll();
 
@@ -127,6 +129,7 @@ public class HomeController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'HOME_OWNER')")
     public ResponseEntity<Void> deleteHome(@PathVariable Long id) {
         vacationHomeService.deleteById(id);
         return ResponseEntity.noContent().build();
@@ -198,7 +201,8 @@ public class HomeController {
     }
 
     @GetMapping("{id}/has-incoming-reservations")
-    public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id) {
+    @PreAuthorize("hasAnyRole('ADMIN', 'HOME_OWNER')")
+    public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){
         return ResponseEntity.ok(vacationHomeService.getNoOfIncomingReservations(id) > 0);
     }
 

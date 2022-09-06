@@ -5,6 +5,7 @@ import com.ftn.fishingbooker.mapper.UtilityMapper;
 import com.ftn.fishingbooker.model.Utility;
 import com.ftn.fishingbooker.service.UtilityService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ public class UtilityController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Collection<UtilityDto>> getAdventureUtilities() {
         Collection<Utility> found = utilityService.getAll();
        return ResponseEntity.ok(UtilityMapper.map(found));

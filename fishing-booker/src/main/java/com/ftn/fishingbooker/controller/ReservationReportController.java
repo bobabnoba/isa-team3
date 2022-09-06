@@ -8,6 +8,7 @@ import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.dao.DatabaseReport;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -34,12 +35,14 @@ public class ReservationReportController {
     }
 
     @GetMapping("/unprocessed")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Collection<DatabaseReport>> getAllUnreviewedReports() {
         Collection<DatabaseReport> reports = reportService.getAllUnreviewedReports();
         return ResponseEntity.ok(reports);
     }
 
     @PostMapping("/{reservationId}")
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Report> addReport(@PathVariable Long reservationId, @RequestBody NewReportDto report) {
         if(report.getType() == ReservationType.ADVENTURE){
             Instructor instructor = instructorService.findByEmail(report.getOwnerEmail());
@@ -58,6 +61,7 @@ public class ReservationReportController {
     }
 
     @PostMapping("/admin-review")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> adminReview(@RequestBody AdminReportResponseDto report)  {
         if(report.isPenalty()) {
             clientService.addPenalty(report.getClientEmail());
