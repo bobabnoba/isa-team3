@@ -14,6 +14,7 @@ import com.ftn.fishingbooker.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -36,6 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/info")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Collection<UserInfoDto>> getAllUserInfo() {
         Collection<User> found = userService.findAllByDeleted(false);
         Collection<UserInfoDto> dtos = found.stream()
@@ -45,6 +47,7 @@ public class UserController {
     }
 
     @GetMapping("{email}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<UserDto> getUserInfo(@PathVariable String email) {
         User userInfo = userService.getByEmail(email);
         return ResponseEntity.ok(UserMapper.mapToDto(userInfo));
@@ -56,8 +59,8 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.mapToDto(userInfo));
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/update")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
         User user = userService.update(UserMapper.mapToEntity(userDto));
         return ResponseEntity.ok(UserMapper.mapToDto(user));
@@ -70,17 +73,20 @@ public class UserController {
     }
 
     @PutMapping(value = "change-password/{email}")
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<HttpStatus> changePassword(@RequestBody PasswordChangeDto request, @PathVariable String email) {
         userService.changePassword(email, request);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("{id}/has-incoming-reservations")
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'ADMIN')")
     public ResponseEntity<Boolean> userHasIncomingReservations(@PathVariable Long id, @RequestParam String role) {
         return ResponseEntity.ok(reservationService.getNoOfIncomingReservationsForUser(id, role) > 0);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteById(id);
         return ResponseEntity.noContent().build();

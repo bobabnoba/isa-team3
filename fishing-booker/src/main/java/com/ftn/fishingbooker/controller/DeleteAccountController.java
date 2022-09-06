@@ -7,6 +7,7 @@ import com.ftn.fishingbooker.model.DeleteAccountRequest;
 import com.ftn.fishingbooker.service.DeleteAccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -23,12 +24,14 @@ public class DeleteAccountController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR', 'CLIENT', 'BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<DeleteAccountResponse> createDeletionRequest(@RequestBody DeleteAccountRequestDto request) {
         DeleteAccountRequest savedRequest = deleteAccountService.createRequest(DeleteAccountRequestMapper.mapToEntity(request));
         return ResponseEntity.ok(DeleteAccountRequestMapper.mapToDto(savedRequest));
     }
 
     @GetMapping("/requests")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Collection<DeleteAccountResponse>> getAllDeletionRequests(){
         Collection<DeleteAccountRequest> requests = deleteAccountService.getAllUnprocessed();
         Collection<DeleteAccountResponse> dtos = requests.stream()
@@ -38,6 +41,7 @@ public class DeleteAccountController {
     }
 
     @PostMapping("/process-request/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> processDeletionRequest
             (@PathVariable Long id, @RequestBody DeleteAccountResponse request) {
         deleteAccountService.processRequest(id,

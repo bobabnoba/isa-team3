@@ -5,6 +5,7 @@ import com.ftn.fishingbooker.mapper.UserRankMapper;
 import com.ftn.fishingbooker.model.UserRank;
 import com.ftn.fishingbooker.service.UserRankService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -21,6 +22,7 @@ public class UserRankController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Collection<UserRankDto>> getLoyaltyProgram(){
 
         Collection<UserRank> found = userRankService.getLoyaltyProgram();
@@ -33,6 +35,7 @@ public class UserRankController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Collection<UserRankDto>> updateLoyaltyProgram(@RequestBody Collection<UserRankDto> program){
 
         Collection<UserRank> userRanks = program.stream()

@@ -13,4 +13,14 @@ public interface ReviewRepository extends JpaRepository<ClientReview, Long> {
     ClientReview findByReservationId(Long reservationId);
 
     Collection<ClientReview> findAllByStatus(ReviewStatus status);
+
+    @Query(value = " select avg(r.rentalRating) " +
+            "        from ClientReview r " +
+            "        where r.rentalId = :rentalId and r.status = com.ftn.fishingbooker.enumeration.ReviewStatus.APPROVED")
+    double calculateRentalRating(Long rentalId);
+
+    @Query(value = " select avg(r.ownerRating) " +
+            "        from ClientReview r " +
+            "        where r.ownerEmail = :email and r.status = com.ftn.fishingbooker.enumeration.ReviewStatus.APPROVED")
+    double calculateOwnerRating(String email);
 }

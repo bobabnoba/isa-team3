@@ -44,7 +44,7 @@
                     </div>
                     <div *ngIf="!instructor">
                         <div *ngFor="let offer of clientSpecialOffers">
-                            <app-adventure-special-offer [adventureId]="adventure.id" [offer]="offer" class="p-3">
+                            <app-adventure-special-offer [adventureId]="adventure.id" [type]="'adventure'" [offer]="offer" class="p-3">
                             </app-adventure-special-offer>
                         </div>
                     </div>

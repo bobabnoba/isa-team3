@@ -2,7 +2,6 @@ package com.ftn.fishingbooker.service;
 
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.model.*;
-import org.springframework.http.*;
 
 import java.util.*;
 
@@ -44,4 +43,6 @@ public interface BoatService {
     int getNoOfIncomingReservations(Long id);
 
     Boolean checkIfReservationOverlapsAvailability(BoatAvailability mapToBoatAvailabilityEntity, Long boatId);
+
+    void updateBoatRating(Long rentalId, double boatRating);
 }

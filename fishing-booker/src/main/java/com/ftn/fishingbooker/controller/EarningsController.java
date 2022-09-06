@@ -7,6 +7,7 @@ import com.ftn.fishingbooker.service.EarningsService;
 import com.ftn.fishingbooker.util.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -26,6 +27,7 @@ public class EarningsController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Collection<EarningsDto>> getAllForAdvertiserInDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to){
@@ -38,6 +40,7 @@ public class EarningsController {
 
 
     @GetMapping("/advertiser/{email}")
+    @PreAuthorize("hasRole('INSTRUCTOR','BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Collection<EarningsDto>> getAllForAdvertiserInDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
@@ -50,6 +53,7 @@ public class EarningsController {
     }
 
     @GetMapping("/advertiser-chart/{email}")
+    @PreAuthorize("hasRole('INSTRUCTOR','BOAT_OWNER', 'HOME_OWNER')")
     public ResponseEntity<Collection<EarningsChartDto>> getAllForAdvertiserChartInDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,

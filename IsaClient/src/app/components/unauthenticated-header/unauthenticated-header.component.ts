@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { RegisterAsComponent } from '../register-components/register-as/register-as.component';
 
 @Component({
   selector: 'app-unauthenticated-header',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UnauthenticatedHeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _matDialog : MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  register(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.id = 'modal-component';
+    dialogConfig.width = '500px';
+    this._matDialog.open(RegisterAsComponent, dialogConfig);
+  }
 }

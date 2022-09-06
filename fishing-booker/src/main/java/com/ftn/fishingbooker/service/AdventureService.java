@@ -48,4 +48,5 @@ public interface AdventureService {
 
     Adventure getAdventureForReservation(Long reservationId);
 
+    void updateAdventureRating(Long id, double adventureRating, double instructorRating);
 }

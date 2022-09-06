@@ -35,16 +35,16 @@ insert into user_rank(id, name, min_points, reservation_percentage, percentage)
 --Client
 insert into client(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id,  no_of_penalties) values
 (10,'Whatever Bio',  'majablgic505@gmail.com', 'Edgar Alan', 'true' , 'false', 'false', 'Poe',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 4002, 2, 0),
-(12,'Whatever Bio',  'ClientEmail2', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 1, 0);
+(12,'Whatever Bio',  'client2gmail.com', 'Marlena', 'true' , 'false', 'false', 'Voltori',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 2 , 0, 1, 0);
 
 ----Admin
 insert into admin(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password, phone, test_rebase_again, address_id, role_id, points, rank_id, first_login, head_admin)
-values (11,'No bio',  'AdminEmail', 'Adminko', 'true' , 'false', 'false', 'kovic',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 1, 0, 4, 'false', 'true');
+values (11,'No bio',  'admin12@gmail.com', 'Adminko', 'true' , 'false', 'false', 'kovic',null, /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.', '043-4234-423', 'false',41 , 1, 0, 4, 'false', 'true');
 
 ----Home Owner
 insert into home_owner(id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password,
  phone, test_rebase_again, address_id, role_id, points, rank_id)
-	values (111,'Whatever Bio', 'VacationOwnerEmail', 'VacationOwnerFirstName'
+	values (111,'Whatever Bio', 'vacationowner@gmail.com', 'VacationOwnerFirstName'
 	, 'true' , 'false', 'false', 'VacationOwnerLastName', null , /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.',
 	 '0943242342','false',41, 4, 0, 4);
 
@@ -53,7 +53,7 @@ insert into boat_owner(
 	id, biography, email, first_name, is_activated, is_blocked, deleted, last_name, last_password_reset_date, password,
 	 phone, test_rebase_again, address_id, role_id, type, points, rank_id)
 
-	values (109,'Whatever Bio', 'BoatOwnerEmail', 'BoatOwnerFirstName'
+	values (109,'Whatever Bio', 'boatowner@gmail.com', 'BoatOwnerFirstName'
 	, 'true' , 'false', 'false', 'BoatOwnerLastName', null , /*password : WhateverPassword*/ '$2a$09$pKCALxdgccQZyZp0BwFBq.Fvl82rMQYehkxB5J7BGNwru7UVBpzo.',
 	 '0943242342','false', 42, 3,'BOAT_OWNER', 0, 4);
 
@@ -101,6 +101,7 @@ insert into utility(
 	(110, 'Raw Fish', 20),
 	(111, 'Treasure Hunting', 5),
 	(112, 'Gospodje Pufna Fish', 10);
+
 insert into vacation_home_utilities(
 	vacation_home_id, utilities_id)
 	values (100, 100),
