@@ -150,23 +150,24 @@ public class ReservationController {
         if (type.equals(ReservationType.BOAT)) {
             if (email != null) {
                 BoatOwner owner = boatOwnerService.getByEmail(email);
-                found.addAll(reservationService.getReservationForBoatOwner(owner.getId(), from, to));
+                var s = reservationService.getReservationForBoatOwnerChart(owner.getId(), from, to);
+                found.addAll(s);
             } else {
-                found.addAll(reservationService.getReservationsForBoat(id, from, to));
+                found.addAll(reservationService.getReservationsForBoatChart(id, from, to));
             }
         } else if (type.equals(ReservationType.VACATION_HOME)) {
             if (email != null) {
                 HomeOwner owner = homeOwnerService.getByEmail(email);
-                found.addAll(reservationService.getReservationForHomeOwner(owner.getId(), from, to));
+                found.addAll(reservationService.getReservationForHomeOwnerChart(owner.getId(), from, to));
             } else {
-                found.addAll(reservationService.getReservationsForHome(id, from, to));
+                found.addAll(reservationService.getReservationsForHomeChart(id, from, to));
             }
         } else {
             if (email != null) {
                 Instructor instructor = instructorService.findByEmail(email);
-                found.addAll(reservationService.getReservationForInstructor(instructor.getId(), from, to));
+                found.addAll(reservationService.getReservationForInstructorChart(instructor.getId(), from, to));
             } else {
-                found.addAll(reservationService.getReservationsForAdventure(id, from, to));
+                found.addAll(reservationService.getReservationsForAdventureChart(id, from, to));
             }
         }
         Collection<EarningsChartDto> earningsDtos = new ArrayList<>();
@@ -195,23 +196,23 @@ public class ReservationController {
         if (type.equals(ReservationType.BOAT)) {
             if (email != null) {
                 BoatOwner owner = boatOwnerService.getByEmail(email);
-                found.addAll(reservationService.getReservationForBoatOwner(owner.getId(), from, to));
+                found.addAll(reservationService.getReservationForBoatOwnerChart(owner.getId(), from, to));
             } else {
-                found.addAll(reservationService.getReservationsForBoat(id, from, to));
+                found.addAll(reservationService.getReservationsForBoatChart(id, from, to));
             }
         } else if (type.equals(ReservationType.VACATION_HOME)) {
             if (email != null) {
                 HomeOwner owner = homeOwnerService.getByEmail(email);
-                found.addAll(reservationService.getReservationForHomeOwner(owner.getId(), from, to));
+                found.addAll(reservationService.getReservationForHomeOwnerChart(owner.getId(), from, to));
             } else {
-                found.addAll(reservationService.getReservationsForHome(id, from, to));
+                found.addAll(reservationService.getReservationsForHomeChart(id, from, to));
             }
         } else {
             if (email != null) {
                 Instructor instructor = instructorService.findByEmail(email);
-                found.addAll(reservationService.getReservationForInstructor(instructor.getId(), from, to));
+                found.addAll(reservationService.getReservationForInstructorChart(instructor.getId(), from, to));
             } else {
-                found.addAll(reservationService.getReservationsForAdventure(id, from, to));
+                found.addAll(reservationService.getReservationsForAdventureChart(id, from, to));
             }
         }
         Collection<ReservationChartDto> earningsDtos = new ArrayList<>();

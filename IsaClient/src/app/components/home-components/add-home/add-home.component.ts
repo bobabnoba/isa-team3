@@ -162,7 +162,7 @@ export class AddHomeComponent implements OnInit {
     this.newHome.description = this.info.value.description;
     this.newHome.pricePerDay = this.info.value.pricePerDay;
     this.newHome.information = this.info.value.information;
-    this.newHome.cancelingPercentage = this.info.value.cancellationPercentage;
+    this.newHome.cancelingPercentage = this.info.value.cancelingPercentage;
     this.newHome.guestLimit = this.info.value.guestsLimit;
     this.newHome.codeOfConduct = this.rules;
     this.newHome.ownerEmail = this._storageService.getEmail();

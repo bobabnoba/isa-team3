@@ -38,27 +38,40 @@ export class BoatOwnerProfileComponent implements OnInit {
   }
 
   deleteAccount(){
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = false;
-    dialogConfig.id = 'modal-component';
-    dialogConfig.width = '600px';
-    const dialogRef = this._matDialog.open(BoatOwnerAccDeletionExplanationComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe({
-      next: (res) => {
-        let request = {
-          email : this._storageService.getEmail(),
-          explanation : res.data
-        } as DeleteAccoutRequest;
-        this._deleteAccountService.createDeletionRequest(request).subscribe(
-          res => {
-            this._snackBar.open('Your request has been sent to admins for approval.', '',
-              {duration : 3000, panelClass: ['snack-bar']}
-            );
-          }
-        );
+    this._userService.hasIncomingReservations(this.user.id, "ROLE_BOAT_OWNER").subscribe(
+      (res) => {
+        if(res){
+          this._snackBar.open("You have incoming reservations, you can't delete your account!", '', {
+            duration: 3000,
+            panelClass: ['snack-bar']
+          });
+        }else {
+          const dialogConfig = new MatDialogConfig();
+          dialogConfig.disableClose = false;
+          dialogConfig.id = 'modal-component';
+          dialogConfig.width = '600px';
+          const dialogRef = this._matDialog.open(BoatOwnerAccDeletionExplanationComponent, dialogConfig);
+
+          dialogRef.afterClosed().subscribe({
+            next: (res) => {
+              let request = {
+                email : this._storageService.getEmail(),
+                explanation : res.data
+              } as DeleteAccoutRequest;
+              this._deleteAccountService.createDeletionRequest(request).subscribe(
+                res => {
+                  this._snackBar.open('Your request has been sent to admins for approval.', '',
+                    {duration : 3000, panelClass: ['snack-bar']}
+                  );
+                }
+              );
+            }
+          })
+        }
       }
-    })
+    )
+    
   }
 
   doSth() {
