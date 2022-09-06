@@ -55,7 +55,7 @@ public class HomeController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN', 'HOME_OWNER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'HOME_OWNER')")
     public Collection<VacationHomeDto> getAllVacations() {
         Collection<VacationHome> homes = vacationHomeService.getAll();
 
