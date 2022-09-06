@@ -1,13 +1,17 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.dao.*;
+import com.ftn.fishingbooker.dao.BoatReservationInfo;
+import com.ftn.fishingbooker.dao.ReservationCalendarInfo;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.UtilityDto;
-import com.ftn.fishingbooker.enumeration.*;
+import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
-import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.repository.*;
+import com.ftn.fishingbooker.model.Client;
+import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.model.Utility;
+import com.ftn.fishingbooker.repository.ReservationRepository;
 import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +31,10 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final DateService dateService;
     private final UtilityService utilityService;
+    private final ClientService clientService;
+    private final EmailService emailService;
+    private final HomeService homeService;
+    private final BoatService boatService;
 
     @Override
     public Collection<Reservation> findAllForClient(Long clientId) {
@@ -216,9 +224,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation ownerMakeReservation(Client client, ReservationDto reservationDto) {
-        //metoda bez racunanja cene opet
-        //meni ovdje nikakvo racunjanje ne treba, stize izracunata cena s fronta, moze samo neka provjera mzd
+    public Reservation ownerMakeReservation(Client client, ReservationDto reservationDto, Long objectId) {
 
         Reservation newReservation = ReservationMapper.map(reservationDto);
         newReservation.setClient(client);
@@ -230,7 +236,18 @@ public class ReservationServiceImpl implements ReservationService {
             utilitySet.add(utility);
         }
         newReservation.setUtilities(utilitySet);
-        return reservationRepository.save(newReservation);
+
+        Reservation saved = reservationRepository.save(newReservation);
+        if(reservationDto.getType().equals(ReservationType.VACATION_HOME)){
+            homeService.makeReservation(objectId, saved);
+        }else{
+            boatService.makeReservation(objectId, saved);
+        }
+
+        clientService.updatePoints(client, saved.getPrice());
+        emailService.sendReservationEmail(ReservationMapper.map(saved), client);
+
+        return saved;
     }
 
     @Override
@@ -257,6 +274,7 @@ public class ReservationServiceImpl implements ReservationService {
     public Collection<ReservationCalendarInfo> getAllInstructorReservations(Long id) {
         return reservationRepository.getAllReservationForInstructor(id);
     }
+
     @Override
     public Collection<BoatReservationInfo> getUpcomingReservationsForHomeOwner(Long id) {
         return reservationRepository.getUpcomingReservationsForHomeOwner(id);
@@ -307,5 +325,34 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.getReservationForInstructor(id, from, to);
     }
 
+    @Override
+    public Reservation makeVacationHomeReservation(Client client, Long homeId, ReservationDto reservationDto) {
+        Reservation reservation = ReservationMapper.map(reservationDto);
+        reservation.setClient(client);
+        reservation.setPrice(calculatePrice(reservationDto, client.getRank().getPercentage()));
+        Set<Utility> utilitySet = new HashSet<>();
+        for (UtilityDto utilityDto : reservationDto.getUtilities()
+        ) {
+            Utility utility = utilityService.getByName(utilityDto.getName());
+            utilitySet.add(utility);
+        }
+        reservation.setUtilities(utilitySet);
+        reservationRepository.save(reservation);
+        homeService.makeReservation(homeId, reservation);
+        clientService.updatePoints(client, reservation.getPrice());
+        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        return reservation;
+    }
+
+    @Override
+    public Reservation makeBoatReservation(Client client, Long boatId, ReservationDto reservationDto) {
+
+
+    //        boatService.makeReservation(boatId, reservation);
+    //        clientService.updatePoints(client, reservation.getPrice());
+
+            //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        return  new Reservation();
+    }
 
 }

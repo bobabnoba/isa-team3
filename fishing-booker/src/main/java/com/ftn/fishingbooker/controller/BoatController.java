@@ -63,11 +63,8 @@ public class BoatController {
         }
 
         reservationDto.setType(ReservationType.BOAT);
-        Reservation reservation = reservationService.makeReservation(client, reservationDto);
-        boatService.makeReservation(boatId, reservation);
-        clientService.updatePoints(client, reservation.getPrice());
+        Reservation reservation = reservationService.makeBoatReservation(client, boatId, reservationDto);
 
-        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 
@@ -77,13 +74,7 @@ public class BoatController {
         if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-
-        //reservationDto.setType(ReservationType.BOAT);
-        Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto);
-        boatService.makeReservation(boatId, reservation);
-        clientService.updatePoints(client, reservation.getPrice());
-
-        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto, boatId);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 

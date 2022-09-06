@@ -11,7 +11,8 @@ import com.ftn.fishingbooker.repository.BoatOwnerRepository;
 import com.ftn.fishingbooker.repository.BoatRepository;
 import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.DateUtil;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,15 +21,22 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class BoatServiceImpl implements BoatService {
-    private final BoatRepository boatRepository;
-    private final DateService dateService;
-    private final ReservationService reservationService;
-    private final BoatOwnerService boatOwnerService;
-    private final BoatOwnerRepository boatOwnerRepository;
-    private final EarningsService earningsService;
-    private final BoatAvailabilityService boatAvailabilityService;
+    @Autowired
+    private BoatRepository boatRepository;
+    @Autowired
+    private DateService dateService;
+    @Autowired
+    @Lazy
+    private ReservationService reservationService;
+    @Autowired
+    private BoatOwnerService boatOwnerService;
+    @Autowired
+    private BoatOwnerRepository boatOwnerRepository;
+    @Autowired
+    private EarningsService earningsService;
+    @Autowired
+    private BoatAvailabilityService boatAvailabilityService;
 
     @Override
     public Collection<Boat> getAll() {

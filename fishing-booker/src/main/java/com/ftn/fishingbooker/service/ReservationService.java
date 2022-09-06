@@ -1,8 +1,9 @@
 package com.ftn.fishingbooker.service;
 
-import com.ftn.fishingbooker.dao.*;
+import com.ftn.fishingbooker.dao.BoatReservationInfo;
+import com.ftn.fishingbooker.dao.ReservationCalendarInfo;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.dto.ReservationDto;
-import com.ftn.fishingbooker.enumeration.*;
 import com.ftn.fishingbooker.model.Client;
 import com.ftn.fishingbooker.model.Reservation;
 
@@ -54,7 +55,7 @@ public interface ReservationService {
 
     Collection<BoatReservationInfo> getCurrentReservationsForBoatOwner(Long id);
 
-    Reservation ownerMakeReservation(Client client, ReservationDto reservation);
+    Reservation ownerMakeReservation(Client client, ReservationDto reservation, Long homeId);
 
     Reservation instructorMakeReservation(Client client, ReservationDto reservationDto, double durationInHours);
 
@@ -69,9 +70,18 @@ public interface ReservationService {
     Collection<Reservation> getCaptainReservationsForBoatOwner(Long id);
 
     Collection<Reservation> getReservationsForBoat(Long id, Date from, Date to);
+
     Collection<Reservation> getReservationsForHome(Long id, Date from, Date to);
+
     Collection<Reservation> getReservationsForAdventure(Long id, Date from, Date to);
+
     Collection<Reservation> getReservationForBoatOwner(Long id, Date from, Date to);
+
     Collection<Reservation> getReservationForHomeOwner(Long id, Date from, Date to);
+
     Collection<Reservation> getReservationForInstructor(Long id, Date from, Date to);
+
+    Reservation makeVacationHomeReservation(Client client, Long homeId, ReservationDto reservationDto);
+
+    Reservation makeBoatReservation(Client client, Long boatId, ReservationDto reservationDto);
 }

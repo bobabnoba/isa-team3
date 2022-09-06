@@ -10,7 +10,8 @@ import com.ftn.fishingbooker.repository.HomeOwnerRepository;
 import com.ftn.fishingbooker.repository.HomeRepository;
 import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.DateUtil;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,16 +20,23 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class HomeServiceImpl implements HomeService {
-    private final HomeRepository vacationHomeRepository;
-    private final ReservationService reservationService;
-    private final DateService dateService;
-    private final HomeOwnerService homeOwnerService;
-    private final EarningsService earningsService;
-    private final HomeOwnerRepository homeOwnerRepository;
-    private final HomeAvailabilityService homeAvailabilityService;
 
+    @Autowired
+    private HomeRepository vacationHomeRepository;
+    @Autowired
+    @Lazy
+    private ReservationService reservationService;
+    @Autowired
+    private DateService dateService;
+    @Autowired
+    private HomeOwnerService homeOwnerService;
+    @Autowired
+    private EarningsService earningsService;
+    @Autowired
+    private HomeOwnerRepository homeOwnerRepository;
+    @Autowired
+    private HomeAvailabilityService homeAvailabilityService;
 
     @Override
     public Collection<VacationHome> getAll() {
@@ -60,6 +68,7 @@ public class HomeServiceImpl implements HomeService {
         }
         return filteredHomeList;
     }
+
     @Override
     public boolean checkAvailability(Date from, Date to, Long homeId) {
         boolean isAvailable = false;

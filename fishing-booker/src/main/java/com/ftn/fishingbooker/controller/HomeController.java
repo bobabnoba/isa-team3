@@ -2,24 +2,28 @@ package com.ftn.fishingbooker.controller;
 
 import com.ftn.fishingbooker.dto.*;
 import com.ftn.fishingbooker.enumeration.ReservationType;
-import com.ftn.fishingbooker.mapper.*;
+import com.ftn.fishingbooker.mapper.AddressMapper;
+import com.ftn.fishingbooker.mapper.RentalMapper;
+import com.ftn.fishingbooker.mapper.ReservationMapper;
+import com.ftn.fishingbooker.mapper.VacationHomeMapper;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.service.ClientService;
 import com.ftn.fishingbooker.service.EmailService;
 import com.ftn.fishingbooker.service.HomeService;
 import com.ftn.fishingbooker.service.ReservationService;
-import com.ftn.fishingbooker.util.*;
+import com.ftn.fishingbooker.util.FIleUploadUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.*;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.*;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -33,7 +37,7 @@ public class HomeController {
     private final EmailService emailService;
 
     @GetMapping("/{id}")
-        public ResponseEntity<VacationHomeDto> getHomeById(@PathVariable Long id) {
+    public ResponseEntity<VacationHomeDto> getHomeById(@PathVariable Long id) {
         VacationHome found = vacationHomeService.getById(id);
         VacationHomeDto dto = VacationHomeMapper.map(found);
         return ok(dto);
@@ -70,6 +74,7 @@ public class HomeController {
 
         return ReservationMapper.map(reservationService.getReservationForVacationHome(homeId));
     }
+
     @GetMapping("/profile/{id}")
     public ResponseEntity<VacationHomeDto> getHomeProfileById(@PathVariable Long id) {
         VacationHome found = vacationHomeService.getById(id);
@@ -77,18 +82,33 @@ public class HomeController {
         return ok(dto);
     }
 
+//    @PostMapping("/rent/{homeId}/{userEmail}")
+//    public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long homeId, @RequestBody ReservationDto reservationDto) {
+//        Client client = clientService.getClientByEmail(userEmail);
+//        if (client.getNoOfPenalties() >= 3){
+//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//        }
+//        reservationDto.setType(ReservationType.VACATION_HOME);
+//        Reservation reservation = reservationService.makeReservation(client, reservationDto);
+//        vacationHomeService.makeReservation(homeId, reservation);
+//        clientService.updatePoints(client, reservation.getPrice());
+//        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+//        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+//    }
+
     @PostMapping("/rent/{homeId}/{userEmail}")
     public ResponseEntity<ReservationDto> makeReservation(@PathVariable String userEmail, @PathVariable Long homeId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
-        if (client.getNoOfPenalties() >= 3){
+        if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
         reservationDto.setType(ReservationType.VACATION_HOME);
-        Reservation reservation = reservationService.makeReservation(client, reservationDto);
-        vacationHomeService.makeReservation(homeId, reservation);
-        clientService.updatePoints(client, reservation.getPrice());
-        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
-        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+        Reservation reservation = reservationService.makeVacationHomeReservation(client, homeId, reservationDto);
+        if (reservation == null) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+        }
     }
 
     @PostMapping("/owner-rent/{homeId}/{userEmail}")
@@ -98,12 +118,8 @@ public class HomeController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        //reservationDto.setType(ReservationType.VACATION_HOME);
-        Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto);
-        vacationHomeService.makeReservation(homeId, reservation);
-        clientService.updatePoints(client, reservation.getPrice());
+        Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto, homeId);
 
-        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 
@@ -130,6 +146,7 @@ public class HomeController {
         VacationHome saved = vacationHomeService.addHome(home, dto.getOwnerEmail());
         return ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
+
     @PostMapping("/info-update/{id}")
     public ResponseEntity<VacationHomeDto> updateHomeInfo(@PathVariable Long id, @RequestBody HomeInfoDto updated) {
         VacationHome saved = vacationHomeService.updateHomeInfo(id, updated);
@@ -183,13 +200,13 @@ public class HomeController {
     }
 
     @GetMapping("for-reservation/{reservationId}")
-    public ResponseEntity<HomeInfoDto> getHomeForReservation(@PathVariable Long reservationId){
+    public ResponseEntity<HomeInfoDto> getHomeForReservation(@PathVariable Long reservationId) {
         VacationHome home = vacationHomeService.getHomeForReservation(reservationId);
-        return new ResponseEntity<>(VacationHomeMapper.mapToDtoInfo(home),HttpStatus.OK);
+        return new ResponseEntity<>(VacationHomeMapper.mapToDtoInfo(home), HttpStatus.OK);
     }
 
     @GetMapping("{id}/has-incoming-reservations")
-    public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){
+    public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id) {
         return ResponseEntity.ok(vacationHomeService.getNoOfIncomingReservations(id) > 0);
     }
 
