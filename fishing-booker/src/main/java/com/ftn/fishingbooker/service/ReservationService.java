@@ -28,6 +28,8 @@ public interface ReservationService {
 
     Reservation makeSpecialOfferReservation(Client client, ReservationDto reservationDto);
 
+    Reservation makeSpecialOfferHomeReservation(Client client, Long rentalId, Long offerId, ReservationDto reservationDto);
+
     Collection<Reservation> getReservationsForAdventures(Collection<Long> id);
 
     Collection<ReservationInfo> getUpcomingReservationsForInstructor(Long id);

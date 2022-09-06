@@ -171,11 +171,10 @@ public class AdventureController {
         if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        if (clientService.hasOverlappingReservation(userEmail, reservationDto.getStartDate(), reservationDto.getEndDate())) {
-            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
-        }
+
         reservationDto.setType(ReservationType.ADVENTURE);
         Reservation reservation = reservationService.makeAdventureReservation(client, adventureId, reservationDto);
+
 
         if (reservation == null) {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);

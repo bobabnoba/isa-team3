@@ -47,6 +47,8 @@ public class ReservationServiceImpl implements ReservationService {
     @Autowired
     @Lazy
     private AdventureService adventureService;
+    @Autowired
+    private SpecialOfferService specialOfferService;
 
 
     @Override
@@ -142,24 +144,6 @@ public class ReservationServiceImpl implements ReservationService {
         newReservation.setUtilities(utilitySet);
         return reservationRepository.save(newReservation);
     }
-
-    @Override
-    public Reservation makeSpecialOfferReservation(Client client, ReservationDto reservationDto) {
-        Reservation newReservation = ReservationMapper.map(reservationDto);
-        newReservation.setClient(client);
-        var discount = reservationDto.getPrice() * client.getRank().getPercentage() / 100;
-        newReservation.setPrice(reservationDto.getPrice() - discount);
-
-        Set<Utility> utilitySet = new HashSet<>();
-        for (UtilityDto utilityDto : reservationDto.getUtilities()
-        ) {
-            Utility utility = utilityService.getByName(utilityDto.getName());
-            utilitySet.add(utility);
-        }
-        newReservation.setUtilities(utilitySet);
-        return reservationRepository.save(newReservation);
-    }
-
 
     @Override
     public Reservation makeReservation(Client client, ReservationDto reservationDto, double durationInHours) {
@@ -395,6 +379,60 @@ public class ReservationServiceImpl implements ReservationService {
 
         }
         return null;
+    }
+    @Override
+    public Reservation makeSpecialOfferReservation(Client client, ReservationDto reservationDto) {
+        Reservation newReservation = ReservationMapper.map(reservationDto);
+        newReservation.setClient(client);
+        var discount = reservationDto.getPrice() * client.getRank().getPercentage() / 100;
+        newReservation.setPrice(reservationDto.getPrice() - discount);
+
+        Set<Utility> utilitySet = new HashSet<>();
+        for (UtilityDto utilityDto : reservationDto.getUtilities()
+        ) {
+            Utility utility = utilityService.getByName(utilityDto.getName());
+            utilitySet.add(utility);
+        }
+        newReservation.setUtilities(utilitySet);
+        return reservationRepository.save(newReservation);
+    }
+
+
+    @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public Reservation makeSpecialOfferHomeReservation(Client client, Long rentalId, Long offerId, ReservationDto reservationDto) {
+        Reservation reservation = makeNewSpecialOfferReservation(client, reservationDto);
+
+        try {
+            specialOfferService.reserveSpecialOffer(offerId);
+            Reservation newReservation = reservationRepository.save(reservation);
+            homeService.makeReservation(rentalId, reservation);
+            clientService.updatePoints(client, newReservation.getPrice());
+
+            return newReservation;
+
+        } catch (Exception e) {
+            System.out.println("Pessimistic lock: SpecialOfferReservation");
+
+        }
+        return null;
+
+    }
+
+    private Reservation makeNewSpecialOfferReservation(Client client, ReservationDto reservationDto) {
+        Reservation reservation = ReservationMapper.map(reservationDto);
+        reservation.setClient(client);
+        var discount = reservationDto.getPrice() * client.getRank().getPercentage() / 100;
+        reservation.setPrice(reservationDto.getPrice() - discount);
+
+        Set<Utility> utilitySet = new HashSet<>();
+        for (UtilityDto utilityDto : reservationDto.getUtilities()
+        ) {
+            Utility utility = utilityService.getByName(utilityDto.getName());
+            utilitySet.add(utility);
+        }
+        reservation.setUtilities(utilitySet);
+        return reservation;
     }
 
     private Reservation makeNewReservation(Client client, ReservationDto reservationDto) {
