@@ -165,7 +165,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'ownerRegistration',
+    path: 'owner-register',
     component: OwnerRegisterComponent,
   },
   {

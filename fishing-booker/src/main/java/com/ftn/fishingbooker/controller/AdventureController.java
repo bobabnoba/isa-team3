@@ -12,6 +12,7 @@ import com.ftn.fishingbooker.util.FIleUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,6 +41,7 @@ public class AdventureController {
 
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR')")
     public ResponseEntity<Collection<AdventureDto>> getAllAdventures() {
         Collection<Adventure> found = adventureService.getAll();
 
@@ -51,6 +53,7 @@ public class AdventureController {
     }
 
     @GetMapping("/by-instructor/{email}")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<Collection<AdventureDto>> getAllAdventuresByInstructor(@PathVariable String email) {
         Collection<Adventure> found = adventureService.getAllByInstructorEmail(email);
 
@@ -73,6 +76,7 @@ public class AdventureController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN' ,'INSTRUCTOR', 'CLIENT')")
     public ResponseEntity<AdventureDto> getAdventureById(@PathVariable Long id) {
         Adventure found = adventureService.getById(id);
         AdventureDto dto = AdventureMapper.mapToDto(found);
@@ -80,12 +84,14 @@ public class AdventureController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR')")
     public ResponseEntity<Void> deleteAdventure(@PathVariable Long id) {
         adventureService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<AdventureDto> addNewAdventure(@RequestBody NewAdventureDto dto) {
         Adventure adventure = AdventureMapper.toEntity(dto);
         Adventure saved = adventureService.addAdventure(adventure, dto.getInstructorEmail());
@@ -93,30 +99,35 @@ public class AdventureController {
     }
 
     @PostMapping("/info-update/{id}")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<AdventureDto> updateAdventureInfo(@PathVariable Long id, @RequestBody AdventureInfo updated) {
         Adventure saved = adventureService.updateAdventureInfo(id, updated);
         return ResponseEntity.ok(AdventureMapper.mapToDto(saved));
     }
 
     @PostMapping("/additional-update/{id}")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<AdventureDto> updateAdventureAdditionalInfo(@PathVariable Long id, @RequestBody AdventureAdditionalInfo updated) {
         Adventure saved = adventureService.updateAdventureAdditionalInfo(id, updated);
         return ResponseEntity.ok(AdventureMapper.mapToDto(saved));
     }
 
     @PostMapping("/code-of-conduct-update/{id}")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<AdventureDto> updateAdventureCodeOfConduct(@PathVariable Long id, @RequestBody Collection<Rule> updated) {
         Adventure saved = adventureService.updateAdventureRules(id, updated);
         return ResponseEntity.ok(AdventureMapper.mapToDto(saved));
     }
 
     @PostMapping("/address-update/{id}")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<AdventureDto> updateAdventureAddress(@PathVariable Long id, @RequestBody AddressDto updated) {
         Adventure saved = adventureService.updateAdventureAddress(id, AddressMapper.toEntity(updated));
         return ResponseEntity.ok(AdventureMapper.mapToDto(saved));
     }
 
     @PostMapping("/image-upload/{id}")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<Object> uploadImages(@RequestParam MultipartFile file, @PathVariable Long id) throws IOException {
 
         String uploadDir = "images/adventures/" + id;
@@ -185,6 +196,7 @@ public class AdventureController {
     }
 
     @PostMapping("/instructor-rent/{adventureId}/{userEmail}")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<ReservationDto> instructorMakeReservation(@PathVariable String userEmail, @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
         if (client.getNoOfPenalties() >= 3) {
@@ -204,6 +216,7 @@ public class AdventureController {
 
 
     @GetMapping("{id}/has-incoming-reservations")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR')")
     public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){
         return ResponseEntity.ok(adventureService.getNoOfIncomingReservations(id) > 0);
     }

@@ -5,12 +5,13 @@ import com.ftn.fishingbooker.dto.BoatInfo;
 import com.ftn.fishingbooker.dto.FilterDto;
 import com.ftn.fishingbooker.enumeration.BoatType;
 import com.ftn.fishingbooker.enumeration.NavigationType;
-import com.ftn.fishingbooker.exception.ResourceConflictException;
+import com.ftn.fishingbooker.exception.*;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.BoatOwnerRepository;
 import com.ftn.fishingbooker.repository.BoatRepository;
 import com.ftn.fishingbooker.service.*;
-import com.ftn.fishingbooker.util.DateUtil;
+import com.ftn.fishingbooker.util.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -532,5 +533,13 @@ public class BoatServiceImpl implements BoatService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void updateBoatRating(Long id, double boatRating) {
+        Boat boat = boatRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Boat not found"));
+        boat.setRating(boatRating);
+        boatRepository.save(boat);
     }
 }

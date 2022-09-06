@@ -3,6 +3,7 @@ package com.ftn.fishingbooker.service.Impl;
 import com.ftn.fishingbooker.dto.AdventureAdditionalInfo;
 import com.ftn.fishingbooker.dto.AdventureInfo;
 import com.ftn.fishingbooker.dto.FilterDto;
+import com.ftn.fishingbooker.exception.EntityNotFoundException;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.AdventureRepository;
@@ -124,6 +125,15 @@ public class AdventureServiceImpl implements AdventureService {
     @Override
     public Adventure getAdventureForReservation(Long reservationId) {
         return adventureRepository.getAdventureForReservation(reservationId);
+    }
+
+    @Override
+    public void updateAdventureRating(Long id, double adventureRating, double instructorRating) {
+        Adventure adventure = adventureRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Adventure not found"));
+        adventure.setRating(adventureRating);
+        adventure.getInstructor().setRating(instructorRating);
+        adventureRepository.save(adventure);
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.ftn.fishingbooker.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -20,6 +21,7 @@ public class ClientController {
 
 
     @GetMapping("/check-if-available")
+    @PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<Boolean> checkIfAvailable(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
                                                     @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
                                                     @RequestParam String email) {

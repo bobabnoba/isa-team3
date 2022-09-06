@@ -9,6 +9,7 @@ import com.ftn.fishingbooker.model.Complaint;
 import com.ftn.fishingbooker.service.ComplaintService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -50,6 +51,7 @@ public class ComplaintController {
     }
 
     @GetMapping("/pending")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Collection<AdminComplaintDto>> getAllPending(){
         Collection<Complaint> found = complaintService.getAllPendingComplaints();
         Collection<AdminComplaintDto> dtos = found.stream()
@@ -59,6 +61,7 @@ public class ComplaintController {
     }
 
     @PostMapping("/admin-response/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> processComplaint(@PathVariable Long id, @RequestBody String response) {
         complaintService.addAdminResponse(id, response);
         return ResponseEntity.ok().build();

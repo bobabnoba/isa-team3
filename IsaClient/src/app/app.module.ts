@@ -182,6 +182,7 @@ import { HomeReservationChartComponent } from './components/home-owner-component
 import { AdventureReservationChartsComponent } from './components/instructor-components/adventure-reservation-charts/adventure-reservation-charts.component';
 import { ErrorNotFoundComponent } from './pages/error-not-found/error-not-found.component';
 import { ErrorForbiddenComponent } from './pages/error-forbidden/error-forbidden.component';
+import { RegisterAsComponent } from './components/register-components/register-as/register-as.component';
 
 @NgModule({
   declarations: [
@@ -338,6 +339,7 @@ import { ErrorForbiddenComponent } from './pages/error-forbidden/error-forbidden
     AdventureReservationChartsComponent,
     ErrorNotFoundComponent,
     ErrorForbiddenComponent,
+    RegisterAsComponent,
   ],
   imports: [
     BrowserModule,

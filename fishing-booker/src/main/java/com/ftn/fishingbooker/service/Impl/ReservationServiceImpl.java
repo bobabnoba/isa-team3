@@ -326,6 +326,36 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public Collection<Reservation> getReservationsForBoatChart(Long id, Date from, Date to) {
+        return reservationRepository.getReservationsForBoatChart(id, from, to);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationsForHomeChart(Long id, Date from, Date to) {
+        return reservationRepository.getReservationsForHomeChart(id, from, to);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationsForAdventureChart(Long id, Date from, Date to) {
+        return reservationRepository.getReservationsForAdventureChart(id, from, to);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationForBoatOwnerChart(Long id, Date from, Date to) {
+        return reservationRepository.getReservationForBoatOwnerChart(id, from, to);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationForHomeOwnerChart(Long id, Date from, Date to) {
+        return reservationRepository.getReservationForHomeOwnerChart(id, from, to);
+    }
+
+    @Override
+    public Collection<Reservation> getReservationForInstructorChart(Long id, Date from, Date to) {
+        return reservationRepository.getReservationForInstructorChart(id, from, to);
+    }
+
+    @Override
     public Reservation makeVacationHomeReservation(Client client, Long homeId, ReservationDto reservationDto) {
         Reservation reservation = ReservationMapper.map(reservationDto);
         reservation.setClient(client);

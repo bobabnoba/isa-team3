@@ -81,6 +81,13 @@ public interface ReservationService {
 
     Collection<Reservation> getReservationForInstructor(Long id, Date from, Date to);
 
+    Collection<Reservation> getReservationsForBoatChart(Long id, Date from, Date to);
+    Collection<Reservation> getReservationsForHomeChart(Long id, Date from, Date to);
+    Collection<Reservation> getReservationsForAdventureChart(Long id, Date from, Date to);
+    Collection<Reservation> getReservationForBoatOwnerChart(Long id, Date from, Date to);
+    Collection<Reservation> getReservationForHomeOwnerChart(Long id, Date from, Date to);
+    Collection<Reservation> getReservationForInstructorChart(Long id, Date from, Date to);
+
     Reservation makeVacationHomeReservation(Client client, Long homeId, ReservationDto reservationDto);
 
     Reservation makeBoatReservation(Client client, Long boatId, ReservationDto reservationDto);

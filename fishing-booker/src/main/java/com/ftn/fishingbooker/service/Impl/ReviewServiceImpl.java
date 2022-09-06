@@ -1,5 +1,6 @@
 package com.ftn.fishingbooker.service.Impl;
 
+import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.enumeration.ReviewStatus;
 import com.ftn.fishingbooker.exception.EntityNotFoundException;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
@@ -90,6 +91,7 @@ public class ReviewServiceImpl implements ReviewService {
             if (approved) {
                 review.setStatus(ReviewStatus.APPROVED);
                 emailService.sendReviewApprovedEmail(review);
+                updateRatings(review);
 
             } else {
                 review.setStatus(ReviewStatus.REJECTED);
@@ -98,6 +100,18 @@ public class ReviewServiceImpl implements ReviewService {
 
         } catch (ObjectOptimisticLockingFailureException e) {
             loggerLog.debug("Optimistic lock exception");
+        }
+    }
+
+    private void updateRatings(ClientReview review){
+        double rentalRating = reviewRepository.calculateRentalRating(review.getRentalId());
+        double ownerRating = reviewRepository.calculateOwnerRating(review.getOwnerEmail());
+        if(review.getReservationType() == ReservationType.VACATION_HOME){
+            homeService.updateHomeRating(review.getRentalId(), rentalRating);
+        } else if(review.getReservationType() == ReservationType.BOAT){
+            boatService.updateBoatRating(review.getRentalId(), rentalRating);
+        } else if(review.getReservationType() == ReservationType.ADVENTURE){
+            adventureService.updateAdventureRating(review.getRentalId(), rentalRating, ownerRating);
         }
     }
 }

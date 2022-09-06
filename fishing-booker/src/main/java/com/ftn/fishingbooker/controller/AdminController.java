@@ -9,6 +9,7 @@ import com.ftn.fishingbooker.model.Registration;
 import com.ftn.fishingbooker.repository.RegistrationRepository;
 import com.ftn.fishingbooker.service.AdminService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
@@ -28,17 +29,20 @@ public class AdminController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AdminDto> addNewAdmin(@RequestBody AdminDto newAdmin) {
         Admin added = adminService.addNewAdmin(AdminMapper.toEntity(newAdmin));
         return ResponseEntity.ok(AdminMapper.toDto(added));
     }
 
     @GetMapping("/first-login/{email}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Boolean> firstLogin(@PathVariable String email) {
         return ResponseEntity.ok(adminService.isFirstLogin(email));
     }
 
     @GetMapping("registration-requests")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> getAllRegistrationRequests() {
         Collection<Registration> requests = registrationRepository.findUnprocessedRequests();
         Collection<RegistrationResponseDto> requestDtos = requests.stream()
@@ -47,14 +51,15 @@ public class AdminController {
         return ResponseEntity.ok().body(requestDtos);
     }
 
-
     @PostMapping("/handle-request")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Object> handleRegistrationRequest(@RequestBody RegistrationResponseDto registrationResponseDto) throws MessagingException {
         adminService.respondToRegistrationRequest(RegistrationMapper.mapToRegistration(registrationResponseDto));
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/head")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AdminDto> getHeadAdmin() {
         Admin admin = adminService.getHeadAdmin();
         return ResponseEntity.ok(AdminMapper.toDto(admin));

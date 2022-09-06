@@ -19,7 +19,6 @@ import com.ftn.fishingbooker.service.UserService;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {

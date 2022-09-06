@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 
 public interface HomeService {
+
     Collection<VacationHome> getAll();
 
     VacationHome getById(Long id);
@@ -49,4 +50,6 @@ public interface HomeService {
     int getNoOfIncomingReservations(Long id);
 
     Boolean checkIfReservationOverlapsAvailability(VacationHomeAvailability mapToHomeAvailabilityEntity, Long homeId);
+
+    void updateHomeRating(Long id, double rating);
 }
