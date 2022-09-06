@@ -142,9 +142,15 @@ public class HomeController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'HOME_OWNER')")
-    public ResponseEntity<Void> deleteHome(@PathVariable Long id) {
-        vacationHomeService.deleteById(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deleteHome(@PathVariable Long id) {
+
+        try{
+            vacationHomeService.deleteById(id);
+            return new ResponseEntity<>("Deleted", HttpStatus.OK);
+        }
+        catch (PessimisticLockingFailureException e){
+            return new ResponseEntity<>("Lock:" + e.getMessage(),HttpStatus.CONFLICT);
+        }
     }
 
     @PostMapping("")

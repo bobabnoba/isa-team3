@@ -107,9 +107,14 @@ public class BoatController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'BOAT_OWNER')")
-    public ResponseEntity<Void> deleteABoat(@PathVariable Long id) {
-        boatService.deleteById(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deleteABoat(@PathVariable Long id) {
+        try{
+            boatService.deleteById(id);
+            return new ResponseEntity<>("Deleted", HttpStatus.OK);
+        }
+        catch (PessimisticLockingFailureException e){
+            return new ResponseEntity<>("Lock:" + e.getMessage(),HttpStatus.CONFLICT);
+        }
     }
 
     @PostMapping("")

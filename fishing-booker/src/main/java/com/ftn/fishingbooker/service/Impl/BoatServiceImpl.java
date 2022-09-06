@@ -119,16 +119,15 @@ public class BoatServiceImpl implements BoatService {
     @Override
     @Transactional
     public void deleteById(Long id) {
-        Boat found = boatRepository.findById(id)
-                .orElseThrow(() -> new ResourceConflictException("Boat not found"));
-        //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVAJ BROD!
-        //ako ima ne moze se obrisati ako nema brisi ga
+        Boat found = boatRepository.findLockedById(id);
+        if ( found == null ){
+            throw new PessimisticLockingFailureException("Someone is already trying to reserve same boat at this moment!");
+        }
         var noOfFutureRes = reservationService.getNoOfIncomingReservationsForBoat(id);
         if (!(noOfFutureRes > 0)) {
             found.setDeleted(true);
             boatRepository.save(found);
         }
-        //TODO: dodati povratnu poruku
 
     }
 

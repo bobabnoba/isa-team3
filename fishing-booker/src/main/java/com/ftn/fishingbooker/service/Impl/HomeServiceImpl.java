@@ -126,8 +126,11 @@ public class HomeServiceImpl implements HomeService {
     @Override
     @Transactional
     public void deleteById(Long id) {
-        VacationHome found = vacationHomeRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Vacation home not found"));
+        VacationHome found = vacationHomeRepository.findLockedById(id);
+//                .orElseThrow(() -> new ResourceConflictException("Boat not found"));
+        if ( found == null ){
+            throw new PessimisticLockingFailureException("Someone is already trying to reserve same boat at this moment!");
+        }
         //TODO: DODATI PROVJERU DA LI IMA REZERVACIJA ZA OVU VIKENDICU!
         var noOfFutureRes = reservationService.getNoOfIncomingReservationsForVacationHome(id);
         if (!(noOfFutureRes > 0)) {
