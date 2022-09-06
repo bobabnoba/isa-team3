@@ -2,10 +2,14 @@ package com.ftn.fishingbooker.repository;
 
 import com.ftn.fishingbooker.model.Adventure;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import javax.persistence.LockModeType;
+import javax.persistence.QueryHint;
+import java.util.Collection;
 
 @Repository
 public interface AdventureRepository extends JpaRepository<Adventure, Long> {
@@ -28,4 +32,7 @@ public interface AdventureRepository extends JpaRepository<Adventure, Long> {
             "   where ar.reservations_id = ?1  ", nativeQuery = true)
     Adventure getAdventureForReservation(Long reservationId);
 
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value = "0")})
+    Adventure findLockedById(Long adventureId);
 }

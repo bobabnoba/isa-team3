@@ -14,6 +14,7 @@ import com.ftn.fishingbooker.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -61,15 +62,25 @@ public class BoatServiceImpl implements BoatService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void makeReservation(Long boatId, Reservation reservation) {
-        Boat boat = boatRepository.getById(boatId);
-        boat.getReservations().add(reservation);
-        boatRepository.save(boat);
-        boatOwnerService.updatePoints(boat.getBoatOwner(), reservation.getPrice());
-        earningsService.saveEarnings(reservation, boat.getBoatOwner().getEmail(), boat.getBoatOwner().getRank());
-        updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boatId);
-        if (reservation.isOwnerCaptain()) {
-            boatOwnerService.updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boat.getBoatOwner().getEmail());
+
+        try {
+            //Ako pokusa ne daj da mijenja tj da doda reservation
+            Boat boat = boatRepository.findLockedById(boatId);
+            boat.getReservations().add(reservation);
+            boatRepository.save(boat);
+            updateAvailability(reservation.getStartDate(), reservation.getEndDate(),boatId);
+            boatOwnerService.updatePoints(boat.getBoatOwner(), reservation.getPrice());
+            earningsService.saveEarnings(reservation, boat.getBoatOwner().getEmail(), boat.getBoatOwner().getRank());
+            updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boatId);
+            if (reservation.isOwnerCaptain()) {
+                boatOwnerService.updateAvailability(reservation.getStartDate(), reservation.getEndDate(), boat.getBoatOwner().getEmail());
+            }
+
+        } catch (Exception exception) {
+            throw exception;
+
         }
     }
 

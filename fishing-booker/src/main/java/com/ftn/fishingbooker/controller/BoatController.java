@@ -61,11 +61,19 @@ public class BoatController {
         if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+        if (clientService.hasOverlappingReservation(userEmail, reservationDto.getStartDate(), reservationDto.getEndDate())) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
 
         reservationDto.setType(ReservationType.BOAT);
         Reservation reservation = reservationService.makeBoatReservation(client, boatId, reservationDto);
+        if (reservation == null) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
 
-        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+        } else {
+            emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+            return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+        }
     }
 
     @PostMapping("/owner-rent/{boatId}/{userEmail}")

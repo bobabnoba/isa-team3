@@ -84,4 +84,6 @@ public interface ReservationService {
     Reservation makeVacationHomeReservation(Client client, Long homeId, ReservationDto reservationDto);
 
     Reservation makeBoatReservation(Client client, Long boatId, ReservationDto reservationDto);
+
+    Reservation makeAdventureReservation(Client client, Long adventureId, ReservationDto reservationDto);
 }

@@ -1,9 +1,13 @@
 package com.ftn.fishingbooker.repository;
 
-import com.ftn.fishingbooker.model.*;
+import com.ftn.fishingbooker.model.VacationHome;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 
+import javax.persistence.LockModeType;
+import javax.persistence.QueryHint;
 import java.util.Collection;
 
 public interface HomeRepository extends JpaRepository<VacationHome, Long> {
@@ -19,4 +23,9 @@ public interface HomeRepository extends JpaRepository<VacationHome, Long> {
 
     @Query("SELECT a FROM VacationHome a WHERE a.homeOwner.id = ?1 and a.deleted = false")
     Collection<VacationHome> findAllByOwnerId(Long id);
+
+
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value = "0")})
+    VacationHome findLockedById(Long id);
 }

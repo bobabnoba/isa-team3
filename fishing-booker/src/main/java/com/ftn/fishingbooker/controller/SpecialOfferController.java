@@ -68,7 +68,8 @@ public class SpecialOfferController {
         if (type.equals("adventure")) {
             reservationDto.setType(ReservationType.ADVENTURE);
             reservation = reservationService.makeSpecialOfferReservation(client, reservationDto);
-            Adventure adventure = adventureService.makeReservation(rentalId, reservation);
+            adventureService.makeReservation(rentalId, reservation);
+            Adventure adventure = adventureService.getById(rentalId);
             instructorService.updateAvailability(new InstructorAvailability(reservation.getStartDate(), reservation.getEndDate()), adventure.getInstructor().getEmail());
             instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
 

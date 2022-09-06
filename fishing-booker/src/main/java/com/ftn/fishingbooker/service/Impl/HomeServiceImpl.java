@@ -13,8 +13,9 @@ import com.ftn.fishingbooker.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -95,12 +96,21 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void makeReservation(Long homeId, Reservation reservation) {
-        VacationHome home = vacationHomeRepository.getById(homeId);
-        home.getReservations().add(reservation);
-        vacationHomeRepository.save(home);
-        homeOwnerService.updatePoints(home.getHomeOwner(), reservation.getPrice());
-        earningsService.saveEarnings(reservation, home.getHomeOwner().getEmail(), home.getHomeOwner().getRank());
+        try {
+            //Ako pokusa ne daj da mijenja tj da doda reservation
+            VacationHome home = vacationHomeRepository.findLockedById(homeId);
+            home.getReservations().add(reservation);
+            vacationHomeRepository.save(home);
+            updateAvailability(reservation.getStartDate(), reservation.getEndDate(), homeId);
+            homeOwnerService.updatePoints(home.getHomeOwner(), reservation.getPrice());
+            earningsService.saveEarnings(reservation, home.getHomeOwner().getEmail(), home.getHomeOwner().getRank());
+
+        } catch (Exception exception) {
+            throw exception;
+
+        }
     }
 
     @Override

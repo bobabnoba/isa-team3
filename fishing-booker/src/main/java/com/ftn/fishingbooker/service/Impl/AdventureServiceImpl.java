@@ -7,9 +7,7 @@ import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.model.*;
 import com.ftn.fishingbooker.repository.AdventureRepository;
 import com.ftn.fishingbooker.repository.InstructorRepository;
-import com.ftn.fishingbooker.service.AdventureService;
-import com.ftn.fishingbooker.service.DateService;
-import com.ftn.fishingbooker.service.ReservationService;
+import com.ftn.fishingbooker.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,6 +23,8 @@ public class AdventureServiceImpl implements AdventureService {
     private final InstructorRepository instructorRepository;
     private final DateService dateService;
     private final ReservationService reservationService;
+    private final InstructorService instructorService;
+    private final EarningsService earningsService;
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true, noRollbackFor = Exception.class)
@@ -186,16 +186,20 @@ public class AdventureServiceImpl implements AdventureService {
 
 
     @Override
-    @Transactional
-    public Adventure makeReservation(Long adventureId, Reservation reservation) {
-        Adventure adventure = adventureRepository.getWithReservations(adventureId);
-        if (adventure == null) {
-            adventure = adventureRepository.findById(adventureId)
-                    .orElseThrow(() -> new ResourceConflictException("Adventure not found"));
-            adventure.setReservations(new HashSet<>());
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void makeReservation(Long adventureId, Reservation reservation) {
+        try {
+            Adventure adventure = adventureRepository.findLockedById(adventureId);
+            adventure.getReservations().add(reservation);
+            adventureRepository.save(adventure);
+            instructorService.updateAvailability(new InstructorAvailability(reservation.getStartDate(), reservation.getEndDate()), adventure.getInstructor().getEmail());
+            instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
+            earningsService.saveEarnings(reservation, adventure.getInstructor().getEmail(), adventure.getInstructor().getRank());
+
+        }catch (Exception exception) {
+            throw exception;
+
         }
-        adventure.getReservations().add(reservation);
-        return adventureRepository.save(adventure);
     }
 
 
