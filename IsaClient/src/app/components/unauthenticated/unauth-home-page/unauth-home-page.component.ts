@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { VacationHome } from 'src/app/interfaces/vacation-home';
 import { IAvailableReservations, IVacationHouseProfile } from 'src/app/interfaces/vacation-house-profile';
 import { HomeService } from 'src/app/services/vacation-home-service/home.service';
 import { environment } from 'src/environments/environment';
@@ -10,7 +11,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./unauth-home-page.component.css']
 })
 export class UnauthHomePageComponent implements OnInit {
-  item!: IVacationHouseProfile;
+  item!: VacationHome;
   actions!: IAvailableReservations[];
   roomsNumber!: number;
   bedsNumber!: number;
@@ -24,7 +25,7 @@ export class UnauthHomePageComponent implements OnInit {
   }
   getHomeDetails() {
     const homeObserver = {
-      next: (data: IVacationHouseProfile) => {
+      next: (data: VacationHome) => {
         this.item = data;
         console.log(data);
         this.roomsNumber = this.item.rooms.length
@@ -37,7 +38,7 @@ export class UnauthHomePageComponent implements OnInit {
         this._router.navigate(['/404']);
       },
     }
-    this.homeService.getVacationHomeDetails(this.id).subscribe(homeObserver)
+    this.homeService.getById(this.id).subscribe(homeObserver)
   }
 
   ngOnInit(): void {

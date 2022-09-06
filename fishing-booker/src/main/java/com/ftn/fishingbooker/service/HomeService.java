@@ -1,9 +1,12 @@
 package com.ftn.fishingbooker.service;
 
-import com.ftn.fishingbooker.dto.*;
+import com.ftn.fishingbooker.dto.FilterDto;
+import com.ftn.fishingbooker.dto.HomeAdditionalInfo;
+import com.ftn.fishingbooker.dto.HomeInfoDto;
 import com.ftn.fishingbooker.model.*;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
 
 public interface HomeService {
 

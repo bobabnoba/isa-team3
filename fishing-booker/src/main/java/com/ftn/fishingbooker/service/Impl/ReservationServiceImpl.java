@@ -1,18 +1,25 @@
 package com.ftn.fishingbooker.service.Impl;
 
-import com.ftn.fishingbooker.dao.*;
+import com.ftn.fishingbooker.dao.BoatReservationInfo;
+import com.ftn.fishingbooker.dao.ReservationCalendarInfo;
+import com.ftn.fishingbooker.dao.ReservationInfo;
 import com.ftn.fishingbooker.dto.ReservationDto;
 import com.ftn.fishingbooker.dto.UtilityDto;
-import com.ftn.fishingbooker.enumeration.*;
+import com.ftn.fishingbooker.enumeration.ReservationType;
 import com.ftn.fishingbooker.exception.ResourceConflictException;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
-import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.repository.*;
+import com.ftn.fishingbooker.model.Adventure;
+import com.ftn.fishingbooker.model.Client;
+import com.ftn.fishingbooker.model.Reservation;
+import com.ftn.fishingbooker.model.Utility;
+import com.ftn.fishingbooker.repository.ReservationRepository;
 import com.ftn.fishingbooker.service.*;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
@@ -21,12 +28,28 @@ import java.util.Set;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService {
 
-    private final ReservationRepository reservationRepository;
-    private final DateService dateService;
-    private final UtilityService utilityService;
+    @Autowired
+    private ReservationRepository reservationRepository;
+    @Autowired
+    private DateService dateService;
+    @Autowired
+    private UtilityService utilityService;
+    @Autowired
+    private ClientService clientService;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private HomeService homeService;
+    @Autowired
+    private BoatService boatService;
+    @Autowired
+    @Lazy
+    private AdventureService adventureService;
+    @Autowired
+    private SpecialOfferService specialOfferService;
+
 
     @Override
     public Collection<Reservation> findAllForClient(Long clientId) {
@@ -123,24 +146,6 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation makeSpecialOfferReservation(Client client, ReservationDto reservationDto) {
-        Reservation newReservation = ReservationMapper.map(reservationDto);
-        newReservation.setClient(client);
-        var discount = reservationDto.getPrice() * client.getRank().getPercentage() / 100;
-        newReservation.setPrice(reservationDto.getPrice() - discount);
-
-        Set<Utility> utilitySet = new HashSet<>();
-        for (UtilityDto utilityDto : reservationDto.getUtilities()
-        ) {
-            Utility utility = utilityService.getByName(utilityDto.getName());
-            utilitySet.add(utility);
-        }
-        newReservation.setUtilities(utilitySet);
-        return reservationRepository.save(newReservation);
-    }
-
-
-    @Override
     public Reservation makeReservation(Client client, ReservationDto reservationDto, double durationInHours) {
         Date newEndDate = dateService.addHoursToJavaUtilDate(reservationDto.getStartDate(), durationInHours);
         reservationDto.setEndDate(newEndDate);
@@ -216,9 +221,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation ownerMakeReservation(Client client, ReservationDto reservationDto) {
-        //metoda bez racunanja cene opet
-        //meni ovdje nikakvo racunjanje ne treba, stize izracunata cena s fronta, moze samo neka provjera mzd
+    public Reservation ownerMakeReservation(Client client, ReservationDto reservationDto, Long objectId) {
 
         Reservation newReservation = ReservationMapper.map(reservationDto);
         newReservation.setClient(client);
@@ -230,7 +233,18 @@ public class ReservationServiceImpl implements ReservationService {
             utilitySet.add(utility);
         }
         newReservation.setUtilities(utilitySet);
-        return reservationRepository.save(newReservation);
+
+        Reservation saved = reservationRepository.save(newReservation);
+        if (reservationDto.getType().equals(ReservationType.VACATION_HOME)) {
+            homeService.makeReservation(objectId, saved);
+        } else {
+            boatService.makeReservation(objectId, saved);
+        }
+
+        clientService.updatePoints(client, saved.getPrice());
+        emailService.sendReservationEmail(ReservationMapper.map(saved), client);
+
+        return saved;
     }
 
     @Override
@@ -257,6 +271,7 @@ public class ReservationServiceImpl implements ReservationService {
     public Collection<ReservationCalendarInfo> getAllInstructorReservations(Long id) {
         return reservationRepository.getAllReservationForInstructor(id);
     }
+
     @Override
     public Collection<BoatReservationInfo> getUpcomingReservationsForHomeOwner(Long id) {
         return reservationRepository.getUpcomingReservationsForHomeOwner(id);
@@ -308,6 +323,133 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public Reservation makeVacationHomeReservation(Client client, Long homeId, ReservationDto reservationDto) {
+        Reservation reservation = makeNewReservation(client, reservationDto);
+
+        try {
+            Reservation newReservation = reservationRepository.save(reservation);
+            homeService.makeReservation(homeId, newReservation);
+            clientService.updatePoints(client, newReservation.getPrice());
+
+            return newReservation;
+
+        } catch (Exception e) {
+            System.out.println("Pessimistic lock: Vacation Home");
+
+        }
+        return null;
+
+    }
+
+    @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public Reservation makeBoatReservation(Client client, Long boatId, ReservationDto reservationDto) {
+        Reservation reservation = makeNewReservation(client, reservationDto);
+
+        try {
+            Reservation newReservation = reservationRepository.save(reservation);
+            boatService.makeReservation(boatId, reservation);
+            clientService.updatePoints(client, newReservation.getPrice());
+
+            return newReservation;
+
+        } catch (Exception e) {
+            System.out.println("Pessimistic lock: Vacation Home");
+
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public Reservation makeAdventureReservation(Client client, Long adventureId, ReservationDto reservationDto) {
+        Adventure adventure = adventureService.getById(adventureId);
+        Reservation reservation = makeReservation(client, reservationDto, adventure.getDurationInHours());
+
+        try {
+            Reservation newReservation = reservationRepository.save(reservation);
+            adventureService.makeReservation(adventureId, reservation);
+            clientService.updatePoints(client, newReservation.getPrice());
+
+            return newReservation;
+
+        } catch (Exception e) {
+            System.out.println("Pessimistic lock: Vacation Home");
+
+        }
+        return null;
+    }
+    @Override
+    public Reservation makeSpecialOfferReservation(Client client, ReservationDto reservationDto) {
+        Reservation newReservation = ReservationMapper.map(reservationDto);
+        newReservation.setClient(client);
+        var discount = reservationDto.getPrice() * client.getRank().getPercentage() / 100;
+        newReservation.setPrice(reservationDto.getPrice() - discount);
+
+        Set<Utility> utilitySet = new HashSet<>();
+        for (UtilityDto utilityDto : reservationDto.getUtilities()
+        ) {
+            Utility utility = utilityService.getByName(utilityDto.getName());
+            utilitySet.add(utility);
+        }
+        newReservation.setUtilities(utilitySet);
+        return reservationRepository.save(newReservation);
+    }
+
+
+    @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public Reservation makeSpecialOfferHomeReservation(Client client, Long rentalId, Long offerId, ReservationDto reservationDto) {
+        Reservation reservation = makeNewSpecialOfferReservation(client, reservationDto);
+
+        try {
+            specialOfferService.reserveSpecialOffer(offerId);
+            Reservation newReservation = reservationRepository.save(reservation);
+            homeService.makeReservation(rentalId, reservation);
+            clientService.updatePoints(client, newReservation.getPrice());
+
+            return newReservation;
+
+        } catch (Exception e) {
+            System.out.println("Pessimistic lock: SpecialOfferReservation");
+
+        }
+        return null;
+
+    }
+
+    private Reservation makeNewSpecialOfferReservation(Client client, ReservationDto reservationDto) {
+        Reservation reservation = ReservationMapper.map(reservationDto);
+        reservation.setClient(client);
+        var discount = reservationDto.getPrice() * client.getRank().getPercentage() / 100;
+        reservation.setPrice(reservationDto.getPrice() - discount);
+
+        Set<Utility> utilitySet = new HashSet<>();
+        for (UtilityDto utilityDto : reservationDto.getUtilities()
+        ) {
+            Utility utility = utilityService.getByName(utilityDto.getName());
+            utilitySet.add(utility);
+        }
+        reservation.setUtilities(utilitySet);
+        return reservation;
+    }
+
+    private Reservation makeNewReservation(Client client, ReservationDto reservationDto) {
+        Reservation reservation = ReservationMapper.map(reservationDto);
+        reservation.setClient(client);
+        reservation.setPrice(calculatePrice(reservationDto, client.getRank().getPercentage()));
+        Set<Utility> utilitySet = new HashSet<>();
+        for (UtilityDto utilityDto : reservationDto.getUtilities()
+        ) {
+            Utility utility = utilityService.getByName(utilityDto.getName());
+            utilitySet.add(utility);
+        }
+        reservation.setUtilities(utilitySet);
+        return reservation;
+    }
+    
+    @Override
     public Collection<Reservation> getReservationsForBoatChart(Long id, Date from, Date to) {
         return reservationRepository.getReservationsForBoatChart(id, from, to);
     }
@@ -336,6 +478,7 @@ public class ReservationServiceImpl implements ReservationService {
     public Collection<Reservation> getReservationForInstructorChart(Long id, Date from, Date to) {
         return reservationRepository.getReservationForInstructorChart(id, from, to);
     }
+
 
 
 }

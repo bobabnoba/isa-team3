@@ -283,13 +283,11 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendReservationEmail(ReservationDto map, Client client) {
+    public void sendReservationEmail(ReservationDto reservationDto, Client client) {
         String temp =  "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Thank you for making a reservation!</p>" +
                 "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> " +
-                "Thank you for registering. Your account is now activated. " +
                 "</p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\">" +
-                "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>See you soon</p>" +
-                " <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Sadly, your registration request has been denied. </p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">" ;
+                "<p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">  </p></blockquote>\n <p>";
         String retVal = "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +

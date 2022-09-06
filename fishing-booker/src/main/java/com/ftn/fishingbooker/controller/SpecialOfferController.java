@@ -68,32 +68,41 @@ public class SpecialOfferController {
 
         Reservation reservation = null;
         if (type.equals("adventure")) {
+
             reservationDto.setType(ReservationType.ADVENTURE);
             reservation = reservationService.makeSpecialOfferReservation(client, reservationDto);
-            Adventure adventure = adventureService.makeReservation(rentalId, reservation);
+            adventureService.makeReservation(rentalId, reservation);
+            Adventure adventure = adventureService.getById(rentalId);
             instructorService.updateAvailability(new InstructorAvailability(reservation.getStartDate(), reservation.getEndDate()), adventure.getInstructor().getEmail());
             instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
+            specialOfferService.reserveSpecialOffer(offerId);
+            clientService.updatePoints(client, reservation.getPrice());
 
         } else if (type.equals("home")) {
+
             reservationDto.setType(ReservationType.VACATION_HOME);
-            reservation = reservationService.makeSpecialOfferReservation(client, reservationDto);
-            homeService.makeReservation(rentalId, reservation);
+            reservation = reservationService.makeSpecialOfferHomeReservation(client, rentalId, offerId, reservationDto);
+
 
         } else if (type.equals("boat")) {
             reservationDto.setType(ReservationType.BOAT);
             reservation = reservationService.makeSpecialOfferReservation(client, reservationDto);
             boatService.makeReservation(rentalId, reservation);
-
+            specialOfferService.reserveSpecialOffer(offerId);
+            clientService.updatePoints(client, reservation.getPrice());
 
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
         }
 
-        specialOfferService.reserveSpecialOffer(offerId);
-        clientService.updatePoints(client, reservation.getPrice());
-        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        if (reservation == null) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
 
-        return new ResponseEntity<>(ReservationMapper.map(new Reservation()), HttpStatus.OK);
+        } else {
+            emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+            return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+
+        }
     }
-
 }

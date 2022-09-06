@@ -103,8 +103,10 @@ export class AvailabilityCalendarComponent implements OnInit {
           data.availability.forEach((e : any) => {
             this.addEvent(e.startDate, e.endDate)}
           )
-          data.specialOffers.forEach(o => {
-            this.addSpecialOfferEvent(o);
+          data.specialOffers.forEach((e: SpecialOffer) => {
+            if (e.isUsed == false) {
+              this.addSpecialOfferEvent(e)
+            }
           }) 
         }
       );

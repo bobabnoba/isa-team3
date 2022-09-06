@@ -32,6 +32,7 @@ export class ClientProfileComponent implements OnInit {
     this._clientService.getClientInfo(this._storageService.getEmail()).subscribe(
       (data) => {
         this.user = data;
+        this.user.points = Math.round(data.points*10)/10
         this.rank = this.user.rank.name.split('_')[0];
       }
     );

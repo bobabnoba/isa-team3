@@ -6,14 +6,16 @@ import com.ftn.fishingbooker.repository.ClientRepository;
 import com.ftn.fishingbooker.repository.UserRepository;
 import com.ftn.fishingbooker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Propagation;
 
 @Service
 @Transactional
@@ -26,6 +28,7 @@ public class ClientServiceImpl implements ClientService {
     @Autowired
     private RegistrationService registrationService;
     @Autowired
+    @Lazy
     private ReservationService reservationService;
     @Autowired
     private DateService dateService;
@@ -35,7 +38,6 @@ public class ClientServiceImpl implements ClientService {
     private EarningsService earningsService;
     @Autowired
     private EmailService emailService;
-
 
     @Override
     public void registerClient(Client client) throws MessagingException {
@@ -68,6 +70,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public void updatePoints(Client client, double reservationPrice) {
         client.setPoints(client.getPoints() + reservationPrice * client.getRank().getReservationPercentage() / 100);
 
@@ -195,7 +198,6 @@ public class ClientServiceImpl implements ClientService {
 
         return null;
     }
-
 
     private boolean canBeCanceled(Reservation reservation) {
         Date inThreeDays = dateService.addDaysToJavaUtilDate(new Date(), 3);

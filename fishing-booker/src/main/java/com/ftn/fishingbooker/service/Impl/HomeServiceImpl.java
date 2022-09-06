@@ -11,25 +11,34 @@ import com.ftn.fishingbooker.repository.HomeOwnerRepository;
 import com.ftn.fishingbooker.repository.HomeRepository;
 import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.DateUtil;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class HomeServiceImpl implements HomeService {
-    private final HomeRepository vacationHomeRepository;
-    private final ReservationService reservationService;
-    private final DateService dateService;
-    private final HomeOwnerService homeOwnerService;
-    private final EarningsService earningsService;
-    private final HomeOwnerRepository homeOwnerRepository;
-    private final HomeAvailabilityService homeAvailabilityService;
 
+    @Autowired
+    private HomeRepository vacationHomeRepository;
+    @Autowired
+    @Lazy
+    private ReservationService reservationService;
+    @Autowired
+    private DateService dateService;
+    @Autowired
+    private HomeOwnerService homeOwnerService;
+    @Autowired
+    private EarningsService earningsService;
+    @Autowired
+    private HomeOwnerRepository homeOwnerRepository;
+    @Autowired
+    private HomeAvailabilityService homeAvailabilityService;
 
     @Override
     public Collection<VacationHome> getAll() {
@@ -51,7 +60,6 @@ public class HomeServiceImpl implements HomeService {
             if (home.getGuestLimit() >= filter.getPeople()) {
                 // Date should overlap with vacation home availability
                 if (inBetweenOrEqual(filter.getStartDate(), filter.getEndDate(), home.getAvailability())) {
-
                     boolean available = checkAvailability(filter.getStartDate(), filter.getEndDate(), home.getId());
 
                     if (available) {
@@ -61,6 +69,21 @@ public class HomeServiceImpl implements HomeService {
             }
         }
         return filteredHomeList;
+    }
+
+    @Override
+    public boolean checkAvailability(Date from, Date to, Long homeId) {
+        boolean isAvailable = false;
+        VacationHome home = vacationHomeRepository.findById(homeId).orElseThrow(() -> new ResourceConflictException("Vacation home not found"));
+        List<VacationHomeAvailability> availabilityPeriods = new ArrayList<>(home.getAvailability());
+
+        for (VacationHomeAvailability period : availabilityPeriods) {
+            if ((from.after(period.getStartDate()) || from.equals(period.getStartDate())) && (to.before(period.getEndDate()) || to.equals(period.getEndDate()))) {
+                isAvailable = true;
+                break;
+            }
+        }
+        return isAvailable;
     }
 
     private boolean inBetweenOrEqual(Date startDate, Date endDate, Set<VacationHomeAvailability> availableTimePeriods) {
@@ -74,12 +97,21 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void makeReservation(Long homeId, Reservation reservation) {
-        VacationHome home = vacationHomeRepository.getById(homeId);
-        home.getReservations().add(reservation);
-        vacationHomeRepository.save(home);
-        homeOwnerService.updatePoints(home.getHomeOwner(), reservation.getPrice());
-        earningsService.saveEarnings(reservation, home.getHomeOwner().getEmail(), home.getHomeOwner().getRank());
+        try {
+            //Ako pokusa ne daj da mijenja tj da doda reservation
+            VacationHome home = vacationHomeRepository.findLockedById(homeId);
+            home.getReservations().add(reservation);
+            vacationHomeRepository.save(home);
+            updateAvailability(reservation.getStartDate(), reservation.getEndDate(), homeId);
+            homeOwnerService.updatePoints(home.getHomeOwner(), reservation.getPrice());
+            earningsService.saveEarnings(reservation, home.getHomeOwner().getEmail(), home.getHomeOwner().getRank());
+
+        } catch (Exception exception) {
+            throw exception;
+
+        }
     }
 
     @Override
@@ -354,21 +386,6 @@ public class HomeServiceImpl implements HomeService {
         vacationHomeRepository.save(home);
         return home.getAvailability();
 
-    }
-
-    @Override
-    public boolean checkAvailability(Date from, Date to, Long homeId) {
-        boolean isAvailable = false;
-        VacationHome home = vacationHomeRepository.findById(homeId).orElseThrow(() -> new EntityNotFoundException("Vacation home not found"));
-        List<VacationHomeAvailability> availabilityPeriods = new ArrayList<>(home.getAvailability());
-
-        for (VacationHomeAvailability period : availabilityPeriods) {
-            if ((from.after(period.getStartDate()) || from.equals(period.getStartDate())) && (to.before(period.getEndDate()) || to.equals(period.getEndDate()))) {
-                isAvailable = true;
-                break;
-            }
-        }
-        return isAvailable;
     }
 
     @Override

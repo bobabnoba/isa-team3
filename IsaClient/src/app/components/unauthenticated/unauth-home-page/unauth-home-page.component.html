@@ -2,11 +2,10 @@
     <app-unauthenticated-header></app-unauthenticated-header>
     <div id="content-wrapper" class="d-flex flex-column" style="margin-top: 120px;">
         <div *ngIf="item" class="containersss">
-            <div class="about" style="height:fit-content;">
-                <mat-card class="example-card"  style="height: 100%;">
-                    <mat-card-title-group style="height: 70%;width: 100% ;" >
-                        <mat-card-title> <h2>{{item.name}}
-                        </h2>
+            <div class="about">
+                <mat-card class="example-card">
+                    <mat-card-title-group>
+                        <mat-card-title>{{item.name}}
                         </mat-card-title>
                         <mat-card-subtitle>
                             <div>{{item.address.country}},
@@ -15,17 +14,18 @@
                                 {{item.address.zipCode}}
                             </div>
                             <div>
-                                <label *ngIf="item.vacationHomeOwner" style="font-size: bold;">Contact:</label>
+                                <label *ngIf="item.vacationHomeOwner">Contact:</label>
                                 <li>@Email :{{item.vacationHomeOwner.email}}</li>
                                 <li>Phone Number : {{item.vacationHomeOwner.phone}}</li>
-
                             </div>
+                            <br>
                         </mat-card-subtitle>
-
                         <div class="image-display">
-                            <img *ngIf="item.imageUrls" src="{{baseUrl}}{{item.imageUrls[0]}}" class="img1"
-                                onerror="this.onerror;this.src='../../../../assets/images/no-img.png'"
-                                alt="Image not available">
+                            <div *ngIf="item.imageUrls">
+                                <img src="{{baseUrl}}{{item.imageUrls[0]}}" class="img1"
+                                    onerror="this.onerror;this.src='/../../../assets/images/no-img.png'"
+                                    alt="Image not available">
+                            </div>
                         </div>
                     </mat-card-title-group>
                     <mat-card-content>
@@ -40,6 +40,7 @@
                     </mat-card-content>
                 </mat-card>
             </div>
+
             <div class="moreInfo">
 
                 <mat-card class="wrapper">
@@ -53,8 +54,8 @@
                 <mat-card class="wrapper">
                     <mat-card-title>House rules</mat-card-title>
                     <div class="box">
-                        <span *ngFor="let item of item.codeOfConduct;" class="listing">
-                            <label style="font-weight: bold;"> - {{item.name}}</label>
+                        <span *ngFor="let item of item.codeOfConduct; index as i;" class="listing">
+                            <label style="font-weight: bold;">{{item.name}}</label>
                         </span>
                     </div>
                 </mat-card>
@@ -70,19 +71,22 @@
                 </mat-card>
 
             </div>
+            <hr>
             <mat-card class="wrapper">
                 <mat-card-title>Availability Period </mat-card-title>
                 <div class="box">
-                    <span *ngIf="!item.availability[0]"> Currently there are no set availablities for this vacation home !</span>
+                    <span *ngIf="!item.availability[0]"> Currently there are no set availablities for this boat !</span>
                     <div *ngIf="item.availability[0]">
                     <span *ngFor="let item of item.availability; index as i;" class="listing">
                         <label style="font-weight: bold;">{{item.startDate | date:"shortDate"}} - {{item.endDate |
-                            date:"shortDate"}}, &nbsp; </label>
+                            date:"shortDate"}}, &nbsp;  </label>
+                            
                     </span>
                 </div>
                 </div>
             </mat-card>
             <hr>
+
         </div>
     </div>
 </div>

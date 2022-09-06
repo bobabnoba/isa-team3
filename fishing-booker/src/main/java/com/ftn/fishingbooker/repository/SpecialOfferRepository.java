@@ -3,8 +3,12 @@ package com.ftn.fishingbooker.repository;
 import com.ftn.fishingbooker.dao.SpecialOfferCalendarInfo;
 import com.ftn.fishingbooker.model.SpecialOffer;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 
+import javax.persistence.LockModeType;
+import javax.persistence.QueryHint;
 import java.util.Collection;
 
 public interface SpecialOfferRepository extends JpaRepository<SpecialOffer, Long> {
@@ -30,4 +34,8 @@ public interface SpecialOfferRepository extends JpaRepository<SpecialOffer, Long
             "    join b.specialOffers so " +
             "    where b.boatOwner.id = :id and so.isUsed = false and so.isCaptain = true")
     Collection<SpecialOffer> getAllCaptainOffersForBoatOwner(Long id);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value = "0")})
+    SpecialOffer findLockedById(Long offerId);
 }

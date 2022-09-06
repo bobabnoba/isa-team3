@@ -7,22 +7,23 @@ import com.ftn.fishingbooker.mapper.BoatMapper;
 import com.ftn.fishingbooker.mapper.RentalMapper;
 import com.ftn.fishingbooker.mapper.ReservationMapper;
 import com.ftn.fishingbooker.model.*;
-import com.ftn.fishingbooker.util.*;
+import com.ftn.fishingbooker.service.BoatService;
+import com.ftn.fishingbooker.service.ClientService;
+import com.ftn.fishingbooker.service.EmailService;
+import com.ftn.fishingbooker.service.ReservationService;
+import com.ftn.fishingbooker.util.FIleUploadUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.ftn.fishingbooker.service.BoatService;
-import com.ftn.fishingbooker.service.ClientService;
-import com.ftn.fishingbooker.service.EmailService;
-import com.ftn.fishingbooker.service.ReservationService;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -62,14 +63,19 @@ public class BoatController {
         if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+        if (clientService.hasOverlappingReservation(userEmail, reservationDto.getStartDate(), reservationDto.getEndDate())) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
 
         reservationDto.setType(ReservationType.BOAT);
-        Reservation reservation = reservationService.makeReservation(client, reservationDto);
-        boatService.makeReservation(boatId, reservation);
-        clientService.updatePoints(client, reservation.getPrice());
+        Reservation reservation = reservationService.makeBoatReservation(client, boatId, reservationDto);
+        if (reservation == null) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
 
-        //emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
-        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+        } else {
+            emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+            return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+        }
     }
 
     @PostMapping("/owner-rent/{boatId}/{userEmail}")
@@ -78,13 +84,7 @@ public class BoatController {
         if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-
-        //reservationDto.setType(ReservationType.BOAT);
-        Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto);
-        boatService.makeReservation(boatId, reservation);
-        clientService.updatePoints(client, reservation.getPrice());
-
-        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+        Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto, boatId);
         return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
     }
 
@@ -174,13 +174,13 @@ public class BoatController {
     }
 
     @GetMapping("for-reservation/{reservationId}")
-    public ResponseEntity<BoatInfo> getBoatForReservation(@PathVariable Long reservationId){
+    public ResponseEntity<BoatInfo> getBoatForReservation(@PathVariable Long reservationId) {
         Boat boat = boatService.getBoatForReservation(reservationId);
-        return new ResponseEntity<>(BoatMapper.mapToDtoInfo(boat),HttpStatus.OK);
+        return new ResponseEntity<>(BoatMapper.mapToDtoInfo(boat), HttpStatus.OK);
     }
 
     @GetMapping("/reservations/{id}")
-    public ResponseEntity<Collection<ReservationDto>> getBoatReservations(@PathVariable Long id){
+    public ResponseEntity<Collection<ReservationDto>> getBoatReservations(@PathVariable Long id) {
         Collection<Reservation> reservations = reservationService.getReservationForBoat(id);
         Collection<ReservationDto> dtos = reservations.stream()
                 .map(ReservationMapper::map)
@@ -189,7 +189,7 @@ public class BoatController {
     }
 
     @GetMapping("{id}/has-incoming-reservations")
-    public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id){
+    public ResponseEntity<Boolean> adventureHasIncomingReservations(@PathVariable Long id) {
         return ResponseEntity.ok(boatService.getNoOfIncomingReservations(id) > 0);
     }
 

@@ -17,7 +17,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
@@ -151,7 +150,7 @@ public class AdventureController {
     }
 
     @PostMapping("/rent/special/offer/{adventureId}/{offerId}/{userEmail}")
-    public ResponseEntity<ReservationDto> makeSpecialOfferReservation(@PathVariable String userEmail, @PathVariable Long offerId,  @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
+    public ResponseEntity<ReservationDto> makeSpecialOfferReservation(@PathVariable String userEmail, @PathVariable Long offerId, @PathVariable Long adventureId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
 
         if (client.getNoOfPenalties() >= 3) {
@@ -183,16 +182,18 @@ public class AdventureController {
         if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-        Adventure adventure = adventureService.getById(adventureId);
+
         reservationDto.setType(ReservationType.ADVENTURE);
-        Reservation reservation = reservationService.makeReservation(client, reservationDto, adventure.getDurationInHours());
-        adventureService.makeReservation(adventureId, reservation);
-        instructorService.updateAvailability(new InstructorAvailability(reservation.getStartDate(), reservation.getEndDate()), adventure.getInstructor().getEmail());
-        clientService.updatePoints(client, reservation.getPrice());
-        instructorService.updatePoints(adventure.getInstructor(), reservation.getPrice());
-        earningsService.saveEarnings(reservation, adventure.getInstructor().getEmail(), adventure.getInstructor().getRank());
-        emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
-        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+        Reservation reservation = reservationService.makeAdventureReservation(client, adventureId, reservationDto);
+
+
+        if (reservation == null) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+
+        } else {
+            emailService.sendReservationEmail(ReservationMapper.map(reservation), client);
+            return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+        }
     }
 
     @PostMapping("/instructor-rent/{adventureId}/{userEmail}")

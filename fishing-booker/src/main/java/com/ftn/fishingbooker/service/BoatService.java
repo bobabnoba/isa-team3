@@ -6,6 +6,7 @@ import com.ftn.fishingbooker.model.*;
 import java.util.*;
 
 public interface BoatService {
+
     Collection<Boat> getAll();
 
     Collection<Boat> filterAll(FilterDto filter);
