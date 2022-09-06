@@ -7,6 +7,7 @@ import com.ftn.fishingbooker.model.*;
 import org.springframework.format.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.*;
 import org.springframework.web.bind.annotation.*;
 import com.ftn.fishingbooker.service.BoatOwnerService;
 import com.ftn.fishingbooker.service.ReservationService;
@@ -55,6 +56,7 @@ public class BoatOwnerController {
     }
 
     @GetMapping("/reservations/upcoming")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     ResponseEntity<Collection<BoatReservationInfo>> getUpcomingReservations(@RequestParam String boatOwnerEmail) {
         BoatOwner owner = boatOwnerService.getByEmail(boatOwnerEmail);
         Collection<BoatReservationInfo> reservations = reservationService.getUpcomingReservationsForBoatOwner(owner.getId());
@@ -62,6 +64,7 @@ public class BoatOwnerController {
     }
 
     @GetMapping("/reservations/past")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     ResponseEntity<Collection<ReservationDto>> getReservationsHistory(@RequestParam String boatOwnerEmail) {
         BoatOwner owner = boatOwnerService.getByEmail(boatOwnerEmail);
         Collection<Reservation> reservations = reservationService.getPastReservationsForBoatOwner(owner.getId());
@@ -71,6 +74,7 @@ public class BoatOwnerController {
         return ok(dtos);
     }
     @GetMapping("/reservations/current")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     ResponseEntity<Collection<BoatReservationInfo>> getCurrentReservations(@RequestParam String boatOwnerEmail) {
         BoatOwner owner = boatOwnerService.getByEmail(boatOwnerEmail);
         Collection<BoatReservationInfo> reservations  = reservationService.getCurrentReservationsForBoatOwner(owner.getId());
@@ -98,6 +102,7 @@ public class BoatOwnerController {
     }
 
     @PostMapping("/add-availability")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<Collection<BoatAvailabilityDto>> addAvailabilityPeriod(@RequestBody BoatOwnerAvailabilityRequestDto availability) {
         Collection<BoatOwnerAvailability> availabilities = boatOwnerService.addAvailabilityPeriod(BoatOwnerMapper.mapToBoatOwnerAvailabilityEntity(availability), availability.getEmail());
         Collection<BoatAvailabilityDto> dtos = availabilities.stream()
@@ -112,6 +117,7 @@ public class BoatOwnerController {
     }
 
     @PostMapping("/remove-availability")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<Collection<BoatAvailabilityDto>> deleteAvailabilityPeriod(@RequestBody BoatOwnerAvailabilityRequestDto availability) {
         Collection<BoatOwnerAvailability> availabilities = boatOwnerService.updateAvailability(availability.getStartDate(), availability.getEndDate(), availability.getEmail());
         Collection<BoatAvailabilityDto> dtos = availabilities.stream()

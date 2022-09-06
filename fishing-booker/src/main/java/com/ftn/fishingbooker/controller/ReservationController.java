@@ -36,7 +36,7 @@ public class ReservationController {
 
 
     @GetMapping("{id}")
-    @PreAuthorize("hasRole('INSTRUCTOR')")
+    @PreAuthorize("hasAnyRole('HOME_OWNER', 'BOAT_OWNER', 'INSTRUCTOR')")
     public ResponseEntity<ReservationWithClientDto> getReservation(@PathVariable Long id) {
         Reservation reservation = reservationService.getReservationById(id);
         return ok(ReservationMapper.toDtoWClient(reservation));
@@ -139,7 +139,7 @@ public class ReservationController {
     }
 
     @GetMapping("/chart/{type}")
-    @PreAuthorize("hasRole('INSTRUCTOR')")
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'HOME_OWNER', 'INSTRUCTOR')")
     public ResponseEntity<Collection<EarningsChartDto>> getReservationChartInDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,
@@ -185,7 +185,7 @@ public class ReservationController {
     }
 
     @GetMapping("/chart-year/{type}")
-    @PreAuthorize("hasRole('INSTRUCTOR')")
+    @PreAuthorize("hasAnyRole('BOAT_OWNER', 'HOME_OWNER', 'INSTRUCTOR')")
     public ResponseEntity<Collection<ReservationChartDto>> getReservationChartYearInDateRange(
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date to,

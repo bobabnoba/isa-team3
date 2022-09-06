@@ -6,6 +6,7 @@ import com.ftn.fishingbooker.mapper.*;
 import com.ftn.fishingbooker.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.*;
 import org.springframework.web.bind.annotation.*;
 import com.ftn.fishingbooker.service.HomeOwnerService;
 import com.ftn.fishingbooker.service.ReservationService;
@@ -38,6 +39,7 @@ public class HomeOwnerController {
 
 
     @GetMapping("/reservations/upcoming")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     ResponseEntity<Collection<BoatReservationInfo>> getUpcomingReservations(@RequestParam String homeOwnerEmail) {
         HomeOwner owner = homeOwnerService.getByEmail(homeOwnerEmail);
         Collection<BoatReservationInfo> reservations = reservationService.getUpcomingReservationsForHomeOwner(owner.getId());
@@ -45,6 +47,7 @@ public class HomeOwnerController {
     }
 
     @GetMapping("/reservations/past")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     ResponseEntity<Collection<ReservationDto>> getReservationsHistory(@RequestParam String homeOwnerEmail) {
         HomeOwner owner = homeOwnerService.getByEmail(homeOwnerEmail);
         Collection<Reservation> reservations = reservationService.getPastReservationsForHomeOwner(owner.getId());
@@ -54,6 +57,7 @@ public class HomeOwnerController {
         return ok(dtos);
     }
     @GetMapping("/reservations/current")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     ResponseEntity<Collection<BoatReservationInfo>> getCurrentReservations(@RequestParam String homeOwnerEmail) {
         HomeOwner owner = homeOwnerService.getByEmail(homeOwnerEmail);
         Collection<BoatReservationInfo> reservations = reservationService.getCurrentReservationsForHomeOwner(owner.getId());

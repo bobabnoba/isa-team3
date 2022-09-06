@@ -72,6 +72,7 @@ public class BoatController {
     }
 
     @PostMapping("/owner-rent/{boatId}/{userEmail}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<?> ownerMakeReservation(@PathVariable String userEmail, @PathVariable Long boatId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
         if (client.getNoOfPenalties() >= 3) {
@@ -88,6 +89,7 @@ public class BoatController {
     }
 
     @GetMapping("/by-owner/{email}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<Collection<BoatDto>> getAllBoatsByOwner(@PathVariable String email) {
         Collection<Boat> found = boatService.getAllByOwner(email);
 
@@ -118,6 +120,7 @@ public class BoatController {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<BoatDto> addNewBoat(@RequestBody NewBoatDto dto) {
         Boat boat = BoatMapper.toEntity(dto);
         Boat saved = boatService.addBoat(boat, dto.getOwnerEmail());
@@ -125,30 +128,35 @@ public class BoatController {
     }
 
     @PostMapping("/info-update/{id}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<BoatDto> updateBoatInfo(@PathVariable Long id, @RequestBody BoatInfo updated) {
         Boat saved = boatService.updateBoatInfo(id, updated);
         return ResponseEntity.ok(BoatMapper.mapToDto(saved));
     }
 
     @PostMapping("/additional-update/{id}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<BoatDto> updateBoatAdditionalInfo(@PathVariable Long id, @RequestBody BoatAdditionalInfo updated) {
         Boat saved = boatService.updateBoatAdditionalInfo(id, updated);
         return ResponseEntity.ok(BoatMapper.mapToDto(saved));
     }
 
     @PostMapping("/code-of-conduct-update/{id}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<BoatDto> updateBoatCodeOfConduct(@PathVariable Long id, @RequestBody Collection<Rule> updated) {
         Boat saved = boatService.updateBoatRules(id, updated);
         return ResponseEntity.ok(BoatMapper.mapToDto(saved));
     }
 
     @PostMapping("/address-update/{id}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<BoatDto> updateBoatAddress(@PathVariable Long id, @RequestBody AddressDto updated) {
         Boat saved = boatService.updateBoatAddress(id, AddressMapper.toEntity(updated));
         return ResponseEntity.ok(BoatMapper.mapToDto(saved));
     }
 
     @PostMapping("/image-upload/{id}")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<Object> uploadImages(@RequestParam MultipartFile file, @PathVariable Long id) throws IOException {
 
         String uploadDir = "images/boats/" + id;
@@ -162,6 +170,7 @@ public class BoatController {
 
 
     @PostMapping("/add-availability")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<Collection<BoatAvailabilityDto>> addAvailabilityPeriod(@RequestBody BoatAvailabilityRequestDto availability) {
         Collection<BoatAvailability> availabilities = boatService.addAvailabilityPeriod(BoatMapper.mapToBoatAvailabilityEntity(availability), availability.boatId);
         Collection<BoatAvailabilityDto> dtos = availabilities.stream()
@@ -204,6 +213,7 @@ public class BoatController {
     }
 
     @PostMapping("/remove-availability")
+    @PreAuthorize("hasRole('BOAT_OWNER')")
     public ResponseEntity<Collection<BoatAvailabilityDto>> deleteAvailabilityPeriod(@RequestBody BoatAvailabilityRequestDto availability) {
         Collection<BoatAvailability> availabilities = boatService.updateAvailability(availability.getStartDate(), availability.getEndDate(), availability.boatId);
         Collection<BoatAvailabilityDto> dtos = availabilities.stream()

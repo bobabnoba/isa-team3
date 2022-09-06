@@ -53,7 +53,7 @@ public class HomeController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN', 'HOME_OWNER')")
     public Collection<VacationHomeDto> getAllVacations() {
         Collection<VacationHome> homes = vacationHomeService.getAll();
 
@@ -115,6 +115,7 @@ public class HomeController {
     }
 
     @PostMapping("/owner-rent/{homeId}/{userEmail}")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<?> ownerMakeReservation(@PathVariable String userEmail, @PathVariable Long homeId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
         if (client.getNoOfPenalties() >= 3) {
@@ -154,6 +155,7 @@ public class HomeController {
     }
 
     @PostMapping("")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<VacationHomeDto> addNewHome(@RequestBody NewHomeDto dto) {
         VacationHome home = VacationHomeMapper.toEntity(dto);
         VacationHome saved = vacationHomeService.addHome(home, dto.getOwnerEmail());
@@ -161,30 +163,35 @@ public class HomeController {
     }
 
     @PostMapping("/info-update/{id}")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<VacationHomeDto> updateHomeInfo(@PathVariable Long id, @RequestBody HomeInfoDto updated) {
         VacationHome saved = vacationHomeService.updateHomeInfo(id, updated);
         return ResponseEntity.ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
 
     @PostMapping("/additional-update/{id}")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<VacationHomeDto> updateHomeAdditionalInfo(@PathVariable Long id, @RequestBody HomeAdditionalInfo updated) {
         VacationHome saved = vacationHomeService.updateHomeAdditionalInfo(id, updated);
         return ResponseEntity.ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
 
     @PostMapping("/code-of-conduct-update/{id}")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<VacationHomeDto> updateHomeCodeOfConduct(@PathVariable Long id, @RequestBody Collection<Rule> updated) {
         VacationHome saved = vacationHomeService.updateHomeRules(id, updated);
         return ResponseEntity.ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
 
     @PostMapping("/address-update/{id}")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<VacationHomeDto> updateHomeAddress(@PathVariable Long id, @RequestBody AddressDto updated) {
         VacationHome saved = vacationHomeService.updateHomeAddress(id, AddressMapper.toEntity(updated));
         return ResponseEntity.ok(VacationHomeMapper.mapToHomeOwnerDto(saved));
     }
 
     @PostMapping("/image-upload/{id}")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<Object> uploadImages(@RequestParam MultipartFile file, @PathVariable Long id) throws IOException {
 
         String uploadDir = "images/homes/" + id;
@@ -197,6 +204,7 @@ public class HomeController {
     }
 
     @PostMapping("/add-availability")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<Collection<HomeAvailabilityDto>> addAvailabilityPeriod(@RequestBody HomeAvailabilityRequestDto availability) {
         Collection<VacationHomeAvailability> availabilities = vacationHomeService.addAvailabilityPeriod(VacationHomeMapper.mapToHomeAvailabilityEntity(availability), availability.getHomeId());
         Collection<HomeAvailabilityDto> dtos = availabilities.stream()
@@ -231,6 +239,7 @@ public class HomeController {
     }
 
     @PostMapping("/remove-availability")
+    @PreAuthorize("hasRole('HOME_OWNER')")
     public ResponseEntity<Collection<HomeAvailabilityDto>> deleteAvailabilityPeriod(@RequestBody HomeAvailabilityRequestDto availability) {
         Collection<VacationHomeAvailability> availabilities = vacationHomeService.updateAvailability(availability.getStartDate(), availability.getEndDate(), availability.homeId);
         Collection<HomeAvailabilityDto> dtos = availabilities.stream()

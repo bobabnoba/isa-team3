@@ -21,7 +21,7 @@ public class ClientController {
 
 
     @GetMapping("/check-if-available")
-    @PreAuthorize("hasRole('INSTRUCTOR')")
+    @PreAuthorize("hasAnyRole('HOME_OWNER', 'BOAT_OWNER', 'INSTRUCTOR')")
     public ResponseEntity<Boolean> checkIfAvailable(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date from,
                                                     @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date to,
                                                     @RequestParam String email) {
