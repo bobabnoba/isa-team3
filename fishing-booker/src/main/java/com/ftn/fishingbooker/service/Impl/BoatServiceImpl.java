@@ -14,6 +14,7 @@ import com.ftn.fishingbooker.util.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +64,10 @@ public class BoatServiceImpl implements BoatService {
 
     @Override
     public void makeReservation(Long boatId, Reservation reservation) {
-        Boat boat = boatRepository.getById(boatId);
+        Boat boat = boatRepository.findLockedById(boatId);
+        if ( boat == null ){
+            throw new PessimisticLockingFailureException("Someone is already trying to reserve same boat at this moment!");
+        }
         boat.getReservations().add(reservation);
         boatRepository.save(boat);
         boatOwnerService.updatePoints(boat.getBoatOwner(), reservation.getPrice());

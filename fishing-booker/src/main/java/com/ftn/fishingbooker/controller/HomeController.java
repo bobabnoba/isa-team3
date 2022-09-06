@@ -13,6 +13,7 @@ import com.ftn.fishingbooker.service.HomeService;
 import com.ftn.fishingbooker.service.ReservationService;
 import com.ftn.fishingbooker.util.FIleUploadUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -114,15 +115,18 @@ public class HomeController {
     }
 
     @PostMapping("/owner-rent/{homeId}/{userEmail}")
-    public ResponseEntity<ReservationDto> ownerMakeReservation(@PathVariable String userEmail, @PathVariable Long homeId, @RequestBody ReservationDto reservationDto) {
+    public ResponseEntity<?> ownerMakeReservation(@PathVariable String userEmail, @PathVariable Long homeId, @RequestBody ReservationDto reservationDto) {
         Client client = clientService.getClientByEmail(userEmail);
         if (client.getNoOfPenalties() >= 3) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-
-        Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto, homeId);
-
-        return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+        try{
+            Reservation reservation = reservationService.ownerMakeReservation(client, reservationDto, homeId);
+            return new ResponseEntity<>(ReservationMapper.map(reservation), HttpStatus.OK);
+        }
+        catch (PessimisticLockingFailureException e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        }
     }
 
     @GetMapping("/by-owner/{email}")

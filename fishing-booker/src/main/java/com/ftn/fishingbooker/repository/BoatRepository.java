@@ -1,9 +1,10 @@
 package com.ftn.fishingbooker.repository;
 
-import com.ftn.fishingbooker.model.Boat;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.ftn.fishingbooker.model.*;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.persistence.*;
 import java.util.Collection;
 
 public interface BoatRepository extends JpaRepository<Boat, Long> {
@@ -19,4 +20,8 @@ public interface BoatRepository extends JpaRepository<Boat, Long> {
             "   join boat_reservations as ar on a.id = ar.boat_id \n" +
             "   where ar.reservations_id = ?1  ", nativeQuery = true)
     Boat getBoatForReservation(Long reservationId);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @QueryHints({@QueryHint(name = "javax.persistence.lock.timeout", value = "0")})
+    Boat findLockedById(Long id);
 }

@@ -13,6 +13,7 @@ import com.ftn.fishingbooker.service.*;
 import com.ftn.fishingbooker.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.*;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -97,7 +98,11 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public void makeReservation(Long homeId, Reservation reservation) {
-        VacationHome home = vacationHomeRepository.getById(homeId);
+        VacationHome home = vacationHomeRepository.findLockedById(homeId);
+        if ( home == null ){
+            throw new PessimisticLockingFailureException("Someone is already trying to reserve same vacation home at this moment!");
+        }
+
         home.getReservations().add(reservation);
         vacationHomeRepository.save(home);
         homeOwnerService.updatePoints(home.getHomeOwner(), reservation.getPrice());
